@@ -2,6 +2,8 @@ Contributing to Graffiti
 ========================
 The guide itself is open for contribution.  Nothing in here is universal law.  Just make a pull request. :wink:
 
+If you need to get up to speed with git, [this](https://www.atlassian.com/git/tutorials/syncing) is a terrific guide.  Even if you know the basics, it's worth checking out at some point for the advance stuff.  It's the guide I use every time I forget how to rebase or revert. :sob:
+
 Workflow
 --------
 1. create [**issue**](#issues)
@@ -74,6 +76,7 @@ You can leave this PR open until you are ready to merge (it will continue to tra
 
 Additional info
 ---------------
+* [Great Git Guide](https://www.atlassian.com/git/tutorials/syncing)
 * [Github Workflow](https://guides.github.com/introduction/flow/)
 * [Github issues](https://guides.github.com/features/issues/)
 * [Github pull requests](https://help.github.com/articles/about-pull-requests/)
