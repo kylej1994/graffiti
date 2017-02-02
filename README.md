@@ -1,4 +1,4 @@
-Graffiti
+Graffiti :vertical_traffic_light::art:
 ========
 Team
 ----
