@@ -35,7 +35,8 @@ Branches
 ```
 graffiti
 └── master
-    └── [feature]
+    └── dev
+        └── [feature]
 ```
 
 ### Master Branches
