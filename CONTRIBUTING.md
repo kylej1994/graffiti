@@ -39,12 +39,15 @@ graffiti
         └── [feature]
 ```
 
-### Master Branches
+### Master Branch
 The graffiti repo will have a master branch and many feature branches.  The master branch holds to canonical "master" copy of our code.
 
 **You are not allowed to commit directly to master** *for the most part*
 
 Instead, a feature branch should be forked off of master.  The change can be made in that feature branch.  When finished, a pull request to merge the brach back into master can be create to be reviewed.  For more information see  [Pull Request](#pull-requests).
+
+### Dev Branch
+As an extra layer of precaution, we will only be branching and merging to and from a dev branch.  We will then merge this dev branch with master at the end of iterations.  This will keep our master production ready.
 
 ### Feature Branches
 In general, a feature should be a specific feature to implement or bug to fix.  If the feature is related to a specific issue, it is good practice to reference it in the branch name.  For example, if the new branch fixes issue #12, call it "issue12".
