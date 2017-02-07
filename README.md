@@ -13,4 +13,4 @@ Team
 
 Contributing
 ------------
-See our [contribution guide](CONTRIBUTION.md).
+See our [contribution guide](CONTRIBUTING.md).
