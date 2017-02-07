@@ -44,7 +44,7 @@ The graffiti repo will have a master branch and many feature branches.  The mast
 
 **You are not allowed to commit directly to master** *for the most part*
 
-Instead, a feature branch should be forked off of master.  The change can be made in that feature branch.  When finished, a pull request to merge the brach back into master can be create to be reviewed.  For more information see  [Pull Request](#pull-requests).
+Instead, a feature branch should be forked off of master (well, actually the dev branch... more on that later).  The change can be made in that feature branch.  When finished, a pull request to merge the brach back into master/dev can be create to be reviewed.  For more information see  [Pull Request](#pull-requests).
 
 ### Dev Branch
 As an extra layer of precaution, we will only be branching and merging to and from a dev branch.  We will then merge this dev branch with master at the end of iterations.  This will keep our master production ready.
