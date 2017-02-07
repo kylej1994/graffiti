@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		598B435CBAD828D29AE71840 /* Pods_Graffiti.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 713DC8BD02EAC92DE23868C8 /* Pods_Graffiti.framework */; };
+		6FCDE8E4BD77B03A8F9D7EF3 /* Pods_GraffitiUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABFD6572D47051DFF80F7CD /* Pods_GraffitiUITests.framework */; };
+		766D1D3684E13C8778E03EA6 /* Pods_GraffitiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0DF8A503BE07DFF08436AA1 /* Pods_GraffitiTests.framework */; };
 		AD84BD311E4947330020505D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD301E4947330020505D /* AppDelegate.swift */; };
 		AD84BD361E4947330020505D /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD84BD341E4947330020505D /* Login.storyboard */; };
 		AD84BD381E4947330020505D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD84BD371E4947330020505D /* Assets.xcassets */; };
@@ -45,6 +48,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A8894365BAFDF25351179FA /* Pods-GraffitiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraffitiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GraffitiTests/Pods-GraffitiTests.release.xcconfig"; sourceTree = "<group>"; };
+		1ABFD6572D47051DFF80F7CD /* Pods_GraffitiUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraffitiUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		49AA21F62EF3FDFA9DD4607E /* Pods-GraffitiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraffitiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GraffitiTests/Pods-GraffitiTests.debug.xcconfig"; sourceTree = "<group>"; };
+		6672CC941A4504DECB751DAE /* Pods-Graffiti.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Graffiti.release.xcconfig"; path = "Pods/Target Support Files/Pods-Graffiti/Pods-Graffiti.release.xcconfig"; sourceTree = "<group>"; };
+		713DC8BD02EAC92DE23868C8 /* Pods_Graffiti.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Graffiti.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A8D950DFCFCDB465E06D7E9 /* Pods-Graffiti.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Graffiti.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Graffiti/Pods-Graffiti.debug.xcconfig"; sourceTree = "<group>"; };
+		8F280E8407B8FD52B58979CD /* Pods-GraffitiUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraffitiUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GraffitiUITests/Pods-GraffitiUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		AD84BD2D1E4947330020505D /* Graffiti.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Graffiti.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD84BD301E4947330020505D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD84BD351E4947330020505D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
@@ -69,6 +79,8 @@
 		AD84BD791E4952B20020505D /* FeedViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewControllerTests.swift; sourceTree = "<group>"; };
 		AD84BD7B1E4952CA0020505D /* ProfileViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerTests.swift; sourceTree = "<group>"; };
 		AD84BD7D1E4952FB0020505D /* TextPostViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextPostViewControllerTests.swift; sourceTree = "<group>"; };
+		ADA147E95DA84165A40FB7DE /* Pods-GraffitiUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraffitiUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GraffitiUITests/Pods-GraffitiUITests.release.xcconfig"; sourceTree = "<group>"; };
+		B0DF8A503BE07DFF08436AA1 /* Pods_GraffitiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraffitiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				598B435CBAD828D29AE71840 /* Pods_Graffiti.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				766D1D3684E13C8778E03EA6 /* Pods_GraffitiTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,12 +104,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6FCDE8E4BD77B03A8F9D7EF3 /* Pods_GraffitiUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5D197A0A817A1639A0729DA5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7A8D950DFCFCDB465E06D7E9 /* Pods-Graffiti.debug.xcconfig */,
+				6672CC941A4504DECB751DAE /* Pods-Graffiti.release.xcconfig */,
+				49AA21F62EF3FDFA9DD4607E /* Pods-GraffitiTests.debug.xcconfig */,
+				0A8894365BAFDF25351179FA /* Pods-GraffitiTests.release.xcconfig */,
+				8F280E8407B8FD52B58979CD /* Pods-GraffitiUITests.debug.xcconfig */,
+				ADA147E95DA84165A40FB7DE /* Pods-GraffitiUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		AD84BD241E4947330020505D = {
 			isa = PBXGroup;
 			children = (
@@ -103,6 +131,8 @@
 				AD84BD441E4947330020505D /* GraffitiTests */,
 				AD84BD4F1E4947330020505D /* GraffitiUITests */,
 				AD84BD2E1E4947330020505D /* Products */,
+				5D197A0A817A1639A0729DA5 /* Pods */,
+				F178C92EFF743464C75BFAE3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -190,6 +220,16 @@
 			name = Login;
 			sourceTree = "<group>";
 		};
+		F178C92EFF743464C75BFAE3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				713DC8BD02EAC92DE23868C8 /* Pods_Graffiti.framework */,
+				B0DF8A503BE07DFF08436AA1 /* Pods_GraffitiTests.framework */,
+				1ABFD6572D47051DFF80F7CD /* Pods_GraffitiUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -197,9 +237,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AD84BD551E4947330020505D /* Build configuration list for PBXNativeTarget "Graffiti" */;
 			buildPhases = (
+				05A6836C472E78DFC5D090CA /* [CP] Check Pods Manifest.lock */,
 				AD84BD291E4947330020505D /* Sources */,
 				AD84BD2A1E4947330020505D /* Frameworks */,
 				AD84BD2B1E4947330020505D /* Resources */,
+				D8F68AB7D2A636B261D99798 /* [CP] Embed Pods Frameworks */,
+				D8E0AC6DD773F09F12B05CCD /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -214,9 +257,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AD84BD581E4947330020505D /* Build configuration list for PBXNativeTarget "GraffitiTests" */;
 			buildPhases = (
+				494107EFFFDC54E9CDF9752C /* [CP] Check Pods Manifest.lock */,
 				AD84BD3D1E4947330020505D /* Sources */,
 				AD84BD3E1E4947330020505D /* Frameworks */,
 				AD84BD3F1E4947330020505D /* Resources */,
+				048E0683BD4AE6BAF5730C74 /* [CP] Embed Pods Frameworks */,
+				AA00BCBB50E8F178680B891F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -232,9 +278,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AD84BD5B1E4947330020505D /* Build configuration list for PBXNativeTarget "GraffitiUITests" */;
 			buildPhases = (
+				83A149F1914889E279D6AC3C /* [CP] Check Pods Manifest.lock */,
 				AD84BD481E4947330020505D /* Sources */,
 				AD84BD491E4947330020505D /* Frameworks */,
 				AD84BD4A1E4947330020505D /* Resources */,
+				B4FB242B591D701F1B87DA5C /* [CP] Embed Pods Frameworks */,
+				ECDADCA60AADECEF2671BE83 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -323,6 +372,144 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		048E0683BD4AE6BAF5730C74 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GraffitiTests/Pods-GraffitiTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		05A6836C472E78DFC5D090CA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		494107EFFFDC54E9CDF9752C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		83A149F1914889E279D6AC3C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		AA00BCBB50E8F178680B891F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GraffitiTests/Pods-GraffitiTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B4FB242B591D701F1B87DA5C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GraffitiUITests/Pods-GraffitiUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D8E0AC6DD773F09F12B05CCD /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Graffiti/Pods-Graffiti-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D8F68AB7D2A636B261D99798 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Graffiti/Pods-Graffiti-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ECDADCA60AADECEF2671BE83 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GraffitiUITests/Pods-GraffitiUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		AD84BD291E4947330020505D /* Sources */ = {
@@ -501,6 +688,7 @@
 		};
 		AD84BD561E4947330020505D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7A8D950DFCFCDB465E06D7E9 /* Pods-Graffiti.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Graffiti/Info.plist;
@@ -513,6 +701,7 @@
 		};
 		AD84BD571E4947330020505D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6672CC941A4504DECB751DAE /* Pods-Graffiti.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Graffiti/Info.plist;
@@ -525,6 +714,7 @@
 		};
 		AD84BD591E4947330020505D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 49AA21F62EF3FDFA9DD4607E /* Pods-GraffitiTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -541,6 +731,7 @@
 		};
 		AD84BD5A1E4947330020505D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0A8894365BAFDF25351179FA /* Pods-GraffitiTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -556,6 +747,7 @@
 		};
 		AD84BD5C1E4947330020505D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8F280E8407B8FD52B58979CD /* Pods-GraffitiUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = GraffitiUITests/Info.plist;
@@ -569,6 +761,7 @@
 		};
 		AD84BD5D1E4947330020505D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ADA147E95DA84165A40FB7DE /* Pods-GraffitiUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = GraffitiUITests/Info.plist;
