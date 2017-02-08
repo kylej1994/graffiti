@@ -2,6 +2,7 @@ import os
 import sys
 import unittest
 import tempfile
+import json
 
 sys.path.append('..')
 from graffiti import graffiti
@@ -23,13 +24,28 @@ class APITestCase(unittest.TestCase):
         os.close(self.db_fd)
         os.unlink(graffiti.app.config['DATABASE'])
 
+
+    """ Posts related API calls. """
     def test_empty_db(self):
-        rv = self.app.post('/posts', data=dict(
-            latitude='29.12123',
-            longitude='32.12943'),
+        post_text = 'omg first graffiti post'
+        lat = 29.12123
+        lon = 32.12943
+        created_at = 0.1
+        poster_username = 'jeffdean'
+        rv = self.app.post('/posts/create',
+                data=dict(
+                    latitude=lat,
+                    longitude=lon,
+                    created_at = created_at,
+                    poster = poster_username),
             follow_redirects=True)
-        # nothing in the database yet, so nothing should be returned
-        assert b'' in rv.data
+        assert rv.status_code == 200
+
+        data = json.loads(rv.data)
+        assert data['lat'] == lat
+        assert data['lon'] == lon
+        assert data['created_at'] == 0.1
+        assert data['poster'] == poster_username
 
 if __name__ == '__main__':
     unittest.main()
