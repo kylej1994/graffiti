@@ -1,0 +1,1 @@
+from .graffiti import app
