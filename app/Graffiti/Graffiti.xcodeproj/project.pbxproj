@@ -45,6 +45,7 @@
 		D9E63BA61E4D633A00EE6C4B /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E63B9F1E4D460900EE6C4B /* API.swift */; };
 		D9E63BA71E4D639100EE6C4B /* ManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E63BA11E4D496E00EE6C4B /* ManagerProtocol.swift */; };
 		F744D4131E4E77C300C42677 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F744D4121E4E77C300C42677 /* GoogleService-Info.plist */; };
+		F744D4141E4E842600C42677 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33B07CB1E4AB6D2007025FB /* Post.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -614,6 +615,7 @@
 				AD03CF7B1E4E4F92003D3682 /* LocationServiceTests.swift in Sources */,
 				AD03CF761E4E4BB7003D3682 /* MockLocationManager.swift in Sources */,
 				AD03CF791E4E4C91003D3682 /* LocationManagerProtocol.swift in Sources */,
+				F744D4141E4E842600C42677 /* Post.swift in Sources */,
 				AD03CF7C1E4E6430003D3682 /* LocationService.swift in Sources */,
 				AD84BD761E4951D70020505D /* UserTests.swift in Sources */,
 				B35620C31E4D396400F8CC9E /* PostTest.swift in Sources */,
@@ -778,6 +780,22 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				ENABLE_BITCODE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"${PODS_ROOT}/Google/Headers",
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseAnalytics\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseCore\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseInstanceID\"",
+					"\"${PODS_ROOT}/Headers/Public/Google\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleAppUtilities\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleInterchangeUtilities\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleSignIn\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleSymbolUtilities\"",
+					"\"${PODS_ROOT}/Pods/Google\"/**",
+					"$(SRCROOT)/Pods/**",
+				);
 				INFOPLIST_FILE = Graffiti/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = graffiti.Graffiti;
@@ -795,6 +813,22 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				ENABLE_BITCODE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"${PODS_ROOT}/Google/Headers",
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseAnalytics\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseCore\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseInstanceID\"",
+					"\"${PODS_ROOT}/Headers/Public/Google\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleAppUtilities\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleInterchangeUtilities\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleSignIn\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleSymbolUtilities\"",
+					"\"${PODS_ROOT}/Pods/Google\"/**",
+					"$(SRCROOT)/Pods/**",
+				);
 				INFOPLIST_FILE = Graffiti/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = graffiti.Graffiti;
