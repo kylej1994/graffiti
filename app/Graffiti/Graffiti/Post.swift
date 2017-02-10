@@ -11,11 +11,26 @@ import UIKit
 import MapKit
 import CoreLocation
 
-enum PostError: Error {
+enum PostError: Error, Equatable {
     case noImage
     case tooManyChars
     case invalidLifetime
     case invalidVisibility
+}
+
+func ==(lhs: PostError, rhs: PostError) -> Bool {
+    switch (lhs, rhs) {
+        case (.noImage, .noImage):
+            return true
+        case (.tooManyChars, .tooManyChars):
+            return true
+        case (.invalidLifetime, .invalidLifetime):
+            return true
+        case (.invalidVisibility, .invalidVisibility):
+            return true
+        case _:
+            return false
+    }
 }
 
 enum VisType: Int{
@@ -134,6 +149,11 @@ class Post {
     public func getLifetime()->Int{
         return lifetime
     }
+    
+    public func getReported()->Bool{
+        return reported
+    }
+
     
     //MARK: Setters
     
