@@ -1,4 +1,5 @@
-from app import db
+sys.path.append('..')
+from graffiti import db
 from sqlalchemy import Column, Float, Integer, String
 
 from datetime import datetime
