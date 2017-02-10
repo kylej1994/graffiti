@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import Graffiti
+
 
 class UserTests: XCTestCase {
     

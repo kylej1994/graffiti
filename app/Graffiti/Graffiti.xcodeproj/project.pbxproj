@@ -29,6 +29,7 @@
 		AD84BD7C1E4952CA0020505D /* ProfileViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD7B1E4952CA0020505D /* ProfileViewControllerTests.swift */; };
 		AD84BD7E1E4952FB0020505D /* TextPostViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD7D1E4952FB0020505D /* TextPostViewControllerTests.swift */; };
 		B33B07D01E4ACA8F007025FB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33B07CF1E4ACA8F007025FB /* User.swift */; };
+		F744D4151E4E860400C42677 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33B07CF1E4ACA8F007025FB /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -534,6 +535,7 @@
 			files = (
 				AD84BD7C1E4952CA0020505D /* ProfileViewControllerTests.swift in Sources */,
 				AD84BD7E1E4952FB0020505D /* TextPostViewControllerTests.swift in Sources */,
+				F744D4151E4E860400C42677 /* User.swift in Sources */,
 				AD84BD781E4952330020505D /* ApiTests.swift in Sources */,
 				AD84BD7A1E4952B20020505D /* FeedViewControllerTests.swift in Sources */,
 				AD84BD761E4951D70020505D /* UserTests.swift in Sources */,
