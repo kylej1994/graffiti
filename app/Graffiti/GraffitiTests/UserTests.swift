@@ -21,10 +21,10 @@ class UserTests: XCTestCase {
         super.tearDown()
     }
     
-    func initTest() {        
+    // Function to test initialization of users
+    func testInit() {
         let testUser:User = User(username: "willem", name: "Will", email: "w@uchicago.edu", userImage: nil, textTag: nil, imageTag: nil)
         XCTAssertNotNil(testUser)
     }
-    
     
 }
