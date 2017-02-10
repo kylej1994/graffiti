@@ -9,8 +9,13 @@
 import Foundation
 import Alamofire
 
+// A completion closure invoked when requests complete
 typealias Handler = (DataResponse<Any>) -> Void
 
+
+// A Service that executes network requests to the Graffiti API
+// For more information about API endpoints see
+// https://github.com/kylej1994/graffiti/wiki/API-Documentation
 class API {
     static let sharedInstance = API()
     
@@ -22,7 +27,6 @@ class API {
     }
     
     //MARK Private Methods
-    
     private func makeRequest(_ url: URLConvertible, method: HTTPMethod, parameters: Parameters? = nil, handler: @escaping Handler) {
         // Add Authentication token
         let idToken = "idToken" //TODO
