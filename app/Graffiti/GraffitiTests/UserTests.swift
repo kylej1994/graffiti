@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import Graffiti
 
 class UserTests: XCTestCase {
     
@@ -20,16 +21,10 @@ class UserTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func initTest() {        
+        let testUser:User = User(username: "willem", name: "Will", email: "w@uchicago.edu", userImage: nil, textTag: nil, imageTag: nil)
+        XCTAssertNotNil(testUser)
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
     
 }
