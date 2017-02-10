@@ -182,7 +182,7 @@ class Post {
     }
     
     public func setVisType(_visType: Int) throws {
-        if( _visType != 1 || _visType != 2){
+        if( _visType != VisType.Public.rawValue && _visType != VisType.Private.rawValue){
             throw PostError.invalidVisibility
         } else {
             self.visibilityType = _visType
