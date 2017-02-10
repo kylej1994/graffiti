@@ -28,6 +28,11 @@
 		AD84BD7A1E4952B20020505D /* FeedViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD791E4952B20020505D /* FeedViewControllerTests.swift */; };
 		AD84BD7C1E4952CA0020505D /* ProfileViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD7B1E4952CA0020505D /* ProfileViewControllerTests.swift */; };
 		AD84BD7E1E4952FB0020505D /* TextPostViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD7D1E4952FB0020505D /* TextPostViewControllerTests.swift */; };
+		D9E63BA01E4D460900EE6C4B /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E63B9F1E4D460900EE6C4B /* API.swift */; };
+		D9E63BA21E4D496E00EE6C4B /* ManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E63BA11E4D496E00EE6C4B /* ManagerProtocol.swift */; };
+		D9E63BA51E4D555E00EE6C4B /* MockSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E63BA41E4D555E00EE6C4B /* MockSessionManager.swift */; };
+		D9E63BA61E4D633A00EE6C4B /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E63B9F1E4D460900EE6C4B /* API.swift */; };
+		D9E63BA71E4D639100EE6C4B /* ManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E63BA11E4D496E00EE6C4B /* ManagerProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +86,9 @@
 		AD84BD7D1E4952FB0020505D /* TextPostViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextPostViewControllerTests.swift; sourceTree = "<group>"; };
 		ADA147E95DA84165A40FB7DE /* Pods-GraffitiUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraffitiUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GraffitiUITests/Pods-GraffitiUITests.release.xcconfig"; sourceTree = "<group>"; };
 		B0DF8A503BE07DFF08436AA1 /* Pods_GraffitiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraffitiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9E63B9F1E4D460900EE6C4B /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		D9E63BA11E4D496E00EE6C4B /* ManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerProtocol.swift; sourceTree = "<group>"; };
+		D9E63BA41E4D555E00EE6C4B /* MockSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSessionManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +157,7 @@
 		AD84BD2F1E4947330020505D /* Graffiti */ = {
 			isa = PBXGroup;
 			children = (
+				D9E63B9E1E4D45CD00EE6C4B /* API */,
 				AD84BD301E4947330020505D /* AppDelegate.swift */,
 				AD84BD6F1E494BD30020505D /* Main.storyboard */,
 				AD84BD6C1E494B430020505D /* Feed */,
@@ -165,6 +174,7 @@
 		AD84BD441E4947330020505D /* GraffitiTests */ = {
 			isa = PBXGroup;
 			children = (
+				D9E63BA31E4D554500EE6C4B /* Mocks */,
 				AD84BD471E4947330020505D /* Info.plist */,
 				AD84BD751E4951D70020505D /* UserTests.swift */,
 				AD84BD771E4952330020505D /* ApiTests.swift */,
@@ -218,6 +228,23 @@
 				AD84BD721E494C320020505D /* LoginViewController.swift */,
 			);
 			name = Login;
+			sourceTree = "<group>";
+		};
+		D9E63B9E1E4D45CD00EE6C4B /* API */ = {
+			isa = PBXGroup;
+			children = (
+				D9E63B9F1E4D460900EE6C4B /* API.swift */,
+				D9E63BA11E4D496E00EE6C4B /* ManagerProtocol.swift */,
+			);
+			name = API;
+			sourceTree = "<group>";
+		};
+		D9E63BA31E4D554500EE6C4B /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				D9E63BA41E4D555E00EE6C4B /* MockSessionManager.swift */,
+			);
+			name = Mocks;
 			sourceTree = "<group>";
 		};
 		F178C92EFF743464C75BFAE3 /* Frameworks */ = {
@@ -520,7 +547,9 @@
 				AD84BD631E4949860020505D /* ProfileViewController.swift in Sources */,
 				AD84BD5F1E4949260020505D /* FeedTableViewController.swift in Sources */,
 				AD84BD731E494C320020505D /* LoginViewController.swift in Sources */,
+				D9E63BA01E4D460900EE6C4B /* API.swift in Sources */,
 				AD84BD311E4947330020505D /* AppDelegate.swift in Sources */,
+				D9E63BA21E4D496E00EE6C4B /* ManagerProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -532,7 +561,10 @@
 				AD84BD7E1E4952FB0020505D /* TextPostViewControllerTests.swift in Sources */,
 				AD84BD781E4952330020505D /* ApiTests.swift in Sources */,
 				AD84BD7A1E4952B20020505D /* FeedViewControllerTests.swift in Sources */,
+				D9E63BA51E4D555E00EE6C4B /* MockSessionManager.swift in Sources */,
+				D9E63BA71E4D639100EE6C4B /* ManagerProtocol.swift in Sources */,
 				AD84BD761E4951D70020505D /* UserTests.swift in Sources */,
+				D9E63BA61E4D633A00EE6C4B /* API.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -792,6 +824,7 @@
 				AD84BD571E4947330020505D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AD84BD581E4947330020505D /* Build configuration list for PBXNativeTarget "GraffitiTests" */ = {
 			isa = XCConfigurationList;
@@ -800,6 +833,7 @@
 				AD84BD5A1E4947330020505D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AD84BD5B1E4947330020505D /* Build configuration list for PBXNativeTarget "GraffitiUITests" */ = {
 			isa = XCConfigurationList;
@@ -808,6 +842,7 @@
 				AD84BD5D1E4947330020505D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
