@@ -28,6 +28,8 @@ class ApiTests: XCTestCase {
         let url = session.lastURL as? String
         XCTAssertEqual(url, "/user/1234")
         
+        XCTAssertEqual(session.lastMethod, .get)
+        
         let token = session.lastHeaders?["Authorization"]
         XCTAssertNotNil(token)
     }
@@ -45,6 +47,8 @@ class ApiTests: XCTestCase {
         let url = session.lastURL as? String
         XCTAssertEqual(url, "/user/1234")
         
+        XCTAssertEqual(session.lastMethod, .put)
+        
         let token = session.lastHeaders?["Authorization"]
         XCTAssertNotNil(token)
     }
@@ -54,6 +58,8 @@ class ApiTests: XCTestCase {
         
         let url = session.lastURL as? String
         XCTAssertEqual(url, "/user/login")
+        
+        XCTAssertEqual(session.lastMethod, .get)
         
         let token = session.lastHeaders?["Authorization"]
         XCTAssertNotNil(token)
@@ -75,6 +81,8 @@ class ApiTests: XCTestCase {
         let url = session.lastURL as? String
         XCTAssertEqual(url, "/post")
         
+        XCTAssertEqual(session.lastMethod, .post)
+        
         let token = session.lastHeaders?["Authorization"]
         XCTAssertNotNil(token)
     }
@@ -84,6 +92,8 @@ class ApiTests: XCTestCase {
         
         let url = session.lastURL as? String
         XCTAssertEqual(url, "/post/1234")
+        
+        XCTAssertEqual(session.lastMethod, .delete)
         
         let token = session.lastHeaders?["Authorization"]
         XCTAssertNotNil(token)
@@ -95,6 +105,8 @@ class ApiTests: XCTestCase {
         let url = session.lastURL as? String
         XCTAssertEqual(url, "/post/1234")
         
+        XCTAssertEqual(session.lastMethod, .get)
+        
         let token = session.lastHeaders?["Authorization"]
         XCTAssertNotNil(token)
     }
@@ -105,6 +117,8 @@ class ApiTests: XCTestCase {
         let url = session.lastURL as? String
         XCTAssertEqual(url, "/post")
         
+        XCTAssertEqual(session.lastMethod, .get)
+        
         let token = session.lastHeaders?["Authorization"]
         XCTAssertNotNil(token)
     }
@@ -114,6 +128,8 @@ class ApiTests: XCTestCase {
         
         let url = session.lastURL as? String
         XCTAssertEqual(url, "/post/1234")
+        
+        XCTAssertEqual(session.lastMethod, .put)
         
         let token = session.lastHeaders?["Authorization"]
         XCTAssertNotNil(token)
