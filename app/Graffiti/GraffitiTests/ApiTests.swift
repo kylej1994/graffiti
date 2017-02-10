@@ -19,11 +19,11 @@ class ApiTests: XCTestCase {
         let api = API(manager: session)
         api.deletePost(postid: 1234)
         
-        if let url = session.lastURL as? String {
-            XCTAssertEqual(url, "/post/1234")
-        } else {
-            XCTFail("URL should be string")
-        }
+        let url = session.lastURL as? String
+        XCTAssertEqual(url, "/post/1234")
+        
+        let token = session.lastHeaders?["Authorization"]
+        XCTAssertNotNil(token)
     }
     
 }
