@@ -57,7 +57,7 @@ class API {
         makeRequest("/post/\(postid)", method: .get)
     }
     
-    func getPost(longitude: Float, latitude: Float) {
+    func getPost(longitude: Double, latitude: Double) {
         let parameters = [
             "longitude": longitude,
             "latitude": latitude

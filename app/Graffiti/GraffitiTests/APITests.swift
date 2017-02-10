@@ -8,8 +8,7 @@
 
 import XCTest
 
-//TODO test method and parameters
-//     Also responses
+//TODO test response
 
 class ApiTests: XCTestCase {
     let session = MockSessionManager()
@@ -48,6 +47,7 @@ class ApiTests: XCTestCase {
         XCTAssertEqual(url, "/user/1234")
         
         XCTAssertEqual(session.lastMethod, .put)
+        XCTAssertEqual(session.lastParameters as! [String : String], user as! [String : String])
         
         let token = session.lastHeaders?["Authorization"]
         XCTAssertNotNil(token)
@@ -71,8 +71,8 @@ class ApiTests: XCTestCase {
         let post = [
             "text": "this is a post",
             "location": [
-                "longitude": 10,
-                "latitude": 10
+                "longitude": 10.0,
+                "latitude": 10.0
             ]
         ] as [String : Any]
         
@@ -82,6 +82,8 @@ class ApiTests: XCTestCase {
         XCTAssertEqual(url, "/post")
         
         XCTAssertEqual(session.lastMethod, .post)
+        XCTAssertEqual(session.lastParameters?["text"] as! String, post["text"] as! String)
+        XCTAssertEqual(session.lastParameters?["location"] as! [String : Double], post["location"] as! [String : Double])
         
         let token = session.lastHeaders?["Authorization"]
         XCTAssertNotNil(token)
@@ -112,24 +114,31 @@ class ApiTests: XCTestCase {
     }
     
     func testGetPostByLocation() {
-        api.getPost(longitude: 10, latitude: 10)
+        let location: [String : Double] = [
+            "longitude": 10,
+            "latitude": 10
+        ]
+        api.getPost(longitude: location["longitude"]!, latitude: location["latitude"]!)
         
         let url = session.lastURL as? String
         XCTAssertEqual(url, "/post")
         
         XCTAssertEqual(session.lastMethod, .get)
+        XCTAssertEqual(session.lastParameters as! [String : Double], location)
         
         let token = session.lastHeaders?["Authorization"]
         XCTAssertNotNil(token)
     }
     
     func testVoteOnPost() {
-        api.voteOnPost(postid: 1234, vote: 1)
+        let vote: [String : Int] = ["vote": 1]
+        api.voteOnPost(postid: 1234, vote: vote["vote"]!)
         
         let url = session.lastURL as? String
         XCTAssertEqual(url, "/post/1234")
         
         XCTAssertEqual(session.lastMethod, .put)
+        XCTAssertEqual(session.lastParameters as! [String : Int], vote)
         
         let token = session.lastHeaders?["Authorization"]
         XCTAssertNotNil(token)
