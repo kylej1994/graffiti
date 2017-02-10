@@ -22,7 +22,7 @@ class ApiTests: XCTestCase {
     
     //MARK: User Call Tests
     func testGetUser() {
-        api.getUser(userid: 1234)
+        api.getUser(userid: 1234) { (_) in }
         
         let url = session.lastURL as? String
         XCTAssertEqual(url, "/user/1234")
@@ -41,7 +41,7 @@ class ApiTests: XCTestCase {
             "textTag": "textTag"
         ] as [String : Any]
         
-        api.updateUser(userid: 1234, user: user)
+        api.updateUser(userid: 1234, user: user) { (_) in }
         
         let url = session.lastURL as? String
         XCTAssertEqual(url, "/user/1234")
@@ -54,7 +54,7 @@ class ApiTests: XCTestCase {
     }
     
     func testLogin() {
-        api.login()
+        api.login() { (_) in }
         
         let url = session.lastURL as? String
         XCTAssertEqual(url, "/user/login")
@@ -76,7 +76,7 @@ class ApiTests: XCTestCase {
             ]
         ] as [String : Any]
         
-        api.createPost(post: post)
+        api.createPost(post: post) { (_) in }
         
         let url = session.lastURL as? String
         XCTAssertEqual(url, "/post")
@@ -90,7 +90,7 @@ class ApiTests: XCTestCase {
     }
     
     func testDeletePost() {
-        api.deletePost(postid: 1234)
+        api.deletePost(postid: 1234) { (_) in }
         
         let url = session.lastURL as? String
         XCTAssertEqual(url, "/post/1234")
@@ -102,7 +102,7 @@ class ApiTests: XCTestCase {
     }
     
     func testGetPost() {
-        api.getPost(postid: 1234)
+        api.getPost(postid: 1234) { (_) in }
         
         let url = session.lastURL as? String
         XCTAssertEqual(url, "/post/1234")
@@ -118,7 +118,7 @@ class ApiTests: XCTestCase {
             "longitude": 10,
             "latitude": 10
         ]
-        api.getPost(longitude: location["longitude"]!, latitude: location["latitude"]!)
+        api.getPost(longitude: location["longitude"]!, latitude: location["latitude"]!) { (_) in }
         
         let url = session.lastURL as? String
         XCTAssertEqual(url, "/post")
@@ -132,7 +132,7 @@ class ApiTests: XCTestCase {
     
     func testVoteOnPost() {
         let vote: [String : Int] = ["vote": 1]
-        api.voteOnPost(postid: 1234, vote: vote["vote"]!)
+        api.voteOnPost(postid: 1234, vote: vote["vote"]!) { (_) in }
         
         let url = session.lastURL as? String
         XCTAssertEqual(url, "/post/1234")

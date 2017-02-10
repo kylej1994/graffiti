@@ -9,6 +9,8 @@
 import Foundation
 import Alamofire
 
+typealias Handler = (DataResponse<Any>) -> Void
+
 class API {
     static let sharedInstance = API()
     
@@ -21,52 +23,53 @@ class API {
     
     //MARK Private Methods
     
-    private func makeRequest(_ url: URLConvertible, method: HTTPMethod, parameters: Parameters? = nil) {
+    private func makeRequest(_ url: URLConvertible, method: HTTPMethod, parameters: Parameters? = nil, handler: @escaping Handler) {
         // Add Authentication token
         let idToken = "idToken" //TODO
         let headers = ["Authorization": "Bearer \(idToken)"]
         
         // Make request
-        manager.request(url, method: method, parameters: parameters, encoding: URLEncoding.default,
-                        headers: headers)
+        manager.request(url, method: method, parameters: parameters,
+                        encoding: URLEncoding.default, headers: headers)
+            .responseJSON(completionHandler: handler)
     }
     
     //MARK: User Calls
-    func getUser(userid: Int) {
-        makeRequest("/user/\(userid)", method: .get)
+    func getUser(userid: Int, handler: @escaping Handler) {
+        makeRequest("/user/\(userid)", method: .get, handler: handler)
     }
     
-    func updateUser(userid: Int, user: Parameters) {
-        makeRequest("/user/\(userid)", method: .put, parameters: user)
+    func updateUser(userid: Int, user: Parameters, handler: @escaping Handler) {
+        makeRequest("/user/\(userid)", method: .put, parameters: user, handler: handler)
     }
     
-    func login() {
-        makeRequest("/user/login", method: .get)
+    func login(handler: @escaping Handler) {
+        makeRequest("/user/login", method: .get, handler: handler)
     }
     
     //MARK: Post Calls
-    func createPost(post: Parameters) { //TODO
-        makeRequest("/post", method: .post, parameters: post)
+    func createPost(post: Parameters, handler: @escaping Handler) { //TODO
+        makeRequest("/post", method: .post, parameters: post, handler: handler)
     }
     
-    func deletePost(postid: Int) {
-        makeRequest("/post/\(postid)", method: .delete)
+    func deletePost(postid: Int, handler: @escaping Handler) {
+        makeRequest("/post/\(postid)", method: .delete, handler: handler)
     }
     
-    func getPost(postid: Int) {
-        makeRequest("/post/\(postid)", method: .get)
+    func getPost(postid: Int, handler: @escaping Handler) {
+        makeRequest("/post/\(postid)", method: .get, handler: handler)
     }
     
-    func getPost(longitude: Double, latitude: Double) {
+    func getPost(longitude: Double, latitude: Double, handler: @escaping Handler) {
         let parameters = [
             "longitude": longitude,
             "latitude": latitude
         ]
-        makeRequest("/post", method: .get, parameters: parameters)
+        makeRequest("/post", method: .get, parameters: parameters, handler: handler)
     }
     
-    func voteOnPost(postid: Int, vote: Int) {
+    func voteOnPost(postid: Int, vote: Int, handler: @escaping Handler) {
         let parameters = ["vote": vote]
-        makeRequest("/post/\(postid)", method: .put, parameters: parameters)
+        makeRequest("/post/\(postid)", method: .put, parameters: parameters, handler: handler)
     }
 }
