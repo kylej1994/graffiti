@@ -10,6 +10,12 @@
 		598B435CBAD828D29AE71840 /* Pods_Graffiti.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 713DC8BD02EAC92DE23868C8 /* Pods_Graffiti.framework */; };
 		6FCDE8E4BD77B03A8F9D7EF3 /* Pods_GraffitiUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABFD6572D47051DFF80F7CD /* Pods_GraffitiUITests.framework */; };
 		766D1D3684E13C8778E03EA6 /* Pods_GraffitiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0DF8A503BE07DFF08436AA1 /* Pods_GraffitiTests.framework */; };
+		AD03CF721E4D5AB2003D3682 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD03CF711E4D5AB2003D3682 /* LocationService.swift */; };
+		AD03CF761E4E4BB7003D3682 /* MockLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD03CF751E4E4BB7003D3682 /* MockLocationManager.swift */; };
+		AD03CF781E4E4C91003D3682 /* LocationManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD03CF771E4E4C91003D3682 /* LocationManagerProtocol.swift */; };
+		AD03CF791E4E4C91003D3682 /* LocationManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD03CF771E4E4C91003D3682 /* LocationManagerProtocol.swift */; };
+		AD03CF7B1E4E4F92003D3682 /* LocationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD03CF7A1E4E4F92003D3682 /* LocationServiceTests.swift */; };
+		AD03CF7C1E4E6430003D3682 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD03CF711E4D5AB2003D3682 /* LocationService.swift */; };
 		AD84BD311E4947330020505D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD301E4947330020505D /* AppDelegate.swift */; };
 		AD84BD361E4947330020505D /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD84BD341E4947330020505D /* Login.storyboard */; };
 		AD84BD381E4947330020505D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD84BD371E4947330020505D /* Assets.xcassets */; };
@@ -24,12 +30,21 @@
 		AD84BD711E494BD30020505D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD84BD6F1E494BD30020505D /* Main.storyboard */; };
 		AD84BD731E494C320020505D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD721E494C320020505D /* LoginViewController.swift */; };
 		AD84BD761E4951D70020505D /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD751E4951D70020505D /* UserTests.swift */; };
-		AD84BD781E4952330020505D /* ApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD771E4952330020505D /* ApiTests.swift */; };
-		AD84BD7A1E4952B20020505D /* FeedViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD791E4952B20020505D /* FeedViewControllerTests.swift */; };
 		AD84BD7C1E4952CA0020505D /* ProfileViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD7B1E4952CA0020505D /* ProfileViewControllerTests.swift */; };
 		AD84BD7E1E4952FB0020505D /* TextPostViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD7D1E4952FB0020505D /* TextPostViewControllerTests.swift */; };
 		B33B07CC1E4AB6D2007025FB /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33B07CB1E4AB6D2007025FB /* Post.swift */; };
 		B35620C31E4D396400F8CC9E /* PostTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35620C21E4D396400F8CC9E /* PostTest.swift */; };
+		D90D7A8C1E4E686700FB5AEE /* RequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90D7A8B1E4E686700FB5AEE /* RequestProtocol.swift */; };
+		D90D7A8D1E4E6ACE00FB5AEE /* RequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90D7A8B1E4E686700FB5AEE /* RequestProtocol.swift */; };
+		D90D7A8F1E4E6C5400FB5AEE /* MockRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90D7A8E1E4E6C5400FB5AEE /* MockRequest.swift */; };
+		D99735A11E4E722F00DA5F29 /* ApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD771E4952330020505D /* ApiTests.swift */; };
+		D99735A21E4E722F00DA5F29 /* FeedViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD791E4952B20020505D /* FeedViewControllerTests.swift */; };
+		D9E63BA01E4D460900EE6C4B /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E63B9F1E4D460900EE6C4B /* API.swift */; };
+		D9E63BA21E4D496E00EE6C4B /* ManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E63BA11E4D496E00EE6C4B /* ManagerProtocol.swift */; };
+		D9E63BA51E4D555E00EE6C4B /* MockSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E63BA41E4D555E00EE6C4B /* MockSessionManager.swift */; };
+		D9E63BA61E4D633A00EE6C4B /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E63B9F1E4D460900EE6C4B /* API.swift */; };
+		D9E63BA71E4D639100EE6C4B /* ManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E63BA11E4D496E00EE6C4B /* ManagerProtocol.swift */; };
+		F744D4131E4E77C300C42677 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F744D4121E4E77C300C42677 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +72,10 @@
 		713DC8BD02EAC92DE23868C8 /* Pods_Graffiti.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Graffiti.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A8D950DFCFCDB465E06D7E9 /* Pods-Graffiti.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Graffiti.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Graffiti/Pods-Graffiti.debug.xcconfig"; sourceTree = "<group>"; };
 		8F280E8407B8FD52B58979CD /* Pods-GraffitiUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraffitiUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GraffitiUITests/Pods-GraffitiUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		AD03CF711E4D5AB2003D3682 /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		AD03CF751E4E4BB7003D3682 /* MockLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockLocationManager.swift; sourceTree = "<group>"; };
+		AD03CF771E4E4C91003D3682 /* LocationManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManagerProtocol.swift; sourceTree = "<group>"; };
+		AD03CF7A1E4E4F92003D3682 /* LocationServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationServiceTests.swift; sourceTree = "<group>"; };
 		AD84BD2D1E4947330020505D /* Graffiti.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Graffiti.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD84BD301E4947330020505D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD84BD351E4947330020505D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
@@ -85,6 +104,13 @@
 		B0DF8A503BE07DFF08436AA1 /* Pods_GraffitiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraffitiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B33B07CB1E4AB6D2007025FB /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		B35620C21E4D396400F8CC9E /* PostTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTest.swift; sourceTree = "<group>"; };
+		D90D7A8B1E4E686700FB5AEE /* RequestProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestProtocol.swift; sourceTree = "<group>"; };
+		D90D7A8E1E4E6C5400FB5AEE /* MockRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRequest.swift; sourceTree = "<group>"; };
+		D9E63B9F1E4D460900EE6C4B /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		D9E63BA11E4D496E00EE6C4B /* ManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerProtocol.swift; sourceTree = "<group>"; };
+		D9E63BA41E4D555E00EE6C4B /* MockSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSessionManager.swift; sourceTree = "<group>"; };
+		F744D4121E4E77C300C42677 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F7B0C1121E4AD29E00ED031B /* Graffiti-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Graffiti-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +154,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		AD03CF701E4D59B1003D3682 /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				AD03CF711E4D5AB2003D3682 /* LocationService.swift */,
+				AD03CF771E4E4C91003D3682 /* LocationManagerProtocol.swift */,
+			);
+			name = Location;
+			sourceTree = "<group>";
+		};
 		AD84BD241E4947330020505D = {
 			isa = PBXGroup;
 			children = (
@@ -153,8 +188,10 @@
 		AD84BD2F1E4947330020505D /* Graffiti */ = {
 			isa = PBXGroup;
 			children = (
+				D9E63B9E1E4D45CD00EE6C4B /* API */,
 				AD84BD301E4947330020505D /* AppDelegate.swift */,
 				AD84BD6F1E494BD30020505D /* Main.storyboard */,
+				AD03CF701E4D59B1003D3682 /* Location */,
 				AD84BD6C1E494B430020505D /* Feed */,
 				AD84BD741E494C3D0020505D /* Login */,
 				AD84BD6E1E494B840020505D /* Profile */,
@@ -162,6 +199,8 @@
 				AD84BD371E4947330020505D /* Assets.xcassets */,
 				AD84BD391E4947330020505D /* LaunchScreen.storyboard */,
 				AD84BD3C1E4947330020505D /* Info.plist */,
+				F744D4121E4E77C300C42677 /* GoogleService-Info.plist */,
+				F7B0C1121E4AD29E00ED031B /* Graffiti-Bridging-Header.h */,
 			);
 			path = Graffiti;
 			sourceTree = "<group>";
@@ -169,6 +208,7 @@
 		AD84BD441E4947330020505D /* GraffitiTests */ = {
 			isa = PBXGroup;
 			children = (
+				D9E63BA31E4D554500EE6C4B /* Mocks */,
 				AD84BD471E4947330020505D /* Info.plist */,
 				AD84BD751E4951D70020505D /* UserTests.swift */,
 				AD84BD771E4952330020505D /* ApiTests.swift */,
@@ -176,6 +216,8 @@
 				AD84BD7B1E4952CA0020505D /* ProfileViewControllerTests.swift */,
 				AD84BD7D1E4952FB0020505D /* TextPostViewControllerTests.swift */,
 				B35620C21E4D396400F8CC9E /* PostTest.swift */,
+				AD03CF751E4E4BB7003D3682 /* MockLocationManager.swift */,
+				AD03CF7A1E4E4F92003D3682 /* LocationServiceTests.swift */,
 			);
 			path = GraffitiTests;
 			sourceTree = "<group>";
@@ -224,6 +266,25 @@
 				AD84BD721E494C320020505D /* LoginViewController.swift */,
 			);
 			name = Login;
+			sourceTree = "<group>";
+		};
+		D9E63B9E1E4D45CD00EE6C4B /* API */ = {
+			isa = PBXGroup;
+			children = (
+				D9E63B9F1E4D460900EE6C4B /* API.swift */,
+				D9E63BA11E4D496E00EE6C4B /* ManagerProtocol.swift */,
+				D90D7A8B1E4E686700FB5AEE /* RequestProtocol.swift */,
+			);
+			name = API;
+			sourceTree = "<group>";
+		};
+		D9E63BA31E4D554500EE6C4B /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				D9E63BA41E4D555E00EE6C4B /* MockSessionManager.swift */,
+				D90D7A8E1E4E6C5400FB5AEE /* MockRequest.swift */,
+			);
+			name = Mocks;
 			sourceTree = "<group>";
 		};
 		F178C92EFF743464C75BFAE3 /* Frameworks */ = {
@@ -313,6 +374,7 @@
 				TargetAttributes = {
 					AD84BD2C1E4947330020505D = {
 						CreatedOnToolsVersion = 8.2.1;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 					AD84BD401E4947330020505D = {
@@ -354,6 +416,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD84BD3B1E4947330020505D /* LaunchScreen.storyboard in Resources */,
+				F744D4131E4E77C300C42677 /* GoogleService-Info.plist in Resources */,
 				AD84BD661E494A020020505D /* TextPost.storyboard in Resources */,
 				AD84BD6A1E494AB50020505D /* Feed.storyboard in Resources */,
 				AD84BD381E4947330020505D /* Assets.xcassets in Resources */,
@@ -525,9 +588,14 @@
 				AD84BD611E49496D0020505D /* TextPostViewController.swift in Sources */,
 				AD84BD631E4949860020505D /* ProfileViewController.swift in Sources */,
 				AD84BD5F1E4949260020505D /* FeedTableViewController.swift in Sources */,
+				D90D7A8C1E4E686700FB5AEE /* RequestProtocol.swift in Sources */,
 				AD84BD731E494C320020505D /* LoginViewController.swift in Sources */,
 				B33B07CC1E4AB6D2007025FB /* Post.swift in Sources */,
+				D9E63BA01E4D460900EE6C4B /* API.swift in Sources */,
+				AD03CF781E4E4C91003D3682 /* LocationManagerProtocol.swift in Sources */,
+				AD03CF721E4D5AB2003D3682 /* LocationService.swift in Sources */,
 				AD84BD311E4947330020505D /* AppDelegate.swift in Sources */,
+				D9E63BA21E4D496E00EE6C4B /* ManagerProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -535,12 +603,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D90D7A8D1E4E6ACE00FB5AEE /* RequestProtocol.swift in Sources */,
 				AD84BD7C1E4952CA0020505D /* ProfileViewControllerTests.swift in Sources */,
 				AD84BD7E1E4952FB0020505D /* TextPostViewControllerTests.swift in Sources */,
-				AD84BD781E4952330020505D /* ApiTests.swift in Sources */,
-				AD84BD7A1E4952B20020505D /* FeedViewControllerTests.swift in Sources */,
+				D90D7A8F1E4E6C5400FB5AEE /* MockRequest.swift in Sources */,
+				D99735A11E4E722F00DA5F29 /* ApiTests.swift in Sources */,
+				D99735A21E4E722F00DA5F29 /* FeedViewControllerTests.swift in Sources */,
+				D9E63BA51E4D555E00EE6C4B /* MockSessionManager.swift in Sources */,
+				D9E63BA71E4D639100EE6C4B /* ManagerProtocol.swift in Sources */,
+				AD03CF7B1E4E4F92003D3682 /* LocationServiceTests.swift in Sources */,
+				AD03CF761E4E4BB7003D3682 /* MockLocationManager.swift in Sources */,
+				AD03CF791E4E4C91003D3682 /* LocationManagerProtocol.swift in Sources */,
+				AD03CF7C1E4E6430003D3682 /* LocationService.swift in Sources */,
 				AD84BD761E4951D70020505D /* UserTests.swift in Sources */,
 				B35620C31E4D396400F8CC9E /* PostTest.swift in Sources */,
+				D9E63BA61E4D633A00EE6C4B /* API.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -699,10 +776,14 @@
 			baseConfigurationReference = 7A8D950DFCFCDB465E06D7E9 /* Pods-Graffiti.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Graffiti/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = graffiti.Graffiti;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Graffiti/Graffiti-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -712,10 +793,13 @@
 			baseConfigurationReference = 6672CC941A4504DECB751DAE /* Pods-Graffiti.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Graffiti/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = graffiti.Graffiti;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Graffiti/Graffiti-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
