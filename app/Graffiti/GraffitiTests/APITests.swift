@@ -8,8 +8,6 @@
 
 import XCTest
 
-//TODO test response
-
 class ApiTests: XCTestCase {
     let session = MockSessionManager()
     var api: API!
