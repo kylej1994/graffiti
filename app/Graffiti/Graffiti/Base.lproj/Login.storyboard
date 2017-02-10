@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="HOq-5u-5t8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C68" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="HOq-5u-5t8">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Login View Controller-->
+        <!--View Controller-->
         <scene sceneID="GlH-A2-mZU">
             <objects>
-                <viewController id="HOq-5u-5t8" customClass="LoginViewController" customModule="Graffiti" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="HOq-5u-5t8" customClass="ViewController" customModule="Graffiti" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jy5-8U-jGH"/>
                         <viewControllerLayoutGuide type="bottom" id="TeT-os-ctb"/>
@@ -22,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9BF-tQ-pZc">
-                                <rect key="frame" x="151.5" y="28" width="72" height="30"/>
+                                <rect key="frame" x="152" y="28" width="72" height="30"/>
                                 <state key="normal" title="Go to tabs"/>
                                 <connections>
                                     <segue destination="k1O-2a-SVY" kind="show" id="bTC-c4-v9j"/>

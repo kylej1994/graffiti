@@ -32,6 +32,9 @@
 		AD84BD761E4951D70020505D /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD751E4951D70020505D /* UserTests.swift */; };
 		AD84BD7C1E4952CA0020505D /* ProfileViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD7B1E4952CA0020505D /* ProfileViewControllerTests.swift */; };
 		AD84BD7E1E4952FB0020505D /* TextPostViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD7D1E4952FB0020505D /* TextPostViewControllerTests.swift */; };
+		F7B0C10F1E4AD24200ED031B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F7B0C10E1E4AD24200ED031B /* GoogleService-Info.plist */; };
+		F7B0C1101E4AD24200ED031B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F7B0C10E1E4AD24200ED031B /* GoogleService-Info.plist */; };
+		F7B0C1111E4AD24200ED031B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F7B0C10E1E4AD24200ED031B /* GoogleService-Info.plist */; };
 		D90D7A8C1E4E686700FB5AEE /* RequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90D7A8B1E4E686700FB5AEE /* RequestProtocol.swift */; };
 		D90D7A8D1E4E6ACE00FB5AEE /* RequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90D7A8B1E4E686700FB5AEE /* RequestProtocol.swift */; };
 		D90D7A8F1E4E6C5400FB5AEE /* MockRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90D7A8E1E4E6C5400FB5AEE /* MockRequest.swift */; };
@@ -99,6 +102,8 @@
 		AD84BD7D1E4952FB0020505D /* TextPostViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextPostViewControllerTests.swift; sourceTree = "<group>"; };
 		ADA147E95DA84165A40FB7DE /* Pods-GraffitiUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraffitiUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GraffitiUITests/Pods-GraffitiUITests.release.xcconfig"; sourceTree = "<group>"; };
 		B0DF8A503BE07DFF08436AA1 /* Pods_GraffitiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraffitiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F7B0C10E1E4AD24200ED031B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F7B0C1121E4AD29E00ED031B /* Graffiti-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Graffiti-Bridging-Header.h"; sourceTree = "<group>"; };
 		D90D7A8B1E4E686700FB5AEE /* RequestProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestProtocol.swift; sourceTree = "<group>"; };
 		D90D7A8E1E4E6C5400FB5AEE /* MockRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRequest.swift; sourceTree = "<group>"; };
 		D9E63B9F1E4D460900EE6C4B /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
@@ -192,6 +197,8 @@
 				AD84BD371E4947330020505D /* Assets.xcassets */,
 				AD84BD391E4947330020505D /* LaunchScreen.storyboard */,
 				AD84BD3C1E4947330020505D /* Info.plist */,
+				F7B0C10E1E4AD24200ED031B /* GoogleService-Info.plist */,
+				F7B0C1121E4AD29E00ED031B /* Graffiti-Bridging-Header.h */,
 			);
 			path = Graffiti;
 			sourceTree = "<group>";
@@ -363,6 +370,7 @@
 				TargetAttributes = {
 					AD84BD2C1E4947330020505D = {
 						CreatedOnToolsVersion = 8.2.1;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 					AD84BD401E4947330020505D = {
@@ -404,6 +412,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD84BD3B1E4947330020505D /* LaunchScreen.storyboard in Resources */,
+				F7B0C10F1E4AD24200ED031B /* GoogleService-Info.plist in Resources */,
 				AD84BD661E494A020020505D /* TextPost.storyboard in Resources */,
 				AD84BD6A1E494AB50020505D /* Feed.storyboard in Resources */,
 				AD84BD381E4947330020505D /* Assets.xcassets in Resources */,
@@ -417,6 +426,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7B0C1101E4AD24200ED031B /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,6 +434,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7B0C1111E4AD24200ED031B /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -761,10 +772,14 @@
 			baseConfigurationReference = 7A8D950DFCFCDB465E06D7E9 /* Pods-Graffiti.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Graffiti/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = graffiti.Graffiti;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Graffiti/Graffiti-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -774,10 +789,13 @@
 			baseConfigurationReference = 6672CC941A4504DECB751DAE /* Pods-Graffiti.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Graffiti/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = graffiti.Graffiti;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Graffiti/Graffiti-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
