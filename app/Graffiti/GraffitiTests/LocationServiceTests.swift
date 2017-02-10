@@ -21,10 +21,8 @@ class LocationServiceTests: XCTestCase {
     }
     
     func testLocation() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
         let mock = MockLocationManager()
-        let locationService = LocationService(givenLocationManager: mock)
+        let locationService = LocationService(with: mock)
         
         let aLocation = CLLocation(latitude: 10.0, longitude: 10.0)
         
@@ -37,7 +35,7 @@ class LocationServiceTests: XCTestCase {
     
     func testDidCallAuthorization() {
         let mock = MockLocationManager()
-        _ = LocationService(givenLocationManager: mock)
+        _ = LocationService(with: mock)
         XCTAssertTrue(mock.authorized)
         
     }

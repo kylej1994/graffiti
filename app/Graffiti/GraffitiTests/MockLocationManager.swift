@@ -34,6 +34,4 @@ class MockLocationManager: LocationManagerProtocol {
     func setLocation(location: CLLocation) {
         delegate?.locationManager!(CLLocationManager(), didUpdateLocations: [location])
     }
-    
-    
 }

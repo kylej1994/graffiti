@@ -15,6 +15,8 @@ import CoreLocation
  * To use: make a variable like locationService = LocationService.sharedInstance
  * then, in viewDidLoad, call locationService.startUpdatingLocation() to start generating updates
  * Call locationService.stopUpdatingLocation() to stop generating updates (don't know why we'd do this)
+ * When the ViewController wants to send location info to the backend, it calls
+ * getLatitude() and getLongitude() to get the latest location
  */
 
 class LocationService: NSObject, CLLocationManagerDelegate {
@@ -24,9 +26,11 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     static let sharedInstance = LocationService()
     var locationManager : LocationManagerProtocol
     var currentLocation: CLLocation?
-    let distanceFilter: CLLocationDistance = 100 // min distance (meters) device must move horizontally for update event to be generated
+    // min distance (meters) device must move horizontally for update event to be generated
+    let distanceFilter: CLLocationDistance = 100
     
-    public init(givenLocationManager: LocationManagerProtocol? = nil) {
+    // the parameter is necessary so the class can be testable with a mock CLLocationManager
+    public init(with givenLocationManager: LocationManagerProtocol? = nil) {
         if let unwrappedLocationManager = givenLocationManager {
             self.locationManager = unwrappedLocationManager
         }   else {
@@ -49,7 +53,6 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         return currentLocation?.coordinate.longitude
     }
 
-    
     func startUpdatingLocation() {
         print("Starting location updates")
         locationManager.startUpdatingLocation()

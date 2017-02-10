@@ -10,7 +10,6 @@ import Foundation
 import CoreLocation
 
 protocol LocationManagerProtocol {
-    //var desiredAccuracy: CLLocationAccuracy { get set }
     var desiredAccuracy: CLLocationAccuracy { get set }
     var distanceFilter: CLLocationDistance { get set }
     var delegate: CLLocationManagerDelegate? { get set }
@@ -18,7 +17,6 @@ protocol LocationManagerProtocol {
     func stopUpdatingLocation()
     func startMonitoringSignificantLocationChanges()
     func requestAuthorizationWhenNotDetermined()
-    
 }
 
 extension CLLocationManager: LocationManagerProtocol {
