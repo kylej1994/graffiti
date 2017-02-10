@@ -24,7 +24,7 @@
 		AD84BD711E494BD30020505D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD84BD6F1E494BD30020505D /* Main.storyboard */; };
 		AD84BD731E494C320020505D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD721E494C320020505D /* LoginViewController.swift */; };
 		AD84BD761E4951D70020505D /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD751E4951D70020505D /* UserTests.swift */; };
-		AD84BD781E4952330020505D /* ApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD771E4952330020505D /* ApiTests.swift */; };
+		AD84BD781E4952330020505D /* APITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD771E4952330020505D /* APITests.swift */; };
 		AD84BD7A1E4952B20020505D /* FeedViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD791E4952B20020505D /* FeedViewControllerTests.swift */; };
 		AD84BD7C1E4952CA0020505D /* ProfileViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD7B1E4952CA0020505D /* ProfileViewControllerTests.swift */; };
 		AD84BD7E1E4952FB0020505D /* TextPostViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD7D1E4952FB0020505D /* TextPostViewControllerTests.swift */; };
@@ -80,7 +80,7 @@
 		AD84BD701E494BD30020505D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AD84BD721E494C320020505D /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		AD84BD751E4951D70020505D /* UserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTests.swift; sourceTree = "<group>"; };
-		AD84BD771E4952330020505D /* ApiTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiTests.swift; sourceTree = "<group>"; };
+		AD84BD771E4952330020505D /* APITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APITests.swift; sourceTree = "<group>"; };
 		AD84BD791E4952B20020505D /* FeedViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewControllerTests.swift; sourceTree = "<group>"; };
 		AD84BD7B1E4952CA0020505D /* ProfileViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerTests.swift; sourceTree = "<group>"; };
 		AD84BD7D1E4952FB0020505D /* TextPostViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextPostViewControllerTests.swift; sourceTree = "<group>"; };
@@ -177,7 +177,7 @@
 				D9E63BA31E4D554500EE6C4B /* Mocks */,
 				AD84BD471E4947330020505D /* Info.plist */,
 				AD84BD751E4951D70020505D /* UserTests.swift */,
-				AD84BD771E4952330020505D /* ApiTests.swift */,
+				AD84BD771E4952330020505D /* APITests.swift */,
 				AD84BD791E4952B20020505D /* FeedViewControllerTests.swift */,
 				AD84BD7B1E4952CA0020505D /* ProfileViewControllerTests.swift */,
 				AD84BD7D1E4952FB0020505D /* TextPostViewControllerTests.swift */,
@@ -559,7 +559,7 @@
 			files = (
 				AD84BD7C1E4952CA0020505D /* ProfileViewControllerTests.swift in Sources */,
 				AD84BD7E1E4952FB0020505D /* TextPostViewControllerTests.swift in Sources */,
-				AD84BD781E4952330020505D /* ApiTests.swift in Sources */,
+				AD84BD781E4952330020505D /* APITests.swift in Sources */,
 				AD84BD7A1E4952B20020505D /* FeedViewControllerTests.swift in Sources */,
 				D9E63BA51E4D555E00EE6C4B /* MockSessionManager.swift in Sources */,
 				D9E63BA71E4D639100EE6C4B /* ManagerProtocol.swift in Sources */,

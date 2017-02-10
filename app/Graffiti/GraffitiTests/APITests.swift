@@ -1,5 +1,5 @@
 //
-//  ApiTests.swift
+//  APITests.swift
 //  Graffiti
 //
 //  Created by Amanda Aizuss on 2/6/17.
