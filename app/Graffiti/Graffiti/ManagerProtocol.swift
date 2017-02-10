@@ -10,9 +10,14 @@ import Foundation
 import Alamofire
 
 protocol ManagerProtocol {
-    
-    @discardableResult func request(_ url: URLConvertible, method: HTTPMethod, parameters: Parameters?,
-                 encoding: ParameterEncoding, headers: HTTPHeaders?)  -> DataRequest
+    func makeRequest(_ url: URLConvertible, method: HTTPMethod, parameters: Parameters?,
+                 encoding: ParameterEncoding, headers: HTTPHeaders?)  -> RequestProtocol
 }
 
-extension Alamofire.SessionManager: ManagerProtocol { }
+extension Alamofire.SessionManager: ManagerProtocol {
+    func makeRequest(_ url: URLConvertible, method: HTTPMethod, parameters: Parameters?,
+                 encoding: ParameterEncoding, headers: HTTPHeaders?) -> RequestProtocol {
+        return request(url, method: method, parameters: parameters,
+                       encoding: encoding, headers: headers)
+    }
+}

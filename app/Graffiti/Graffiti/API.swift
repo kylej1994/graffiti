@@ -33,7 +33,7 @@ class API {
         let headers = ["Authorization": "Bearer \(idToken)"]
         
         // Make request
-        manager.request(url, method: method, parameters: parameters,
+        manager.makeRequest(url, method: method, parameters: parameters,
                         encoding: URLEncoding.default, headers: headers)
             .responseJSON(completionHandler: handler)
     }

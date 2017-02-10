@@ -15,14 +15,14 @@ class MockSessionManager: ManagerProtocol {
     var lastMethod: HTTPMethod?
     var lastParameters: Parameters?
     
-    func request(_ url: URLConvertible, method: HTTPMethod, parameters: Parameters?,
-                 encoding: ParameterEncoding, headers: HTTPHeaders?)  -> DataRequest {
+    func makeRequest(_ url: URLConvertible, method: HTTPMethod, parameters: Parameters?,
+                 encoding: ParameterEncoding, headers: HTTPHeaders?)  -> RequestProtocol {
         lastURL = url
         lastHeaders = headers
         lastMethod = method
         lastParameters = parameters
         
         // Dummy DataRequest
-        return Alamofire.request(url)
+        return MockRequest()
     }
 }
