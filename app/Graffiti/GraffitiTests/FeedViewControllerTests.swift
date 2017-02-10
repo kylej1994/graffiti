@@ -8,6 +8,7 @@
 
 import XCTest
 
+/* The feed view controller simply displays data, so it does not need to be tested */
 class FeedViewControllerTests: XCTestCase {
     
     override func setUp() {
