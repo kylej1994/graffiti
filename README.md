@@ -11,6 +11,11 @@ Team
 * [Ron](https://github.com/Ronovan)
 * [Willem](https://github.com/longendyke)
 
+Documentation
+-------------
+* [API Docs](https://github.com/kylej1994/graffiti/wiki/API-Documentation)
+* [iOS Unit Test Info](iOSTestInfo.md)
+
 Contributing
 ------------
 See our [contribution guide](CONTRIBUTING.md).
