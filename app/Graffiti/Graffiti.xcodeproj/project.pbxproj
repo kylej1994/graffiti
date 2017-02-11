@@ -193,16 +193,16 @@
 			isa = PBXGroup;
 			children = (
 				D9E63B9E1E4D45CD00EE6C4B /* API */,
-				AD84BD301E4947330020505D /* AppDelegate.swift */,
-				AD84BD6F1E494BD30020505D /* Main.storyboard */,
 				AD03CF701E4D59B1003D3682 /* Location */,
 				AD84BD6C1E494B430020505D /* Feed */,
 				AD84BD741E494C3D0020505D /* Login */,
 				AD84BD6E1E494B840020505D /* Profile */,
 				AD84BD6D1E494B5D0020505D /* Post */,
-				AD84BD371E4947330020505D /* Assets.xcassets */,
-				AD84BD391E4947330020505D /* LaunchScreen.storyboard */,
 				AD84BD3C1E4947330020505D /* Info.plist */,
+				AD84BD6F1E494BD30020505D /* Main.storyboard */,
+				AD84BD391E4947330020505D /* LaunchScreen.storyboard */,
+				AD84BD301E4947330020505D /* AppDelegate.swift */,
+				AD84BD371E4947330020505D /* Assets.xcassets */,
 				F744D4121E4E77C300C42677 /* GoogleService-Info.plist */,
 				F7B0C1121E4AD29E00ED031B /* Graffiti-Bridging-Header.h */,
 			);
