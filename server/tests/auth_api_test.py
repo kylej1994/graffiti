@@ -58,7 +58,7 @@ class AuthTestCase(APITestCase):
         authObj = Auth(authJson)
         assert authObj == False
 
-
+    #Test to Create a valid authentication object & testing its properties
     def test_create_valid_auth(self):
         #Create auth obj
         test_string = '1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com'
@@ -70,17 +70,19 @@ class AuthTestCase(APITestCase):
         assert authObj.token == test_string
         assert authObj.is_expired == True
 
+    #Test that we can successfully store 
     def test_store_auth(self):
         #Create auth obj
         test_string = '1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com'
         authJson = self.create_auth_json(test_string)
         authObj = Auth(authJson)
 
-        #Try dading and deleting
+        #Try adding and deleting an auth object
         self.db.session.add(authObj)
         self.db.session.delete(authObj)
-        self.commit()
+        self.db.commit()
 
+    #Test that we can successfully add and retrieve an auth object
     def test_get_auth(self):
         test_string = '1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com'
         authJson = self.create_auth_json(test_string)
@@ -88,8 +90,10 @@ class AuthTestCase(APITestCase):
 
         self.db.session.add(authObj)
         queriedAuth = Auth.query.filter(token=test_string)
+        #Compare that the object is the same.
         self.is_same_auth(authObj, queriedAuth)
         self.db.session.delete(authObj)
+        self.db.commit()
 
 
 if __name__ == '__main__':
