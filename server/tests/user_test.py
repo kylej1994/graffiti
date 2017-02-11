@@ -17,8 +17,8 @@ class UserTestCase(APITestCase):
         self.app = graffiti.app.test_client()
         db.create_all()
         db.session.add(User("easmith", 
-        	"1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com",
-        	"9172825753"))
+            "1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com",
+            "9172825753"))
         db.session.flush()
 
     def tearDown(self):
@@ -26,16 +26,18 @@ class UserTestCase(APITestCase):
         db.session.remove()
         db.drop_all()
 
-   	def test_fetch_user(self):
-   		user = db.query(User).filter(User.username=="easmith").first()
+    def test_fetch_user(self):
+        user = db.query(User).filter(User.username=="easmith").first()
         self.assertTrue(user.username == "easmith")
         self.assertTrue(user.google_aud == "1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com")
         self.assertTrue(user.has_been_suspended == False)
 
+        self.assertFalse(db.query(User).filter(User.username=="rony").first())
+
     def test_change_suspension(self):
-   		user = db.query(User).filter(User.username=="easmith").first()
-   		# Below function has not yet been implemented
-   		user.change_suspension(True);
+        user = db.query(User).filter(User.username=="easmith").first()
+        # Below function has not yet been implemented
+        user.change_suspension(True);
         self.assertTrue(db.query(User).filter(User.username=="easmith").first().has_been_suspended == True)
         user.change_suspension(True);
         self.assertTrue(db.query(User).filter(User.username=="easmith").first().has_been_suspended == True)
@@ -43,35 +45,35 @@ class UserTestCase(APITestCase):
         self.assertTrue(db.query(User).filter(User.username=="easmith").first().has_been_suspended == False)
 
     def test_adding_duplicate_user_parameters(self):
-    	# Duplicate username
+        # Duplicate username
         self.assertFalse(db.session.add(User("easmith", 
-        	"auth",
-        	"6462825753")))
-        
+            "auth",
+            "6462825753")))
+
         # Duplicate auth
         self.assertFalse(db.session.add(User("willem", 
-        	"1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com",
-        	"4462825753")))
-        
+            "1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com",
+            "4462825753")))
+
         # Duplicate phone
         self.assertFalse(db.session.add(User("ron", 
-        	"444-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com",
-        	"9172825753")))
+            "444-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com",
+            "9172825753")))
 
         # No duplicates
         self.assertTrue(db.session.add(User("amanda", 
-        	"4344-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com",
-        	"5172825753")))
+            "4344-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com",
+            "5172825753")))
 
-   	def test_delete_user(self):
-   		# Below function has not yet been implemented
-   		user2 = User("ron", "4555", "9274859273")
-   		assertFalse(user2.delete())
+    def test_delete_user(self):
+        # Below function has not yet been implemented
+        user2 = User("ron", "4555", "9274859273")
+        assertFalse(user2.delete())
 
-   		user = db.query(User).filter(User.username=="easmith").first()
-   		assertTrue(user.delete())
+        user = db.query(User).filter(User.username=="easmith").first()
+        assertTrue(user.delete())
 
-   		assertIsNone(db.query(User).filter(User.username=="easmith").first())
+        assertIsNone(db.query(User).filter(User.username=="easmith").first())
 
 
     # Below are commented-out but related tests to be implemented for the API
