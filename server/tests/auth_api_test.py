@@ -80,7 +80,6 @@ class AuthTestCase(APITestCase):
         self.db.session.add(authObj)
         self.db.session.delete(authObj)
         self.commit()
-        ##more
 
     def test_get_auth(self):
         test_string = '1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com'
