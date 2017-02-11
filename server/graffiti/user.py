@@ -33,4 +33,4 @@ class User(db.Model):
         self.has_been_suspended = False
 
     def __repr__(self):
-        return '<post_id {}>'.format(self.post_id)
+        return '<username {}>'.format(self.username)
