@@ -1,3 +1,4 @@
+import sys
 sys.path.append('..')
 from graffiti import db
 from sqlalchemy import Column, Float, Integer, String

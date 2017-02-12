@@ -1,1 +1,4 @@
-from .graffiti import app
+from graffiti import app
+
+if __name__ == '__main__':
+    app.run()

@@ -85,7 +85,7 @@ class PostTestCase(APITestCase):
 
         assert rv.status_code == 200
 
-    def test_delete_nonexisten_post(self):
+    def test_delete_nonexistent_post(self):
         rv = self.app.delete('/post/postid=1',
                 headers=dict(
                     idToken=9402234123712),
