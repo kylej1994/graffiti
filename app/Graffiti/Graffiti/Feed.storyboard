@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="Pud-ZO-sRW">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedCell" id="Pud-ZO-sRW" customClass="FeedTableViewTextCell" customModule="Graffiti" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="150"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pud-ZO-sRW" id="Eik-o5-MaK">
@@ -66,6 +66,10 @@
                                         <constraint firstAttribute="leadingMargin" secondItem="ifq-Jr-j4V" secondAttribute="leading" id="zbS-Lk-kan"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="textView" destination="ifq-Jr-j4V" id="D5q-QT-srp"/>
+                                    <outlet property="votesLabel" destination="JU0-SS-ZyY" id="a6s-Gr-CnY"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

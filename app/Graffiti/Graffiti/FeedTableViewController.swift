@@ -39,9 +39,13 @@ class FeedTableViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cellIdentifier = "FeedCell"
 
-        // Configure the cell...
+        // downcast cell to the custom cell class
+        // guard safely unwraps the optional
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? FeedTableViewTextCell else {
+            fatalError("The dequeue cell is not an instance of FeedTableViewTextCell.")
+        }
 
         return cell
     }
