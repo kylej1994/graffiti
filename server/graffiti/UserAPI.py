@@ -5,6 +5,13 @@ from flask import Blueprint, request
 
 user_api = Blueprint('user_api', __name__)
 
+fake_response = json.dumps(dict(
+		userid=1,
+		username='hothjylewis',
+		name="Hot and Bothered",
+		email="comeNfind@me.com",
+		textTag="Yum yum yum!"))
+
 @user_api.route('/user/login', methods=['GET'])
 def user_login():
 	# no checking of authentication is happening yet...
@@ -15,7 +22,9 @@ def user_login():
 	# else, login with idToken passed in through header
 	# return whether its a new user and the associated user object
 
-	return 'hi user\n'
+	return json.dumps(dict(
+		new_user='No',
+		user=fake_response))
 
 @user_api.route('/user/<int:userid>', methods=['GET'])
 def get_user(userid):
@@ -25,7 +34,7 @@ def get_user(userid):
 	# return user object if found
 	# return 404 otherwise
 
-	return 'got user\n'
+	return fake_response
 
 @user_api.route('/user/<int:userid>', methods=['PUT'])
 def update_user(userid):
@@ -43,4 +52,4 @@ def update_user(userid):
 	# update and return user object if found
 	# return 404 otherwise
 
-	return 'updated user\n'
+	return fake_response

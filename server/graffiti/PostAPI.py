@@ -1,3 +1,4 @@
+import datetime
 import json
 
 from flask import Blueprint, request
@@ -5,20 +6,33 @@ from flask import Blueprint, request
 
 post_api = Blueprint('post_api', __name__)
 
+fake_response = json.dumps(dict(
+		postid=1,
+		text='This one is for you, Henry ;)',
+		location=dict(
+			longitude=41.792279,
+			latitude=-87.599954),
+		created_at=datetime.datetime(1995, 05, 23, 11, 11, 11, 111).isoformat(),
+		posterid=3,
+		num_votes=102))
 
 @post_api.route('/post', methods=['POST'])
 def create_post():
 	# no checking of authentication is happening yet...
 	print 'in create post'
-	data = request.get_json()
 
-	# checks for necessary data params
-	if ('text' not in data or 'location' not in data
-			or 'latitude' not in data['location']
-			or 'longitude' not in data['location']):
-		error_response = {}
-		error_response['error'] = "Post information was invalid."
-		return json.dumps(error_response), 400
+
+	""" Commented this out so that frontend can do stuff with the api before
+	it was completely implemented. """
+	# data = request.get_json()
+
+	# # checks for necessary data params
+	# if ('text' not in data or 'location' not in data
+	# 		or 'latitude' not in data['location']
+	# 		or 'longitude' not in data['location']):
+	# 	error_response = {}
+	# 	error_response['error'] = "Post information was invalid."
+	# 	return json.dumps(error_response), 400
 
 	# not exactly sure what the db setup will look like for now but I have a
 	# rough idea based on this SO question: http://stackoverflow.com/questions/13058800/using-flask-sqlalchemy-in-blueprint-models-without-reference-to-the-app?rq=1
@@ -26,7 +40,7 @@ def create_post():
 
 	# would create a new post and add it to the db session here
 
-	return 'hi post\n'
+	return fake_response
 
 @post_api.route('/post/<int:postid>', methods=['DELETE'])
 def delete_post(postid):
@@ -48,7 +62,7 @@ def get_post(postid):
 	# if found but dif user, return 403
 	# if not found, return 404
 
-	return 'got post\n'
+	return fake_response
 
 @post_api.route('/post/<float:longitude><float:latitude>', methods=['GET'])
 def get_post_by_locatoin(longitude, latitude):
@@ -56,7 +70,7 @@ def get_post_by_locatoin(longitude, latitude):
 
 	# query db for all posts in this area
 
-	return 'got posts\n'
+	return fake_response
 
 @post_api.route('/post/<int:postid>', methods=['PUT'])
 def vote_post(postid):
@@ -68,4 +82,4 @@ def vote_post(postid):
 	# modify accordingly
 	# return postid of post and new num votes
 
-	return 'voted on post\n'
+	return fake_response
