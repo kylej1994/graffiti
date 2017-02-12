@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -13,17 +14,57 @@
         <scene sceneID="acF-Bt-ASm">
             <objects>
                 <tableViewController id="vt4-Ow-rT6" customClass="FeedTableViewController" customModule="Graffiti" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="4W6-5X-oLW">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="150" sectionHeaderHeight="28" sectionFooterHeight="28" id="4W6-5X-oLW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="Pud-ZO-sRW">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="150"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pud-ZO-sRW" id="Eik-o5-MaK">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="149"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Text post body goes here. Hardest part of finals: finding an open reg cubicle." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ifq-Jr-j4V">
+                                            <rect key="frame" x="8" y="8" width="294" height="100"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7AH-iB-j81">
+                                            <rect key="frame" x="8" y="99" width="22" height="22"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" title="Button" image="upvote-black-50"/>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AQi-hy-mG8">
+                                            <rect key="frame" x="8" y="115" width="22" height="22"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" title="Button" image="downvote-black-50"/>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JU0-SS-ZyY">
+                                            <rect key="frame" x="37" y="107" width="11" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cat-prof-100" translatesAutoresizingMaskIntoConstraints="NO" id="jbE-n0-jhT">
+                                            <rect key="frame" x="297" y="71" width="70" height="70"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="70" id="MOp-Xr-jh1"/>
+                                                <constraint firstAttribute="width" constant="70" id="vTc-NA-aBG"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="topMargin" secondItem="ifq-Jr-j4V" secondAttribute="top" id="58b-2n-ik0"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="ifq-Jr-j4V" secondAttribute="trailing" constant="65" id="Bd7-S6-8xZ"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="jbE-n0-jhT" secondAttribute="bottom" id="Nso-cz-6Me"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="jbE-n0-jhT" secondAttribute="trailing" id="XRP-7n-PSG"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="ifq-Jr-j4V" secondAttribute="bottom" constant="33" id="YVr-vP-Fwk"/>
+                                        <constraint firstAttribute="leadingMargin" secondItem="ifq-Jr-j4V" secondAttribute="leading" id="zbS-Lk-kan"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -37,7 +78,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XAi-yO-duV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-225" y="-471"/>
+            <point key="canvasLocation" x="-226.40000000000001" y="-471.8140929535233"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="cat-prof-100" width="48" height="48"/>
+        <image name="downvote-black-50" width="25" height="25"/>
+        <image name="upvote-black-50" width="25" height="25"/>
+    </resources>
 </document>
