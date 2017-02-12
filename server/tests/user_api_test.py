@@ -16,7 +16,7 @@ class UserTestCase(APITestCase):
         super(APITestCase, self).tearDown()
 
     def create_user(self):
-        return self.app.get('/users/login',
+        return self.app.get('/user/login',
                 headers=dict(
                     idToken=9402234123712),
                 follow_redirects=True)
@@ -40,7 +40,7 @@ class UserTestCase(APITestCase):
         self.check_user_fields(data, 1, '', '', '', '')
 
     def test_invalid_create_user(self):
-        rv = self.app.get('/users/login',
+        rv = self.app.get('/user/login',
                 follow_redirects=True)
 
         # no idToken header, so is an unauthorized request
@@ -52,7 +52,7 @@ class UserTestCase(APITestCase):
     def test_get_existent_user(self):
         # creates a user with userId: 1
         self.create_user()
-        rv = self.app.get('/users/userid=1',
+        rv = self.app.get('/user/userid=1',
                 headers=dict(
                     idToken=9402234123712),
                 follow_redirects=True)
@@ -64,7 +64,7 @@ class UserTestCase(APITestCase):
         self.check_user_fields(data, 1, '', '', '', '')
 
     def test_get_nonexistent_user_by_user_id(self):
-        rv = self.app.get('/users/userid=1',
+        rv = self.app.get('/user/userid=1',
                 headers=dict(
                     idToken=9402234123712),
                 follow_redirects=True)
@@ -75,7 +75,7 @@ class UserTestCase(APITestCase):
         assert data['error'] == "User not found."
 
     def test_update_nonexistent_user(self):
-        rv = self.app.put('/users/userid=1',
+        rv = self.app.put('/user/userid=1',
                 headers=dict(
                     idToken=9402234123712),
                 follow_redirects=True)
@@ -89,7 +89,7 @@ class UserTestCase(APITestCase):
         # creates a user with userId: 1
         self.create_user()
 
-        rv = self.app.put('/users/userid=1',
+        rv = self.app.put('/user/userid=1',
                 data=dict(
                     userid=1,
                     username='l33t',
