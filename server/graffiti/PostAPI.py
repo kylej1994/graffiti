@@ -6,7 +6,7 @@ from flask import Blueprint, request
 
 post_api = Blueprint('post_api', __name__)
 
-fake_response = json.dumps(dict(
+fake_dict = dict(
 		postid=1,
 		text='This one is for you, Henry ;)',
 		location=dict(
@@ -14,7 +14,8 @@ fake_response = json.dumps(dict(
 			latitude=-87.599954),
 		created_at=datetime.datetime(1995, 05, 23, 11, 11, 11, 111).isoformat(),
 		posterid=3,
-		num_votes=102))
+		num_votes=102)
+fake_response = json.dumps(fake_dict)
 
 @post_api.route('/post', methods=['POST'])
 def create_post():
@@ -64,15 +65,18 @@ def get_post(postid):
 
 	return fake_response
 
-@post_api.route('/post/<float:longitude><float:latitude>', methods=['GET'])
-def get_post_by_locatoin(longitude, latitude):
+@post_api.route('/post', methods=['GET'])
+def get_post_by_location():
 	# no checking of authentication is happening yet...
 
 	# query db for all posts in this area
+	lat = request.args.get('latitude')
+	lon = request.args.get('longitude')
 
-	return fake_response
+	return json.dumps([fake_dict, fake_dict, fake_dict, fake_dict, fake_dict,
+		fake_dict, fake_dict, fake_dict, fake_dict, fake_dict])
 
-@post_api.route('/post/<int:postid>', methods=['PUT'])
+@post_api.route('/post/<int:postid>/vote', methods=['PUT'])
 def vote_post(postid):
 	# no checking of authentication is happening yet...
 
