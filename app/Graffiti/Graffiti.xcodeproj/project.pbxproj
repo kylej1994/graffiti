@@ -16,6 +16,7 @@
 		AD03CF791E4E4C91003D3682 /* LocationManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD03CF771E4E4C91003D3682 /* LocationManagerProtocol.swift */; };
 		AD03CF7B1E4E4F92003D3682 /* LocationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD03CF7A1E4E4F92003D3682 /* LocationServiceTests.swift */; };
 		AD03CF7C1E4E6430003D3682 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD03CF711E4D5AB2003D3682 /* LocationService.swift */; };
+		AD3E23451E5123A80022C882 /* FeedTableViewTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3E23441E5123A80022C882 /* FeedTableViewTextCell.swift */; };
 		AD84BD311E4947330020505D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD301E4947330020505D /* AppDelegate.swift */; };
 		AD84BD361E4947330020505D /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD84BD341E4947330020505D /* Login.storyboard */; };
 		AD84BD381E4947330020505D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD84BD371E4947330020505D /* Assets.xcassets */; };
@@ -79,6 +80,7 @@
 		AD03CF751E4E4BB7003D3682 /* MockLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockLocationManager.swift; sourceTree = "<group>"; };
 		AD03CF771E4E4C91003D3682 /* LocationManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManagerProtocol.swift; sourceTree = "<group>"; };
 		AD03CF7A1E4E4F92003D3682 /* LocationServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationServiceTests.swift; sourceTree = "<group>"; };
+		AD3E23441E5123A80022C882 /* FeedTableViewTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedTableViewTextCell.swift; sourceTree = "<group>"; };
 		AD84BD2D1E4947330020505D /* Graffiti.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Graffiti.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD84BD301E4947330020505D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD84BD351E4947330020505D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 			children = (
 				AD84BD5E1E4949260020505D /* FeedTableViewController.swift */,
 				AD84BD691E494AB50020505D /* Feed.storyboard */,
+				AD3E23441E5123A80022C882 /* FeedTableViewTextCell.swift */,
 			);
 			name = Feed;
 			sourceTree = "<group>";
@@ -594,6 +597,7 @@
 				AD84BD631E4949860020505D /* ProfileViewController.swift in Sources */,
 				B33B07D01E4ACA8F007025FB /* User.swift in Sources */,
 				AD84BD5F1E4949260020505D /* FeedTableViewController.swift in Sources */,
+				AD3E23451E5123A80022C882 /* FeedTableViewTextCell.swift in Sources */,
 				D90D7A8C1E4E686700FB5AEE /* RequestProtocol.swift in Sources */,
 				AD84BD731E494C320020505D /* LoginViewController.swift in Sources */,
 				B33B07CC1E4AB6D2007025FB /* Post.swift in Sources */,
