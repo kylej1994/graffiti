@@ -46,6 +46,8 @@ class FeedTableViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? FeedTableViewTextCell else {
             fatalError("The dequeue cell is not an instance of FeedTableViewTextCell.")
         }
+        
+        // this is where we get the posts from the post model
 
         return cell
     }
