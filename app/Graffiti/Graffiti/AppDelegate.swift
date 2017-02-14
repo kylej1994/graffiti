@@ -14,6 +14,8 @@ import GoogleSignIn
 // [START appdelegate_interfaces]
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
+    
+    
     // [END appdelegate_interfaces]
     var window: UIWindow?
     
@@ -63,6 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             //let familyName = user.profile.familyName
             //let email = user.profile.email
             // [START_EXCLUDE]
+            
             NotificationCenter.default.post(
                 name: Notification.Name(rawValue: "ToggleAuthUINotification"),
                 object: nil,
