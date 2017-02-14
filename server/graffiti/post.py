@@ -1,12 +1,14 @@
+import json
 import sys
 sys.path.append('..')
 from graffiti import db
 from sqlalchemy import Column, Float, Integer, String
+from sqlalchemy.dialects.postgresql import JSON
 
 from datetime import datetime
 from time import time
 
-import geoalchemy
+import geoalchemy2
 
 class Post(db.Model):
     __tablename__ = 'post'
@@ -24,9 +26,20 @@ class Post(db.Model):
         self.text = text
         self.longitude = longitude
         self.latitude = latitude
-        self.created_at = datetime.fromtimestamp(time()).strftime('%Y-%m-%d %H:%M:%S')
+        self.created_at = datetime.fromtimestamp(time()).isoformat()
         self.poster_username = poster_username
         self.num_votes = 0
 
     def __repr__(self):
         return '<post_id {}>'.format(self.post_id)
+
+    def to_json_fields_for_FE(self):
+        return json.dumps(dict(
+            postid=self.post_id,
+            text=self.text,
+            location=dict(
+                longitude=self.longitude,
+                latitude=self.latitude),
+            created_at=str(self.created_at),
+            posterid=3, # NOTE: Need to fix this (probably pass into init?)
+            num_votes=self.num_votes))

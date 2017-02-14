@@ -1,9 +1,11 @@
 import json
 
 from flask import Blueprint, request
-#from user import User
+from user import User
 
 user_api = Blueprint('user_api', __name__)
+
+from graffiti import db
 
 fake_response = json.dumps(dict(
 		userid=1,
@@ -29,12 +31,19 @@ def user_login():
 @user_api.route('/user/<int:userid>', methods=['GET'])
 def get_user(userid):
 	# no checking of authentication is happening yet...
-
+	
 	# look for user based on userid 
 	# return user object if found
 	# return 404 otherwise
 
-	return fake_response
+	user = db.session.query(User).filter(User.user_id==userid).first()
+	
+	if (user is None):
+		error_response = {}
+		error_response['error'] = "User not found."
+		return json.dumps(error_response), 404
+
+	return user.to_json_fields_for_FE()
 
 @user_api.route('/user/<int:userid>', methods=['PUT'])
 def update_user(userid):
