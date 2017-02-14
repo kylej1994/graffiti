@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController, GIDSignInUIDelegate {
     
-    var btnSignIn : GIDSignInButton!
+    var btnSignIn : UIButton!
     var btnSignOut : UIButton!
     var btnDisconnect : UIButton!
     var label : UILabel!
@@ -21,10 +21,19 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         
         GIDSignIn.sharedInstance().uiDelegate = self
         
-        btnSignIn = GIDSignInButton(frame: CGRect(0,0,230,48))
+        let btnSize : CGFloat = 100
+        btnSignIn = UIButton(frame: CGRect(0,0,btnSize,btnSize))
         btnSignIn.center = view.center
-        btnSignIn.style = GIDSignInButtonStyle.wide
+        btnSignIn.setImage(UIImage(named: "SprayCan"), for: UIControlState.normal)
+        btnSignIn.addTarget(self, action: #selector(btnSignInPressed(_:)), for: UIControlEvents.touchUpInside)
+        
+        //Circular button
+        btnSignIn.layer.cornerRadius = btnSize/4
+        btnSignIn.layer.masksToBounds = true
+        btnSignIn.layer.borderColor = UIColor.black.cgColor
+        btnSignIn.layer.borderWidth = 2
         view.addSubview(btnSignIn)
+
         
         btnSignOut = UIButton(frame: CGRect(0,0,100,30))
         btnSignOut.center = CGPoint(view.center.x, 100)
@@ -46,9 +55,9 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         
         
         label = UILabel(frame: CGRect(0,0,200,100))
-        label.center = CGPoint(view.center.x, 400)
+        label.center = CGPoint(view.center.x, 250)
         label.numberOfLines = 0 //Multi-lines
-        label.text = "Please Sign in."
+        label.text = "Please Sign in to Graffiti Using Google."
         label.textAlignment = NSTextAlignment.center
         view.addSubview(label)
         
@@ -56,6 +65,10 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         name: NSNotification.Name(rawValue: "ToggleAuthUINotification"),object: nil)
         
         toggleAuthUI()
+    }
+    
+    func btnSignInPressed(_ sender: UIButton) {
+        GIDSignIn.sharedInstance().signIn()
     }
     
     
