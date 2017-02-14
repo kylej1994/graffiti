@@ -23,8 +23,8 @@ print init_db()
 from post import Post
 from user import User
 
-from UserAPI import user_api
-from PostAPI import post_api
+from post_api import post_api
+from user_api import user_api
 
 app.register_blueprint(user_api)
 app.register_blueprint(post_api)
