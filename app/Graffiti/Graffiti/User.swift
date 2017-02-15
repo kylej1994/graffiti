@@ -10,24 +10,13 @@ import Foundation
 import UIKit
 
 enum UserError: Error, Equatable {
-    case noImage
-    case noTextTag
-    case noImageTag
     case tooManyChars
 }
 
 func ==(lhs: UserError, rhs: UserError) -> Bool {
     switch (lhs, rhs) {
-    case (.noImage, .noImage):
-        return true
-    case (.noTextTag, .noTextTag):
-        return true
-    case (.noImageTag, .noImageTag):
-        return true
     case (.tooManyChars, .tooManyChars):
         return true
-    case _:
-        return false
     }
 }
 
@@ -37,103 +26,85 @@ class User {
     //MARK: Properties
     
     // The user's attributes
-    var username: String
-    var name: String
-    var email: String
-    var userImage: UIImage?
-    var textTag: String?
-    var imageTag: UIImage?
+    private var id: Int
+    private var username: String?
+    private var name: String?
+    private var email: String?
+    private var userImage: UIImage?
+    private var textTag: String?
+    private var imageTag: UIImage?
    
     
     //MARK: Initialization
     
-    init(username: String, name: String, email: String, userImage: UIImage?, textTag: String?, imageTag: UIImage?){
+    init(id: Int, username: String? = nil, name: String? = nil, email: String? = nil, userImage: UIImage? = nil, textTag: String? = nil, imageTag: UIImage? = nil){
+        self.id = id
+        
         self.username = username
         self.name = name
         self.email = email
-        
-        if(userImage != nil){
-            self.userImage = userImage!
-        }
-        if(textTag != nil){
-            self.textTag = textTag
-        }
-        if(imageTag != nil){
-            self.imageTag = imageTag
-        }
+        self.userImage = userImage
+        self.textTag = textTag
+        self.imageTag = imageTag
     }
     
     //MARK: Getters
     
-    public func getUsername()->String{
+    public func getId()->Int{
+        return id
+    }
+    
+    public func getUsername()->String?{
         return username
     }
     
-    public func getName()->String{
+    public func getName()->String?{
         return name
     }
     
-    public func getEmail()->String{
+    public func getEmail()->String?{
         return email
     }
     
-    public func getUserImage() throws -> UIImage{
-        // Try to retrieve the image of this post
-        guard let ret: UIImage = userImage else {
-            
-            // Throw an error if it's nil
-            throw UserError.noImage
-        }
-        return ret
+    public func getUserImage() -> UIImage?{
+        return userImage
     }
     
-    public func getTextTag() throws -> String{
-        // Try to retrieve the image of this post
-        guard let ret: String = textTag else {
-            
-            // Throw an error if it's nil
-            throw UserError.noTextTag
-        }
-        return ret
+    public func getTextTag() -> String?{
+        return textTag
     }
     
-    public func getImageTag() throws -> UIImage{
-        // Try to retrieve the image of this post
-        guard let ret: UIImage = imageTag else {
-            
-            // Throw an error if it's nil
-            throw UserError.noImageTag
-        }
-        return ret
+    public func getImageTag() -> UIImage?{
+        return imageTag
     }
     
     //MARK: Setters
     
-    public func setUsername(_username:String) throws {
-        if( _username.characters.count > 100){
+    public func setUsername(_ username:String) throws {
+        if(username.characters.count > 100){
             throw UserError.tooManyChars
         } else {
-            self.username = _username
+            self.username = username
         }
     }
     
-    public func setName(_name:String) {
-        self.name = _name
+    public func setName(_ name:String) {
+        self.name = name
     }
     
-    public func setEmail(_email:String) {
-        self.username = _email
+    public func setEmail(_ email:String) {
+        self.username = email
     }
     
-    public func setUserImage(_UImage: UIImage){
-        self.userImage = _UImage
+    public func setUserImage(_ UImage: UIImage){
+        self.userImage = UImage
     }
     
-    public func setTagImage(_TImage: UIImage){
-        self.imageTag = _TImage
+    public func setTagImage(_ TImage: UIImage){
+        self.imageTag = TImage
     }
     
-    public func setImage(_textTag: String){
-        self.textTag = _textTag
+    public func setImage(_ textTag: String){
+        self.textTag = textTag
     }
 }

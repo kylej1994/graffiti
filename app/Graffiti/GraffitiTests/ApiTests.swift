@@ -32,20 +32,19 @@ class ApiTests: XCTestCase {
     }
     
     func testUpdateUser() {
-        let user = [
-            "username": "username",
-            "name": "name",
-            "email": "email",
-            "textTag": "textTag"
-        ] as [String : Any]
+        let user = User(id: 1234, username: "username", name: "name", email: "email", textTag: "textTag")
         
-        api.updateUser(userid: 1234, user: user) { (_) in }
+        api.updateUser(user: user) { (_) in }
         
         let url = session.lastURL as? String
         XCTAssertEqual(url, "/user/1234")
         
         XCTAssertEqual(session.lastMethod, .put)
-        XCTAssertEqual(session.lastParameters as! [String : String], user as! [String : String])
+        XCTAssertEqual(session.lastParameters?["userid"] as! Int, 1234)
+        XCTAssertEqual(session.lastParameters?["username"] as! String, "username")
+        XCTAssertEqual(session.lastParameters?["name"] as! String, "name")
+        XCTAssertEqual(session.lastParameters?["email"] as! String, "email")
+        XCTAssertEqual(session.lastParameters?["textTag"] as! String, "textTag")
         
         let token = session.lastHeaders?["Authorization"]
         XCTAssertNotNil(token)

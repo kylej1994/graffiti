@@ -47,8 +47,23 @@ class API {
         makeRequest("/user/\(userid)", method: .get, handler: handler)
     }
     
-    func updateUser(userid: Int, user: Parameters, handler: @escaping Handler) {
-        makeRequest("/user/\(userid)", method: .put, parameters: user, handler: handler)
+    func updateUser(user: User, handler: @escaping Handler) {
+        var userParams : Parameters = ["userid": user.getId()]
+        
+        if let username = user.getUsername() {
+            userParams["username"] = username
+        }
+        if let name = user.getName() {
+            userParams["name"] = name
+        }
+        if let email = user.getEmail() {
+            userParams["email"] = email
+        }
+        if let textTag = user.getTextTag() {
+            userParams["textTag"] = textTag
+        }
+        
+        makeRequest("/user/\(user.getId())", method: .put, parameters: userParams, handler: handler)
     }
     
     func login(handler: @escaping Handler) {
@@ -56,6 +71,7 @@ class API {
     }
     
     //MARK: Post Calls
+    // todo
     func createPost(post: Parameters, handler: @escaping Handler) { //TODO
         makeRequest("/post", method: .post, parameters: post, handler: handler)
     }
