@@ -21,19 +21,23 @@ class API {
     
     //MARK Properties
     private let manager: ManagerProtocol
+    private let baseUrl = "http://127.0.0.1:5000"
     
     init(manager: ManagerProtocol = Alamofire.SessionManager.default) {
         self.manager = manager
     }
     
     //MARK Private Methods
-    private func makeRequest(_ url: URLConvertible, method: HTTPMethod, parameters: Parameters? = nil, handler: @escaping Handler) {
+    private func makeRequest(_ url: String, method: HTTPMethod, parameters: Parameters? = nil, handler: @escaping Handler) {
         // Add Authentication token
         let idToken = "idToken" //TODO
         let headers = ["Authorization": "Bearer \(idToken)"]
         
+        // Construct Url
+        let fullUrl = baseUrl + url
+        
         // Make request
-        manager.makeRequest(url, method: method, parameters: parameters,
+        manager.makeRequest(fullUrl, method: method, parameters: parameters,
                         encoding: URLEncoding.default, headers: headers)
             .responseJSON(completionHandler: handler)
     }
