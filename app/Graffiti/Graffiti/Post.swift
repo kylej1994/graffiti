@@ -32,6 +32,8 @@ enum VisType {
     case Private
 }
 
+let defaultLifetime = 24
+
 class Post {
     
     //MARK: Properties
@@ -61,7 +63,7 @@ class Post {
     
     init?(ID: Int, text: String = "", image: UIImage? = nil, timeAdded: NSDate? = nil,
           location: CLLocation, /*user: User,*/ includeTag: Bool = false,
-          visibilityType: VisType = .Public, lifetime: Int){
+          visibilityType: VisType = .Public, lifetime: Int = defaultLifetime){
         
         // Initialize all the things!
         self.ID = ID
@@ -78,8 +80,7 @@ class Post {
         self.includeTag = includeTag
         
         self.visibilityType = visibilityType
-        self.lifetime = lifetime
-        
+        self.lifetime = defaultLifetime
         self.reported = false
         
         // We still need to check the above values
