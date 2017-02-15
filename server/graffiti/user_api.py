@@ -1,9 +1,11 @@
 import json
 
 from flask import Blueprint, request
-#from user import User
+from user import User
 
 user_api = Blueprint('user_api', __name__)
+
+from graffiti import db
 
 fake_response = json.dumps(dict(
 		userid=1,
@@ -29,27 +31,46 @@ def user_login():
 @user_api.route('/user/<int:userid>', methods=['GET'])
 def get_user(userid):
 	# no checking of authentication is happening yet...
-
+	
 	# look for user based on userid 
 	# return user object if found
 	# return 404 otherwise
 
-	return fake_response
+	user = db.session.query(User).filter(User.user_id==userid).first()
+	
+	if (user is None):
+		error_response = {}
+		error_response['error'] = "User not found."
+		return json.dumps(error_response), 404
+
+	return user.to_json_fields_for_FE()
 
 @user_api.route('/user/<int:userid>', methods=['PUT'])
 def update_user(userid):
 	# no checking of authentication is happening yet...
-
 	data = request.get_json()
-
+	
 	# checks for necessary data params
-	if ('userid' not in data or data['userid'] != userid):
+	if ('userid' not in data or int(data['userid']) != userid):
 		error_response = {}
 		error_response['error'] = "User can only update their own information."
 		return json.dumps(error_response), 403
 
-	# look for user based on userId 
-	# update and return user object if found
-	# return 404 otherwise
+	print data
 
-	return fake_response
+	# checks if a user with specified username already exists
+	username = data['username']
+	existing = db.session.query(User).filter(User.username==username).first()
+	if (existing):
+		error_response = {}
+		error_response['error'] = "Specified username is already taken."
+		return json.dumps(error_response), 400
+
+	user = db.session.query(User).filter(User.user_id==userid).first()
+	user.username = username
+	user.name = data['name']
+	user.email = data['email']
+	user.text_tag = data['textTag']
+	db.session.commit()
+
+	return user.to_json_fields_for_FE()

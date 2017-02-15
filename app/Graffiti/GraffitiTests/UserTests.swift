@@ -24,56 +24,19 @@ class UserTests: XCTestCase {
     
     // Function to test initialization of users
     func testInit() {
-        let testUser:User = User(username: "willem", name: "Will", email: "w@uchicago.edu", userImage: nil, textTag: nil, imageTag: nil)
+        let testUser:User = User(id: 1, username: "willem", name: "Will", email: "w@uchicago.edu")
         XCTAssertNotNil(testUser)
     }
     
     func testSetUsername() {
-        let testUser:User = User(username: "willem", name: "Will", email: "w@uchicago.edu", userImage: nil, textTag: nil, imageTag: nil)
+        let testUser:User = User(id: 1, username: "willem", name: "Will", email: "w@uchicago.edu")
         
         do {
-            _ = try testUser.setUsername(_username: longUN)
+            _ = try testUser.setUsername(longUN)
         } catch let e as UserError {
             XCTAssertEqual(e, UserError.tooManyChars)
         } catch {
             XCTFail("Wrong Error!")
         }
     }
-    
-    func testGetTextTag() {
-        let testUser:User = User(username: "willem", name: "Will", email: "w@uchicago.edu", userImage: nil, textTag: nil, imageTag: nil)
-        
-        do {
-            _ = try testUser.getTextTag()
-        } catch let e as UserError {
-            XCTAssertEqual(e, UserError.noTextTag)
-        } catch {
-            XCTFail("Wrong Error!")
-        }
-    }
-    
-    func testGetImageTag() {
-        let testUser:User = User(username: "willem", name: "Will", email: "w@uchicago.edu", userImage: nil, textTag: nil, imageTag: nil)
-        
-        do {
-            _ = try testUser.getImageTag()
-        } catch let e as UserError {
-            XCTAssertEqual(e, UserError.noImageTag)
-        } catch {
-            XCTFail("Wrong Error!")
-        }
-    }
-    
-    func testGetUserImage() {
-        let testUser:User = User(username: "willem", name: "Will", email: "w@uchicago.edu", userImage: nil, textTag: nil, imageTag: nil)
-        
-        do {
-            _ = try testUser.getUserImage()
-        } catch let e as UserError {
-            XCTAssertEqual(e, UserError.noImage)
-        } catch {
-            XCTFail("Wrong Error!")
-        }
-    }
-    
 }
