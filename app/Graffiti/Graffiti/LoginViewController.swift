@@ -86,6 +86,7 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         name: NSNotification.Name(rawValue: "ToggleAuthUINotification"),object: nil)
         
         toggleAuthUI()
+        
     }
     
     func btnSignInPressed(_ sender: UIButton) {
@@ -124,6 +125,8 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
             }
             
         } else {
+            
+            // Not Signed In
             welcome.isHidden = false
             btnNewsFeed.isHidden = true
             btnSignIn.isHidden = false
