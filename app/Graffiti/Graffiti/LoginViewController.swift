@@ -115,6 +115,14 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
             btnSignIn.isHidden = true
             btnSignOut.isHidden = false
             btnDisconnect.isHidden = true
+            
+            
+            // Added to handle if user is already signed in 
+            if (GIDSignIn.sharedInstance().currentUser == nil) {
+                print("no user info")
+                GIDSignIn.sharedInstance().signInSilently()
+            }
+            
         } else {
             welcome.isHidden = false
             btnNewsFeed.isHidden = true

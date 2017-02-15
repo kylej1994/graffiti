@@ -58,6 +58,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             // [END_EXCLUDE]
         } else {
             // Perform any operations on signed in user here.
+            
+            
          //   let userId = user.userID                  // For client-side use only!
            // let idToken = user.authentication.idToken // Safe to send to the server
             let fullName = user.profile.name
@@ -74,6 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         }
     }
     // [END signin_handler]
+    
     // [START disconnect_handler]
     func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!,
               withError error: Error!) {
