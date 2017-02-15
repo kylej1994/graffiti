@@ -8,7 +8,8 @@ target 'Graffiti' do
 
   # Pods for Graffiti
   pod 'Alamofire', '~> 4.3'
-pod 'Google/SignIn'
+  pod 'AlamofireObjectMapper', '~> 4.0'
+  pod 'Google/SignIn'
 
   target 'GraffitiTests' do
     inherit! :search_paths
