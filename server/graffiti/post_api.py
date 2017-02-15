@@ -2,9 +2,11 @@ import datetime
 import json
 
 from flask import Blueprint, request
-#from post import Post
+from post import Post
 
 post_api = Blueprint('post_api', __name__)
+
+from graffiti import db
 
 fake_dict = dict(
 		postid=1,
@@ -41,6 +43,7 @@ def create_post():
 
 	# would create a new post and add it to the db session here
 
+
 	return fake_response
 
 @post_api.route('/post/<int:postid>', methods=['DELETE'])
@@ -63,7 +66,14 @@ def get_post(postid):
 	# if found but dif user, return 403
 	# if not found, return 404
 
-	return fake_response
+	post = db.session.query(Post).filter(Post.post_id==postid).first()
+	
+	if (post is None):
+		error_response = {}
+		error_response['error'] = "Post not found."
+		return json.dumps(error_response), 404
+
+	return post.to_json_fields_for_FE()
 
 @post_api.route('/post', methods=['GET'])
 def get_post_by_location():
