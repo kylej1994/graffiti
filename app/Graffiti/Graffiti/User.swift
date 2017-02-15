@@ -33,7 +33,6 @@ class User {
     private var userImage: UIImage?
     private var textTag: String?
     private var imageTag: UIImage?
-   
     
     //MARK: Initialization
     
