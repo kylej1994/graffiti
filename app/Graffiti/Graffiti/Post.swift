@@ -12,30 +12,24 @@ import MapKit
 import CoreLocation
 
 enum PostError: Error, Equatable {
-    case noImage
     case tooManyChars
     case invalidLifetime
-    case invalidVisibility
 }
 
 func ==(lhs: PostError, rhs: PostError) -> Bool {
     switch (lhs, rhs) {
-        case (.noImage, .noImage):
-            return true
         case (.tooManyChars, .tooManyChars):
             return true
         case (.invalidLifetime, .invalidLifetime):
-            return true
-        case (.invalidVisibility, .invalidVisibility):
             return true
         case _:
             return false
     }
 }
 
-enum VisType: Int{
-    case Public = 1
-    case Private = 2
+enum VisType {
+    case Public
+    case Private
 }
 
 class Post {
@@ -51,32 +45,30 @@ class Post {
     
     // Other properties...
     private var rating: Int
-    private var timeAdded: NSDate
+    private var timeAdded: NSDate?
     private var location: CLLocation
     
     // User-specific properties STATUS: waiting for brach merges
     //private var user: User
     private var includeTag: Bool
     
-    private var visibilityType: Int
+    private var visibilityType: VisType
     private var lifetime: Int
     
     private var reported: Bool
     
     //MARK: Initialization
     
-    init?(ID: Int, text: String, image: UIImage?, timeAdded: NSDate,
-          location: CLLocation, /*user: User,*/ includeTag: Bool,
-          visibilityType: Int, lifetime: Int){
+    init?(ID: Int, text: String = "", image: UIImage? = nil, timeAdded: NSDate? = nil,
+          location: CLLocation, /*user: User,*/ includeTag: Bool = false,
+          visibilityType: VisType = .Public, lifetime: Int){
         
         // Initialize all the things!
         self.ID = ID
         self.text = text
-        
-        // Make certain we've got an actual image
-        if image != nil {
-            self.image = image!
-        }
+
+        self.image = image
+
         
         self.rating = 0
         self.timeAdded = timeAdded
@@ -85,24 +77,20 @@ class Post {
         //self.user = user
         self.includeTag = includeTag
         
-        self.visibilityType = VisType.Public.rawValue
+        self.visibilityType = visibilityType
         self.lifetime = lifetime
         
         self.reported = false
         
         // We still need to check the above values
         do{
-            try setText(_text: text)
-            try setLifetime(_lifetime: lifetime)
-            try setVisType(_visType: visibilityType)
+            try setText(text)
+            try setLifetime(lifetime)
         } catch PostError.tooManyChars {
             print("PostInit ERROR: too many characters!")
             return nil
         } catch PostError.invalidLifetime {
             print("PostInit ERROR: invalid lifetime!")
-            return nil
-        } catch PostError.invalidVisibility {
-            print("PostInit ERROR: invalid visibility!")
             return nil
         } catch let error {
             print(error.localizedDescription)
@@ -120,21 +108,15 @@ class Post {
         return text
     }
     
-    public func getImage() throws -> UIImage{
-        // Try to retrieve the image of this post
-        guard let ret: UIImage = image else {
-            
-            // Throw an error if it's nil
-            throw PostError.noImage
-        }
-        return ret
+    public func getImage() -> UIImage?{
+        return image
     }
     
     public func getRating()->Int{
         return rating
     }
     
-    public func getTimeAdded()->NSDate{
+    public func getTimeAdded()->NSDate?{
         return timeAdded
     }
     
@@ -142,7 +124,7 @@ class Post {
         return location
     }
     
-    public func getVisType()->Int{
+    public func getVisType()->VisType{
         return visibilityType
     }
     
@@ -157,43 +139,39 @@ class Post {
     
     //MARK: Setters
     
-    public func setText(_text:String) throws {
-        if( _text.characters.count > 200){
+    public func setText(_ text:String) throws {
+        if( text.characters.count > 200){
             throw PostError.tooManyChars
         } else {
-            self.text = _text
+            self.text = text
         }
     }
     
-    public func setImage(_image: UIImage){
-        self.image = _image
+    public func setImage(_ image: UIImage){
+        self.image = image
     }
     
-    public func setRating(_rating: Int){
-        self.rating = _rating
+    public func setRating(_ rating: Int){
+        self.rating = rating
     }
     
-    public func setTimeAdded(_time:NSDate){
-        self.timeAdded = _time
+    public func setTimeAdded(_ time:NSDate){
+        self.timeAdded = time
     }
     
-    public func setLocation(_location: CLLocation){
-        self.location = _location
+    public func setLocation(_ location: CLLocation){
+        self.location = location
     }
     
-    public func setVisType(_visType: Int) throws {
-        if( _visType != VisType.Public.rawValue && _visType != VisType.Private.rawValue){
-            throw PostError.invalidVisibility
-        } else {
-            self.visibilityType = _visType
-        }
+    public func setVisType(_ visType: VisType) {
+        self.visibilityType = visType
     }
     
-    public func setLifetime(_lifetime: Int) throws {
-        if( _lifetime < 0){
+    public func setLifetime(_ lifetime: Int) throws {
+        if( lifetime < 0){
             throw PostError.invalidLifetime
         } else {
-            self.lifetime = _lifetime
+            self.lifetime = lifetime
         }
     }
     
@@ -212,13 +190,13 @@ class Post {
     public func upVote(){
         var upRating = self.getRating()
         upRating += 1
-        setRating(_rating: upRating)
+        setRating(upRating)
     }
     
     // Function to downvote a post -- this time decrementing the 'rating' field
     public func downVote(){
         var dnRating = self.getRating()
         dnRating -= 1
-        setRating(_rating: dnRating)
+        setRating(dnRating)
     }
 }

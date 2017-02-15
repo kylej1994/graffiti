@@ -41,49 +41,26 @@ class PostTests: XCTestCase {
     // Initialaztion tests
     func testInit() {
         
-        // Testing to make sure we don't allow a post to be made with an invalid post audience
-        let invalidAudiencePost: Post? = Post(ID: 1, text: "This is a failing post!", image: nil, timeAdded: date, location: SUPERsecretLocation, includeTag: false, visibilityType: 100, lifetime: -1)
-        XCTAssertNil(invalidAudiencePost)
-        
         // Testing to make sure we don't allow a post to be made with a negative lifetime
-        let invalidLifetimePost: Post? = Post(ID: 1, text: "This is a failing post!", image: nil, timeAdded: date, location: SUPERsecretLocation, includeTag: false, visibilityType: VisType.Public.rawValue, lifetime: -1)
+        let invalidLifetimePost: Post? = Post(ID: 1, text: "This is a failing post!", image: nil, timeAdded: date, location: SUPERsecretLocation, includeTag: false, visibilityType: .Public, lifetime: -1)
         XCTAssertNil(invalidLifetimePost)
         
         // Testing to make sure we can't make a post whose text is > 200 chars
-        let tooManyCharsPost: Post? = Post(ID: 1, text: dramaticBlabber, image: nil, timeAdded: date, location: secretLocation, includeTag: false, visibilityType: VisType.Public.rawValue, lifetime: 7)
+        let tooManyCharsPost: Post? = Post(ID: 1, text: dramaticBlabber, image: nil, timeAdded: date, location: secretLocation, includeTag: false, visibilityType: .Public, lifetime: 7)
         XCTAssertNil(tooManyCharsPost)
         
         // A test to make sure we're capable of creating a post
-        let passPost: Post = Post(ID: 1, text: "This is a passing post!", image: nil, timeAdded: date, location: secretLocation, includeTag: false, visibilityType: VisType.Public.rawValue, lifetime: 7)!
+        let passPost: Post = Post(ID: 1, text: "This is a passing post!", image: nil, timeAdded: date, location: secretLocation, includeTag: false, visibilityType: .Public, lifetime: 7)!
         XCTAssertNotNil(passPost)
     }
     
     // Testing getter/setter methods
-    func testGetImage() {
-        
-        let date: NSDate = NSDate.init()
-        
-        let latitude: Double = 41.792199
-        let longitude: Double = -87.599691
-        let secretLocation: CLLocation = CLLocation.init(latitude: latitude, longitude: longitude)
-        
-        let passPost: Post = Post(ID: 1, text: "This is a passing post!", image: nil, timeAdded: date, location: secretLocation, includeTag: false, visibilityType: VisType.Public.rawValue, lifetime: 7)!
-        
-        do {
-            _ = try passPost.getImage()
-        } catch let e as PostError {
-            XCTAssertEqual(e, PostError.noImage)
-        } catch {
-            XCTFail("Wrong Error!")
-        }
-    }
-    
     func testSetText() {
         
-        let passPost: Post = Post(ID: 1, text: "This is a passing post!", image: nil, timeAdded: date, location: secretLocation, includeTag: false, visibilityType: VisType.Public.rawValue, lifetime: 7)!
+        let passPost: Post = Post(ID: 1, text: "This is a passing post!", image: nil, timeAdded: date, location: secretLocation, includeTag: false, visibilityType: .Public, lifetime: 7)!
         
         do {
-            _ = try passPost.setText(_text: dramaticBlabber)
+            _ = try passPost.setText(dramaticBlabber)
         } catch let e as PostError {
             XCTAssertEqual(e, PostError.tooManyChars)
         } catch {
@@ -91,25 +68,12 @@ class PostTests: XCTestCase {
         }
     }
     
-    func testSetVisType() {
-        
-        let passPost: Post = Post(ID: 1, text: "This is a passing post!", image: nil, timeAdded: date, location: secretLocation, includeTag: false, visibilityType: VisType.Public.rawValue, lifetime: 7)!
-        
-        do {
-            _ = try passPost.setVisType(_visType: 200)
-        } catch let e as PostError {
-            XCTAssertEqual(e, PostError.invalidVisibility)
-        } catch {
-            XCTFail("Wrong Error!")
-        }
-    }
-    
     func testSetLifetime() {
         
-        let passPost: Post = Post(ID: 1, text: "This is a passing post!", image: nil, timeAdded: date, location: secretLocation, includeTag: false, visibilityType: VisType.Public.rawValue, lifetime: 7)!
+        let passPost: Post = Post(ID: 1, text: "This is a passing post!", image: nil, timeAdded: date, location: secretLocation, includeTag: false, visibilityType: .Public, lifetime: 7)!
         
         do {
-            _ = try passPost.setLifetime(_lifetime: -1)
+            _ = try passPost.setLifetime(-1)
         } catch let e as PostError {
             XCTAssertEqual(e, PostError.invalidLifetime)
         } catch {
@@ -119,21 +83,21 @@ class PostTests: XCTestCase {
     
     func testSettersTest() {
         
-        let passPost: Post = Post(ID: 1, text: "This is a passing post!", image: nil, timeAdded: date, location: secretLocation, includeTag: false, visibilityType: VisType.Public.rawValue, lifetime: 1)!
+        let passPost: Post = Post(ID: 1, text: "This is a passing post!", image: nil, timeAdded: date, location: secretLocation, includeTag: false, visibilityType: .Public, lifetime: 1)!
         
         do {
-            _ = try passPost.setText(_text: "Did I actually change?")
-            _ = passPost.setRating(_rating: 9001)
-            _ = passPost.setTimeAdded(_time: dateTest)
-            _ = passPost.setLocation(_location: SUPERsecretLocation)
-            _ = try passPost.setVisType(_visType: VisType.Private.rawValue)
-            _ = try passPost.setLifetime(_lifetime: 7)
+            _ = try passPost.setText("Did I actually change?")
+            _ = passPost.setRating(9001)
+            _ = passPost.setTimeAdded(dateTest)
+            _ = passPost.setLocation(SUPERsecretLocation)
+            _ = passPost.setVisType(.Private)
+            _ = try passPost.setLifetime(7)
             
             XCTAssertEqual(passPost.getText(), "Did I actually change?")
             XCTAssertEqual(passPost.getRating(), 9001)
             XCTAssertEqual(passPost.getTimeAdded(), dateTest)
             XCTAssertEqual(passPost.getLocation(), SUPERsecretLocation)
-            XCTAssertEqual(passPost.getVisType(), 2)
+            XCTAssertEqual(passPost.getVisType(), .Private)
             XCTAssertEqual(passPost.getLifetime(), 7)
         } catch {
             XCTFail("Wrong Error!")
@@ -141,7 +105,7 @@ class PostTests: XCTestCase {
     }
 
     func testReport() {
-        let passPost: Post = Post(ID: 1, text: "This is a passing post!", image: nil, timeAdded: date, location: secretLocation, includeTag: false, visibilityType: VisType.Public.rawValue, lifetime: 1)!
+        let passPost: Post = Post(ID: 1, text: "This is a passing post!", image: nil, timeAdded: date, location: secretLocation, includeTag: false, visibilityType: .Public, lifetime: 1)!
         
         XCTAssertFalse(passPost.getReported())
         
@@ -151,7 +115,7 @@ class PostTests: XCTestCase {
     }
     
     func testVoting() {
-        let passPost: Post = Post(ID: 1, text: "This is a passing post!", image: nil, timeAdded: date, location: secretLocation, includeTag: false, visibilityType: VisType.Public.rawValue, lifetime: 1)!
+        let passPost: Post = Post(ID: 1, text: "This is a passing post!", image: nil, timeAdded: date, location: secretLocation, includeTag: false, visibilityType: .Public, lifetime: 1)!
         
         var i:Int = 0
         while(i < 50){
