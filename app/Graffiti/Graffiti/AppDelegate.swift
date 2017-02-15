@@ -14,10 +14,12 @@ import GoogleSignIn
 // [START appdelegate_interfaces]
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
-    
+   
     
     // [END appdelegate_interfaces]
     var window: UIWindow?
+    var currentUser: GIDGoogleUser!
+    
     
     // [START didfinishlaunching]
     func application(_ application: UIApplication,
@@ -57,12 +59,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                 name: Notification.Name(rawValue: "ToggleAuthUINotification"), object: nil, userInfo: nil)
             // [END_EXCLUDE]
         } else {
+            
+            // We have sucesfully signed in a User 
+            
+            currentUser = GIDSignIn.sharedInstance().currentUser
+          //  API().login()
+            
             // Perform any operations on signed in user here.
             
             
          //   let userId = user.userID                  // For client-side use only!
            // let idToken = user.authentication.idToken // Safe to send to the server
-            let fullName = user.profile.name
+           // let fullName = user.profile.name
             //let givenName = user.profile.givenName
             //let familyName = user.profile.familyName
             //let email = user.profile.email
@@ -71,7 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             NotificationCenter.default.post(
                 name: Notification.Name(rawValue: "ToggleAuthUINotification"),
                 object: nil,
-                userInfo: ["statusText": "Signed in user:\(fullName!)"])
+                userInfo: ["statusText": "Signed in user:\(currentUser.profile.name!)"])
             // [END_EXCLUDE]
         }
     }
