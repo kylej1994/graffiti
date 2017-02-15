@@ -48,21 +48,7 @@ class API {
     }
     
     func updateUser(user: User, handler: @escaping Handler) {
-        var userParams : Parameters = ["userid": user.getId()]
-        
-        if let username = user.getUsername() {
-            userParams["username"] = username
-        }
-        if let name = user.getName() {
-            userParams["name"] = name
-        }
-        if let email = user.getEmail() {
-            userParams["email"] = email
-        }
-        if let textTag = user.getTextTag() {
-            userParams["textTag"] = textTag
-        }
-        
+        let userParams : Parameters = user.toJSON()
         makeRequest("/user/\(user.getId())", method: .put, parameters: userParams, handler: handler)
     }
     
