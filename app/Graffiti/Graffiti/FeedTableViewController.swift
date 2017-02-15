@@ -9,7 +9,29 @@
 import UIKit
 
 class FeedTableViewController: UITableViewController {
-
+    // reference: https://github.com/uchicago-mobi/mpcs51030-2016-winter-assignment-5-aaizuss/blob/master/Issues/Issues/DataTableViewController.swift
+    // activty indicator var
+    // api object
+    
+    // Property observer
+    // variable of posts?
+    
+    // computed properties
+    // var formatter = NSDateFormatter()
+//    var formattedTimestamp: String {
+//        get {
+//            // code to execute when getting
+//            // The getter must return a value of the same type
+//            let time = NSDate()
+//            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+//            formatter.dateStyle = NSDateFormatterStyle.LongStyle
+//            formatter.timeStyle = .ShortStyle
+//            updateString = "Updated on " + formatter.stringFromDate(time)
+//            return updateString
+//        }
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -18,6 +40,9 @@ class FeedTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        // make network request
+        // update the posts variable with the response
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,6 +60,7 @@ class FeedTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return 10
+        // return posts.count unless posts is nil (return 0)
     }
 
     
@@ -48,10 +74,13 @@ class FeedTableViewController: UITableViewController {
         }
         
         // this is where we get the posts from the post model
+        // let post = posts[indexPath.row]
+        // cell.textView.text = whatever
 
         return cell
     }
     
+    //refresh table function
 
     /*
     // Override to support conditional editing of the table view.
