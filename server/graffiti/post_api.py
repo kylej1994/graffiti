@@ -22,9 +22,6 @@ fake_response = json.dumps(fake_dict)
 @post_api.route('/post', methods=['POST'])
 def create_post():
 	# no checking of authentication is happening yet...
-
-	""" Commented this out so that frontend can do stuff with the api before
-	it was completely implemented. """
 	data = request.get_json()
 
 	# checks for necessary data params
@@ -39,7 +36,7 @@ def create_post():
 	# rough idea based on this SO question: http://stackoverflow.com/questions/13058800/using-flask-sqlalchemy-in-blueprint-models-without-reference-to-the-app?rq=1
 	# and the example flask app with PostGIS github repo here: https://github.com/ryanj/flask-postGIS
 
-	# would create a new post and add it to the db session here
+	# create a new post and add it to the db session
 	text = data['text']
 	lon = data['location']['longitude']
 	lat = data['location']['latitude']
@@ -48,7 +45,7 @@ def create_post():
 	post = Post(text, lon, lat, user_id, google_aud)
 	post.save_post()
 
-	return 200
+	return post.to_json_fields_for_FE(), 200
 
 @post_api.route('/post/<int:postid>', methods=['DELETE'])
 def delete_post(postid):
@@ -58,20 +55,21 @@ def delete_post(postid):
 	# if found, delete it and return success (200)
 	# if found but dif user, return 403
 	# if not found, return 404
-	post = db.session.query(Post).filter(Post.post_id==postid).first()
+	post = Post.find_post(postid)
+
 	if (post is None):
 		error_response = {}
 		error_response['error'] = "Post not found."
 		return json.dumps(error_response), 404
 
-	if (post.user_id != request.get_json()['user_id']):
+	if (post.get_user_id() != request.get_json()['user_id']):
 		error_response = {}
-		error_response['error'] = "Cannot delete post."
+		error_response['error'] = "Post is not owned by user."
 		return json.dumps(error_response), 403
 
 	post.delete_post()
 
-	return 'deleted post\n'
+	return 200
 
 @post_api.route('/post/<int:postid>', methods=['GET'])
 def get_post(postid):
@@ -82,14 +80,19 @@ def get_post(postid):
 	# if found but dif user, return 403
 	# if not found, return 404
 
-	post = db.session.query(Post).filter(Post.post_id==postid).first()
+	post = Post.find_post(postid)
 	
 	if (post is None):
 		error_response = {}
 		error_response['error'] = "Post not found."
 		return json.dumps(error_response), 404
 
-	return post.to_json_fields_for_FE()
+	if (post.get_user_id() != request.get_json()['user_id']):
+		error_response = {}
+		error_response['error'] = "Post is not owned by user."
+		return json.dumps(error_response), 403
+
+	return post.to_json_fields_for_FE(), 200
 
 @post_api.route('/post', methods=['GET'])
 def get_post_by_location():
@@ -98,12 +101,15 @@ def get_post_by_location():
 	# query db for all posts in this area
 	lat = request.args.get('latitude')
 	lon = request.args.get('longitude')
-	radius = 1
+	radius = 5 #to be changed later
+	posts = Post.find_post_within_loc(lon, lat, radius)
 
+	#TODO format for returning multiple posts?
+	to_ret = []
+	for post in posts:
+		to_ret += post.to_json_fields_for_FE()
 
-
-	return json.dumps([fake_dict, fake_dict, fake_dict, fake_dict, fake_dict,
-		fake_dict, fake_dict, fake_dict, fake_dict, fake_dict])
+	return to_ret
 
 @post_api.route('/post/<int:postid>/vote', methods=['PUT'])
 def vote_post(postid):
@@ -114,5 +120,9 @@ def vote_post(postid):
 	# already voted on this post
 	# modify accordingly
 	# return postid of post and new num votes
+	vote = int(request.get_json()['vote'])
+	post = Post.find_post(postid)
+	# TODO need to check if user has already voted
+	post.apply_vote(vote)
 
-	return fake_response
+	return post.to_json_fields_for_FE(), 200

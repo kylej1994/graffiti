@@ -59,5 +59,26 @@ class Post(db.Model):
         db.session.delete(self)
         db.session.commit()
 
+    # applies the vote to the post
+    def apply_vote(self, vote):
+        self.num_votes += vote
+        db.session.commit()
+
+    # finds a post given a post id
+    # returns None if post_id is not in the db
+    # NOTE will this conflict with the namespace of the DB model???
+    @staticmethod
+    def find_post(postid):
+        return db.session.query(Post).filter(Post.post_id==postid).first()
+
+    # finds posts within a certain radius of a coordinate
+    @staticmethod
+    def find_posts_within_loc(lon, lat, radius):
+        distance = radius * 0.014472 #convert to degrees
+        center_point = Point(lon, lat)
+        wkb_element = from_shape(center_point)
+        posts = db.session.query(Post).filter(func.ST_DFullyWithin(\
+            Point(Post.longitude, Post.latitude), wkb_element, distance)).all()
+        return posts
 
 
