@@ -21,9 +21,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9BF-tQ-pZc">
-                                <rect key="frame" x="152" y="28" width="72" height="30"/>
-                                <state key="normal" title="Go to tabs"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9BF-tQ-pZc">
+                                <rect key="frame" x="84" y="28" width="207" height="91"/>
+                                <state key="normal" title="Take me to my Newsfeed"/>
                                 <connections>
                                     <segue destination="k1O-2a-SVY" kind="show" id="bTC-c4-v9j"/>
                                 </connections>
@@ -35,6 +35,9 @@
                             <constraint firstItem="9BF-tQ-pZc" firstAttribute="top" secondItem="jy5-8U-jGH" secondAttribute="bottom" constant="8" id="5HL-Ij-1Mm"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="btnNewsFeed" destination="9BF-tQ-pZc" id="Tvx-ZR-yYc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0rr-Ba-WwQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

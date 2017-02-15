@@ -14,10 +14,13 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
     var btnSignOut : UIButton!
     var btnDisconnect : UIButton!
     var label : UILabel!
-    
+    @IBOutlet var btnNewsFeed: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+         self.view.backgroundColor = UIColor.red
         
         GIDSignIn.sharedInstance().uiDelegate = self
         
@@ -89,10 +92,12 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
     func toggleAuthUI() {
         if (GIDSignIn.sharedInstance().hasAuthInKeychain()){
             // Signed in
+            btnNewsFeed.isHidden = false
             btnSignIn.isHidden = true
             btnSignOut.isHidden = false
             btnDisconnect.isHidden = true
         } else {
+            btnNewsFeed.isHidden = true
             btnSignIn.isHidden = false
             btnSignOut.isHidden = true
             btnDisconnect.isHidden = true
