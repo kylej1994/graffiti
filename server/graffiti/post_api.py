@@ -22,29 +22,33 @@ fake_response = json.dumps(fake_dict)
 @post_api.route('/post', methods=['POST'])
 def create_post():
 	# no checking of authentication is happening yet...
-	print 'in create post'
-
 
 	""" Commented this out so that frontend can do stuff with the api before
 	it was completely implemented. """
-	# data = request.get_json()
+	data = request.get_json()
 
-	# # checks for necessary data params
-	# if ('text' not in data or 'location' not in data
-	# 		or 'latitude' not in data['location']
-	# 		or 'longitude' not in data['location']):
-	# 	error_response = {}
-	# 	error_response['error'] = "Post information was invalid."
-	# 	return json.dumps(error_response), 400
+	# checks for necessary data params
+	if ('text' not in data or 'location' not in data
+			or 'latitude' not in data['location']
+			or 'longitude' not in data['location']):
+		error_response = {}
+		error_response['error'] = "Post information was invalid."
+		return json.dumps(error_response), 400
 
 	# not exactly sure what the db setup will look like for now but I have a
 	# rough idea based on this SO question: http://stackoverflow.com/questions/13058800/using-flask-sqlalchemy-in-blueprint-models-without-reference-to-the-app?rq=1
 	# and the example flask app with PostGIS github repo here: https://github.com/ryanj/flask-postGIS
 
 	# would create a new post and add it to the db session here
+	text = data['text']
+	lon = data['location']['longitude']
+	lat = data['location']['latitude']
+	user_id = data['user_id'] #ask KYLE
+	google_aud = data['google_aud']
+	post = Post(text, lon, lat, user_id, google_aud)
+	post.save_post()
 
-
-	return fake_response
+	return 200
 
 @post_api.route('/post/<int:postid>', methods=['DELETE'])
 def delete_post(postid):
@@ -54,6 +58,18 @@ def delete_post(postid):
 	# if found, delete it and return success (200)
 	# if found but dif user, return 403
 	# if not found, return 404
+	post = db.session.query(Post).filter(Post.post_id==postid).first()
+	if (post is None):
+		error_response = {}
+		error_response['error'] = "Post not found."
+		return json.dumps(error_response), 404
+
+	if (post.user_id != request.get_json()['user_id']):
+		error_response = {}
+		error_response['error'] = "Cannot delete post."
+		return json.dumps(error_response), 403
+
+	post.delete_post()
 
 	return 'deleted post\n'
 
@@ -82,6 +98,9 @@ def get_post_by_location():
 	# query db for all posts in this area
 	lat = request.args.get('latitude')
 	lon = request.args.get('longitude')
+	radius = 1
+
+
 
 	return json.dumps([fake_dict, fake_dict, fake_dict, fake_dict, fake_dict,
 		fake_dict, fake_dict, fake_dict, fake_dict, fake_dict])

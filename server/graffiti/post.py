@@ -45,3 +45,19 @@ class Post(db.Model):
             created_at=str(self.created_at),
             posterid=poster_id,
             num_votes=self.num_votes))
+
+    def get_poster_id(self):
+        return self.poster_id;
+
+    # saves the post into the db
+    def save_post(self):
+        db.session.add(self)
+        db.session.commit()
+
+    # deletes the post from the db
+    def delete_post(self):
+        db.session.delete(self)
+        db.session.commit()
+
+
+
