@@ -14,24 +14,32 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
     var btnSignOut : UIButton!
     var btnDisconnect : UIButton!
     var label : UILabel!
+    var welcome : UILabel!
+    var logo : UIImageView!
     @IBOutlet var btnNewsFeed: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
-         self.view.backgroundColor = UIColor.red
+         self.view.backgroundColor = UIColor.black
         
         GIDSignIn.sharedInstance().uiDelegate = self
+        
+        
+        logo = UIImageView(frame: CGRect(0, 0, 150, 150))
+        logo.center = CGPoint(view.center.x, 150)
+        logo.image = UIImage(named:"Logo")
+        view.addSubview(logo)
         
         let btnSize : CGFloat = 100
         btnSignIn = UIButton(frame: CGRect(0,0,btnSize,btnSize))
         btnSignIn.center = view.center
-        btnSignIn.setImage(UIImage(named: "SprayCan"), for: UIControlState.normal)
+        btnSignIn.setImage(UIImage(named: "GoogleLogo"), for: UIControlState.normal)
         btnSignIn.addTarget(self, action: #selector(btnSignInPressed(_:)), for: UIControlEvents.touchUpInside)
         
         //Circular button
-        btnSignIn.layer.cornerRadius = btnSize/4
+        btnSignIn.layer.cornerRadius = btnSize/8
         btnSignIn.layer.masksToBounds = true
         btnSignIn.layer.borderColor = UIColor.black.cgColor
         btnSignIn.layer.borderWidth = 2
@@ -56,11 +64,21 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         btnDisconnect.addTarget(self, action: #selector(btnDisconnectPressed(_:)), for: UIControlEvents.touchUpInside)
         view.addSubview(btnDisconnect)
         
+        welcome = UILabel(frame: CGRect(100,300,600,100))
+        welcome.text = "Welcome to Grafitti"
+        welcome.font = welcome.font.withSize(40)
+        welcome.center = CGPoint(view.center.x, 50)
+        welcome.textColor = UIColor.cyan
+        welcome.textAlignment = NSTextAlignment.center
+        view.addSubview(welcome)
+        
+        
         
         label = UILabel(frame: CGRect(0,0,200,100))
-        label.center = CGPoint(view.center.x, 250)
+        label.center = CGPoint(view.center.x, 300)
         label.numberOfLines = 0 //Multi-lines
-        label.text = "Please Sign in to Graffiti Using Google."
+        label.text = "Please Sign in to Graffiti Using Google"
+        label.textColor = UIColor.cyan
         label.textAlignment = NSTextAlignment.center
         view.addSubview(label)
         
@@ -92,11 +110,13 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
     func toggleAuthUI() {
         if (GIDSignIn.sharedInstance().hasAuthInKeychain()){
             // Signed in
+            welcome.isHidden = true
             btnNewsFeed.isHidden = false
             btnSignIn.isHidden = true
             btnSignOut.isHidden = false
             btnDisconnect.isHidden = true
         } else {
+            welcome.isHidden = false
             btnNewsFeed.isHidden = true
             btnSignIn.isHidden = false
             btnSignOut.isHidden = true

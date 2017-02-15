@@ -22,7 +22,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9BF-tQ-pZc">
-                                <rect key="frame" x="84" y="28" width="207" height="91"/>
+                                <rect key="frame" x="16" y="28" width="343" height="91"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="29"/>
                                 <state key="normal" title="Take me to my Newsfeed"/>
                                 <connections>
                                     <segue destination="k1O-2a-SVY" kind="show" id="bTC-c4-v9j"/>
