@@ -39,7 +39,7 @@ class API {
         // Make request
         manager.makeRequest(fullUrl, method: method, parameters: parameters,
                         encoding: URLEncoding.default, headers: headers)
-            .responseJSON(completionHandler: handler)
+            .defaultValidate().responseJSON(completionHandler: handler)
     }
     
     //MARK: User Calls

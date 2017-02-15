@@ -10,6 +10,11 @@ import Foundation
 import Alamofire
 
 class MockRequest: RequestProtocol {
+    
+    func defaultValidate() -> Self {
+        return self
+    }
+    
     func responseJSON(completionHandler: @escaping (DataResponse<Any>) -> Void) -> Self {
         let response: DataResponse<Any> = DataResponse(request: nil, response: nil, data: nil, result: .success("success"))
         completionHandler(response)
