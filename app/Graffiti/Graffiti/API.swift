@@ -60,7 +60,36 @@ class API {
     }
     
     func login(handler: @escaping Handler) {
-        makeRequest("/user/login", method: .get)
+        makeRequest("/user/login", method: .get).responseJSON() { response in
+            switch response.result {
+            case .success:
+                var result : Result<Any>
+                
+                if
+                    // Unwrap JSON
+                    let json = response.result.value as? [String: Any],
+                    let newUser = json["new_user"] as? Bool,
+                    let userJSON = json["user"] as? [String : Any],
+                    let user = User(JSON: userJSON)
+                {
+                    // Form result value
+                    let value : Any = [
+                        "new_user": newUser,
+                        "user": user
+                    ]
+                    result = Result.success(value)
+                } else {
+                    // Failure
+                    result = Result.failure(APIError.misformedAPIResponse)
+                }
+                
+                let newResponse = DataResponse(request: response.request, response: response.response, data: response.data, result: result)
+                handler(newResponse)
+            case .failure:
+                handler(response)
+            }
+            
+        }
     }
     
     //MARK: Post Calls
@@ -116,7 +145,6 @@ class API {
                     // Failure
                     result = Result.failure(error)
                 }
-                
                 
                 let newResponse = DataResponse(request: response.request, response: response.response, data: response.data, result: result)
                 handler(newResponse)
