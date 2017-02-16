@@ -41,6 +41,8 @@
 		D90D7A8F1E4E6C5400FB5AEE /* MockRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90D7A8E1E4E6C5400FB5AEE /* MockRequest.swift */; };
 		D99735A11E4E722F00DA5F29 /* ApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD771E4952330020505D /* ApiTests.swift */; };
 		D99735A21E4E722F00DA5F29 /* FeedViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD791E4952B20020505D /* FeedViewControllerTests.swift */; };
+		D9B5FAEB1E54FF9300DF87B2 /* LocationTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B5FAEA1E54FF9300DF87B2 /* LocationTransform.swift */; };
+		D9B5FAEC1E552E2800DF87B2 /* LocationTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B5FAEA1E54FF9300DF87B2 /* LocationTransform.swift */; };
 		D9E63BA01E4D460900EE6C4B /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E63B9F1E4D460900EE6C4B /* API.swift */; };
 		D9E63BA21E4D496E00EE6C4B /* ManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E63BA11E4D496E00EE6C4B /* ManagerProtocol.swift */; };
 		D9E63BA51E4D555E00EE6C4B /* MockSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E63BA41E4D555E00EE6C4B /* MockSessionManager.swift */; };
@@ -112,6 +114,7 @@
 		B35620C21E4D396400F8CC9E /* PostTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTest.swift; sourceTree = "<group>"; };
 		D90D7A8B1E4E686700FB5AEE /* RequestProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestProtocol.swift; sourceTree = "<group>"; };
 		D90D7A8E1E4E6C5400FB5AEE /* MockRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRequest.swift; sourceTree = "<group>"; };
+		D9B5FAEA1E54FF9300DF87B2 /* LocationTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTransform.swift; sourceTree = "<group>"; };
 		D9E63B9F1E4D460900EE6C4B /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		D9E63BA11E4D496E00EE6C4B /* ManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerProtocol.swift; sourceTree = "<group>"; };
 		D9E63BA41E4D555E00EE6C4B /* MockSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSessionManager.swift; sourceTree = "<group>"; };
@@ -165,6 +168,7 @@
 			children = (
 				AD03CF711E4D5AB2003D3682 /* LocationService.swift */,
 				AD03CF771E4E4C91003D3682 /* LocationManagerProtocol.swift */,
+				D9B5FAEA1E54FF9300DF87B2 /* LocationTransform.swift */,
 			);
 			name = Location;
 			sourceTree = "<group>";
@@ -594,6 +598,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD84BD611E49496D0020505D /* TextPostViewController.swift in Sources */,
+				D9B5FAEB1E54FF9300DF87B2 /* LocationTransform.swift in Sources */,
 				AD84BD631E4949860020505D /* ProfileViewController.swift in Sources */,
 				B33B07D01E4ACA8F007025FB /* User.swift in Sources */,
 				AD84BD5F1E4949260020505D /* FeedTableViewController.swift in Sources */,
@@ -618,6 +623,7 @@
 				AD84BD7E1E4952FB0020505D /* TextPostViewControllerTests.swift in Sources */,
 				F744D4151E4E860400C42677 /* User.swift in Sources */,
 				D90D7A8F1E4E6C5400FB5AEE /* MockRequest.swift in Sources */,
+				D9B5FAEC1E552E2800DF87B2 /* LocationTransform.swift in Sources */,
 				D99735A11E4E722F00DA5F29 /* ApiTests.swift in Sources */,
 				D99735A21E4E722F00DA5F29 /* FeedViewControllerTests.swift in Sources */,
 				D9E63BA51E4D555E00EE6C4B /* MockSessionManager.swift in Sources */,
