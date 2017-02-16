@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import ObjectMapper
 import UIKit
 
 enum UserError: Error, Equatable {
@@ -21,12 +22,12 @@ func ==(lhs: UserError, rhs: UserError) -> Bool {
 }
 
 
-class User {
+class User : Mappable {
     
     //MARK: Properties
     
     // The user's attributes
-    private var id: Int
+    private var id: Int?
     private var username: String?
     private var name: String?
     private var email: String?
@@ -34,12 +35,10 @@ class User {
     private var textTag: String?
     private var imageTag: UIImage?
     
-    
     //MARK: Initialization
     
     init(id: Int, username: String? = nil, name: String? = nil, email: String? = nil, userImage: UIImage? = nil, textTag: String? = nil, imageTag: UIImage? = nil){
         self.id = id
-        
         self.username = username
         self.name = name
         self.email = email
@@ -48,10 +47,27 @@ class User {
         self.imageTag = imageTag
     }
     
+    //MARK: Object Mapping
+    
+    required init?(map: Map) {
+        // ID is required
+        if map.JSON["userid"] == nil {
+            return nil
+        }
+    }
+    
+    func mapping(map: Map) {
+        id       <- map["userid"]
+        username <- map["username"]
+        name     <- map["name"]
+        email    <- map["email"]
+        textTag  <- map["textTag"]
+    }
+    
     //MARK: Getters
     
     public func getId()->Int{
-        return id
+        return id!
     }
     
     public func getUsername()->String?{
