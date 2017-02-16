@@ -61,6 +61,7 @@
                                                 <rect key="frame" x="50" y="0.0" width="50" height="59.5"/>
                                                 <state key="normal" image="spray_can_50"/>
                                                 <connections>
+                                                    <action selector="postGraffiti:" destination="uIs-UI-GOw" eventType="touchUpInside" id="pVB-LK-KA0"/>
                                                     <segue destination="Crc-Th-kfR" kind="show" id="lNh-wD-nt9"/>
                                                 </connections>
                                             </button>

@@ -25,7 +25,14 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         
         postTextView.text = "What's new?"
         postTextView.textColor = UIColor .lightGray
-        postTextView.layer.borderColor = UIColor.blue.cgColor
+        postTextView.layer.borderColor = UIColor.black.cgColor
+        postTextView.layer.borderWidth = 1.0
+        postTextView.layer.cornerRadius = 5.0
+        
+        let manager = CLLocationManager()
+        if CLLocationManager.locationServicesEnabled() {
+            manager.startUpdatingLocation()
+        }
         
     }
 
@@ -34,30 +41,11 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func textViewDidChange(_ textView: UITextView) {
-        
-        let textViewFixedWidth: CGFloat = self.postTextView.frame.size.width
-        let newSize: CGSize = self.postTextView.sizeThatFits(CGSize(textViewFixedWidth, CGFloat(MAXFLOAT)))
-        var newFrame: CGRect = self.postTextView.frame
-        
-        //var textViewYPosition = self.postTextView.frame.origin.y
-        let heightDifference = self.postTextView.frame.height - newSize.height
-        
-        if (abs(heightDifference) > 20) {
-            newFrame.size = CGSize(fmax(newSize.width, textViewFixedWidth), newSize.height)
-            newFrame.offsetBy(dx: 0.0, dy: 0)
-        }
-        self.postTextView.frame = newFrame
-        
-    }
-    
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
         
         let numberOfChars = newText.characters.count
-        
-        //charCount.text = String(140 - numberOfChars)
         
         if(numberOfChars > 140){
             charCount.textColor = UIColor.red
@@ -77,18 +65,29 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
     
     }
     
-    @IBAction func postButton(_ sender: UIButton){
+    @IBAction func postGraffiti(_ sender: UIButton) {
         
-        let locationService = LocationService.sharedInstance
-        let lat = locationService.getLatitude()
-        let long = locationService.getLongitude()
-        let location = CLLocation.init(latitude: lat!, longitude: long!)
+        //let locationService = LocationService.sharedInstance
+        //let lat = locationService.getLatitude()!
+        //let long = locationService.getLongitude()!
+        
+        
+        let lat:Double = 0.0
+        let long:Double = 0.0
+        let location = CLLocation.init(latitude: lat, longitude: long)
         
         let postText = postTextView.text!
         
-        //let newPost:Post = Post(text: postText, location: location)!
+        let newPost:Post = Post(location: location, text: postText)!
         
-        //API.sharedInstance.createPost(post: newPost , handler: <#T##Handler##Handler##(DataResponse<Any>) -> Void#>)
+        API.sharedInstance.createPost(post: newPost){ response in
+            if(response.result.isFailure){
+                print(response.result.debugDescription)
+            }
+        }
+        
+        //print("We did it!")
+        
     }
     
 }
