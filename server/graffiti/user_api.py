@@ -81,19 +81,19 @@ def update_user(userid):
 	if (int(data['userid']) != userid):
 		return generate_error_response(ERR_403_update, 403);
 
+	# Call set functions and update rtn_val
+	rtn_val = True
+
 	# checks if a user with specified username already exists
 	user = db.session.query(User).filter(User.user_id==userid).first()
-	
 	username = data['username']
 	existing = db.session.query(User).filter(User.username==username).first()
 	username_taken = False
 	if (existing):
 		username_taken = True
 	else:
-		user.set_username(username)
-
-	# Call set functions and update rtn_val
-	rtn_val = True
+		rtn_val = rtn_val && user.set_username(username)
+	
 	if (data['name'] != user.get_name()):
 		rtn_val = rtn_val && user.set_name(data['name'])
 
