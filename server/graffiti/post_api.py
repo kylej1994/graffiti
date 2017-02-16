@@ -19,32 +19,48 @@ fake_dict = dict(
 		num_votes=102)
 fake_response = json.dumps(fake_dict)
 
+#string error messages
+ERR_400 = "Post information was invalid."
+ERR_403 = "Post is not owned by user."
+ERR_404 = "Post not found."
+
+def validate_vote(self, vote):
+	return vote == -1 || vote == 1
+
+def validate_text(self, text):
+    return text.size() <= 100
+
+def generate_error_response(message, code):
+	error_response = {}
+	error_response['error'] = message
+	return json.dumps(error_response), code
+
 @post_api.route('/post', methods=['POST'])
 def create_post():
 	# no checking of authentication is happening yet...
-	print 'in create post'
+	data = request.get_json()
 
+	# checks for necessary data params
+	if ('text' not in data or 'location' not in data
+			or 'latitude' not in data['location']
+			or 'longitude' not in data['location']):
+		return generate_error_response(ERR_400, 400);
 
-	""" Commented this out so that frontend can do stuff with the api before
-	it was completely implemented. """
-	# data = request.get_json()
+	# create a new post and add it to the db session
+	text = data['text']
+	lon = data['location']['longitude']
+	lat = data['location']['latitude']
+	user_id = data['user_id'] #ask KYLE
+	google_aud = data['google_aud']
 
-	# # checks for necessary data params
-	# if ('text' not in data or 'location' not in data
-	# 		or 'latitude' not in data['location']
-	# 		or 'longitude' not in data['location']):
-	# 	error_response = {}
-	# 	error_response['error'] = "Post information was invalid."
-	# 	return json.dumps(error_response), 400
+	#validates the text field for the post
+	if (validate_text(text) == False):
+		return generate_error_response(ERR_400, 400); 
 
-	# not exactly sure what the db setup will look like for now but I have a
-	# rough idea based on this SO question: http://stackoverflow.com/questions/13058800/using-flask-sqlalchemy-in-blueprint-models-without-reference-to-the-app?rq=1
-	# and the example flask app with PostGIS github repo here: https://github.com/ryanj/flask-postGIS
+	post = Post(text, lon, lat, user_id, google_aud)
+	post.save_post()
 
-	# would create a new post and add it to the db session here
-
-
-	return fake_response
+	return post.to_json_fields_for_FE(), 200
 
 @post_api.route('/post/<int:postid>', methods=['DELETE'])
 def delete_post(postid):
@@ -54,8 +70,17 @@ def delete_post(postid):
 	# if found, delete it and return success (200)
 	# if found but dif user, return 403
 	# if not found, return 404
+	post = Post.find_post(postid)
 
-	return 'deleted post\n'
+	if (post is None):
+		return generate_error_response(ERR_404, 404);
+
+	if (post.get_user_id() != request.get_json()['user_id']):
+		return generate_error_response(ERR_403, 403);
+
+	post.delete_post()
+
+	return 200
 
 @post_api.route('/post/<int:postid>', methods=['GET'])
 def get_post(postid):
@@ -66,14 +91,15 @@ def get_post(postid):
 	# if found but dif user, return 403
 	# if not found, return 404
 
-	post = db.session.query(Post).filter(Post.post_id==postid).first()
+	post = Post.find_post(postid)
 	
 	if (post is None):
-		error_response = {}
-		error_response['error'] = "Post not found."
-		return json.dumps(error_response), 404
+		return generate_error_response(ERR_404, 404);
 
-	return post.to_json_fields_for_FE()
+	if (post.get_user_id() != request.get_json()['user_id']):
+		return generate_error_response(ERR_403, 403);
+
+	return post.to_json_fields_for_FE(), 200
 
 @post_api.route('/post', methods=['GET'])
 def get_post_by_location():
@@ -82,9 +108,17 @@ def get_post_by_location():
 	# query db for all posts in this area
 	lat = request.args.get('latitude')
 	lon = request.args.get('longitude')
+	radius = 5 #to be changed later
+	posts = Post.find_post_within_loc(lon, lat, radius)
 
-	return json.dumps([fake_dict, fake_dict, fake_dict, fake_dict, fake_dict,
-		fake_dict, fake_dict, fake_dict, fake_dict, fake_dict])
+	#TODO format for returning multiple posts?
+	to_ret = {}
+	index = 0
+	for post in posts:
+		to_ret[index] = post.to_json_fields_for_FE()
+		index += 1
+
+	return json.dumps(to_ret), 200
 
 @post_api.route('/post/<int:postid>/vote', methods=['PUT'])
 def vote_post(postid):
@@ -95,5 +129,9 @@ def vote_post(postid):
 	# already voted on this post
 	# modify accordingly
 	# return postid of post and new num votes
+	vote = int(request.get_json()['vote'])
+	post = Post.find_post(postid)
+	# TODO need to check if user has already voted
+	post.set_vote(vote)
 
-	return fake_response
+	return post.to_json_fields_for_FE(), 200
