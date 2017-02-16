@@ -18,7 +18,7 @@ class User(db.Model):
     google_aud = db.Column(db.String(100), unique=True)
     username = db.Column(db.String(100), unique=True)
     # Presented as 10 digits in a row. Dashes will be removed in validation.
-    phone_number = db.Column(db.String(100), unique=True)
+    phone_number = db.Column(db.String(100))
     name = db.Column(db.String(100))
     email = db.Column(db.String(100), unique=True)
     bio = db.Column(db.String(160))
@@ -26,18 +26,13 @@ class User(db.Model):
     has_been_suspended = db.Column(db.Boolean)
 
     def __init__(self, username, google_aud, phone_number, name, email, bio):
-        self.username = ""
-        self.phone_number = ""
-        # We have not yet implemented the parameter validation methods 
         set_username(username)
-        if (self.validate_phone_number(phone_number)):
-            self.phone_number = phone_number
-
         set_google_aud(google_aud)
-        self.name = name
-        self.email = email
-        self.bio = bio
+        set_phone_number(phone_number)
+        set_name(name)
+        set_email(email)
         self.join_timestamp = datetime.fromtimestamp(time()).isoformat()
+        set_bio(bio)
         self.has_been_suspended = False
 
     def __repr__(self):
@@ -98,13 +93,11 @@ class User(db.Model):
     # No validations implemented
     def set_google_aud(self):
         self.google_aud = google_aud
-        db.session.commit()
 
     # Only alnum or _ in username. Between 3 and 25 chars inclusive.
     def set_username(self, username):
         if (self.validate_username(username)):
             self.username = username
-            db.session.commit()
             return True
         else
             return False
@@ -114,7 +107,6 @@ class User(db.Model):
         new_number = self.validate_phone_number(phone_number)
         if (new_number != None):
             self.phone_number = new_number
-            db.session.commit()
             return True
         else
             return False
@@ -123,7 +115,6 @@ class User(db.Model):
     def set_name(self, name):
         if (validate_name(name)):
             self.name = name
-            db.session.commit()
             return True
         else
             return False
@@ -131,21 +122,31 @@ class User(db.Model):
     # No validations implemented
     def set_bio(self, bio):
         self.bio = bio
-        db.session.commit()
 
     # Only bool
     def set_has_been_suspended(self, suspended):
         if (type(suspended) == types.BooleanType)):
             self.has_been_suspended = suspended
-            db.session.commit()
             return True
         else:
             return False
 
+    # TODO reevaluate this
     def to_json_fields_for_FE(self):
         return json.dumps(dict(
             userid=self.user_id,
             username=self.username,
             name=self.name,
             email=self.email,
-            textTag=self.bio))
+            bio=self.bio))
+
+    # saves the user into the db
+    def save_user(self):
+        db.session.add(self)
+        db.session.commit()
+
+    # deletes the user from the db
+    def delete_user(self):
+        db.session.delete(self)
+        db.session.commit()
+
