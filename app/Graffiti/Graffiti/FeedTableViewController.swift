@@ -11,26 +11,29 @@ import UIKit
 class FeedTableViewController: UITableViewController {
     // reference: https://github.com/uchicago-mobi/mpcs51030-2016-winter-assignment-5-aaizuss/blob/master/Issues/Issues/DataTableViewController.swift
     // activty indicator var
-    // api object
-    
+    let api = API.sharedInstance
+    let locationManager = LocationService.sharedInstance
+    var posts: [Post] = []
     // Property observer
     // variable of posts?
-    
+    var timestamp = ""
     // computed properties
-    // var formatter = NSDateFormatter()
-//    var formattedTimestamp: String {
-//        get {
-//            // code to execute when getting
-//            // The getter must return a value of the same type
-//            let time = NSDate()
-//            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-//            formatter.dateStyle = NSDateFormatterStyle.LongStyle
-//            formatter.timeStyle = .ShortStyle
-//            updateString = "Updated on " + formatter.stringFromDate(time)
-//            return updateString
-//        }
-    
-    
+    var formatter = DateFormatter()
+    var formattedTimestamp: String {
+        get {
+            // code to execute when getting
+            // The getter must return a value of the same type
+            let time = Date()
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+            formatter.dateStyle = DateFormatter.Style.long
+            formatter.timeStyle = .short
+            timestamp = "stamp: " + formatter.string(from: time)
+            return timestamp
+        }
+        set {
+            print("setting date")
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +45,16 @@ class FeedTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
         // make network request
+        let currentLongitude = locationManager.getLongitude()
+        let currentLatitude = locationManager.getLatitude()
+        // todo: safely unwrap the optionals instead of force unwrapping
+        api.getPost(longitude: currentLongitude!, latitude: currentLatitude!, handler: <#T##Handler##Handler##(DataResponse<Any>) -> Void#>)
+        // API.sharedInstance.getPost(id) { response in 
+        // handler stuff here
+        // response.result is an enum, success or failure
+        // case.successful:
+        // case.failure:
+        //}
         // update the posts variable with the response
     }
 
@@ -60,6 +73,15 @@ class FeedTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return 10
+        // let numRows = posts.count
+        // do a check: if 0,
+        // setupEmptyBackgroundView()
+        // tableView.separatorStyle = .none
+        // tableView.backgroundView?.isHidden = false
+        // else
+        // tableView.separatorStyle = .singleLine
+        // tableView.backgroundView?.isHidden = true
+        // then outside of the else return the number of rows
         // return posts.count unless posts is nil (return 0)
     }
 
