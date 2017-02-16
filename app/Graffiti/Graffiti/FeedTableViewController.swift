@@ -57,7 +57,7 @@ class FeedTableViewController: UITableViewController {
             currentLatitude = -87.599954
         }
         
-        api.getPost(longitude: currentLongitude, latitude: currentLatitude) { response in
+        api.getPost(longitude: currentLongitude!, latitude: currentLatitude!) { response in
             switch response.result {
             case .success:
                 print("hello i am in success")
@@ -108,9 +108,18 @@ class FeedTableViewController: UITableViewController {
         let post = posts[indexPath.row]
         cell.textView.text = post.getText()
         cell.votesLabel.text = "\(post.getRating())" // this might be a bad practice'
-        cell.dateLabel.text = post.getTimeAdded()
+        
+        //cell.dateLabel.text = post.getTimeAdded()
+        
+        cell.voteTapAction = { (cell) in
+            print("upvote tapped!")
+            print(tableView.indexPath(for: cell)!.row)
+        }
         return cell
     }
+    
+    //TODO: handle rating... need to somehow identify the post corresponding to the button pressed
+    // api.voteOnPost(postid: 1234, vote: 1)
     
     func refreshFeed(sender: UIRefreshControl) {
         // make a network request
