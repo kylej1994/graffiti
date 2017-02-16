@@ -7,19 +7,26 @@
 //
 
 import UIKit
+import CoreLocation
 
-class TextPostViewController: UIViewController, UITextFieldDelegate {
+class TextPostViewController: UIViewController, UITextViewDelegate {
 
     // MARK: Properties
-    @IBOutlet weak var postTextField: UITextField!
+    
+    @IBOutlet weak var postTextView: UITextView!
     @IBOutlet weak var postButton: UIButton!
     @IBOutlet weak var charCount: UITextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.postTextField.delegate = self
+        self.postTextView.delegate = self
         // Do any additional setup after loading the view.
+        
+        postTextView.text = "What's new?"
+        postTextView.textColor = UIColor .lightGray
+        postTextView.layer.borderColor = UIColor.blue.cgColor
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -27,32 +34,61 @@ class TextPostViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func textViewDidChange(_ textView: UITextField) {
+    func textViewDidChange(_ textView: UITextView) {
         
-        let textViewFixedWidth: CGFloat = self.postTextField.frame.size.width
-        let newSize: CGSize = self.postTextField.sizeThatFits(CGSize(textViewFixedWidth, CGFloat(MAXFLOAT)))
-        var newFrame: CGRect = self.postTextField.frame
+        let textViewFixedWidth: CGFloat = self.postTextView.frame.size.width
+        let newSize: CGSize = self.postTextView.sizeThatFits(CGSize(textViewFixedWidth, CGFloat(MAXFLOAT)))
+        var newFrame: CGRect = self.postTextView.frame
         
-        //var textViewYPosition = self.postTextField.frame.origin.y
-        let heightDifference = self.postTextField.frame.height - newSize.height
+        //var textViewYPosition = self.postTextView.frame.origin.y
+        let heightDifference = self.postTextView.frame.height - newSize.height
         
         if (abs(heightDifference) > 20) {
             newFrame.size = CGSize(fmax(newSize.width, textViewFixedWidth), newSize.height)
             newFrame.offsetBy(dx: 0.0, dy: 0)
         }
-        self.postTextField.frame = newFrame
+        self.postTextView.frame = newFrame
         
     }
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
-        let newLength = (textField.text?.characters.count)! + string.characters.count - range.length
+        let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
         
-        //change the value of the label
-        charCount.text =  String(newLength)
+        let numberOfChars = newText.characters.count
         
-        //return true to allow the change, if you want to limit the number of characters in the text field use something like
-        return newLength <= 140
+        //charCount.text = String(140 - numberOfChars)
+        
+        if(numberOfChars > 140){
+            charCount.textColor = UIColor.red
+            charCount.text = String(140 - numberOfChars)
+        } else {
+            charCount.textColor = UIColor.black
+            charCount.text = String(140 - numberOfChars)
+        }
+        
+        return true
+    }
+    
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        postTextView.text = ""
+        postTextView.textColor = UIColor .black
+    
+    }
+    
+    @IBAction func postButton(_ sender: UIButton){
+        
+        let locationService = LocationService.sharedInstance
+        let lat = locationService.getLatitude()
+        let long = locationService.getLongitude()
+        let location = CLLocation.init(latitude: lat!, longitude: long!)
+        
+        let postText = postTextView.text!
+        
+        //let newPost:Post = Post(text: postText, location: location)!
+        
+        //API.sharedInstance.createPost(post: newPost , handler: <#T##Handler##Handler##(DataResponse<Any>) -> Void#>)
     }
     
 }

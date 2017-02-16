@@ -23,10 +23,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="hBF-3v-Tec">
-                                <rect key="frame" x="16" y="80" width="343" height="108.5"/>
+                                <rect key="frame" x="16" y="80" width="343" height="338"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Bzx-ry-6aM">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="58.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="278.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Graffiti" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YRo-RP-g7L">
                                                 <rect key="frame" x="0.0" y="0.0" width="91.5" height="20.5"/>
@@ -34,28 +34,35 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="What's new?" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="CGE-QE-3S5">
-                                                <rect key="frame" x="0.0" y="28.5" width="343" height="30"/>
-                                                <nil key="textColor"/>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="l2I-57-J9F">
+                                                <rect key="frame" x="0.0" y="28.5" width="343" height="250"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="250" id="KDU-KT-3iD"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="CGE-QE-3S5" secondAttribute="trailing" id="aUL-Td-9KS"/>
+                                            <constraint firstItem="l2I-57-J9F" firstAttribute="leading" secondItem="Bzx-ry-6aM" secondAttribute="leading" id="1xJ-vu-kb1"/>
+                                            <constraint firstAttribute="trailing" secondItem="l2I-57-J9F" secondAttribute="trailing" id="se9-bM-G62"/>
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tY7-8s-6nU">
-                                        <rect key="frame" x="243" y="58.5" width="100" height="50"/>
+                                        <rect key="frame" x="243" y="278.5" width="100" height="59.5"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="140" textAlignment="right" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d0h-Hd-q51">
-                                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="50" height="59.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iNO-b0-fjn">
-                                                <rect key="frame" x="50" y="0.0" width="50" height="50"/>
+                                                <rect key="frame" x="50" y="0.0" width="50" height="59.5"/>
                                                 <state key="normal" image="spray_can_50"/>
+                                                <connections>
+                                                    <segue destination="Crc-Th-kfR" kind="show" id="lNh-wD-nt9"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -67,6 +74,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="QTv-y6-MsM" firstAttribute="top" secondItem="hBF-3v-Tec" secondAttribute="bottom" constant="200" id="bHv-QH-HAt"/>
                             <constraint firstItem="hBF-3v-Tec" firstAttribute="top" secondItem="8Hs-g9-DE6" secondAttribute="bottom" constant="60" id="hnD-dO-lXg"/>
                             <constraint firstItem="hBF-3v-Tec" firstAttribute="leading" secondItem="Ypg-Gq-hxg" secondAttribute="leadingMargin" id="yrQ-Hu-g9r"/>
                             <constraint firstAttribute="trailingMargin" secondItem="hBF-3v-Tec" secondAttribute="trailing" id="zts-Aj-N31"/>
@@ -76,13 +84,21 @@
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="charCount" destination="d0h-Hd-q51" id="7D4-Sc-ARL"/>
-                        <outlet property="postButton" destination="iNO-b0-fjn" id="cgJ-tV-F9G"/>
-                        <outlet property="postTextField" destination="CGE-QE-3S5" id="gxE-B5-uer"/>
+                        <outlet property="postButton" destination="iNO-b0-fjn" id="Ezk-eA-ErV"/>
+                        <outlet property="postTextView" destination="l2I-57-J9F" id="iLr-LZ-1cU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IKt-KO-12X" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1066.4000000000001" y="842.42878560719646"/>
+        </scene>
+        <!--Main-->
+        <scene sceneID="1VY-NW-i3t">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Main" id="Crc-Th-kfR" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HAU-0E-5Zf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-513" y="898"/>
         </scene>
     </scenes>
     <resources>
