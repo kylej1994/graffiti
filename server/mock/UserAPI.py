@@ -5,12 +5,14 @@ from flask import Blueprint, request
 
 user_api = Blueprint('user_api', __name__)
 
-fake_response = json.dumps(dict(
-		userid=1,
-		username='hothjylewis',
-		name="Hot and Bothered",
-		email="comeNfind@me.com",
-		bio="Yum yum yum!"))
+fake_dict = dict(
+	userid=1,
+	username='hothjylewis',
+	name="Hot and Bothered",
+	email="comeNfind@me.com",
+	bio="Yum yum yum!"
+)
+fake_response = json.dumps(fake_dict)
 
 @user_api.route('/user/login', methods=['GET'])
 def user_login():
@@ -23,8 +25,8 @@ def user_login():
 	# return whether its a new user and the associated user object
 
 	return json.dumps(dict(
-		new_user='No',
-		user=fake_response))
+		new_user=False,
+		user=fake_dict))
 
 @user_api.route('/user/<int:userid>', methods=['GET'])
 def get_user(userid):
