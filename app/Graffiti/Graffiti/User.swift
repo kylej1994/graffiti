@@ -61,7 +61,7 @@ class User : Mappable {
         username <- map["username"]
         name     <- map["name"]
         email    <- map["email"]
-        bio  <- map["bio"]
+        bio      <- map["bio"]
     }
     
     //MARK: Getters

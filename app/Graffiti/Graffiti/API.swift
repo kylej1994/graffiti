@@ -31,7 +31,7 @@ class API {
     }
     
     //MARK Private Methods
-    @discardableResult private func makeRequest(_ url: String, method: HTTPMethod, parameters: Parameters? = nil) -> RequestProtocol{
+    @discardableResult private func makeRequest(_ url: String, method: HTTPMethod, parameters: Parameters? = nil, encoding: ParameterEncoding = URLEncoding.default) -> RequestProtocol{
         // Add Authentication token
         let idToken = "idToken" //TODO
         let headers = ["Authorization": "Bearer \(idToken)"]
@@ -41,7 +41,7 @@ class API {
         
         // Make request
         return manager.makeRequest(fullUrl, method: method, parameters: parameters,
-                        encoding: URLEncoding.default, headers: headers)
+                        encoding: encoding, headers: headers)
             .defaultValidate()
     }
     
@@ -52,7 +52,7 @@ class API {
     
     func updateUser(user: User, handler: @escaping UserHandler) {
         let userParams : Parameters = user.toJSON()
-        makeRequest("/user/\(user.getId())", method: .put, parameters: userParams).responseObject(completionHandler: handler)
+        makeRequest("/user/\(user.getId())", method: .put, parameters: userParams, encoding: JSONEncoding.default).responseObject(completionHandler: handler)
     }
     
     func login(handler: @escaping Handler) {
@@ -62,7 +62,7 @@ class API {
     //MARK: Post Calls
     func createPost(post: Post, handler: @escaping PostHandler) {
         let postParams : Parameters = post.toJSON()
-        makeRequest("/post", method: .post, parameters: postParams).responseObject(completionHandler: handler)
+        makeRequest("/post", method: .post, parameters: postParams, encoding: JSONEncoding.default).responseObject(completionHandler: handler)
 
     }
     
@@ -84,6 +84,6 @@ class API {
     
     func voteOnPost(postid: Int, vote: Int, handler: @escaping PostHandler) {
         let parameters = ["vote": vote]
-        makeRequest("/post/\(postid)", method: .put, parameters: parameters).responseObject(completionHandler: handler)
+        makeRequest("/post/\(postid)", method: .put, parameters: parameters, encoding: JSONEncoding.default).responseObject(completionHandler: handler)
     }
 }

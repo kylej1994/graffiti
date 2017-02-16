@@ -10,13 +10,13 @@ fake_response = json.dumps(dict(
 		username='hothjylewis',
 		name="Hot and Bothered",
 		email="comeNfind@me.com",
-		textTag="Yum yum yum!"))
+		bio="Yum yum yum!"))
 
 @user_api.route('/user/login', methods=['GET'])
 def user_login():
 	# no checking of authentication is happening yet...
 	print 'in create user'
-	
+
 	# if this user is a new user
 	# create new User object with next userId and empty strings for other fields
 	# else, login with idToken passed in through header
@@ -30,7 +30,7 @@ def user_login():
 def get_user(userid):
 	# no checking of authentication is happening yet...
 
-	# look for user based on userid 
+	# look for user based on userid
 	# return user object if found
 	# return 404 otherwise
 
@@ -48,7 +48,7 @@ def update_user(userid):
 		error_response['error'] = "User can only update their own information."
 		return json.dumps(error_response), 403
 
-	# look for user based on userId 
+	# look for user based on userId
 	# update and return user object if found
 	# return 404 otherwise
 
