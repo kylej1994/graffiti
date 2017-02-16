@@ -73,8 +73,10 @@ def get_post_by_location():
 	lat = request.args.get('latitude')
 	lon = request.args.get('longitude')
 
-	return json.dumps([fake_dict, fake_dict, fake_dict, fake_dict, fake_dict,
-		fake_dict, fake_dict, fake_dict, fake_dict, fake_dict])
+	return json.dumps(dict(
+		posts=[fake_dict, fake_dict, fake_dict, fake_dict, fake_dict,
+				fake_dict, fake_dict, fake_dict, fake_dict, fake_dict]
+	))
 
 @post_api.route('/post/<int:postid>/vote', methods=['PUT'])
 def vote_post(postid):
