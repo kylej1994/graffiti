@@ -8,8 +8,14 @@
 
 import Foundation
 import Alamofire
+import ObjectMapper
 
 class MockRequest: RequestProtocol {
+    @discardableResult
+    internal func responseObject<T : BaseMappable>(completionHandler: @escaping (DataResponse<T>) -> Void) -> Self {
+        return self
+    }
+
     
     func defaultValidate() -> Self {
         return self

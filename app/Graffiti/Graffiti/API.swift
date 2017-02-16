@@ -8,9 +8,12 @@
 
 import Foundation
 import Alamofire
+import AlamofireObjectMapper
 
 // A completion closure invoked when requests complete
 typealias Handler = (DataResponse<Any>) -> Void
+typealias PostHandler = (DataResponse<Post>) -> Void
+typealias UserHandler = (DataResponse<User>) -> Void
 
 
 // A Service that executes network requests to the Graffiti API
@@ -28,7 +31,7 @@ class API {
     }
     
     //MARK Private Methods
-    private func makeRequest(_ url: String, method: HTTPMethod, parameters: Parameters? = nil, handler: @escaping Handler) {
+    @discardableResult private func makeRequest(_ url: String, method: HTTPMethod, parameters: Parameters? = nil) -> RequestProtocol{
         // Add Authentication token
         let idToken = "idToken" //TODO
         let headers = ["Authorization": "Bearer \(idToken)"]
@@ -37,37 +40,38 @@ class API {
         let fullUrl = baseUrl + url
         
         // Make request
-        manager.makeRequest(fullUrl, method: method, parameters: parameters,
+        return manager.makeRequest(fullUrl, method: method, parameters: parameters,
                         encoding: URLEncoding.default, headers: headers)
-            .defaultValidate().responseJSON(completionHandler: handler)
+            .defaultValidate()
     }
     
     //MARK: User Calls
-    func getUser(userid: Int, handler: @escaping Handler) {
-        makeRequest("/user/\(userid)", method: .get, handler: handler)
+    func getUser(userid: Int, handler: @escaping UserHandler) {
+        makeRequest("/user/\(userid)", method: .get).responseObject(completionHandler: handler)
     }
     
-    func updateUser(user: User, handler: @escaping Handler) {
+    func updateUser(user: User, handler: @escaping UserHandler) {
         let userParams : Parameters = user.toJSON()
-        makeRequest("/user/\(user.getId())", method: .put, parameters: userParams, handler: handler)
+        makeRequest("/user/\(user.getId())", method: .put, parameters: userParams).responseObject(completionHandler: handler)
     }
     
     func login(handler: @escaping Handler) {
-        makeRequest("/user/login", method: .get, handler: handler)
+        makeRequest("/user/login", method: .get)
     }
     
     //MARK: Post Calls
-    func createPost(post: Post, handler: @escaping Handler) {
+    func createPost(post: Post, handler: @escaping PostHandler) {
         let postParams : Parameters = post.toJSON()
-        makeRequest("/post", method: .post, parameters: postParams, handler: handler)
+        makeRequest("/post", method: .post, parameters: postParams).responseObject(completionHandler: handler)
+
     }
     
-    func deletePost(postid: Int, handler: @escaping Handler) {
-        makeRequest("/post/\(postid)", method: .delete, handler: handler)
+    func deletePost(postid: Int, handler: @escaping PostHandler) {
+        makeRequest("/post/\(postid)", method: .delete).responseObject(completionHandler: handler)
     }
     
-    func getPost(postid: Int, handler: @escaping Handler) {
-        makeRequest("/post/\(postid)", method: .get, handler: handler)
+    func getPost(postid: Int, handler: @escaping PostHandler) {
+        makeRequest("/post/\(postid)", method: .get).responseObject(completionHandler: handler)
     }
     
     func getPost(longitude: Double, latitude: Double, handler: @escaping Handler) {
@@ -75,11 +79,11 @@ class API {
             "longitude": longitude,
             "latitude": latitude
         ]
-        makeRequest("/post", method: .get, parameters: parameters, handler: handler)
+        makeRequest("/post", method: .get, parameters: parameters)
     }
     
-    func voteOnPost(postid: Int, vote: Int, handler: @escaping Handler) {
+    func voteOnPost(postid: Int, vote: Int, handler: @escaping PostHandler) {
         let parameters = ["vote": vote]
-        makeRequest("/post/\(postid)", method: .put, parameters: parameters, handler: handler)
+        makeRequest("/post/\(postid)", method: .put, parameters: parameters).responseObject(completionHandler: handler)
     }
 }
