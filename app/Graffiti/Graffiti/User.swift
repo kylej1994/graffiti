@@ -32,18 +32,18 @@ class User : Mappable {
     private var name: String?
     private var email: String?
     private var userImage: UIImage?
-    private var textTag: String?
+    private var bio: String?
     private var imageTag: UIImage?
     
     //MARK: Initialization
     
-    init(id: Int, username: String? = nil, name: String? = nil, email: String? = nil, userImage: UIImage? = nil, textTag: String? = nil, imageTag: UIImage? = nil){
+    init(id: Int, username: String? = nil, name: String? = nil, email: String? = nil, userImage: UIImage? = nil, bio: String? = nil, imageTag: UIImage? = nil){
         self.id = id
         self.username = username
         self.name = name
         self.email = email
         self.userImage = userImage
-        self.textTag = textTag
+        self.bio = bio
         self.imageTag = imageTag
     }
     
@@ -61,7 +61,7 @@ class User : Mappable {
         username <- map["username"]
         name     <- map["name"]
         email    <- map["email"]
-        textTag  <- map["textTag"]
+        bio  <- map["bio"]
     }
     
     //MARK: Getters
@@ -86,8 +86,8 @@ class User : Mappable {
         return userImage
     }
     
-    public func getTextTag() -> String?{
-        return textTag
+    public func getBio() -> String?{
+        return bio
     }
     
     public func getImageTag() -> UIImage?{
@@ -120,7 +120,7 @@ class User : Mappable {
         self.imageTag = TImage
     }
     
-    public func setImage(_ textTag: String){
-        self.textTag = textTag
+    public func setBio(_ bio: String){
+        self.bio = bio
     }
 }

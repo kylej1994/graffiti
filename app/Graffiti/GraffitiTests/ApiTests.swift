@@ -33,7 +33,7 @@ class ApiTests: XCTestCase {
     }
     
     func testUpdateUser() {
-        let user = User(id: 1234, username: "username", name: "name", email: "email", textTag: "textTag")
+        let user = User(id: 1234, username: "username", name: "name", email: "email", bio: "bio")
         
         api.updateUser(user: user) { (_) in }
         
@@ -45,7 +45,7 @@ class ApiTests: XCTestCase {
         XCTAssertEqual(session.lastParameters?["username"] as! String, "username")
         XCTAssertEqual(session.lastParameters?["name"] as! String, "name")
         XCTAssertEqual(session.lastParameters?["email"] as! String, "email")
-        XCTAssertEqual(session.lastParameters?["textTag"] as! String, "textTag")
+        XCTAssertEqual(session.lastParameters?["bio"] as! String, "bio")
         
         let token = session.lastHeaders?["Authorization"]
         XCTAssertNotNil(token)
