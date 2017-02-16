@@ -112,11 +112,13 @@ def get_post_by_location():
 	posts = Post.find_post_within_loc(lon, lat, radius)
 
 	#TODO format for returning multiple posts?
-	to_ret = []
+	to_ret = {}
+	index = 0
 	for post in posts:
-		to_ret += post.to_json_fields_for_FE()
+		to_ret[index] = post.to_json_fields_for_FE()
+		index += 1
 
-	return to_ret
+	return json.dumps(to_ret), 200
 
 @post_api.route('/post/<int:postid>/vote', methods=['PUT'])
 def vote_post(postid):
