@@ -56,6 +56,8 @@ class FeedTableViewController: UITableViewController {
         // case.failure:
         //}
         // update the posts variable with the response
+        // add refresh control
+        self.refreshControl?.addTarget(self, action: #selector(refreshFeed), for: .valueChanged)
     }
 
     override func didReceiveMemoryWarning() {
@@ -102,7 +104,14 @@ class FeedTableViewController: UITableViewController {
         return cell
     }
     
-    //refresh table function
+    func refreshFeed(sender: UIRefreshControl) {
+        // make a network request
+        // update posts array
+        print("we will refresh here")
+        self.tableView.reloadData()
+        refreshControl?.endRefreshing()
+        timestamp = self.formattedTimestamp
+    }
 
     /*
     // Override to support conditional editing of the table view.
