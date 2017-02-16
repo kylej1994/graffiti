@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import MapKit
+import ObjectMapper
 import CoreLocation
 
 enum PostError: Error, Equatable {
@@ -34,54 +35,46 @@ enum VisType {
 
 let defaultLifetime = 24
 
-class Post {
+class Post : Mappable {
     
     //MARK: Properties
     
-    // The post's unique postID
-    private var ID: Int
+    // Required
+    private var ID: Int!
+    private var location: CLLocation! // The post's unique postID
     
     // The text and image associated with this post
-    private var text: String
+    private var text: String = ""
     private var image: UIImage?
     
     // Other properties...
-    private var rating: Int
-    private var timeAdded: NSDate?
-    private var location: CLLocation
+    private var rating: Int = 0
+    private var timeAdded: Date?
     
     // User-specific properties STATUS: waiting for brach merges
     //private var user: User
-    private var includeTag: Bool
+    private var includeTag: Bool = false
     
-    private var visibilityType: VisType
-    private var lifetime: Int
+    private var visibilityType: VisType = .Public
+    private var lifetime: Int = defaultLifetime
     
-    private var reported: Bool
+    private var reported: Bool = false
     
     //MARK: Initialization
     
-    init?(ID: Int, text: String = "", image: UIImage? = nil, timeAdded: NSDate? = nil,
-          location: CLLocation, /*user: User,*/ includeTag: Bool = false,
+    init?(ID: Int, location: CLLocation,
+          text: String = "", image: UIImage? = nil,
+          timeAdded: Date? = nil, includeTag: Bool = false,
           visibilityType: VisType = .Public, lifetime: Int = defaultLifetime){
         
         // Initialize all the things!
         self.ID = ID
-        self.text = text
-
-        self.image = image
-
-        
-        self.rating = 0
-        self.timeAdded = timeAdded
         self.location = location
         
-        //self.user = user
+        self.image = image
+        self.timeAdded = timeAdded
         self.includeTag = includeTag
-        
         self.visibilityType = visibilityType
-        self.lifetime = defaultLifetime
-        self.reported = false
         
         // We still need to check the above values
         do{
@@ -98,6 +91,26 @@ class Post {
             return nil
         }
         
+    }
+    
+    //MARK: Object Mapping
+    
+    required init?(map: Map) {
+        // ID is required
+        if map.JSON["postid"] == nil {
+            return nil
+        }
+        if map.JSON["location"] == nil {
+            return nil
+        }
+    }
+    
+    func mapping(map: Map) {
+        ID        <- map["postid"]
+        text      <- map["text"]
+        location  <- (map["location"], LocationTransform())
+        timeAdded <- (map["created_at"], DateTransform())
+        rating    <- map["num_votes"]
     }
     
     //MARK: Getters
@@ -117,7 +130,7 @@ class Post {
         return rating
     }
     
-    public func getTimeAdded()->NSDate?{
+    public func getTimeAdded()->Date?{
         return timeAdded
     }
     
@@ -156,7 +169,7 @@ class Post {
         self.rating = rating
     }
     
-    public func setTimeAdded(_ time:NSDate){
+    public func setTimeAdded(_ time:Date){
         self.timeAdded = time
     }
     
