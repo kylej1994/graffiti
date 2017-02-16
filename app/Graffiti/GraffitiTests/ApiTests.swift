@@ -108,12 +108,12 @@ class ApiTests: XCTestCase {
         XCTAssertNotNil(token)
     }
     
-    func testGetPostByLocation() {
+    func testGetPostsByLocation() {
         let location: [String : Double] = [
             "longitude": 10,
             "latitude": 10
         ]
-        api.getPost(longitude: location["longitude"]!, latitude: location["latitude"]!) { (_) in }
+        api.getPosts(longitude: location["longitude"]!, latitude: location["latitude"]!) { (_) in }
         
         let url = session.lastURL as? String
         XCTAssertEqual(url, "/post")

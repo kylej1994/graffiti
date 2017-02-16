@@ -15,6 +15,10 @@ typealias Handler = (DataResponse<Any>) -> Void
 typealias PostHandler = (DataResponse<Post>) -> Void
 typealias UserHandler = (DataResponse<User>) -> Void
 
+enum APIError: Error {
+    case misformedAPIResponse
+}
+
 
 // A Service that executes network requests to the Graffiti API
 // For more information about API endpoints see
@@ -73,12 +77,54 @@ class API {
         makeRequest("/post/\(postid)", method: .get).responseObject(completionHandler: handler)
     }
     
-    func getPost(longitude: Double, latitude: Double, handler: @escaping Handler) {
+    func getPosts(longitude: Double, latitude: Double, handler: @escaping Handler) {
         let parameters = [
             "longitude": longitude,
             "latitude": latitude
         ]
-        makeRequest("/post", method: .get, parameters: parameters)
+        makeRequest("/post", method: .get, parameters: parameters).responseJSON() { response in
+            switch response.result {
+            case .success:
+                var result : Result<Any>
+                do {
+                    // Unwrap JSON
+                    guard
+                        let json = response.result.value as? [String: Any],
+                        let posts = json["posts"] as? [Any]
+                    else{
+                        throw APIError.misformedAPIResponse
+                    }
+
+                    // Map to Post Objects
+                    let postObjects = try posts.map() { (post) -> Post in
+                        if
+                            let postJSON = post as? [String : Any],
+                            let postObject = Post(JSON: postJSON)
+                        {
+                            return postObject
+                        } else {
+                              throw APIError.misformedAPIResponse
+                        }
+                    }
+                    
+                    // Form result value
+                    let value : Any = [
+                        "posts": postObjects
+                    ]
+                    result = Result.success(value)
+                } catch(let error) {
+                    // Failure
+                    result = Result.failure(error)
+                }
+                
+                
+                let newResponse = DataResponse(request: response.request, response: response.response, data: response.data, result: result)
+                handler(newResponse)
+            case .failure:
+                handler(response)
+            }
+           
+        }
     }
     
     func voteOnPost(postid: Int, vote: Int, handler: @escaping PostHandler) {
