@@ -45,17 +45,28 @@ class FeedTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
         // make network request
-        let currentLongitude = locationManager.getLongitude()
-        let currentLatitude = locationManager.getLatitude()
-        // todo: safely unwrap the optionals instead of force unwrapping
-        api.getPost(longitude: currentLongitude!, latitude: currentLatitude!, handler: <#T##Handler##Handler##(DataResponse<Any>) -> Void#>)
-        // API.sharedInstance.getPost(id) { response in 
-        // handler stuff here
-        // response.result is an enum, success or failure
-        // case.successful:
-        // case.failure:
-        //}
-        // update the posts variable with the response
+        var currentLongitude = locationManager.getLongitude()
+        var currentLatitude = locationManager.getLatitude()
+        if var currentLongitude = currentLongitude {
+            print("long exists")
+        } else {
+            currentLongitude = 41.792279
+        }
+        if var currentLatitude = currentLatitude {
+            print("lat exists")
+        } else {
+            currentLatitude = -87.599954
+        }
+        
+        api.getPost(longitude: currentLongitude, latitude: currentLatitude) { response in
+            switch response.result {
+            case .success:
+                print("hello i am in success")
+                self.posts = response.result.value as! [Post]
+            case .failure(let error):
+                print(error)
+            }
+        }
         // add refresh control
         self.refreshControl?.addTarget(self, action: #selector(refreshFeed), for: .valueChanged)
     }
@@ -68,23 +79,20 @@ class FeedTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 10
-        // let numRows = posts.count
-        // do a check: if 0,
-        // setupEmptyBackgroundView()
-        // tableView.separatorStyle = .none
-        // tableView.backgroundView?.isHidden = false
-        // else
-        // tableView.separatorStyle = .singleLine
-        // tableView.backgroundView?.isHidden = true
-        // then outside of the else return the number of rows
-        // return posts.count unless posts is nil (return 0)
+        let numRows = posts.count
+        if numRows == 0 {
+            setupEmptyBackgroundView()
+            tableView.separatorStyle = .none
+            tableView.backgroundView?.isHidden = false
+        } else {
+            tableView.separatorStyle = .singleLine
+            tableView.backgroundView?.isHidden = true
+        }
+        return numRows
     }
 
     
@@ -98,9 +106,9 @@ class FeedTableViewController: UITableViewController {
         }
         
         // this is where we get the posts from the post model
-        // let post = posts[indexPath.row]
-        // cell.textView.text = whatever
-
+        let post = posts[indexPath.row]
+        cell.textView.text = post.getText()
+        cell.votesLabel.text = "\(post.getRating())" // this might be a bad practice
         return cell
     }
     
