@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import CoreLocation //see if i can delete
 class FeedTableViewController: UITableViewController {
     // reference: https://github.com/uchicago-mobi/mpcs51030-2016-winter-assignment-5-aaizuss/blob/master/Issues/Issues/DataTableViewController.swift
     // activty indicator var
@@ -33,6 +33,36 @@ class FeedTableViewController: UITableViewController {
             print("setting date")
         }
     }
+    var currentLatitude: CLLocationDegrees? = CLLocationDegrees()
+    var currentLongitude: CLLocationDegrees? = CLLocationDegrees()
+    
+    func getPostsByLocation() {
+        // make network request
+        currentLongitude = locationManager.getLongitude()
+        currentLatitude = locationManager.getLatitude()
+        if currentLongitude == nil {
+            print("long was nil so setting to default")
+            currentLongitude = 41.792279
+        }
+        if currentLatitude == nil {
+            print("lat was nil so setting to default")
+            currentLatitude = -87.599954
+        }
+        
+        api.getPosts(longitude: currentLongitude!, latitude: currentLatitude!) { response in
+            switch response.result {
+            case .success:
+                print("hello i am in success")
+                if let json = response.result.value as? [String:Any],
+                    let posts = json["posts"] as? [Post] {
+                    print(posts)
+                    self.posts = posts
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,30 +72,8 @@ class FeedTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
-        // make network request
-        var currentLongitude = locationManager.getLongitude()
-        var currentLatitude = locationManager.getLatitude()
-        if var currentLongitude = currentLongitude {
-            print("long exists")
-        } else {
-            currentLongitude = 41.792279
-        }
-        if var currentLatitude = currentLatitude {
-            print("lat exists")
-        } else {
-            currentLatitude = -87.599954
-        }
-        
-        api.getPost(longitude: currentLongitude!, latitude: currentLatitude!) { response in
-            switch response.result {
-            case .success:
-                print("hello i am in success")
-                self.posts = response.result.value as! [Post]
-            case .failure(let error):
-                print(error)
-            }
-        }
+        getPostsByLocation()
+
         // add refresh control
         self.refreshControl?.addTarget(self, action: #selector(refreshFeed), for: .valueChanged)
     }
@@ -125,6 +133,7 @@ class FeedTableViewController: UITableViewController {
         // make a network request
         // update posts array
         print("we will refresh here")
+        getPostsByLocation()
         self.tableView.reloadData()
         refreshControl?.endRefreshing()
         timestamp = self.formattedTimestamp
