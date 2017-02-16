@@ -28,7 +28,7 @@ class Post(db.Model):
         self.longitude = longitude
         self.latitude = latitude
         self.created_at = datetime.fromtimestamp(time()).isoformat()
-        self.poster_username = posted_id
+        self.poster_id = posted_id
         self.poster_aud = poster_aud
         self.num_votes = 0
 
@@ -36,6 +36,7 @@ class Post(db.Model):
         return '<post_id {}>'.format(self.post_id)
 
     def to_json_fields_for_FE(self):
+        user = db.session.query(User).filter(User.user_id==self.poster_id).first()
         return json.dumps(dict(
             postid=self.post_id,
             text=self.text,
@@ -43,7 +44,7 @@ class Post(db.Model):
                 longitude=self.longitude,
                 latitude=self.latitude),
             created_at=str(self.created_at),
-            posterid=poster_id,
+            poster=user.to_json_fields_for_FE()
             num_votes=self.num_votes))
 
     def get_poster_id(self):
@@ -60,7 +61,7 @@ class Post(db.Model):
         db.session.commit()
 
     # applies the vote to the post
-    def apply_vote(self, vote):
+    def set_vote(self, vote):
         self.num_votes += vote
         db.session.commit()
 

@@ -19,6 +19,22 @@ fake_dict = dict(
 		num_votes=102)
 fake_response = json.dumps(fake_dict)
 
+#string error messages
+ERR_400 = "Post information was invalid."
+ERR_403 = "Post is not owned by user."
+ERR_404 = "Post not found."
+
+def validate_vote(self, vote):
+	return vote == -1 || vote == 1
+
+def validate_text(self, text):
+    return text.size() <= 100
+
+def generate_error_response(message, code):
+	error_response = {}
+	error_response['error'] = message
+	return json.dumps(error_response), code
+
 @post_api.route('/post', methods=['POST'])
 def create_post():
 	# no checking of authentication is happening yet...
@@ -28,13 +44,7 @@ def create_post():
 	if ('text' not in data or 'location' not in data
 			or 'latitude' not in data['location']
 			or 'longitude' not in data['location']):
-		error_response = {}
-		error_response['error'] = "Post information was invalid."
-		return json.dumps(error_response), 400
-
-	# not exactly sure what the db setup will look like for now but I have a
-	# rough idea based on this SO question: http://stackoverflow.com/questions/13058800/using-flask-sqlalchemy-in-blueprint-models-without-reference-to-the-app?rq=1
-	# and the example flask app with PostGIS github repo here: https://github.com/ryanj/flask-postGIS
+		return generate_error_response(ERR_400, 400);
 
 	# create a new post and add it to the db session
 	text = data['text']
@@ -42,6 +52,11 @@ def create_post():
 	lat = data['location']['latitude']
 	user_id = data['user_id'] #ask KYLE
 	google_aud = data['google_aud']
+
+	#validates the text field for the post
+	if (validate_text(text) == False):
+		return generate_error_response(ERR_400, 400); 
+
 	post = Post(text, lon, lat, user_id, google_aud)
 	post.save_post()
 
@@ -58,14 +73,10 @@ def delete_post(postid):
 	post = Post.find_post(postid)
 
 	if (post is None):
-		error_response = {}
-		error_response['error'] = "Post not found."
-		return json.dumps(error_response), 404
+		return generate_error_response(ERR_404, 404);
 
 	if (post.get_user_id() != request.get_json()['user_id']):
-		error_response = {}
-		error_response['error'] = "Post is not owned by user."
-		return json.dumps(error_response), 403
+		return generate_error_response(ERR_403, 403);
 
 	post.delete_post()
 
@@ -83,14 +94,10 @@ def get_post(postid):
 	post = Post.find_post(postid)
 	
 	if (post is None):
-		error_response = {}
-		error_response['error'] = "Post not found."
-		return json.dumps(error_response), 404
+		return generate_error_response(ERR_404, 404);
 
 	if (post.get_user_id() != request.get_json()['user_id']):
-		error_response = {}
-		error_response['error'] = "Post is not owned by user."
-		return json.dumps(error_response), 403
+		return generate_error_response(ERR_403, 403);
 
 	return post.to_json_fields_for_FE(), 200
 
@@ -123,6 +130,6 @@ def vote_post(postid):
 	vote = int(request.get_json()['vote'])
 	post = Post.find_post(postid)
 	# TODO need to check if user has already voted
-	post.apply_vote(vote)
+	post.set_vote(vote)
 
 	return post.to_json_fields_for_FE(), 200
