@@ -29,7 +29,7 @@ class API {
     //MARK Private Methods
     private func makeRequest(_ url: URLConvertible, method: HTTPMethod, parameters: Parameters? = nil, handler: @escaping Handler) {
         // Add Authentication token
-        let idToken = "idToken" //TODO
+        let idToken = "idToken" //TODO 
         let headers = ["Authorization": "Bearer \(idToken)"]
         
         // Make request

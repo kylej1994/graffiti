@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
     // [END appdelegate_interfaces]
     var window: UIWindow?
-    var currentUser: GIDGoogleUser!
+    var currentUser: User?
     
     
     // [START didfinishlaunching]
@@ -62,15 +62,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             
             // We have sucesfully signed in a User 
             
-            currentUser = GIDSignIn.sharedInstance().currentUser
-          // API.sharedInstance.login()
+          //  currentUser = GIDSignIn.sharedInstance().currentUser
+           API.sharedInstance.login() { res in
+        // Handler 
+        // response.request 
+        // response.response 
+        //response.result -> enum either success or failure , 200-299 success otherwise failure 
+        //res.result.value -> actual value
+         //   switch res.result {
+      //      case.succesful:
+        //    case.failure
+                
             
+     //   }
+        
             // Perform any operations on signed in user here.
             
             
          //   let userId = user.userID                  // For client-side use only!
            // let idToken = user.authentication.idToken // Safe to send to the server
-           // let fullName = user.profile.name
+            let fullName = user.profile.name
             //let givenName = user.profile.givenName
             //let familyName = user.profile.familyName
             //let email = user.profile.email
@@ -79,7 +90,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             NotificationCenter.default.post(
                 name: Notification.Name(rawValue: "ToggleAuthUINotification"),
                 object: nil,
-                userInfo: ["statusText": "Signed in user:\(currentUser.profile.name!)"])
+                userInfo: ["statusText": "Signed in user:\(fullName!)"])
             // [END_EXCLUDE]
         }
     }
