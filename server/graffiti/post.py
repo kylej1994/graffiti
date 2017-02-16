@@ -28,7 +28,7 @@ class Post(db.Model):
         self.longitude = longitude
         self.latitude = latitude
         self.created_at = datetime.fromtimestamp(time()).isoformat()
-        self.poster_username = posted_id
+        self.poster_id = posted_id
         self.poster_aud = poster_aud
         self.num_votes = 0
 
@@ -36,6 +36,7 @@ class Post(db.Model):
         return '<post_id {}>'.format(self.post_id)
 
     def to_json_fields_for_FE(self):
+        user = db.session.query(User).filter(User.user_id==self.poster_id).first()
         return json.dumps(dict(
             postid=self.post_id,
             text=self.text,
@@ -43,5 +44,42 @@ class Post(db.Model):
                 longitude=self.longitude,
                 latitude=self.latitude),
             created_at=str(self.created_at),
-            posterid=poster_id,
+            poster=user.to_json_fields_for_FE()
             num_votes=self.num_votes))
+
+    def get_poster_id(self):
+        return self.poster_id;
+
+    # saves the post into the db
+    def save_post(self):
+        db.session.add(self)
+        db.session.commit()
+
+    # deletes the post from the db
+    def delete_post(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    # applies the vote to the post
+    def set_vote(self, vote):
+        self.num_votes += vote
+        db.session.commit()
+
+    # finds a post given a post id
+    # returns None if post_id is not in the db
+    # NOTE will this conflict with the namespace of the DB model???
+    @staticmethod
+    def find_post(postid):
+        return db.session.query(Post).filter(Post.post_id==postid).first()
+
+    # finds posts within a certain radius of a coordinate
+    @staticmethod
+    def find_posts_within_loc(lon, lat, radius):
+        distance = radius * 0.014472 #convert to degrees
+        center_point = Point(lon, lat)
+        wkb_element = from_shape(center_point)
+        posts = db.session.query(Post).filter(func.ST_DFullyWithin(\
+            Point(Post.longitude, Post.latitude), wkb_element, distance)).all()
+        return posts
+
+

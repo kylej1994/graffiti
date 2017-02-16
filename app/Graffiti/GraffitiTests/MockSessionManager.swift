@@ -15,9 +15,9 @@ class MockSessionManager: ManagerProtocol {
     var lastMethod: HTTPMethod?
     var lastParameters: Parameters?
     
-    func makeRequest(_ url: URLConvertible, method: HTTPMethod, parameters: Parameters?,
+    func makeRequest(_ url: String, method: HTTPMethod, parameters: Parameters?,
                  encoding: ParameterEncoding, headers: HTTPHeaders?)  -> RequestProtocol {
-        lastURL = url
+        lastURL = URL(string: url)?.path
         lastHeaders = headers
         lastMethod = method
         lastParameters = parameters
