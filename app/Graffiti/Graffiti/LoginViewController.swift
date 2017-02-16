@@ -104,7 +104,18 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         label.text = "Disconnecting."
     }
     
-   
+    func newuser(newuser: Dictionary<String, Any>) {
+        let nu = newuser["new_user"]
+        if (nu as? Bool == true) {
+          self.btnNewsFeed.isHidden = false
+        }
+        else {
+         //create textbox and call update user with setting new username
+        }
+        
+    
+    }
+    
     
   
     
