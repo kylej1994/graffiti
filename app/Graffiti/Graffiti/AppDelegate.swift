@@ -63,7 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             // We have sucesfully signed in a User 
             
           //  currentUser = GIDSignIn.sharedInstance().currentUser
-           API.sharedInstance.login() { res in
+         //  API.sharedInstance.login() { res in
         // Handler 
         // response.request 
         // response.response 
