@@ -14,9 +14,8 @@ class FeedTableViewController: UITableViewController {
     let api = API.sharedInstance
     let locationManager = LocationService.sharedInstance
     var posts: [Post] = []
-    // Property observer
-    // variable of posts?
-    var timestamp = ""
+
+    var timestamp = "time ago"
     // computed properties
     var formatter = DateFormatter()
     var formattedTimestamp: String {
@@ -108,7 +107,8 @@ class FeedTableViewController: UITableViewController {
         // this is where we get the posts from the post model
         let post = posts[indexPath.row]
         cell.textView.text = post.getText()
-        cell.votesLabel.text = "\(post.getRating())" // this might be a bad practice
+        cell.votesLabel.text = "\(post.getRating())" // this might be a bad practice'
+        cell.dateLabel.text = post.getTimeAdded()
         return cell
     }
     
