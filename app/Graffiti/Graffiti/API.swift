@@ -57,9 +57,9 @@ class API {
     }
     
     //MARK: Post Calls
-    // todo
-    func createPost(post: Parameters, handler: @escaping Handler) { //TODO
-        makeRequest("/post", method: .post, parameters: post, handler: handler)
+    func createPost(post: Post, handler: @escaping Handler) {
+        let postParams : Parameters = post.toJSON()
+        makeRequest("/post", method: .post, parameters: postParams, handler: handler)
     }
     
     func deletePost(postid: Int, handler: @escaping Handler) {

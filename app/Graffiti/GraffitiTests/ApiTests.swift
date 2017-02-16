@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import CoreLocation
 
 class ApiTests: XCTestCase {
     let session = MockSessionManager()
@@ -65,22 +66,19 @@ class ApiTests: XCTestCase {
     //MARK: Post Call Tests
     
     func testCreatePost() {
-        let post = [
-            "text": "this is a post",
-            "location": [
-                "longitude": 10.0,
-                "latitude": 10.0
-            ]
-        ] as [String : Any]
+        let location = CLLocation.init(latitude: 10.0, longitude: 10.0)
+        let post = Post(location: location, text: "this is a post")
         
-        api.createPost(post: post) { (_) in }
+        api.createPost(post: post!) { (_) in }
         
         let url = session.lastURL as? String
-        XCTAssertEqual(url, "/post")
+        let locationParam = session.lastParameters?["location"] as! [String : Double]
         
+        XCTAssertEqual(url, "/post")
         XCTAssertEqual(session.lastMethod, .post)
-        XCTAssertEqual(session.lastParameters?["text"] as! String, post["text"] as! String)
-        XCTAssertEqual(session.lastParameters?["location"] as! [String : Double], post["location"] as! [String : Double])
+        XCTAssertEqual(session.lastParameters?["text"] as! String, "this is a post")
+        XCTAssertEqual(locationParam["latitude"], 10.0)
+        XCTAssertEqual(locationParam["longitude"], 10.0)
         
         let token = session.lastHeaders?["Authorization"]
         XCTAssertNotNil(token)
