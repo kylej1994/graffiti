@@ -39,9 +39,8 @@ class Post : Mappable {
     
     //MARK: Properties
     
-    // Required
-    private var ID: Int!
-    private var location: CLLocation! // The post's unique postID
+    private var ID: Int? // The post's unique postID
+    private var location: CLLocation?
     
     // The text and image associated with this post
     private var text: String = ""
@@ -62,7 +61,7 @@ class Post : Mappable {
     
     //MARK: Initialization
     
-    init?(ID: Int, location: CLLocation,
+    init?(ID: Int? = nil, location: CLLocation? = nil,
           text: String = "", image: UIImage? = nil,
           timeAdded: Date? = nil, includeTag: Bool = false,
           visibilityType: VisType = .Public, lifetime: Int = defaultLifetime){
@@ -100,6 +99,7 @@ class Post : Mappable {
         if map.JSON["postid"] == nil {
             return nil
         }
+        // Location is required
         if map.JSON["location"] == nil {
             return nil
         }
@@ -114,7 +114,7 @@ class Post : Mappable {
     }
     
     //MARK: Getters
-    public func getID()->Int{
+    public func getID()->Int?{
         return ID
     }
     
@@ -134,7 +134,7 @@ class Post : Mappable {
         return timeAdded
     }
     
-    public func getLocation()->CLLocation{
+    public func getLocation()->CLLocation?{
         return location
     }
     
