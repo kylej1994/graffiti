@@ -63,7 +63,6 @@ class API {
     func createPost(post: Post, handler: @escaping PostHandler) {
         let postParams : Parameters = post.toJSON()
         makeRequest("/post", method: .post, parameters: postParams, encoding: JSONEncoding.default).responseObject(completionHandler: handler)
-
     }
     
     func deletePost(postid: Int, handler: @escaping PostHandler) {
@@ -84,6 +83,6 @@ class API {
     
     func voteOnPost(postid: Int, vote: Int, handler: @escaping PostHandler) {
         let parameters = ["vote": vote]
-        makeRequest("/post/\(postid)", method: .put, parameters: parameters, encoding: JSONEncoding.default).responseObject(completionHandler: handler)
+        makeRequest("/post/\(postid)/vote", method: .put, parameters: parameters, encoding: JSONEncoding.default).responseObject(completionHandler: handler)
     }
 }
