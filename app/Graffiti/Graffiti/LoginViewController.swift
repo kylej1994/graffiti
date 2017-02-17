@@ -8,15 +8,19 @@
 
 import UIKit
 
-class ViewController: UIViewController, GIDSignInUIDelegate {
+class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDelegate {
     
     var btnSignIn : UIButton!
     var btnSignOut : UIButton!
     var btnDisconnect : UIButton!
     var label : UILabel!
     var welcome : UILabel!
+    var loginerror : UILabel!
+    var untoolong : UILabel!
     var logo : UIImageView!
     @IBOutlet var btnNewsFeed: UIButton!
+    @IBOutlet weak var usertextnew: UITextField!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +29,8 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
          self.view.backgroundColor = UIColor.black
         
         GIDSignIn.sharedInstance().uiDelegate = self
+        self.usertextnew.delegate = self
+    
         
         
         logo = UIImageView(frame: CGRect(0, 0, 150, 150))
@@ -72,6 +78,28 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         welcome.textAlignment = NSTextAlignment.center
         view.addSubview(welcome)
         
+        loginerror = UILabel(frame: CGRect(0,0,200,100))
+        loginerror.text = "There Was an Error Connectting to Account, Idtoken from Google is Missing"
+        loginerror.numberOfLines = 4 //Multi-lines
+        loginerror.font = loginerror.font.withSize(10)
+        loginerror.center = CGPoint(view.center.x, 250)
+        loginerror.textColor = UIColor.red
+        loginerror.textAlignment = NSTextAlignment.center
+        view.addSubview(loginerror)
+        
+        untoolong = UILabel(frame: CGRect(0,0,200,100))
+        untoolong.text = "The Username you have entered is too long. It must be under 100 characters"
+        untoolong.numberOfLines = 4 //Multi-lines
+        untoolong.font = loginerror.font.withSize(10)
+        untoolong.center = CGPoint(view.center.x, 400)
+        untoolong.textColor = UIColor.red
+        untoolong.textAlignment = NSTextAlignment.center
+        view.addSubview(untoolong)
+        
+        loginerror.isHidden = true
+        usertextnew.isHidden = true
+        untoolong.isHidden = true
+        
         
         
         label = UILabel(frame: CGRect(0,0,200,100))
@@ -87,8 +115,25 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         
         toggleAuthUI()
         
+
+}
+    
+    
+    
+    private func textViewDidBeginEditing(_ textView: UITextView) {
+        usertextnew.text = ""
+        usertextnew.textColor = UIColor .black
+        
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // Hide the keyboard.
+        textField.resignFirstResponder()
+        return true
+    }
+
+    
+
     func btnSignInPressed(_ sender: UIButton) {
         GIDSignIn.sharedInstance().signIn()
     }
@@ -106,14 +151,59 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
     
     func newuser(newuser: Dictionary<String, Any>) {
         let nu = newuser["new_user"]
-        if (nu as? Bool == true) {
+        if (nu as? Bool == false) {
+            print("current user already there")
+        usertextnew.isHidden = true
+         self.welcome.isHidden = true
           self.btnNewsFeed.isHidden = false
+            
+            
         }
         else {
-         //create textbox and call update user with setting new username
-        }
+        print ("new user")
+        self.btnNewsFeed.isHidden = true
+        self.welcome.isHidden = false
+        untoolong.text = "You Must Enter a Username"
+        untoolong.isHidden = false
+        let user = newuser["user"] as! User
+        // setting current user
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+         appDelegate.currentUser = user
+        print(user.getUsername())
+         usertextnew.isHidden = false
+         usertextnew.becomeFirstResponder()
+         let username = usertextnew.text!
+            print(username)
+            do {
+                try user.setUsername(username)
+                
+            } catch{
+                untoolong.isHidden = false
+                
+            }
+            API.sharedInstance.updateUser(user: user) { res in
+                
+                switch res.result{
+                case.success:
+                    self.usertextnew.isHidden = true
+                    self.untoolong.isHidden = true
+                    self.welcome.isHidden = true
+                    self.btnNewsFeed.isHidden = false
+                    print("why")
+                    
+                case.failure:
+                    self.untoolong.text = "Please Re-enter a new Username. That Username is already taken"
+                    self.untoolong.isHidden = false
+                }
+            }
+            
+    }
         
     
+    }
+    
+    func showerrorlabel(){
+        loginerror.isHidden = false
     }
     
     
@@ -123,11 +213,13 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         if (GIDSignIn.sharedInstance().hasAuthInKeychain()){
             // Signed in
             welcome.isHidden = true
-            btnNewsFeed.isHidden = false
+            btnNewsFeed.isHidden = true
             btnSignIn.isHidden = true
             btnSignOut.isHidden = false
             btnDisconnect.isHidden = true
-            
+            loginerror.isHidden = true
+            usertextnew.isHidden = true
+            untoolong.isHidden = true
             
             // Added to handle if user is already signed in 
             if (GIDSignIn.sharedInstance().currentUser == nil) {
@@ -143,6 +235,9 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
             btnSignIn.isHidden = false
             btnSignOut.isHidden = true
             btnDisconnect.isHidden = true
+            loginerror.isHidden = true
+            usertextnew.isHidden = true
+            untoolong.isHidden = true
         }
     }
     
