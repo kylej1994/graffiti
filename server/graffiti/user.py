@@ -89,6 +89,9 @@ class User(db.Model):
     def get_has_been_suspended(self):
         return self.has_been_suspended
 
+    def get_user_id_by_google_aud(self, google_aud):
+        return db.session.query(User).filter(User.google_aud==google_aud).first().user_id
+
     # No validations implemented
     def set_google_aud(self, google_aud):
         self.google_aud = google_aud

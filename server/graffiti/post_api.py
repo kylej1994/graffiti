@@ -3,10 +3,12 @@ import json
 
 from flask import Blueprint, request
 from post import Post
+from userpost import UserPost
 
 post_api = Blueprint('post_api', __name__)
 
 from graffiti import db
+from oauth2client import client
 
 fake_dict = dict(
 		postid=1,
@@ -22,6 +24,7 @@ fake_response = json.dumps(fake_dict)
 #string error messages
 ERR_400 = "Post information was invalid."
 ERR_403 = "Post is not owned by user."
+ERR_403_vote = "User has already voted."
 ERR_404 = "Post not found."
 
 def validate_vote(self, vote):
@@ -50,8 +53,9 @@ def create_post():
 	text = data['text']
 	lon = data['location']['longitude']
 	lat = data['location']['latitude']
-	user_id = data['user_id'] #ask KYLE
-	google_aud = data['google_aud']
+	email = request.environ['GOOGLE_INFO']
+	user_id = email['user_id'] 
+	google_aud = email['audCode']
 
 	#validates the text field for the post
 	if (validate_text(text) == False):
@@ -75,7 +79,7 @@ def delete_post(postid):
 	if (post is None):
 		return generate_error_response(ERR_404, 404);
 
-	if (post.get_user_id() != request.get_json()['user_id']):
+	if (post.get_poster_id() != request.environ['GOOGLE_INFO']['user_id']):
 		return generate_error_response(ERR_403, 403);
 
 	post.delete_post()
@@ -96,7 +100,8 @@ def get_post(postid):
 	if (post is None):
 		return generate_error_response(ERR_404, 404);
 
-	# TODO check id from header
+	if (post.get_poster_id() != request.environ['GOOGLE_INFO']['user_id']):
+		return generate_error_response(ERR_403, 403);
 
 	return post.to_json_fields_for_FE(), 200
 
@@ -110,7 +115,6 @@ def get_post_by_location():
 	radius = 5 #to be changed later
 	posts = Post.find_post_within_loc(lon, lat, radius)
 
-	#TODO format for returning multiple posts?
 	to_ret = {}
 	to_ret['posts'] = posts
 	return json.dumps(to_ret), 200
@@ -124,9 +128,14 @@ def vote_post(postid):
 	# already voted on this post
 	# modify accordingly
 	# return postid of post and new num votes
+
 	vote = int(request.get_json()['vote'])
 	post = Post.find_post(postid)
-	# TODO need to check if user has already voted
-	post.set_vote(vote)
 
+	# checks if user has already voted
+	user_id = request.environ['GOOGLE_INFO']['user_id'];
+	if (UserPost.get_post_vote_by_user(user_id, postid) != 0):
+		return generate_error_response(ERR_403_vote, 403);
+
+	post.set_vote(vote)
 	return post.to_json_fields_for_FE(), 200
