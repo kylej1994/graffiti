@@ -42,9 +42,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
-        user = appDelegate.currentUser!
-        
-        
+        if let someuser = appDelegate.currentUser {self.user = someuser}
         
         let uId: Int = user!.getId()
         
@@ -99,7 +97,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             cell.votesLabel.text = String(rating)
             
             //cell.dateLabel.text = post.getTimeAdded()
-            
             
             return cell
         }
