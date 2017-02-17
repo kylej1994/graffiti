@@ -39,10 +39,13 @@ def clear_db_of_everything():
 def fill_db():
 	# Sample values
 	db.create_all()
-	db.session.add(Post("text", 51.5192028, -0.140863, 1))
-	db.session.add(User("easmith", \
+	db.session.add(Post('text', 51.5192028, -0.140863, 1))
+	db.session.add(Post('text2', 51.5192028, -0.140863, 1))
+	db.session.add(Post('post_location_1', -51.5192028, 0.140863, 1))
+	db.session.add(Post('post_location_2', -51.5192028, 0.140863, 1))
+	db.session.add(User('easmith', \
 		"1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com", \
-		"9172825753", \
+		'9172825753', \
 		'Emma Smith', \
 		'kat@lu.com', \
 		'My name is jablonk'))

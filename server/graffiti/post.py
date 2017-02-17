@@ -9,7 +9,9 @@ from user import User
 from datetime import datetime
 from time import time
 
-import geoalchemy2
+from geoalchemy2.functions import ST_DFullyWithin
+from geoalchemy2.shape import from_shape
+from shapely.geometry import Point
 
 class Post(db.Model):
     __tablename__ = 'post'
@@ -81,9 +83,14 @@ class Post(db.Model):
     def find_posts_within_loc(lon, lat, radius):
         distance = radius * 0.014472 #convert to degrees
         center_point = Point(lon, lat)
+        print type(lon)
+        print type(lat)
         wkb_element = from_shape(center_point)
-        posts = db.session.query(Post).filter(func.ST_DFullyWithin(\
+        print type(wkb_element)
+        print '4'
+        posts = db.session.query(Post).filter(ST_DFullyWithin(\
             Point(Post.longitude, Post.latitude), wkb_element, distance)).all()
+        print '5'
         return posts
 
 

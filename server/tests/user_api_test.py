@@ -120,8 +120,6 @@ class UserTestCase(APITestCase):
 
         assert rv.status_code == 200
 
-        post_data = json.loads(rv.data)
-
     def test_get_nonexistent_user_posts(self):
         rv = self.app.get('/user/2/posts',
                 headers=dict(
