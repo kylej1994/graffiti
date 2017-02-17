@@ -80,8 +80,8 @@ def update_user(userid):
 	if (int(data['userid']) != userid):
 		return generate_error_response(ERR_403_update, 403);
 
-	# Call set functions and update rtn_val
-	rtn_val = True
+	# Call set functions and update good_inputs
+	good_inputs = True
 
 	# checks if a user with specified username already exists
 	user = db.session.query(User).filter(User.user_id==userid).first()
@@ -91,27 +91,27 @@ def update_user(userid):
 	if (existing):
 		username_taken = True
 	else:
-		rtn_val = rtn_val and user.set_username(username)
+		good_inputs = good_inputs and user.set_username(username)
 	
 	# Not sure if all these checks are necessary?
 	if (data['name'] != user.get_name()):
-		rtn_val = rtn_val and user.set_name(data['name'])
+		good_inputs = good_inputs and user.set_name(data['name'])
 
 	if (data['email'] != user.get_email()):
-		rtn_val = rtn_val and user.set_email(data['email'])
+		good_inputs = good_inputs and user.set_email(data['email'])
 
 	if (data['phone_number'] != user.get_phone_number()):
-		rtn_val = rtn_val and user.set_phone_number(data['phone_number'])
+		good_inputs = good_inputs and user.set_phone_number(data['phone_number'])
 
 	if (data['bio'] != user.get_bio()):
-		rtn_val = rtn_val and user.set_bio(data['bio'])
+		good_inputs = good_inputs and user.set_bio(data['bio'])
 
 	user.save_user()
 
 	# Evaluate bools
 	if (username_taken):
 		return generate_error_response(ERR_400_taken, 400)
-	if (not rtn_val):
+	if (not good_inputs):
 		return generate_error_response(ERR_400_invalid, 400)
 
 	return user.to_json_fields_for_FE(), 200

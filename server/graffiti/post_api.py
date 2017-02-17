@@ -31,7 +31,6 @@ def validate_vote(vote):
 	return vote == -1 and vote == 1
 
 def validate_text(text):
-	print 'in validation'
 	return len(text) <= 100
 
 def generate_error_response(message, code):
