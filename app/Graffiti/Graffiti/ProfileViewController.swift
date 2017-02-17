@@ -51,7 +51,7 @@ class ProfileViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let numRows = posts.count
         if numRows == 0 {
-            //setupEmptyBackgroundView()
+            setupEmptyBackgroundView()
             tableView.separatorStyle = .none
             tableView.backgroundView?.isHidden = false
         } else {
