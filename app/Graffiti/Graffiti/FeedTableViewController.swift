@@ -7,10 +7,9 @@
 //
 
 import UIKit
-import CoreLocation //see if i can delete
+import CoreLocation
 class FeedTableViewController: UITableViewController {
-    // reference: https://github.com/uchicago-mobi/mpcs51030-2016-winter-assignment-5-aaizuss/blob/master/Issues/Issues/DataTableViewController.swift
-    // activty indicator var
+    // todo at some point: add loading animation
     let api = API.sharedInstance
     let locationManager = LocationService.sharedInstance
     var posts: [Post] = []
@@ -20,8 +19,28 @@ class FeedTableViewController: UITableViewController {
     var currentLatitude: CLLocationDegrees? = CLLocationDegrees()
     var currentLongitude: CLLocationDegrees? = CLLocationDegrees()
     
+    // we load the data in view did appear so the feed gets filled asap
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        DispatchQueue.main.async {
+            self.getPostsByLocation()
+            self.tableView.reloadData()
+        }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        DispatchQueue.main.async {
+            self.getPostsByLocation()
+            self.tableView.reloadData()
+        }
+        // add refresh control for pull to refresh
+        self.refreshControl?.addTarget(self, action: #selector(refreshFeed), for: .valueChanged)
+    }
+    
+    
+    // get the current location and request list of posts
     func getPostsByLocation() {
-        // make network request
         currentLongitude = locationManager.getLongitude()
         currentLatitude = locationManager.getLatitude()
         if currentLongitude == nil {
@@ -36,35 +55,14 @@ class FeedTableViewController: UITableViewController {
         api.getPosts(longitude: currentLongitude!, latitude: currentLatitude!) { response in
             switch response.result {
             case .success:
-                print("hello i am in success")
                 if let json = response.result.value as? [String:Any],
                     let posts = json["posts"] as? [Post] {
-                    print(posts)
                     self.posts = posts
                 }
             case .failure(let error):
                 print(error)
             }
         }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        getPostsByLocation()
-
-        // add refresh control
-        self.refreshControl?.addTarget(self, action: #selector(refreshFeed), for: .valueChanged)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     // MARK: - Table view data source
@@ -75,6 +73,7 @@ class FeedTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let numRows = posts.count
+        // display a message about lack of posts when there are no posts
         if numRows == 0 {
             setupEmptyBackgroundView()
             tableView.separatorStyle = .none
@@ -85,7 +84,6 @@ class FeedTableViewController: UITableViewController {
         }
         return numRows
     }
-
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "FeedCell"
@@ -96,29 +94,20 @@ class FeedTableViewController: UITableViewController {
             fatalError("The dequeue cell is not an instance of FeedTableViewTextCell.")
         }
         
-        // this is where we get the post from the post model
+        // get the Post from the array of Posts and fill the cell accordingly
         let post = posts[indexPath.row]
         var rating = post.getRating()
 
         cell.textView.text = post.getText()
         
-        // vote label
-        cell.votesLabel.text = String(rating)
-        if rating < 0 {
-            cell.votesLabel.textColor = UIColor(red:0.76, green:0.25, blue:0.25, alpha:1.0)
-        } else {
-            cell.votesLabel.textColor = UIColor(red:0.40, green:0.78, blue:0.49, alpha:1.0)
-        }
+        setRatingDisplay(cell: cell, post: post)
+        setDateDisplay(cell: cell, post: post)
         
-        if let dateAdded = post.getTimeAdded() {
-            cell.dateLabel.text = getFormattedDate(date: dateAdded)
-        } else {
-            cell.dateLabel.text = "Just Now"
-        }
-        
-        // voting
+        // voting (this is so bad and dumb)
         var didUpvote = false
         var didDownvote = false
+        
+        // handle upvote button tap
         cell.upvoteTapAction = { (cell) in
             didDownvote = false
             if !didUpvote {
@@ -138,8 +127,9 @@ class FeedTableViewController: UITableViewController {
             }
         }
 
+        // handle downvote button tap
         cell.downvoteTapAction = { (cell) in
-            didUpvote = true
+            didUpvote = false
             if !didDownvote {
                 didDownvote = true
                 self.handleDownvote(cell: cell, currentRating: rating)
@@ -156,6 +146,24 @@ class FeedTableViewController: UITableViewController {
             }
         }
         return cell
+    }
+    
+    func setRatingDisplay(cell: FeedTableViewTextCell, post: Post) {
+        let rating = post.getRating()
+        cell.votesLabel.text = String(rating)
+        if rating < 0 {
+            cell.votesLabel.textColor = UIColor(red:0.76, green:0.25, blue:0.25, alpha:1.0)
+        } else {
+            cell.votesLabel.textColor = UIColor(red:0.40, green:0.78, blue:0.49, alpha:1.0)
+        }
+    }
+    
+    func setDateDisplay(cell: FeedTableViewTextCell, post: Post) {
+        if let dateAdded = post.getTimeAdded() {
+            cell.dateLabel.text = getFormattedDate(date: dateAdded)
+        } else {
+            cell.dateLabel.text = "Just Now"
+        }
     }
     
     func handleUpvote(cell: FeedTableViewTextCell, currentRating: Int) {
@@ -185,7 +193,7 @@ class FeedTableViewController: UITableViewController {
         }
     }
     
-    
+    // Refresh the feed (request posts from API and fill the table) when user pulls down on table
     func refreshFeed(sender: UIRefreshControl) {
         print("we will refresh here")
         getPostsByLocation()
@@ -193,6 +201,7 @@ class FeedTableViewController: UITableViewController {
         refreshControl?.endRefreshing()
     }
     
+    // convert the date from the date posted to time since posted
     func getFormattedDate(date: Date) -> String {
         let formatter = DateFormatter()
         return formatter.timeSince(from: date as NSDate, numericDates: true)
