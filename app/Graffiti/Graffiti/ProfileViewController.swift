@@ -14,20 +14,16 @@ enum MyRows: Int {
 }
 
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
-    let user:User = AppDelegate.currentUser
-    
-    
-    let userName: String = user.getUsername()
-    
-    let profilePicture: UIImage? = user.getUserImage()
-    
-    let uId: Int = user.getId()
     
     // Don't forget to enter this in IB also
     let cellReuseIdentifier = "header"
     
     var posts: [Post] = []
+    
+    var user:User? = nil
+    var profilePicture:UIImage? = nil
+    var userName:String? = nil
+    
     
     @IBOutlet var tableView: UITableView!
     
@@ -43,8 +39,17 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func getPostsByUser() {
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        user = appDelegate.currentUser!
+        
+        
+        
+        let uId: Int = user!.getId()
+        
         // make network request
-        API.getUserPosts(userid: uId) { response in
+        API.sharedInstance.getUserPosts(userid: uId) { response in
             switch response.result {
             case .success:
                 print("hello i am in success")
@@ -68,14 +73,73 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if(indexPath.row == 0){
             let cell:HeaderCell = self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as! HeaderCell
+            
+            userName = user!.getUsername()!
+            
+            profilePicture = user!.getUserImage()
         
             cell.myView.backgroundColor = UIColor(patternImage: self.profilePicture!)
             cell.myCellLabel.text = self.userName
         
             return cell
         } else {
+            let cellIdentifier = "FeedCell"
             
-        }
+            // downcast cell to the custom cell class
+            // guard safely unwraps the optional
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? FeedTableViewTextCell else {
+                fatalError("The dequeue cell is not an instance of FeedTableViewTextCell.")
+            }
+            
+            // this is where we get the post from the post model
+            let post = posts[indexPath.row]
+            var rating = post.getRating()
+            
+            cell.textView.text = post.getText()
+            cell.votesLabel.text = String(rating)
+            
+            //cell.dateLabel.text = post.getTimeAdded()
+            
+            // voting
+            var didUpvote = false
+            var didDownvote = false
+            cell.upvoteTapAction = { (cell) in
+                didDownvote = false
+                if !didUpvote {
+                    print("entering the upvote stuff")
+                    didUpvote = true
+                    self.handleUpvote(cell: cell, currentRating: rating)
+                    rating += 1 // this seems redundant but it isn't. setting the post rating doesn't work unless we refresh the table
+                    post.setRating(rating + 1)
+                    let indexOfPost = tableView.indexPath(for: cell)!.row
+                    if let postid = self.posts[indexOfPost].getID() {
+                        self.sendVoteFor(postid: postid, vote: 1)
+                    } else {
+                        print("couldn't get postid. not sending upvote to server, but faking it in ui")
+                    }
+                } else {
+                    print("ignoring upvote button press")
+                }
+            }
+            
+            cell.downvoteTapAction = { (cell) in
+                didUpvote = true
+                if !didDownvote {
+                    didDownvote = true
+                    self.handleDownvote(cell: cell, currentRating: rating)
+                    rating -= 1
+                    post.setRating(rating - 1)
+                    let indexOfPost = tableView.indexPath(for: cell)!.row
+                    if let postid = self.posts[indexOfPost].getID() {
+                        self.sendVoteFor(postid: postid, vote: -1)
+                    } else {
+                        print("couldn't get postid. not sending upvote to server, but faking it in ui")
+                    }
+                } else {
+                    print("ignoring downvote button press")
+                }
+            }
+            return cell        }
     }
     
     // method to run when table view cell is tapped
