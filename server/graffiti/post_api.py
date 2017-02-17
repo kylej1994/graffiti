@@ -47,19 +47,19 @@ def create_post():
 	if ('text' not in data or 'location' not in data
 			or 'latitude' not in data['location']
 			or 'longitude' not in data['location']):
-		return generate_error_response(ERR_400, 400);
+		return generate_error_response(ERR_400, 400)
 
 	# create a new post and add it to the db session
 	text = data['text']
 	lon = data['location']['longitude']
 	lat = data['location']['latitude']
 	email = request.environ['GOOGLE_INFO']
-	user_id = email['user_id'] 
+	user_id = User.get_user_id_by_google_id(email['audCode'])
 	google_aud = email['audCode']
 
 	#validates the text field for the post
 	if (validate_text(text) == False):
-		return generate_error_response(ERR_400, 400); 
+		return generate_error_response(ERR_400, 400)
 
 	post = Post(text, lon, lat, user_id, google_aud)
 	post.save_post()
@@ -77,10 +77,12 @@ def delete_post(postid):
 	post = Post.find_post(postid)
 
 	if (post is None):
-		return generate_error_response(ERR_404, 404);
+		return generate_error_response(ERR_404, 404)
 
-	if (post.get_poster_id() != request.environ['GOOGLE_INFO']['user_id']):
-		return generate_error_response(ERR_403, 403);
+	email = request.environ['GOOGLE_INFO']
+	user_id = User.get_user_id_by_google_id(email['audCode'])
+	if (post.get_poster_id() != user_id):
+		return generate_error_response(ERR_403, 403)
 
 	post.delete_post()
 
@@ -98,10 +100,12 @@ def get_post(postid):
 	post = Post.find_post(postid)
 	
 	if (post is None):
-		return generate_error_response(ERR_404, 404);
+		return generate_error_response(ERR_404, 404)
 
-	if (post.get_poster_id() != request.environ['GOOGLE_INFO']['user_id']):
-		return generate_error_response(ERR_403, 403);
+	email = request.environ['GOOGLE_INFO']
+	user_id = User.get_user_id_by_google_id(email['audCode'])
+	if (post.get_poster_id() != user_id):
+		return generate_error_response(ERR_403, 403)
 
 	return post.to_json_fields_for_FE(), 200
 
@@ -133,9 +137,10 @@ def vote_post(postid):
 	post = Post.find_post(postid)
 
 	# checks if user has already voted
-	user_id = request.environ['GOOGLE_INFO']['user_id'];
-	if (UserPost.get_post_vote_by_user(user_id, postid) != 0):
-		return generate_error_response(ERR_403_vote, 403);
+	email = request.environ['GOOGLE_INFO']
+	user_id = User.get_user_id_by_google_id(email['audCode'])
+	if (post.get_poster_id() != user_id):
+		return generate_error_response(ERR_403, 403)
 
 	post.set_vote(vote)
 	return post.to_json_fields_for_FE(), 200
