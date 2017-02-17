@@ -115,7 +115,7 @@ def update_user(userid):
 @user_api.route('/user/<int:userid>/posts', methods=['GET'])
 def get_user_posts(userid):
 	# look for user to make sure this user exists
-	user = db.session.query(User).filter(User.user_id==userid).first()
+	user = User.find_user(userid)
 
 	# return 404 if not found
 	if (user is None):
@@ -123,7 +123,7 @@ def get_user_posts(userid):
 
 	# TODO check id from header
 
-	posts = db.session.query(Post).filter(Post.poster_id==userid)
+	Post.find_user_posts(userid)
 
 	to_rtn = {}
 	posts_arr = []

@@ -155,3 +155,9 @@ class User(db.Model):
     def delete_user(self):
         db.session.delete(self)
         db.session.commit()
+
+    # finds a user given a user id
+    # returns None if user_id is not in the db
+    @staticmethod
+    def find_user(user_id):
+        db.session.query(User).filter(User.user_id==userid).first()
