@@ -22,16 +22,42 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor(red:0.30, green:0.82, blue:0.88, alpha:1.0)
-        
         GIDSignIn.sharedInstance().uiDelegate = self
         self.usertextnew.delegate = self
+        
+        showGoogleSignIn()
+        
+        // add labels to view as subviews
+        loginErrorLabel()
+        usernameTooLongLabel()
 
+        loginerror.isHidden = true
+        usertextnew.isHidden = true
+        untoolong.isHidden = true
+        
+        // Sign In Label
+        label = UILabel(frame: CGRect(0,0,200,100))
+        label.center = CGPoint(view.center.x, 300)
+        label.numberOfLines = 0 //Multi-lines
+        label.text = "Please Sign in to Graffiti Using Google"
+        label.textColor = UIColor.white
+        label.textAlignment = NSTextAlignment.center
+        view.addSubview(label)
+    
+        NotificationCenter.default.addObserver(self, selector: #selector(receiveToggleAuthUINotification(_:)),
+        name: NSNotification.Name(rawValue: "ToggleAuthUINotification"),object: nil)
+        
+        toggleAuthUI()
+    }
+    
+    func showGoogleSignIn() {
         btnSignIn = GIDSignInButton(frame: CGRect(0,0,230,48))
         btnSignIn.center = view.center
         btnSignIn.style = GIDSignInButtonStyle.wide
         view.addSubview(btnSignIn)
-
+    }
+    
+    func loginErrorLabel() {
         loginerror = UILabel(frame: CGRect(0,0,200,100))
         loginerror.text = "There Was an Error Connecting to Account, Idtoken from Google is Missing"
         loginerror.numberOfLines = 4 //Multi-lines
@@ -40,7 +66,9 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
         loginerror.textColor = UIColor.red
         loginerror.textAlignment = NSTextAlignment.center
         view.addSubview(loginerror)
-        
+    }
+    
+    func usernameTooLongLabel() {
         untoolong = UILabel(frame: CGRect(0,0,200,100))
         untoolong.text = "The Username you have entered is too long. It must be under 100 characters"
         untoolong.numberOfLines = 4 //Multi-lines
@@ -49,25 +77,9 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
         untoolong.textColor = UIColor.red
         untoolong.textAlignment = NSTextAlignment.center
         view.addSubview(untoolong)
-        
-        loginerror.isHidden = true
-        usertextnew.isHidden = true
-        untoolong.isHidden = true
-        
-        
-        label = UILabel(frame: CGRect(0,0,200,100))
-        label.center = CGPoint(view.center.x, 300)
-        label.numberOfLines = 0 //Multi-lines
-        label.text = "Please Sign in to Graffiti Using Google"
-        label.textColor = UIColor.white
-        label.textAlignment = NSTextAlignment.center
-        view.addSubview(label)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(receiveToggleAuthUINotification(_:)),
-        name: NSNotification.Name(rawValue: "ToggleAuthUINotification"),object: nil)
-        
-        toggleAuthUI()
-}
+    }
+    
+    
     
     private func textViewDidBeginEditing(_ textView: UITextView) {
         usertextnew.text = ""
