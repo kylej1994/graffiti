@@ -4,6 +4,7 @@ sys.path.append('..')
 from graffiti import db
 from sqlalchemy import Column, Float, Integer, String
 from sqlalchemy.dialects.postgresql import JSON
+from user import User
 
 from datetime import datetime
 from time import time
@@ -20,16 +21,14 @@ class Post(db.Model):
     #loc = db.Column(Geography(geometry_type='POINT', srid=4326))
     created_at = db.Column(db.DateTime)
     poster_id = db.Column(db.Integer)
-    poster_aud = db.Column(db.String(100))
     num_votes = db.Column(db.Integer)
 
-    def __init__(self, text, longitude, latitude, poster_id, poster_aud):
+    def __init__(self, text, longitude, latitude, poster_id):
         self.text = text
         self.longitude = longitude
         self.latitude = latitude
         self.created_at = datetime.fromtimestamp(time()).isoformat()
-        self.poster_id = posted_id
-        self.poster_aud = poster_aud
+        self.poster_id = poster_id
         self.num_votes = 0
 
     def __repr__(self):
@@ -44,7 +43,7 @@ class Post(db.Model):
                 longitude=self.longitude,
                 latitude=self.latitude),
             created_at=str(self.created_at),
-            poster=user.to_json_fields_for_FE()
+            poster=user.to_json_fields_for_FE(),
             num_votes=self.num_votes))
 
     def get_poster_id(self):
@@ -71,6 +70,11 @@ class Post(db.Model):
     @staticmethod
     def find_post(postid):
         return db.session.query(Post).filter(Post.post_id==postid).first()
+
+    # finds all post of a given user_id
+    @staticmethod
+    def find_user_posts(user_id):
+        return db.session.query(Post).filter(Post.poster_id==user_id)
 
     # finds posts within a certain radius of a coordinate
     @staticmethod

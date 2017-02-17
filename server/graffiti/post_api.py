@@ -25,7 +25,7 @@ ERR_403 = "Post is not owned by user."
 ERR_404 = "Post not found."
 
 def validate_vote(self, vote):
-	return vote == -1 || vote == 1
+	return vote == -1 and vote == 1
 
 def validate_text(self, text):
     return text.size() <= 100
@@ -96,8 +96,7 @@ def get_post(postid):
 	if (post is None):
 		return generate_error_response(ERR_404, 404);
 
-	if (post.get_user_id() != request.get_json()['user_id']):
-		return generate_error_response(ERR_403, 403);
+	# TODO check id from header
 
 	return post.to_json_fields_for_FE(), 200
 

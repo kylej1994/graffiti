@@ -13,8 +13,7 @@ db = SQLAlchemy(app)
 def init_db():
 	db.drop_all()
 	db.create_all()
-
-	return 'initted\n'
+	return 'initted the db\n'
 
 print init_db()
 
@@ -30,11 +29,17 @@ app.register_blueprint(user_api)
 app.register_blueprint(post_api)
 
 # FOR TESTING PURPOSES ONLY
+@app.route('/cleardb')
+def clear_db_of_everything():
+	db.drop_all()
+	return 'dropped\n'
+
+# FOR TESTING PURPOSES ONLY
 @app.route('/filldb')
 def fill_db():
 	# Sample values
 	db.create_all()
-	db.session.add(Post("text", 51.5192028, -0.140863, "easmith"))
+	db.session.add(Post("text", 51.5192028, -0.140863, 1))
 	db.session.add(User("easmith", \
 		"1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com", \
 		"9172825753", \
@@ -42,13 +47,10 @@ def fill_db():
 		'kat@lu.com', \
 		'My name is jablonk'))
 	db.session.commit()
-	return 'added\n'
+	return 'added sample records\n'
 
-# FOR TESTING PURPOSES ONLY
-@app.route('/cleardb')
-def clear_db_of_everything():
-	db.drop_all()
-	return 'dropped\n'
+print clear_db_of_everything()
+print fill_db()
 
 @app.route('/')
 def hello():
