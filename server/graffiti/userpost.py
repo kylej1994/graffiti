@@ -35,3 +35,8 @@ class UserPost(db.Model):
     def set_vote(self, vote):
         self.vote = vote
         db.session.commit()
+
+    @staticmethod
+    def get_post_vote_by_user(user_id, post_id):
+        return db.session.query(UserPost).filter(UserPost.post_id==post_id and \
+            UserPost.user_id==user_id).first().get_vote()

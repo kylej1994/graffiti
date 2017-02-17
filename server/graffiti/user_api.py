@@ -31,7 +31,7 @@ def generate_error_response(message, code):
 
 @user_api.route('/user/login', methods=['GET'])
 def user_login():	
-	id_token = #TODO
+	id_token = not None #TODO
 	if (id_token == None):
 			return generate_error_response(ERR_401, 401);
 
@@ -40,12 +40,12 @@ def user_login():
 	if (user):		
 		# login with idToken passed in through header
 		# TODO
-		is_new_user = 'No'
+		is_new_user = False
 	else:
 		# create new User object with next userId and empty strings for other fields
-		user = User("", google_aud, "", "", "", "")
+		user = User('', google_aud, '', '', '', '')
 		user.save_user()
-		is_new_user = 'Yes'
+		is_new_user = True
 	
 	# return whether its a new user and the associated user object
 	return json.dumps(dict(
@@ -54,22 +54,14 @@ def user_login():
 
 @user_api.route('/user/<int:userid>', methods=['GET'])
 def get_user(userid):
-	# Look for user based on userid 
-	data = request.get_json()
-	if ('userid' not in data):
-		return generate_error_response(ERR_400_invalid, 400);
-
-	# make sure both userid values are the same
-	if (int(data['userid']) != userid):
-		return generate_error_response(ERR_403_update, 403);
-
-	# return user object if found
+	# look for user
 	user = db.session.query(User).filter(User.user_id==userid).first()
-	if (user != None):
-		return user.to_json_fields_for_FE(), 200
 
-	# return 404 otherwise
-	return generate_error_response(ERR_404, 404)
+	# return 404 if not found
+	if (user is None):
+		return generate_error_response(ERR_404, 404)
+	
+	return user.to_json_fields_for_FE(), 200
 
 @user_api.route('/user/<int:userid>', methods=['PUT'])
 def update_user(userid):
@@ -78,6 +70,7 @@ def update_user(userid):
 	if ('userid' not in data):
 		return generate_error_response(ERR_400_invalid, 400);
 	
+	# TODO check id from header
 	if (int(data['userid']) != userid):
 		return generate_error_response(ERR_403_update, 403);
 
@@ -92,25 +85,27 @@ def update_user(userid):
 	if (existing):
 		username_taken = True
 	else:
-		rtn_val = rtn_val && user.set_username(username)
+		rtn_val = rtn_val and user.set_username(username)
 	
+	# Not sure if all these checks are necessary?
 	if (data['name'] != user.get_name()):
-		rtn_val = rtn_val && user.set_name(data['name'])
+		rtn_val = rtn_val and user.set_name(data['name'])
 
 	if (data['email'] != user.get_email()):
-		rtn_val = rtn_val && user.set_email(data['email'])
+		rtn_val = rtn_val and user.set_email(data['email'])
 
-	# TODO add phone number?
+	if (data['phone_number'] != user.get_phone_number()):
+		rtn_val = rtn_val and user.set_phone_number(data['phone_number'])
 
-	# TODO texttag or bio?
 	if (data['bio'] != user.get_bio()):
-		rtn_val = rtn_val && user.set_bio(data['bio'])
+		rtn_val = rtn_val and user.set_bio(data['bio'])
+
+	user.save_user()
 
 	# Evaluate bools
 	if (username_taken):
-		generate_error_response(ERR_400_taken, 400)
+		return generate_error_response(ERR_400_taken, 400)
 	if (rtn_val == False):
-		generate_error_response(ERR_400_invalid, 400)
+		return generate_error_response(ERR_400_invalid, 400)
 
-	user.save_user()
 	return user.to_json_fields_for_FE(), 200

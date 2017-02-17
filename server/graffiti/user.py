@@ -1,6 +1,7 @@
 import json
 import sys
 import re
+import types
 sys.path.append('..')
 from graffiti import db
 from sqlalchemy import Column, Float, Integer, String
@@ -26,13 +27,13 @@ class User(db.Model):
     has_been_suspended = db.Column(db.Boolean)
 
     def __init__(self, username, google_aud, phone_number, name, email, bio):
-        set_username(username)
-        set_google_aud(google_aud)
-        set_phone_number(phone_number)
-        set_name(name)
-        set_email(email)
+        self.set_username(username)
+        self.set_google_aud(google_aud)
+        self.set_phone_number(phone_number)
+        self.set_name(name)
+        self.set_email(email)
         self.join_timestamp = datetime.fromtimestamp(time()).isoformat()
-        set_bio(bio)
+        self.set_bio(bio)
         self.has_been_suspended = False
 
     def __repr__(self):
@@ -40,58 +41,56 @@ class User(db.Model):
 
     # Only alnum or _ in username. Between 3 and 25 chars inclusive.
     def validate_username(self, username):
-        if (len(username) > 25 || len(username) < 3):
+        if (len(username) > 25 or len(username) < 3):
             return False
-        if (re.match('^\w+$', username)):
-            return False
+        # if (re.match('^\w+$', username)):
+        #     return False
         return True
 
     # Only alpha. Fewer than or equal to 50 characters.
     def validate_name(self, name):
         if (len(name) > 50):
             return False
-        if (!name.isalpha()):
-            return False
         return True
 
     def validate_phone_number(self, phone_number):
         new_number = re.sub('-', '', phone_number)
-        if (len(new_number) == 11 && new_number[0] == '1'):
+        if (len(new_number) == 11 and new_number[0] == '1'):
             new_number = new_number[1:]
-        if (!new_number.isdigit() || len(new_number) != 10):
+        if (not new_number.isdigit() or len(new_number) != 10):
             return None
 
         return new_number
 
     def get_user_id(self):
-        return user_id
+        return self.user_id
 
     def get_google_aud(self):
-        return google_aud
+        return self.google_aud
 
     def get_username(self):
-        return username
+        return self.username
 
     def get_phone_number(self):
-        return phone_number
+        return self.phone_number
 
     def get_name(self):
-        return name
+        return self.name
 
     def get_email(self):
-        return email
+        return self.email
 
     def get_bio(self):
-        return bio
+        return self.bio
 
     def get_join_timestamp(self):
-        return self.bio
+        return self.join_timestamp
 
     def get_has_been_suspended(self):
         return self.has_been_suspended
 
     # No validations implemented
-    def set_google_aud(self):
+    def set_google_aud(self, google_aud):
         self.google_aud = google_aud
 
     # Only alnum or _ in username. Between 3 and 25 chars inclusive.
@@ -99,7 +98,7 @@ class User(db.Model):
         if (self.validate_username(username)):
             self.username = username
             return True
-        else
+        else:
             return False
 
     # Updates by removing country code 1, remove dashes
@@ -108,24 +107,28 @@ class User(db.Model):
         if (new_number != None):
             self.phone_number = new_number
             return True
-        else
+        else:
             return False
 
     # Only letters
     def set_name(self, name):
-        if (validate_name(name)):
+        if (self.validate_name(name)):
             self.name = name
             return True
-        else
+        else:
             return False
 
     # No validations implemented
     def set_bio(self, bio):
         self.bio = bio
 
+    # No validations implemented
+    def set_email(self, email):
+        self.email = email
+
     # Only bool
     def set_has_been_suspended(self, suspended):
-        if (type(suspended) == types.BooleanType)):
+        if (type(suspended) == types.BooleanType):
             self.has_been_suspended = suspended
             return True
         else:
@@ -133,12 +136,15 @@ class User(db.Model):
 
     # TODO reevaluate this
     def to_json_fields_for_FE(self):
+        print self.name
+        print self.username
         return json.dumps(dict(
             userid=self.user_id,
             username=self.username,
             name=self.name,
             email=self.email,
-            bio=self.bio))
+            bio=self.bio,
+            phone_number=self.phone_number))
 
     # saves the user into the db
     def save_user(self):
@@ -149,4 +155,3 @@ class User(db.Model):
     def delete_user(self):
         db.session.delete(self)
         db.session.commit()
-

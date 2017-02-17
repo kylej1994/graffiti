@@ -25,7 +25,7 @@ ERR_403 = "Post is not owned by user."
 ERR_404 = "Post not found."
 
 def validate_vote(self, vote):
-	return vote == -1 || vote == 1
+	return vote == -1 and vote == 1
 
 def validate_text(self, text):
     return text.size() <= 100
