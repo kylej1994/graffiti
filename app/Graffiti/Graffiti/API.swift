@@ -37,7 +37,7 @@ class API {
     //MARK Private Methods
     @discardableResult private func makeRequest(_ url: String, method: HTTPMethod, parameters: Parameters? = nil, encoding: ParameterEncoding = URLEncoding.default) -> RequestProtocol{
         // Add Authentication token
-        let idToken = "idToken" //TODO
+        let idToken = "idToken" //TODO 
         let headers = ["Authorization": "Bearer \(idToken)"]
         
         // Construct Url

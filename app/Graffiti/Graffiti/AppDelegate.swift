@@ -14,8 +14,16 @@ import GoogleSignIn
 // [START appdelegate_interfaces]
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
+   
+    
     // [END appdelegate_interfaces]
     var window: UIWindow?
+    var currentUser: User?
+    
+    
+   
+    
+    
     
     // [START didfinishlaunching]
     func application(_ application: UIApplication,
@@ -55,7 +63,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                 name: Notification.Name(rawValue: "ToggleAuthUINotification"), object: nil, userInfo: nil)
             // [END_EXCLUDE]
         } else {
+            
+            // We have sucesfully signed in a User 
+            
+          //  currentUser = GIDSignIn.sharedInstance().currentUser
+       
+        
             // Perform any operations on signed in user here.
+            
+            API.sharedInstance.login() { res in
+                // Handler
+                // response.request
+                // response.response
+                //response.result -> enum either success or failure , 200-299 success otherwise failure
+                //res.result.value -> actual value
+                // let lvc = LoginViewControllor().
+            let lvc = GIDSignIn.sharedInstance().uiDelegate as? LoginViewController
+         //   print(res.result.value)
+          //  print(res.result)
+           // print(res.response)
+           // print(res.request)
+            switch res.result {
+            case.success: lvc?.newuser(newuser: res.result.value as! Dictionary<String, Any>)
+            case.failure: lvc?.showerrorlabel()
+
+            }
+            }
+            
+            
          //   let userId = user.userID                  // For client-side use only!
            // let idToken = user.authentication.idToken // Safe to send to the server
             let fullName = user.profile.name
@@ -63,14 +98,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             //let familyName = user.profile.familyName
             //let email = user.profile.email
             // [START_EXCLUDE]
+            
             NotificationCenter.default.post(
                 name: Notification.Name(rawValue: "ToggleAuthUINotification"),
                 object: nil,
-                userInfo: ["statusText": "Signed in user:\(fullName!)"])
+                userInfo: ["statusText": "Signed in Google user:\(fullName!)"])
             // [END_EXCLUDE]
         }
     }
     // [END signin_handler]
+    
     // [START disconnect_handler]
     func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!,
               withError error: Error!) {

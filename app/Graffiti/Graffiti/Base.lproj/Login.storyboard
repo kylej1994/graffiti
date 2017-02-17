@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Login View Controller-->
         <scene sceneID="GlH-A2-mZU">
             <objects>
-                <viewController id="HOq-5u-5t8" customClass="ViewController" customModule="Graffiti" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="HOq-5u-5t8" customClass="LoginViewController" customModule="Graffiti" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jy5-8U-jGH"/>
                         <viewControllerLayoutGuide type="bottom" id="TeT-os-ctb"/>
@@ -21,13 +21,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9BF-tQ-pZc">
-                                <rect key="frame" x="152" y="28" width="72" height="30"/>
-                                <state key="normal" title="Go to tabs"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9BF-tQ-pZc">
+                                <rect key="frame" x="16" y="28" width="343" height="91"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="29"/>
+                                <state key="normal" title="Take me to my Newsfeed"/>
                                 <connections>
                                     <segue destination="k1O-2a-SVY" kind="show" id="bTC-c4-v9j"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8op-C7-aew">
+                                <rect key="frame" x="16" y="330" width="343" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -35,6 +43,10 @@
                             <constraint firstItem="9BF-tQ-pZc" firstAttribute="top" secondItem="jy5-8U-jGH" secondAttribute="bottom" constant="8" id="5HL-Ij-1Mm"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="btnNewsFeed" destination="9BF-tQ-pZc" id="Tvx-ZR-yYc"/>
+                        <outlet property="usertextnew" destination="8op-C7-aew" id="8hO-bk-tvh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0rr-Ba-WwQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
