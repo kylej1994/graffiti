@@ -10,7 +10,6 @@ test_idtoken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjgxM2QzNjVmZWJjZDhkZjE2YjZlZTlhOGNh
 
 class AuthTestCase(APITestCase):
 
-
     def setUp(self):
         super(APITestCase, self).setUp()
         self.app = graffiti.app.test_client()
@@ -18,10 +17,9 @@ class AuthTestCase(APITestCase):
     def tearDown(self):
         super(APITestCase, self).tearDown()
 
-
-    #Return Json of auth
+    # Return Json of auth
     def create_auth_json(self, token):
-        rv = self.app.put('/',
+        rv = self.app.get('/',
             headers=dict(
                 idToken=token),
             follow_redirects=True)
@@ -29,50 +27,13 @@ class AuthTestCase(APITestCase):
         return rv
 
     '''Auth Tests'''
-    #Test auth with no Authorization token
-    def test_no_token(self):
-        rv = self.app.get('/post',
-            follow_redirects=True)
-
-        assert rv.status_code == 400
-
-    #Test auth with invalid user. Expects FALSE, for invalid auth code
+    # Test auth with invalid user. Expects FALSE, for invalid auth code
+    # Only one auth test because auth is part of other tests as well.
     def test_create_invalid_auth(self):
         test_string = 'test_token_string'
-        rv = self.create_auth_json(test_idtoken)
+        rv = self.create_auth_json(test_string)
 
-        assert rv.status_code == 400
-
-
-if __name__ == '__main__':
-    unittest.main()
-        assert authObj.is_expired == True
-
-    #Test that we can successfully store 
-    def test_store_auth(self):
-        #Create auth obj
-        test_string = '1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com'
-        authJson = self.create_auth_json(test_string)
-        authObj = Auth(authJson)
-
-        #Try adding and deleting an auth object
-        self.db.session.add(authObj)
-        self.db.session.delete(authObj)
-        self.db.commit()
-
-    #Test that we can successfully add and retrieve an auth object
-    def test_get_auth(self):
-        test_string = '1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com'
-        authJson = self.create_auth_json(test_string)
-        authObj = Auth(authJson)
-
-        self.db.session.add(authObj)
-        queriedAuth = Auth.query.filter(token=test_string)
-        #Compare that the object is the same.
-        self.is_same_auth(authObj, queriedAuth)
-        self.db.session.delete(authObj)
-        self.db.commit()
-
+        assert rv.status_code == 401
 
 if __name__ == '__main__':
     unittest.main()
