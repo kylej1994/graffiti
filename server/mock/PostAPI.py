@@ -14,6 +14,7 @@ fake_dict = dict(
 			latitude=-87.599954),
 		created_at=datetime.datetime(1995, 05, 23, 11, 11, 11, 111).isoformat(),
 		posterid=3,
+		current_user_vote=1,
 		num_votes=102)
 fake_response = json.dumps(fake_dict)
 
