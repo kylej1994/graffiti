@@ -16,23 +16,7 @@ class FeedTableViewController: UITableViewController {
     var posts: [Post] = []
 
     var timestamp = "time ago"
-    // computed properties
-    var formatter = DateFormatter()
-    var formattedTimestamp: String {
-        get {
-            // code to execute when getting
-            // The getter must return a value of the same type
-            let time = Date()
-            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-            formatter.dateStyle = DateFormatter.Style.long
-            formatter.timeStyle = .short
-            timestamp = "stamp: " + formatter.string(from: time)
-            return timestamp
-        }
-        set {
-            print("setting date")
-        }
-    }
+    
     var currentLatitude: CLLocationDegrees? = CLLocationDegrees()
     var currentLongitude: CLLocationDegrees? = CLLocationDegrees()
     
@@ -117,9 +101,20 @@ class FeedTableViewController: UITableViewController {
         var rating = post.getRating()
 
         cell.textView.text = post.getText()
-        cell.votesLabel.text = String(rating)
         
-        //cell.dateLabel.text = post.getTimeAdded()
+        // vote label
+        cell.votesLabel.text = String(rating)
+        if rating < 0 {
+            cell.votesLabel.textColor = UIColor(red:0.76, green:0.25, blue:0.25, alpha:1.0)
+        } else {
+            cell.votesLabel.textColor = UIColor(red:0.40, green:0.78, blue:0.49, alpha:1.0)
+        }
+        
+        if let dateAdded = post.getTimeAdded() {
+            cell.dateLabel.text = getFormattedDate(date: dateAdded)
+        } else {
+            cell.dateLabel.text = "Just Now"
+        }
         
         // voting
         var didUpvote = false
@@ -139,7 +134,7 @@ class FeedTableViewController: UITableViewController {
                     print("couldn't get postid. not sending upvote to server, but faking it in ui")
                 }
             } else {
-                print("ignoring upvote button press")
+                print("ignoring extra upvote button press")
             }
         }
 
@@ -157,7 +152,7 @@ class FeedTableViewController: UITableViewController {
                     print("couldn't get postid. not sending upvote to server, but faking it in ui")
                 }
             } else {
-                print("ignoring downvote button press")
+                print("ignoring extra downvote button press")
             }
         }
         return cell
@@ -196,7 +191,11 @@ class FeedTableViewController: UITableViewController {
         getPostsByLocation()
         self.tableView.reloadData()
         refreshControl?.endRefreshing()
-        timestamp = self.formattedTimestamp
+    }
+    
+    func getFormattedDate(date: Date) -> String {
+        let formatter = DateFormatter()
+        return formatter.timeSince(from: date as NSDate, numericDates: true)
     }
 
 
