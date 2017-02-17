@@ -7,7 +7,7 @@ user_api = Blueprint('user_api', __name__)
 
 fake_dict = dict(
 	userid=1,
-	username='hothjylewis',
+	username='',
 	name="Hot and Bothered",
 	email="comeNfind@me.com",
 	bio="Yum yum yum!"
@@ -25,7 +25,7 @@ def user_login():
 	# return whether its a new user and the associated user object
 
 	return json.dumps(dict(
-		new_user=False,
+		new_user=True,
 		user=fake_dict))
 
 @user_api.route('/user/<int:userid>', methods=['GET'])
