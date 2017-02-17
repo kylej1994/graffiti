@@ -169,10 +169,4 @@ class User(db.Model):
     # returns None if user_id is not in the db
     @staticmethod
     def find_user(user_id):
-<<<<<<< HEAD
-        db.session.query(User).filter(User.user_id==user_id).first()
-=======
         return db.session.query(User).filter(User.user_id==userid).first()
-
-    
->>>>>>> origin

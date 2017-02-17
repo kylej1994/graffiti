@@ -27,12 +27,12 @@ ERR_403 = "Post is not owned by user."
 ERR_403_vote = "User has already voted."
 ERR_404 = "Post not found."
 
-def validate_vote(self, vote):
+def validate_vote(vote):
 	return vote == -1 and vote == 1
 
-def validate_text(self, text):
+def validate_text(text):
 	print 'in validation'
-	return text.size() <= 100
+	return len(text) <= 100
 
 def generate_error_response(message, code):
 	error_response = {}
@@ -51,10 +51,9 @@ def create_post():
 		return generate_error_response(ERR_400, 400)
 
 	# create a new post and add it to the db session
-	text = data['text']
-	lon = data['location']['longitude']
-	lat = data['location']['latitude']
-<<<<<<< HEAD
+	text = str(data['text'])
+	lon = (float)(data['location']['longitude'])
+	lat = (float)(data['location']['latitude'])
 	# TODO retrieve idToken to find poster_id
 	# make sure this user exists
 	user_id = 1
@@ -62,16 +61,14 @@ def create_post():
 	#validates the text field for the post
 	# if (self.validate_text(text) == False):
 	# 	return generate_error_response(ERR_400, 400); 
-=======
 
-	email = request.environ['META_INFO']
-	user_id = User.get_user_id_by_google_id(email['audCode'])
-	google_aud = email['audCode']
+	# email = request.environ['META_INFO']
+	# user_id = User.get_user_id_by_google_id(email['audCode'])
+	# google_aud = email['audCode']
 
 	#validates the text field for the post
-	if (validate_text(text) == False):
+	if (not validate_text(text)):
 		return generate_error_response(ERR_400, 400)
->>>>>>> origin
 
 	post = Post(text, lon, lat, user_id)
 	post.save_post()
@@ -81,22 +78,19 @@ def create_post():
 @post_api.route('/post/<int:postid>', methods=['DELETE'])
 def delete_post(postid):
 	# no checking of authentication is happening yet...
-
 	post = Post.find_post(postid)
 
 	if (post is None):
 		return generate_error_response(ERR_404, 404)
 
-<<<<<<< HEAD
 	# TODO check user_id
 	# if (post.get_user_id() != request.get_json()['user_id']):
 	# 	return generate_error_response(ERR_403, 403);
-=======
-	email = request.environ['META_INFO']
-	user_id = User.get_user_id_by_google_id(email['audCode'])
-	if (post.get_poster_id() != user_id):
-		return generate_error_response(ERR_403, 403)
->>>>>>> origin
+
+	# email = request.environ['META_INFO']
+	# user_id = User.get_user_id_by_google_id(email['audCode'])
+	# if (post.get_poster_id() != user_id):
+	# 	return generate_error_response(ERR_403, 403)
 
 	jsonified_post = post.to_json_fields_for_FE()
 	post.delete_post()
@@ -111,16 +105,15 @@ def get_post(postid):
 	# if found, retrieve it and return jsonified object with 200
 	# if found but dif user, return 403
 	# if not found, return 404
-
 	post = Post.find_post(postid)
 	
 	if (post is None):
 		return generate_error_response(ERR_404, 404)
 
-	email = request.environ['META_INFO']
-	user_id = User.get_user_id_by_google_id(email['audCode'])
-	if (post.get_poster_id() != user_id):
-		return generate_error_response(ERR_403, 403)
+	# email = request.environ['META_INFO']
+	# user_id = User.get_user_id_by_google_id(email['audCode'])
+	# if (post.get_poster_id() != user_id):
+	# 	return generate_error_response(ERR_403, 403)
 
 	return post.to_json_fields_for_FE(), 200
 

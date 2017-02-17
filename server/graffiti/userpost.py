@@ -1,3 +1,4 @@
+import sys
 sys.path.append('..')
 from graffiti import db
 from sqlalchemy import Column, Float, Integer, String
@@ -5,12 +6,12 @@ from sqlalchemy import Column, Float, Integer, String
 from datetime import datetime
 from time import time
 
-import geoalchemy
+import geoalchemy2
 
 class UserPost(db.Model):
     __tablename__ = 'userpost'
 
-    user_id = db.Column(db.String(100), db.ForeignKey('user.user_id'), primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), primary_key=True)
     post_id = db.Column(db.Integer, db.ForeignKey('post.post_id'), primary_key=True)
     vote = db.Column(db.Integer)
 
