@@ -155,6 +155,31 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         GIDSignIn.sharedInstance().disconnect()
         label.text = "Disconnecting."
     }
+    
+    func btnDisconnectPressed(_ sender: UIButton) {
+        self.navigationController?.popToRootViewController(animated: true)
+        
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let nextviewController = storyBoard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+        self.present(nextviewController, animated: true, completion: nil)
+        
+        
+        label.text = "Signed out."
+        label.isHidden = false
+        LoginViewController().toggleAuthUI()
+        
+        
+       
+        
+    }
+    
+    func btnSignOutPressed(_ sender: UIButton) {
+        GIDSignIn.sharedInstance().disconnect()
+        label.text = "Disconnecting."
+    }
+
+    
+    
 
     
     // method to run when table view cell is tapped

@@ -128,8 +128,14 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // Hide the keyboard.
-        textField.resignFirstResponder()
+        usertextnew.resignFirstResponder()
         return true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        // Show keyboard by default
+        super.viewDidLoad()
+        usertextnew.becomeFirstResponder()
     }
 
     

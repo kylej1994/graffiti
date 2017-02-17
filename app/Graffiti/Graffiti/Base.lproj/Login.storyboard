@@ -12,7 +12,7 @@
         <!--Login View Controller-->
         <scene sceneID="GlH-A2-mZU">
             <objects>
-                <viewController id="HOq-5u-5t8" customClass="LoginViewController" customModule="Graffiti" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="LoginViewController" storyboardIdentifier="LoginViewController" id="HOq-5u-5t8" customClass="LoginViewController" customModule="Graffiti" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jy5-8U-jGH"/>
                         <viewControllerLayoutGuide type="bottom" id="TeT-os-ctb"/>
