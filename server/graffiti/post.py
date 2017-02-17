@@ -71,6 +71,11 @@ class Post(db.Model):
     def find_post(postid):
         return db.session.query(Post).filter(Post.post_id==postid).first()
 
+    # finds all post of a given user_id
+    @staticmethod
+    def find_user_posts(user_id):
+        return db.session.query(Post).filter(Post.poster_id==user_id)
+
     # finds posts within a certain radius of a coordinate
     @staticmethod
     def find_posts_within_loc(lon, lat, radius):
