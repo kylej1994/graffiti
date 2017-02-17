@@ -12,7 +12,7 @@ class ProfileViewController: UIViewController {
     
     var btnDisconnect : UIButton!
     var label : UILabel!
-    @IBOutlet weak var btnSignOut: UIButton!
+    var btnSignOut: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()

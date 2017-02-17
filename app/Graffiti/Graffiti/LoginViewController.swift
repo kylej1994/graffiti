@@ -11,8 +11,6 @@ import UIKit
 class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDelegate {
     
     var btnSignIn : UIButton!
-    var btnSignOut : UIButton!
-    var btnDisconnect : UIButton!
     var label : UILabel!
     var welcome : UILabel!
     var loginerror : UILabel!
@@ -51,24 +49,6 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
         btnSignIn.layer.borderWidth = 2
         view.addSubview(btnSignIn)
 
-        
-        btnSignOut = UIButton(frame: CGRect(0,0,100,30))
-        btnSignOut.center = CGPoint(view.center.x, 100)
-        btnSignOut.setTitle("Sign Out", for: UIControlState.normal)
-        btnSignOut.setTitleColor(UIColor.blue, for: UIControlState.normal)
-        btnSignOut.setTitleColor(UIColor.cyan, for: UIControlState.highlighted)
-        btnSignOut.addTarget(self, action: #selector(btnSignOutPressed(_:)), for: UIControlEvents.touchUpInside)
-        view.addSubview(btnSignOut)
-        
-       
-        
-        btnDisconnect = UIButton(frame: CGRect(0,0,100,30))
-        btnDisconnect.center = CGPoint(view.center.x, 200)
-        btnDisconnect.setTitle("Disconnect", for: UIControlState.normal)
-        btnDisconnect.setTitleColor(UIColor.blue, for: UIControlState.normal)
-        btnDisconnect.setTitleColor(UIColor.cyan, for: UIControlState.highlighted)
-        btnDisconnect.addTarget(self, action: #selector(btnDisconnectPressed(_:)), for: UIControlEvents.touchUpInside)
-        view.addSubview(btnDisconnect)
         
         welcome = UILabel(frame: CGRect(100,300,600,100))
         welcome.text = "Welcome to Grafitti"
@@ -145,16 +125,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
     }
     
     
-    func btnDisconnectPressed(_ sender: UIButton) {
-        label.text = "Signed out."
-        toggleAuthUI()
-    }
-    
-    func btnSignOutPressed(_ sender: UIButton) {
-        GIDSignIn.sharedInstance().disconnect()
-        label.text = "Disconnecting."
-    }
-    
+
     func newuser(newuser: Dictionary<String, Any>) {
         let nu = newuser["new_user"]
         if (nu as? Bool == false) {
@@ -175,7 +146,6 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
         // setting current user
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
          appDelegate.currentUser = user
-        print(user.getUsername())
          usertextnew.isHidden = false
          usertextnew.becomeFirstResponder()
          let username = usertextnew.text!
@@ -221,8 +191,6 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
             welcome.isHidden = true
             btnNewsFeed.isHidden = true
             btnSignIn.isHidden = true
-            btnSignOut.isHidden = false
-            btnDisconnect.isHidden = true
             loginerror.isHidden = true
             usertextnew.isHidden = true
             untoolong.isHidden = true
@@ -239,8 +207,6 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
             welcome.isHidden = false
             btnNewsFeed.isHidden = true
             btnSignIn.isHidden = false
-            btnSignOut.isHidden = true
-            btnDisconnect.isHidden = true
             loginerror.isHidden = true
             usertextnew.isHidden = true
             untoolong.isHidden = true
