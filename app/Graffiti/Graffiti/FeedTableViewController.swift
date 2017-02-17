@@ -120,12 +120,24 @@ class FeedTableViewController: UITableViewController {
         
         //cell.dateLabel.text = post.getTimeAdded()
         
+        // voting
         cell.upvoteTapAction = { (cell) in
             print("upvote tapped!")
             let indexOfPost = tableView.indexPath(for: cell)!.row
             print(indexOfPost)
             if let postid = self.posts[indexOfPost].getID() {
-                self.sendUpvoteFor(postid: postid)
+                self.sendVoteFor(postid: postid, vote: 1)
+            } else {
+                print("couldn't get postid. not sending upvote to server, but faking it in ui")
+            }
+        }
+        
+        cell.downvoteTapAction = { (cell) in
+            print("downvote tapped!")
+            let indexOfPost = tableView.indexPath(for: cell)!.row
+            print(indexOfPost)
+            if let postid = self.posts[indexOfPost].getID() {
+                self.sendVoteFor(postid: postid, vote: -1)
             } else {
                 print("couldn't get postid. not sending upvote to server, but faking it in ui")
             }
@@ -133,16 +145,16 @@ class FeedTableViewController: UITableViewController {
         return cell
     }
     
-
-    func sendUpvoteFor(postid: Int) {
-        api.voteOnPost(postid: postid, vote: 1) { response in
+    // todo: change second param from int to enum: upvote or downvote
+    func sendVoteFor(postid: Int, vote: Int) {
+        api.voteOnPost(postid: postid, vote: vote) { response in
             switch response.result {
             case .success:
-                print("sending upvote")
+                print("sending vote")
                 let updatedPost = response.result.value
                 print(updatedPost?.getRating() as Any)
             case .failure(let error):
-                print("upvote failed")
+                print("sending vote failed")
                 print(error)
             }
         }

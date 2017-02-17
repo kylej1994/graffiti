@@ -16,6 +16,7 @@ class FeedTableViewTextCell: UITableViewCell {
     
     // http://candycode.io/how-to-properly-do-buttons-in-table-view-cells-using-swift-closures/
     var upvoteTapAction: ((UITableViewCell) -> Void)?
+    var downvoteTapAction: ((UITableViewCell) -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,5 +31,8 @@ class FeedTableViewTextCell: UITableViewCell {
 
     @IBAction func tapUpvote(_ sender: Any) {
         upvoteTapAction?(self)
+    }
+    @IBAction func tapDownvote(_ sender: UIButton) {
+        downvoteTapAction?(self)
     }
 }
