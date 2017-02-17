@@ -53,15 +53,14 @@ class UserTestCase(APITestCase):
         no_user = User.find_user(user.get_user_id() + 1000)
         self.assertIsNone(no_user)
 
-    # def test_change_suspension(self):
-    #     user = db.query(User).filter(User.username=="easmith").first()
-    #     # Below function has not yet been implemented
-    #     user.change_suspension(True)
-    #     self.assertTrue(db.query(User).filter(User.username=="easmith").first().has_been_suspended == True)
-    #     user.change_suspension(True)
-    #     self.assertTrue(db.query(User).filter(User.username=="easmith").first().has_been_suspended == True)
-    #     user.change_suspension(False)
-    #     self.assertTrue(db.query(User).filter(User.username=="easmith").first().has_been_suspended == False)
+    def test_change_suspension(self):
+        user = db.query(User).filter(User.username=="easmith").first()
+        user.set_has_been_suspended(True)
+        self.assertTrue(db.query(User).filter(User.username=="easmith").first().has_been_suspended == True)
+        user.set_has_been_suspended(True)
+        self.assertTrue(db.query(User).filter(User.username=="easmith").first().has_been_suspended == True)
+        user.set_has_been_suspended(False)
+        self.assertTrue(db.query(User).filter(User.username=="easmith").first().has_been_suspended == False)
 
     def test_adding_duplicate_user_parameters(self):
         # Duplicate username
@@ -87,10 +86,10 @@ class UserTestCase(APITestCase):
     def test_delete_user(self):
         # Below function has not yet been implemented
         user2 = User("ron", "4555", "9274859273")
-        assertFalse(user2.delete())
+        assertFalse(user2.delete_user())
 
         user = db.query(User).filter(User.username=="easmith").first()
-        assertTrue(user.delete())
+        assertTrue(user.delete_user())
 
         assertIsNone(db.query(User).filter(User.username=="easmith").first())
 
