@@ -17,6 +17,7 @@ typealias UserHandler = (DataResponse<User>) -> Void
 
 enum APIError: Error {
     case misformedAPIResponse
+    case userNotSignedIn
 }
 
 
@@ -35,9 +36,14 @@ class API {
     }
     
     //MARK Private Methods
-    @discardableResult private func makeRequest(_ url: String, method: HTTPMethod, parameters: Parameters? = nil, encoding: ParameterEncoding = URLEncoding.default) -> RequestProtocol{
+    @discardableResult private func makeRequest(_ url: String, method: HTTPMethod, parameters: Parameters? = nil, encoding: ParameterEncoding = URLEncoding.default) -> RequestProtocol?{
         // Add Authentication token
-        let idToken = "idToken" //TODO
+        guard let idToken = GIDSignIn.sharedInstance().currentUser?.authentication?.idToken else {
+            // User needs to be signed in
+            // Navigate to SignIn View?
+            return nil
+        }
+        
         let headers = ["Authorization": "Bearer \(idToken)"]
         
         // Construct Url
@@ -94,16 +100,16 @@ class API {
     
     //MARK: User Calls
     func getUser(userid: Int, handler: @escaping UserHandler) {
-        makeRequest("/user/\(userid)", method: .get).responseObject(completionHandler: handler)
+        makeRequest("/user/\(userid)", method: .get)?.responseObject(completionHandler: handler)
     }
     
     func updateUser(user: User, handler: @escaping UserHandler) {
         let userParams : Parameters = user.toJSON()
-        makeRequest("/user/\(user.getId())", method: .put, parameters: userParams, encoding: JSONEncoding.default).responseObject(completionHandler: handler)
+        makeRequest("/user/\(user.getId())", method: .put, parameters: userParams, encoding: JSONEncoding.default)?.responseObject(completionHandler: handler)
     }
     
     func login(handler: @escaping Handler) {
-        makeRequest("/user/login", method: .get).responseJSON() { response in
+        makeRequest("/user/login", method: .get)?.responseJSON() { response in
             switch response.result {
             case .success:
                 var result : Result<Any>
@@ -137,7 +143,7 @@ class API {
     
     //Needs testing
     func getUserPosts(userid: Int, handler: @escaping Handler) {
-        makeRequest("/user/\(userid)/posts", method: .get).responseJSON() { response in
+        makeRequest("/user/\(userid)/posts", method: .get)?.responseJSON() { response in
             self.postsHandler(response: response, handler: handler)
         }
     }
@@ -145,15 +151,15 @@ class API {
     //MARK: Post Calls
     func createPost(post: Post, handler: @escaping PostHandler) {
         let postParams : Parameters = post.toJSON()
-        makeRequest("/post", method: .post, parameters: postParams, encoding: JSONEncoding.default).responseObject(completionHandler: handler)
+        makeRequest("/post", method: .post, parameters: postParams, encoding: JSONEncoding.default)?.responseObject(completionHandler: handler)
     }
     
     func deletePost(postid: Int, handler: @escaping PostHandler) {
-        makeRequest("/post/\(postid)", method: .delete).responseObject(completionHandler: handler)
+        makeRequest("/post/\(postid)", method: .delete)?.responseObject(completionHandler: handler)
     }
     
     func getPost(postid: Int, handler: @escaping PostHandler) {
-        makeRequest("/post/\(postid)", method: .get).responseObject(completionHandler: handler)
+        makeRequest("/post/\(postid)", method: .get)?.responseObject(completionHandler: handler)
     }
     
     func getPosts(longitude: Double, latitude: Double, handler: @escaping Handler) {
@@ -161,13 +167,13 @@ class API {
             "longitude": longitude,
             "latitude": latitude
         ]
-        makeRequest("/post", method: .get, parameters: parameters).responseJSON() { response in
+        makeRequest("/post", method: .get, parameters: parameters)?.responseJSON() { response in
             self.postsHandler(response: response, handler: handler)
         }
     }
     
     func voteOnPost(postid: Int, vote: Int, handler: @escaping PostHandler) {
         let parameters = ["vote": vote]
-        makeRequest("/post/\(postid)/vote", method: .put, parameters: parameters, encoding: JSONEncoding.default).responseObject(completionHandler: handler)
+        makeRequest("/post/\(postid)/vote", method: .put, parameters: parameters, encoding: JSONEncoding.default)?.responseObject(completionHandler: handler)
     }
 }
