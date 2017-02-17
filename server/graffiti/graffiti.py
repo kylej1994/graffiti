@@ -1,12 +1,9 @@
 import json
-import pgdb
 import auth_Middleware
-
 
 from flask import Flask, request, abort
 from oauth2client import client, crypt
 from flask.ext.sqlalchemy import SQLAlchemy
-
 
 app = Flask(__name__)
 app.config.from_pyfile('graffiti.cfg')

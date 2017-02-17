@@ -33,15 +33,14 @@ def generate_error_response(message, code):
 
 @user_api.route('/user/login', methods=['GET'])
 def user_login():
-	id_token = not None #TODO
-	if (id_token == None):
-			return generate_error_response(ERR_401, 401);
-
-	# TODO Find user via id_token
+	email = request.environ['META_INFO']
+	if (email['NOID'] or email['BADTOKEN']):
+		return generate_error_response(ERR_401, 401);
+	user_id = User.get_user_id_by_google_id(email['audCode'])
+	user = db.session.query(User).filter(User.user_id==user_id).first()
 
 	if (user):		
 		# login with idToken passed in through header
-		# TODO
 		is_new_user = False
 	else:
 		# create new User object with next userId and empty strings for other fields
