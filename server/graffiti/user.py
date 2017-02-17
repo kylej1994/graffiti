@@ -89,6 +89,9 @@ class User(db.Model):
     def get_has_been_suspended(self):
         return self.has_been_suspended
 
+    def get_user_id_by_google_aud(self, google_aud):
+        return db.session.query(User).filter(User.google_aud==google_aud).first().user_id
+
     # No validations implemented
     def set_google_aud(self, google_aud):
         self.google_aud = google_aud
@@ -156,8 +159,15 @@ class User(db.Model):
         db.session.delete(self)
         db.session.commit()
 
+    # finds the user_id of a user given a google_aud
+    @staticmethod
+    def get_user_id_by_google_aud(self, google_aud):
+        return db.session.query(User).filter(User.google_aud==google_aud).first().user_id
+
     # finds a user given a user id
     # returns None if user_id is not in the db
     @staticmethod
     def find_user(user_id):
-        db.session.query(User).filter(User.user_id==userid).first()
+        return db.session.query(User).filter(User.user_id==userid).first()
+
+    
