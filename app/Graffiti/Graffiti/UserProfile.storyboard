@@ -1,11 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="06M-b9-Bbg">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="06M-b9-Bbg">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -20,14 +21,52 @@
                     <view key="view" contentMode="scaleToFill" id="6k4-pX-c8h">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KO8-Cl-Gsr">
+                                <rect key="frame" x="16" y="20" width="343" height="598"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="n40-Ky-6rx">
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="150"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CVD-DL-Qqm">
+                                            <rect key="frame" x="50" y="38" width="75" height="75"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fpe-Ev-hCM">
+                                            <rect key="frame" x="50" y="121" width="285" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstItem="CVD-DL-Qqm" firstAttribute="top" secondItem="n40-Ky-6rx" secondAttribute="top" constant="38" id="2lL-HC-Pwz"/>
+                                        <constraint firstAttribute="bottom" secondItem="fpe-Ev-hCM" secondAttribute="bottom" constant="8" id="3mI-re-bmG"/>
+                                        <constraint firstAttribute="bottom" secondItem="CVD-DL-Qqm" secondAttribute="bottom" constant="37" id="GdD-gA-qFu"/>
+                                        <constraint firstItem="CVD-DL-Qqm" firstAttribute="leading" secondItem="n40-Ky-6rx" secondAttribute="leading" constant="50" id="Kui-Pd-qYT"/>
+                                        <constraint firstAttribute="trailing" secondItem="CVD-DL-Qqm" secondAttribute="trailing" constant="218" id="LdY-fR-zdt"/>
+                                        <constraint firstAttribute="trailing" secondItem="fpe-Ev-hCM" secondAttribute="trailing" constant="8" id="Mrn-pb-YNe"/>
+                                        <constraint firstItem="fpe-Ev-hCM" firstAttribute="top" secondItem="CVD-DL-Qqm" secondAttribute="bottom" constant="8" id="Oyc-Kq-h6n"/>
+                                        <constraint firstItem="fpe-Ev-hCM" firstAttribute="leading" secondItem="n40-Ky-6rx" secondAttribute="leading" constant="50" id="vcY-wX-soo"/>
+                                    </constraints>
+                                </view>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="KO8-Cl-Gsr" firstAttribute="top" secondItem="sGe-jI-4Tw" secondAttribute="bottom" id="FBw-JO-4Ub"/>
+                            <constraint firstItem="KO8-Cl-Gsr" firstAttribute="leading" secondItem="6k4-pX-c8h" secondAttribute="leadingMargin" id="RIk-Zj-FbX"/>
+                            <constraint firstItem="MIG-7l-Bpk" firstAttribute="top" secondItem="KO8-Cl-Gsr" secondAttribute="bottom" id="ZSn-yE-uHA"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="KO8-Cl-Gsr" secondAttribute="trailing" id="vRi-PP-aQC"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Profile" id="Cz3-g8-u6Y"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gjr-JM-Zh3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-38" y="196"/>
+            <point key="canvasLocation" x="-39.200000000000003" y="195.6521739130435"/>
         </scene>
     </scenes>
 </document>
