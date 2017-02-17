@@ -24,7 +24,7 @@ class Auth_MiddleWare(object):
         self.app = app
 
     def __call__(self, environ, start_response):
-        print 'something you want done in every http request'
+        print 'Auth middleware call'
 
         environ['NOID'] = False
         environ['BADTOKEN'] = False
@@ -39,7 +39,6 @@ class Auth_MiddleWare(object):
         token = request.headers.get('idToken')
         if token is None:
             environ['NOID'] = True
-            print 'idtoken field is none'
             return self.app(environ, start_response)
 
 
@@ -58,6 +57,5 @@ class Auth_MiddleWare(object):
         #Unsuccessful validation
         except crypt.AppIdentityError:
             environ['BADTOKEN'] = True
-            print 'Invalid token'
 
         return self.app(environ, start_response)

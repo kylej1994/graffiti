@@ -61,6 +61,14 @@ def fill_db():
 print clear_db_of_everything()
 print fill_db()
 
+def generate_error_response(message, code):
+	error_response = {}
+	error_response['error'] = message
+	return json.dumps(error_response), code
+
 @app.route('/')
 def hello():
-	return 'hello\n'
+	meta_info = request.environ['META_INFO']
+	if (meta_info is None):
+		return generate_error_response('Missing idToken.', 401)
+	return 'Success.'
