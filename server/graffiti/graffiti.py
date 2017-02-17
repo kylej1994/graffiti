@@ -1,13 +1,19 @@
 import json
 import pgdb
+import auth_Middleware
 
-from flask import Flask, request
+
+from flask import Flask, request, abort
+from oauth2client import client, crypt
 from flask.ext.sqlalchemy import SQLAlchemy
+
 
 app = Flask(__name__)
 app.config.from_pyfile('graffiti.cfg')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+app.wsgi_app = auth_Middleware.Auth_MiddleWare(app.wsgi_app)
+
 
 @app.route('/initdb')
 def init_db():
