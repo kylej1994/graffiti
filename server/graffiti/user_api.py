@@ -1,6 +1,7 @@
 import json
 
 from flask import Blueprint, request
+from post import Post
 from user import User
 
 user_api = Blueprint('user_api', __name__)
@@ -21,6 +22,7 @@ ERR_401 = "User idToken is missing."
 ERR_403_friends = "User is not friends."
 ERR_403_email = "Emails are immutable."
 ERR_403_update = "User can only update their own information."
+ERR_403_posts = "User can only access their own information."
 ERR_404 = "User not found."
 
 def generate_error_response(message, code):
@@ -109,3 +111,26 @@ def update_user(userid):
 		return generate_error_response(ERR_400_invalid, 400)
 
 	return user.to_json_fields_for_FE(), 200
+
+@user_api.route('/user/<int:userid>/posts', methods=['GET'])
+def get_user_posts(userid):
+	# look for user to make sure this user exists
+	user = db.session.query(User).filter(User.user_id==userid).first()
+
+	# return 404 if not found
+	if (user is None):
+		return generate_error_response(ERR_404, 404)
+
+	# TODO check id from header
+
+	posts = db.session.query(Post).filter(Post.poster_id==userid)
+
+	to_rtn = {}
+	posts_arr = []
+	for post in posts:
+		print post
+		posts_arr.append(post.to_json_fields_for_FE())
+
+	to_rtn['posts'] = posts_arr
+
+	return json.dumps(to_rtn)

@@ -96,8 +96,7 @@ def get_post(postid):
 	if (post is None):
 		return generate_error_response(ERR_404, 404);
 
-	if (post.get_user_id() != request.get_json()['user_id']):
-		return generate_error_response(ERR_403, 403);
+	# TODO check id from header
 
 	return post.to_json_fields_for_FE(), 200
 

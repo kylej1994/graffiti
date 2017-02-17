@@ -4,6 +4,7 @@ sys.path.append('..')
 from graffiti import db
 from sqlalchemy import Column, Float, Integer, String
 from sqlalchemy.dialects.postgresql import JSON
+from user import User
 
 from datetime import datetime
 from time import time
