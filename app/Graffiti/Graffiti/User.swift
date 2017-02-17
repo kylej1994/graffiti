@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import ObjectMapper
 import UIKit
 
 enum UserError: Error, Equatable {
@@ -21,37 +22,52 @@ func ==(lhs: UserError, rhs: UserError) -> Bool {
 }
 
 
-class User {
+class User : Mappable {
     
     //MARK: Properties
     
     // The user's attributes
-    private var id: Int
+    private var id: Int?
     private var username: String?
     private var name: String?
     private var email: String?
     private var userImage: UIImage?
-    private var textTag: String?
+    private var bio: String?
     private var imageTag: UIImage?
-    
     
     //MARK: Initialization
     
-    init(id: Int, username: String? = nil, name: String? = nil, email: String? = nil, userImage: UIImage? = nil, textTag: String? = nil, imageTag: UIImage? = nil){
+    init(id: Int, username: String? = nil, name: String? = nil, email: String? = nil, userImage: UIImage? = nil, bio: String? = nil, imageTag: UIImage? = nil){
         self.id = id
-        
         self.username = username
         self.name = name
         self.email = email
         self.userImage = userImage
-        self.textTag = textTag
+        self.bio = bio
         self.imageTag = imageTag
+    }
+    
+    //MARK: Object Mapping
+    
+    required init?(map: Map) {
+        // ID is required
+        if map.JSON["userid"] == nil {
+            return nil
+        }
+    }
+    
+    func mapping(map: Map) {
+        id       <- map["userid"]
+        username <- map["username"]
+        name     <- map["name"]
+        email    <- map["email"]
+        bio      <- map["bio"]
     }
     
     //MARK: Getters
     
     public func getId()->Int{
-        return id
+        return id!
     }
     
     public func getUsername()->String?{
@@ -70,8 +86,8 @@ class User {
         return userImage
     }
     
-    public func getTextTag() -> String?{
-        return textTag
+    public func getBio() -> String?{
+        return bio
     }
     
     public func getImageTag() -> UIImage?{
@@ -104,7 +120,7 @@ class User {
         self.imageTag = TImage
     }
     
-    public func setImage(_ textTag: String){
-        self.textTag = textTag
+    public func setBio(_ bio: String){
+        self.bio = bio
     }
 }

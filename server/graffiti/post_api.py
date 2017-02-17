@@ -3,10 +3,12 @@ import json
 
 from flask import Blueprint, request
 from post import Post
+from userpost import UserPost
 
 post_api = Blueprint('post_api', __name__)
 
 from graffiti import db
+from oauth2client import client
 
 fake_dict = dict(
 		postid=1,
@@ -22,6 +24,7 @@ fake_response = json.dumps(fake_dict)
 #string error messages
 ERR_400 = "Post information was invalid."
 ERR_403 = "Post is not owned by user."
+ERR_403_vote = "User has already voted."
 ERR_404 = "Post not found."
 
 def validate_vote(self, vote):
@@ -45,12 +48,13 @@ def create_post():
 	if ('text' not in data or 'location' not in data
 			or 'latitude' not in data['location']
 			or 'longitude' not in data['location']):
-		return generate_error_response(ERR_400, 400);
+		return generate_error_response(ERR_400, 400)
 
 	# create a new post and add it to the db session
 	text = data['text']
 	lon = data['location']['longitude']
 	lat = data['location']['latitude']
+<<<<<<< HEAD
 	# TODO retrieve idToken to find poster_id
 	# make sure this user exists
 	user_id = 1
@@ -58,6 +62,16 @@ def create_post():
 	#validates the text field for the post
 	# if (self.validate_text(text) == False):
 	# 	return generate_error_response(ERR_400, 400); 
+=======
+
+	email = request.environ['META_INFO']
+	user_id = User.get_user_id_by_google_id(email['audCode'])
+	google_aud = email['audCode']
+
+	#validates the text field for the post
+	if (validate_text(text) == False):
+		return generate_error_response(ERR_400, 400)
+>>>>>>> origin
 
 	post = Post(text, lon, lat, user_id)
 	post.save_post()
@@ -71,11 +85,18 @@ def delete_post(postid):
 	post = Post.find_post(postid)
 
 	if (post is None):
-		return generate_error_response(ERR_404, 404);
+		return generate_error_response(ERR_404, 404)
 
+<<<<<<< HEAD
 	# TODO check user_id
 	# if (post.get_user_id() != request.get_json()['user_id']):
 	# 	return generate_error_response(ERR_403, 403);
+=======
+	email = request.environ['META_INFO']
+	user_id = User.get_user_id_by_google_id(email['audCode'])
+	if (post.get_poster_id() != user_id):
+		return generate_error_response(ERR_403, 403)
+>>>>>>> origin
 
 	jsonified_post = post.to_json_fields_for_FE()
 	post.delete_post()
@@ -94,9 +115,12 @@ def get_post(postid):
 	post = Post.find_post(postid)
 	
 	if (post is None):
-		return generate_error_response(ERR_404, 404);
+		return generate_error_response(ERR_404, 404)
 
-	# TODO check id from header
+	email = request.environ['META_INFO']
+	user_id = User.get_user_id_by_google_id(email['audCode'])
+	if (post.get_poster_id() != user_id):
+		return generate_error_response(ERR_403, 403)
 
 	return post.to_json_fields_for_FE(), 200
 
@@ -112,13 +136,8 @@ def get_post_by_location():
 	posts = Post.find_posts_within_loc(lon, lat, radius)
 	print 'found posts'
 
-	#TODO format for returning multiple posts?
 	to_ret = {}
-	index = 0
-	for post in posts:
-		to_ret[index] = post.to_json_fields_for_FE()
-		index += 1
-
+	to_ret['posts'] = posts
 	return json.dumps(to_ret), 200
 
 @post_api.route('/post/<int:postid>/vote', methods=['PUT'])
@@ -130,9 +149,15 @@ def vote_post(postid):
 	# already voted on this post
 	# modify accordingly
 	# return postid of post and new num votes
+
 	vote = int(request.get_json()['vote'])
 	post = Post.find_post(postid)
-	# TODO need to check if user has already voted
-	post.set_vote(vote)
 
+	# checks if user has already voted
+	email = request.environ['META_INFO']
+	user_id = User.get_user_id_by_google_id(email['audCode'])
+	if (post.get_poster_id() != user_id):
+		return generate_error_response(ERR_403, 403)
+
+	post.set_vote(vote)
 	return post.to_json_fields_for_FE(), 200

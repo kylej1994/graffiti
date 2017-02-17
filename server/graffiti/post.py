@@ -49,7 +49,10 @@ class Post(db.Model):
             num_votes=self.num_votes))
 
     def get_poster_id(self):
-        return self.poster_id;
+        return self.poster_id
+
+    def get_text(self):
+        return self.text
 
     # saves the post into the db
     def save_post(self):
