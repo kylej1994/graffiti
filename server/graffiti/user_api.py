@@ -16,7 +16,7 @@ fake_response = json.dumps(dict(
 		textTag="Yum yum yum!"))
 
 #string error messages
-ERR_400_invalid = "User information is invalid"
+ERR_400_invalid = "User information is invalid."
 ERR_400_taken = "Specified username is already taken."
 ERR_401 = "User idToken is missing."
 ERR_403_friends = "User is not friends."
@@ -32,12 +32,12 @@ def generate_error_response(message, code):
 
 
 @user_api.route('/user/login', methods=['GET'])
-def user_login():	
+def user_login():
 	id_token = not None #TODO
 	if (id_token == None):
 			return generate_error_response(ERR_401, 401);
 
-	# Find user via id_token
+	# TODO Find user via id_token
 
 	if (user):		
 		# login with idToken passed in through header
@@ -68,8 +68,13 @@ def get_user(userid):
 @user_api.route('/user/<int:userid>', methods=['PUT'])
 def update_user(userid):
 	# checks for necessary data params
-	data = request.get_json()
-	if ('userid' not in data):
+	try:
+		data = request.get_json()
+	except:
+		# if there is no data with the PUT request
+		return generate_error_response(ERR_400_invalid, 400);
+
+	if (not data or 'userid' not in data):
 		return generate_error_response(ERR_400_invalid, 400);
 	
 	# TODO check id from header
@@ -107,7 +112,7 @@ def update_user(userid):
 	# Evaluate bools
 	if (username_taken):
 		return generate_error_response(ERR_400_taken, 400)
-	if (rtn_val == False):
+	if (not rtn_val):
 		return generate_error_response(ERR_400_invalid, 400)
 
 	return user.to_json_fields_for_FE(), 200
@@ -115,7 +120,9 @@ def update_user(userid):
 @user_api.route('/user/<int:userid>/posts', methods=['GET'])
 def get_user_posts(userid):
 	# look for user to make sure this user exists
-	user = User.find_user(userid)
+	# not sure why this doesnt work...
+	#user = User.find_user(userid)
+	user = db.session.query(User).filter(User.user_id==userid).first()
 
 	# return 404 if not found
 	if (user is None):
@@ -123,12 +130,11 @@ def get_user_posts(userid):
 
 	# TODO check id from header
 
-	Post.find_user_posts(userid)
+	posts = Post.find_user_posts(userid)
 
 	to_rtn = {}
 	posts_arr = []
 	for post in posts:
-		print post
 		posts_arr.append(post.to_json_fields_for_FE())
 
 	to_rtn['posts'] = posts_arr
