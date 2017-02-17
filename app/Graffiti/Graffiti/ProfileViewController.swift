@@ -10,10 +10,10 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    var btnSignOut : UIButton!
     var btnDisconnect : UIButton!
     var label : UILabel!
-
+    @IBOutlet weak var btnSignOut: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
