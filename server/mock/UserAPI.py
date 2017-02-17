@@ -1,4 +1,6 @@
 import json
+import datetime
+
 
 from flask import Blueprint, request
 #from user import User
@@ -13,6 +15,17 @@ fake_dict = dict(
 	bio="Yum yum yum!"
 )
 fake_response = json.dumps(fake_dict)
+
+fake_post_dict = dict(
+	postid=1,
+	text='This one is for you, Henry ;)',
+	location=dict(
+		longitude=41.792279,
+		latitude=-87.599954),
+	created_at=datetime.datetime(1995, 05, 23, 11, 11, 11, 111).isoformat(),
+	posterid=3,
+	num_votes=102
+)
 
 @user_api.route('/user/login', methods=['GET'])
 def user_login():
@@ -55,3 +68,11 @@ def update_user(userid):
 	# return 404 otherwise
 
 	return fake_response
+
+@user_api.route('/user/<int:userid>/posts', methods=['GET'])
+def get_user_posts(userid):
+
+	return json.dumps(dict(
+			posts=[fake_post_dict, fake_post_dict, fake_post_dict, fake_post_dict, fake_post_dict,
+					fake_post_dict, fake_post_dict, fake_post_dict, fake_post_dict, fake_post_dict]
+		))

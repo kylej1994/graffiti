@@ -49,6 +49,49 @@ class API {
             .defaultValidate()
     }
     
+    // Unwraps and converts JSON to Array of posts to pass to handler
+    private func postsHandler(response: DataResponse<Any>, handler: Handler) {
+        switch response.result {
+        case .success:
+            var result : Result<Any>
+            do {
+                // Unwrap JSON
+                guard
+                    let json = response.result.value as? [String: Any],
+                    let posts = json["posts"] as? [Any]
+                    else{
+                        throw APIError.misformedAPIResponse
+                }
+                
+                // Map to Post Objects
+                let postObjects = try posts.map() { (post) -> Post in
+                    if
+                        let postJSON = post as? [String : Any],
+                        let postObject = Post(JSON: postJSON)
+                    {
+                        return postObject
+                    } else {
+                        throw APIError.misformedAPIResponse
+                    }
+                }
+                
+                // Form result value
+                let value : Any = [
+                    "posts": postObjects
+                ]
+                result = Result.success(value)
+            } catch(let error) {
+                // Failure
+                result = Result.failure(error)
+            }
+            
+            let newResponse = DataResponse(request: response.request, response: response.response, data: response.data, result: result)
+            handler(newResponse)
+        case .failure:
+            handler(response)
+        }
+    }
+    
     //MARK: User Calls
     func getUser(userid: Int, handler: @escaping UserHandler) {
         makeRequest("/user/\(userid)", method: .get).responseObject(completionHandler: handler)
@@ -92,6 +135,13 @@ class API {
         }
     }
     
+    //Needs testing
+    func getUserPosts(userid: Int, handler: @escaping Handler) {
+        makeRequest("/user/\(userid)/posts", method: .get).responseJSON() { response in
+            self.postsHandler(response: response, handler: handler)
+        }
+    }
+    
     //MARK: Post Calls
     func createPost(post: Post, handler: @escaping PostHandler) {
         let postParams : Parameters = post.toJSON()
@@ -112,46 +162,7 @@ class API {
             "latitude": latitude
         ]
         makeRequest("/post", method: .get, parameters: parameters).responseJSON() { response in
-            switch response.result {
-            case .success:
-                var result : Result<Any>
-                do {
-                    // Unwrap JSON
-                    guard
-                        let json = response.result.value as? [String: Any],
-                        let posts = json["posts"] as? [Any]
-                    else{
-                        throw APIError.misformedAPIResponse
-                    }
-
-                    // Map to Post Objects
-                    let postObjects = try posts.map() { (post) -> Post in
-                        if
-                            let postJSON = post as? [String : Any],
-                            let postObject = Post(JSON: postJSON)
-                        {
-                            return postObject
-                        } else {
-                              throw APIError.misformedAPIResponse
-                        }
-                    }
-                    
-                    // Form result value
-                    let value : Any = [
-                        "posts": postObjects
-                    ]
-                    result = Result.success(value)
-                } catch(let error) {
-                    // Failure
-                    result = Result.failure(error)
-                }
-                
-                let newResponse = DataResponse(request: response.request, response: response.response, data: response.data, result: result)
-                handler(newResponse)
-            case .failure:
-                handler(response)
-            }
-           
+            self.postsHandler(response: response, handler: handler)
         }
     }
     
