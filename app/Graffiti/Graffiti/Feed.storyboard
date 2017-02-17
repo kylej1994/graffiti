@@ -32,19 +32,19 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         </textView>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="hFH-VP-7Vv">
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="hFH-VP-7Vv">
                                             <rect key="frame" x="8" y="99" width="79" height="50"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7AH-iB-j81">
-                                                    <rect key="frame" x="0.0" y="0.0" width="79" height="25"/>
-                                                    <state key="normal" title="Button" image="upvote-black-50"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
+                                                    <state key="normal" image="upvote-black-50"/>
                                                     <connections>
                                                         <action selector="tapUpvote:" destination="Pud-ZO-sRW" eventType="touchUpInside" id="czp-QQ-UVL"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AQi-hy-mG8">
-                                                    <rect key="frame" x="0.0" y="25" width="79" height="25"/>
-                                                    <state key="normal" title="Button" image="downvote-black-50"/>
+                                                    <rect key="frame" x="0.0" y="25" width="25" height="25"/>
+                                                    <state key="normal" image="downvote-black-50"/>
                                                     <connections>
                                                         <action selector="tapDownvote:" destination="Pud-ZO-sRW" eventType="touchUpInside" id="2lV-hQ-PrT"/>
                                                     </connections>
@@ -52,7 +52,7 @@
                                             </subviews>
                                         </stackView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JU0-SS-ZyY">
-                                            <rect key="frame" x="40" y="113" width="45" height="21"/>
+                                            <rect key="frame" x="40" y="113.5" width="45" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -65,7 +65,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time ago" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZNV-pv-8KQ">
-                                            <rect key="frame" x="160" y="120" width="135" height="21"/>
+                                            <rect key="frame" x="160" y="120.5" width="135" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -93,7 +93,9 @@
                                 </constraints>
                                 <connections>
                                     <outlet property="dateLabel" destination="ZNV-pv-8KQ" id="Px1-5e-0s8"/>
+                                    <outlet property="downvoteButton" destination="AQi-hy-mG8" id="wxw-Ig-Wyh"/>
                                     <outlet property="textView" destination="ifq-Jr-j4V" id="D5q-QT-srp"/>
+                                    <outlet property="upvoteButton" destination="7AH-iB-j81" id="fyW-4m-XEl"/>
                                     <outlet property="votesLabel" destination="JU0-SS-ZyY" id="a6s-Gr-CnY"/>
                                 </connections>
                             </tableViewCell>

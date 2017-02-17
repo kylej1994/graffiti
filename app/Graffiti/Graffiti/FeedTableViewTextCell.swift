@@ -13,10 +13,12 @@ class FeedTableViewTextCell: UITableViewCell {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var votesLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var upvoteButton: UIButton!
+    @IBOutlet weak var downvoteButton: UIButton!
     
     // http://candycode.io/how-to-properly-do-buttons-in-table-view-cells-using-swift-closures/
-    var upvoteTapAction: ((UITableViewCell) -> Void)?
-    var downvoteTapAction: ((UITableViewCell) -> Void)?
+    var upvoteTapAction: ((FeedTableViewTextCell) -> Void)?
+    var downvoteTapAction: ((FeedTableViewTextCell) -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()

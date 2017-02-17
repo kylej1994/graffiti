@@ -114,35 +114,65 @@ class FeedTableViewController: UITableViewController {
         
         // this is where we get the post from the post model
         let post = posts[indexPath.row]
-        let rating = post.getRating()
+        var rating = post.getRating()
+
         cell.textView.text = post.getText()
-        cell.votesLabel.text = "\(rating)" // this might be a bad practice
+        cell.votesLabel.text = String(rating)
         
         //cell.dateLabel.text = post.getTimeAdded()
         
         // voting
+        var didUpvote = false
+        var didDownvote = false
         cell.upvoteTapAction = { (cell) in
-            print("upvote tapped!")
-            let indexOfPost = tableView.indexPath(for: cell)!.row
-            print(indexOfPost)
-            if let postid = self.posts[indexOfPost].getID() {
-                self.sendVoteFor(postid: postid, vote: 1)
+            didDownvote = false
+            if !didUpvote {
+                print("entering the upvote stuff")
+                didUpvote = true
+                self.handleUpvote(cell: cell, currentRating: rating)
+                rating += 1 // this seems redundant but it isn't. setting the post rating doesn't work unless we refresh the table
+                post.setRating(rating + 1)
+                let indexOfPost = tableView.indexPath(for: cell)!.row
+                if let postid = self.posts[indexOfPost].getID() {
+                    self.sendVoteFor(postid: postid, vote: 1)
+                } else {
+                    print("couldn't get postid. not sending upvote to server, but faking it in ui")
+                }
             } else {
-                print("couldn't get postid. not sending upvote to server, but faking it in ui")
+                print("ignoring upvote button press")
             }
         }
-        
+
         cell.downvoteTapAction = { (cell) in
-            print("downvote tapped!")
-            let indexOfPost = tableView.indexPath(for: cell)!.row
-            print(indexOfPost)
-            if let postid = self.posts[indexOfPost].getID() {
-                self.sendVoteFor(postid: postid, vote: -1)
+            didUpvote = true
+            if !didDownvote {
+                didDownvote = true
+                self.handleDownvote(cell: cell, currentRating: rating)
+                rating -= 1
+                post.setRating(rating - 1)
+                let indexOfPost = tableView.indexPath(for: cell)!.row
+                if let postid = self.posts[indexOfPost].getID() {
+                    self.sendVoteFor(postid: postid, vote: -1)
+                } else {
+                    print("couldn't get postid. not sending upvote to server, but faking it in ui")
+                }
             } else {
-                print("couldn't get postid. not sending upvote to server, but faking it in ui")
+                print("ignoring downvote button press")
             }
         }
         return cell
+    }
+    
+    func handleUpvote(cell: FeedTableViewTextCell, currentRating: Int) {
+        cell.upvoteButton.setImage(UIImage(named: "upvote-green-50"), for: .normal)
+        cell.downvoteButton.setImage(UIImage(named: "downvote-black-50"), for: .normal)
+        cell.votesLabel.text = String(currentRating + 1)
+    }
+    
+    func handleDownvote(cell: FeedTableViewTextCell, currentRating: Int) {
+        cell.downvoteButton.setImage(UIImage(named: "downvote-red-50"), for: .normal)
+        cell.upvoteButton.setImage(UIImage(named: "upvote-black-50"), for: .normal)
+        cell.votesLabel.text = String(currentRating - 1)
     }
     
     // todo: change second param from int to enum: upvote or downvote
@@ -162,8 +192,6 @@ class FeedTableViewController: UITableViewController {
     
     
     func refreshFeed(sender: UIRefreshControl) {
-        // make a network request
-        // update posts array
         print("we will refresh here")
         getPostsByLocation()
         self.tableView.reloadData()
