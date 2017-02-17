@@ -41,6 +41,7 @@ class Post : Mappable {
     
     private var ID: Int? // The post's unique postID
     private var location: CLLocation?
+    private var poster: User?
     
     // The text and image associated with this post
     private var text: String = ""
@@ -62,6 +63,7 @@ class Post : Mappable {
     //MARK: Initialization
     
     init?(ID: Int? = nil, location: CLLocation? = nil,
+          poster: User? = nil,
           text: String = "", image: UIImage? = nil,
           timeAdded: Date? = nil, includeTag: Bool = false,
           visibilityType: VisType = .Public, lifetime: Int = defaultLifetime, vote: VoteType = .noVote){
@@ -69,6 +71,7 @@ class Post : Mappable {
         // Initialize all the things!
         self.ID = ID
         self.location = location
+        self.poster = poster
         
         self.image = image
         self.timeAdded = timeAdded
@@ -113,6 +116,7 @@ class Post : Mappable {
         timeAdded <- (map["created_at"], DateTransform())
         rating    <- map["num_votes"]
         vote      <- (map["current_user_vote"], VoteTransform())
+        poster    <- (map["poster"], UserTransform())
     }
     
     //MARK: Getters
@@ -122,6 +126,10 @@ class Post : Mappable {
     
     public func getText()->String{
         return text
+    }
+    
+    public func getPoster() -> User? {
+        return poster
     }
     
     public func getImage() -> UIImage?{

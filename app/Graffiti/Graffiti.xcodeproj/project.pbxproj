@@ -44,6 +44,7 @@
 		D9B5FAEB1E54FF9300DF87B2 /* LocationTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B5FAEA1E54FF9300DF87B2 /* LocationTransform.swift */; };
 		D9B5FAEC1E552E2800DF87B2 /* LocationTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B5FAEA1E54FF9300DF87B2 /* LocationTransform.swift */; };
 		D9DD58DF1E57A32600D9CB1D /* Vote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DD58DE1E57A32600D9CB1D /* Vote.swift */; };
+		D9DD58E11E57AE3900D9CB1D /* UserTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DD58E01E57AE3900D9CB1D /* UserTransform.swift */; };
 		D9E63BA01E4D460900EE6C4B /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E63B9F1E4D460900EE6C4B /* API.swift */; };
 		D9E63BA21E4D496E00EE6C4B /* ManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E63BA11E4D496E00EE6C4B /* ManagerProtocol.swift */; };
 		D9E63BA51E4D555E00EE6C4B /* MockSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E63BA41E4D555E00EE6C4B /* MockSessionManager.swift */; };
@@ -117,6 +118,7 @@
 		D90D7A8E1E4E6C5400FB5AEE /* MockRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRequest.swift; sourceTree = "<group>"; };
 		D9B5FAEA1E54FF9300DF87B2 /* LocationTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTransform.swift; sourceTree = "<group>"; };
 		D9DD58DE1E57A32600D9CB1D /* Vote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vote.swift; sourceTree = "<group>"; };
+		D9DD58E01E57AE3900D9CB1D /* UserTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTransform.swift; sourceTree = "<group>"; };
 		D9E63B9F1E4D460900EE6C4B /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		D9E63BA11E4D496E00EE6C4B /* ManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerProtocol.swift; sourceTree = "<group>"; };
 		D9E63BA41E4D555E00EE6C4B /* MockSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSessionManager.swift; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 				AD84BD671E494A170020505D /* UserProfile.storyboard */,
 				AD84BD621E4949860020505D /* ProfileViewController.swift */,
 				B33B07CF1E4ACA8F007025FB /* User.swift */,
+				D9DD58E01E57AE3900D9CB1D /* UserTransform.swift */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -609,6 +612,7 @@
 				D90D7A8C1E4E686700FB5AEE /* RequestProtocol.swift in Sources */,
 				D9DD58DF1E57A32600D9CB1D /* Vote.swift in Sources */,
 				AD84BD731E494C320020505D /* LoginViewController.swift in Sources */,
+				D9DD58E11E57AE3900D9CB1D /* UserTransform.swift in Sources */,
 				B33B07CC1E4AB6D2007025FB /* Post.swift in Sources */,
 				D9E63BA01E4D460900EE6C4B /* API.swift in Sources */,
 				AD03CF781E4E4C91003D3682 /* LocationManagerProtocol.swift in Sources */,
