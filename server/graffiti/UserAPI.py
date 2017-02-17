@@ -16,7 +16,11 @@ fake_response = json.dumps(dict(
 def user_login():
 	# no checking of authentication is happening yet...
 	print 'in create user'
-	
+	if request.environ['NOID']:
+		abort(400)
+	if request.environ['BADTOKEN']:
+		abort(401)
+
 	# if this user is a new user
 	# create new User object with next userId and empty strings for other fields
 	# else, login with idToken passed in through header
@@ -29,6 +33,10 @@ def user_login():
 @user_api.route('/user/<int:userid>', methods=['GET'])
 def get_user(userid):
 	# no checking of authentication is happening yet...
+	if request.environ['NOID']:
+		abort(400)
+	if request.environ['BADTOKEN']:
+		abort(401)
 
 	# look for user based on userid 
 	# return user object if found
@@ -39,6 +47,10 @@ def get_user(userid):
 @user_api.route('/user/<int:userid>', methods=['PUT'])
 def update_user(userid):
 	# no checking of authentication is happening yet...
+	if request.environ['NOID']:
+		abort(400)
+	if request.environ['BADTOKEN']:
+		abort(401)
 
 	data = request.get_json()
 

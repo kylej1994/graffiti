@@ -1,7 +1,7 @@
 import datetime
 import json
 
-from flask import Blueprint, request
+from flask import Blueprint, request, abort
 #from post import Post
 
 post_api = Blueprint('post_api', __name__)
@@ -21,7 +21,10 @@ fake_response = json.dumps(fake_dict)
 def create_post():
 	# no checking of authentication is happening yet...
 	print 'in create post'
-
+	if request.environ['NOID']:
+		abort(400)
+	if request.environ['BADTOKEN']:
+		abort(401)
 
 	""" Commented this out so that frontend can do stuff with the api before
 	it was completely implemented. """
@@ -46,6 +49,10 @@ def create_post():
 @post_api.route('/post/<int:postid>', methods=['DELETE'])
 def delete_post(postid):
 	# no checking of authentication is happening yet...
+	if request.environ['NOID']:
+		abort(400)
+	if request.environ['BADTOKEN']:
+		abort(401)
 
 	# look for post
 	# if found, delete it and return success (200)
@@ -57,6 +64,10 @@ def delete_post(postid):
 @post_api.route('/post/<int:postid>', methods=['GET'])
 def get_post(postid):
 	# no checking of authentication is happening yet...
+	if request.environ['NOID']:
+		abort(400)
+	if request.environ['BADTOKEN']:
+		abort(401)
 
 	# look for post
 	# if found, retrieve it and return jsonified object with 200
@@ -68,6 +79,10 @@ def get_post(postid):
 @post_api.route('/post', methods=['GET'])
 def get_post_by_location():
 	# no checking of authentication is happening yet...
+	if request.environ['NOID']:
+		abort(400)
+	if request.environ['BADTOKEN']:
+		abort(401)
 
 	# query db for all posts in this area
 	lat = request.args.get('latitude')
@@ -79,6 +94,10 @@ def get_post_by_location():
 @post_api.route('/post/<int:postid>/vote', methods=['PUT'])
 def vote_post(postid):
 	# no checking of authentication is happening yet...
+	if request.environ['NOID']:
+		abort(400)
+	if request.environ['BADTOKEN']:
+		abort(401)
 
 	# determine whether it is an upvote or downvote
 	# look through User-Posts table to determine if the specified user has
