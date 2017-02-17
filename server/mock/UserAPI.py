@@ -12,7 +12,8 @@ fake_dict = dict(
 	username='hylewis',
 	name="Hot and Bothered",
 	email="comeNfind@me.com",
-	bio="Yum yum yum!"
+	bio="Yum yum yum!",
+	phone_number="1234567890"
 )
 fake_response = json.dumps(fake_dict)
 

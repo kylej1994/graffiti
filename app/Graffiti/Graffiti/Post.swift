@@ -41,6 +41,7 @@ class Post : Mappable {
     
     private var ID: Int? // The post's unique postID
     private var location: CLLocation?
+    private var poster: User?
     
     // The text and image associated with this post
     private var text: String = ""
@@ -51,7 +52,7 @@ class Post : Mappable {
     private var timeAdded: Date?
     
     // User-specific properties STATUS: waiting for brach merges
-    //private var user: User
+    private var vote: VoteType = .noVote
     private var includeTag: Bool = false
     
     private var visibilityType: VisType = .Public
@@ -62,18 +63,21 @@ class Post : Mappable {
     //MARK: Initialization
     
     init?(ID: Int? = nil, location: CLLocation? = nil,
+          poster: User? = nil,
           text: String = "", image: UIImage? = nil,
           timeAdded: Date? = nil, includeTag: Bool = false,
-          visibilityType: VisType = .Public, lifetime: Int = defaultLifetime){
+          visibilityType: VisType = .Public, lifetime: Int = defaultLifetime, vote: VoteType = .noVote){
         
         // Initialize all the things!
         self.ID = ID
         self.location = location
+        self.poster = poster
         
         self.image = image
         self.timeAdded = timeAdded
         self.includeTag = includeTag
         self.visibilityType = visibilityType
+        self.vote = vote
         
         // We still need to check the above values
         do{
@@ -111,6 +115,8 @@ class Post : Mappable {
         location  <- (map["location"], LocationTransform())
         timeAdded <- (map["created_at"], DateTransform())
         rating    <- map["num_votes"]
+        vote      <- (map["current_user_vote"], VoteTransform())
+        poster    <- (map["poster"], UserTransform())
     }
     
     //MARK: Getters
@@ -120,6 +126,10 @@ class Post : Mappable {
     
     public func getText()->String{
         return text
+    }
+    
+    public func getPoster() -> User? {
+        return poster
     }
     
     public func getImage() -> UIImage?{
@@ -149,6 +159,10 @@ class Post : Mappable {
     public func getReported()->Bool{
         return reported
     }
+    
+    public func getVote() -> VoteType {
+        return vote
+    }
 
     
     //MARK: Setters
@@ -159,6 +173,10 @@ class Post : Mappable {
         } else {
             self.text = text
         }
+    }
+    
+    public func setVote(_ vote: VoteType) {
+        self.vote = vote
     }
     
     public func setImage(_ image: UIImage){
@@ -205,6 +223,7 @@ class Post : Mappable {
         var upRating = self.getRating()
         upRating += 1
         setRating(upRating)
+        self.setVote(.upVote)
     }
     
     // Function to downvote a post -- this time decrementing the 'rating' field
@@ -212,5 +231,6 @@ class Post : Mappable {
         var dnRating = self.getRating()
         dnRating -= 1
         setRating(dnRating)
+        self.setVote(.downVote)
     }
 }

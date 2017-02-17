@@ -4,11 +4,14 @@ sys.path.append('..')
 from graffiti import db
 from sqlalchemy import Column, Float, Integer, String
 from sqlalchemy.dialects.postgresql import JSON
+from user import User
 
 from datetime import datetime
 from time import time
 
-import geoalchemy2
+from geoalchemy2.functions import ST_DFullyWithin
+from geoalchemy2.shape import from_shape
+from shapely.geometry import Point
 
 class Post(db.Model):
     __tablename__ = 'post'
@@ -20,16 +23,14 @@ class Post(db.Model):
     #loc = db.Column(Geography(geometry_type='POINT', srid=4326))
     created_at = db.Column(db.DateTime)
     poster_id = db.Column(db.Integer)
-    poster_aud = db.Column(db.String(100))
     num_votes = db.Column(db.Integer)
 
-    def __init__(self, text, longitude, latitude, poster_id, poster_aud):
+    def __init__(self, text, longitude, latitude, poster_id):
         self.text = text
         self.longitude = longitude
         self.latitude = latitude
         self.created_at = datetime.fromtimestamp(time()).isoformat()
-        self.poster_id = posted_id
-        self.poster_aud = poster_aud
+        self.poster_id = poster_id
         self.num_votes = 0
 
     def __repr__(self):
@@ -44,11 +45,14 @@ class Post(db.Model):
                 longitude=self.longitude,
                 latitude=self.latitude),
             created_at=str(self.created_at),
-            poster=user.to_json_fields_for_FE()
+            poster=user.to_json_fields_for_FE(),
             num_votes=self.num_votes))
 
     def get_poster_id(self):
-        return self.poster_id;
+        return self.poster_id
+
+    def get_text(self):
+        return self.text
 
     # saves the post into the db
     def save_post(self):
@@ -72,14 +76,24 @@ class Post(db.Model):
     def find_post(postid):
         return db.session.query(Post).filter(Post.post_id==postid).first()
 
+    # finds all post of a given user_id
+    @staticmethod
+    def find_user_posts(user_id):
+        return db.session.query(Post).filter(Post.poster_id==user_id)
+
     # finds posts within a certain radius of a coordinate
     @staticmethod
     def find_posts_within_loc(lon, lat, radius):
         distance = radius * 0.014472 #convert to degrees
         center_point = Point(lon, lat)
+        print type(lon)
+        print type(lat)
         wkb_element = from_shape(center_point)
-        posts = db.session.query(Post).filter(func.ST_DFullyWithin(\
+        print type(wkb_element)
+        print '4'
+        posts = db.session.query(Post).filter(ST_DFullyWithin(\
             Point(Post.longitude, Post.latitude), wkb_element, distance)).all()
+        print '5'
         return posts
 
 
