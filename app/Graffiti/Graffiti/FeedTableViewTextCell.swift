@@ -15,7 +15,7 @@ class FeedTableViewTextCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     
     // http://candycode.io/how-to-properly-do-buttons-in-table-view-cells-using-swift-closures/
-    var voteTapAction: ((UITableViewCell) -> Void)?
+    var upvoteTapAction: ((UITableViewCell) -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,6 +29,6 @@ class FeedTableViewTextCell: UITableViewCell {
     }
 
     @IBAction func tapUpvote(_ sender: Any) {
-        voteTapAction?(self)
+        upvoteTapAction?(self)
     }
 }

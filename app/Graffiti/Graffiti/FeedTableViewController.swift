@@ -112,22 +112,42 @@ class FeedTableViewController: UITableViewController {
             fatalError("The dequeue cell is not an instance of FeedTableViewTextCell.")
         }
         
-        // this is where we get the posts from the post model
+        // this is where we get the post from the post model
         let post = posts[indexPath.row]
+        let rating = post.getRating()
         cell.textView.text = post.getText()
-        cell.votesLabel.text = "\(post.getRating())" // this might be a bad practice'
+        cell.votesLabel.text = "\(rating)" // this might be a bad practice
         
         //cell.dateLabel.text = post.getTimeAdded()
         
-        cell.voteTapAction = { (cell) in
+        cell.upvoteTapAction = { (cell) in
             print("upvote tapped!")
-            print(tableView.indexPath(for: cell)!.row)
+            let indexOfPost = tableView.indexPath(for: cell)!.row
+            print(indexOfPost)
+            if let postid = self.posts[indexOfPost].getID() {
+                self.sendUpvoteFor(postid: postid)
+            } else {
+                print("couldn't get postid. not sending upvote to server, but faking it in ui")
+            }
         }
         return cell
     }
     
-    //TODO: handle rating... need to somehow identify the post corresponding to the button pressed
-    // api.voteOnPost(postid: 1234, vote: 1)
+
+    func sendUpvoteFor(postid: Int) {
+        api.voteOnPost(postid: postid, vote: 1) { response in
+            switch response.result {
+            case .success:
+                print("sending upvote")
+                let updatedPost = response.result.value
+                print(updatedPost?.getRating() as Any)
+            case .failure(let error):
+                print("upvote failed")
+                print(error)
+            }
+        }
+    }
+    
     
     func refreshFeed(sender: UIRefreshControl) {
         // make a network request
@@ -139,40 +159,6 @@ class FeedTableViewController: UITableViewController {
         timestamp = self.formattedTimestamp
     }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     /*
     // MARK: - Navigation
