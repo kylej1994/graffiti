@@ -53,7 +53,8 @@ def create_post():
 	text = data['text']
 	lon = data['location']['longitude']
 	lat = data['location']['latitude']
-	email = request.environ['GOOGLE_INFO']
+
+	email = request.environ['META_INFO']
 	user_id = User.get_user_id_by_google_id(email['audCode'])
 	google_aud = email['audCode']
 
@@ -79,7 +80,7 @@ def delete_post(postid):
 	if (post is None):
 		return generate_error_response(ERR_404, 404)
 
-	email = request.environ['GOOGLE_INFO']
+	email = request.environ['META_INFO']
 	user_id = User.get_user_id_by_google_id(email['audCode'])
 	if (post.get_poster_id() != user_id):
 		return generate_error_response(ERR_403, 403)
@@ -102,7 +103,7 @@ def get_post(postid):
 	if (post is None):
 		return generate_error_response(ERR_404, 404)
 
-	email = request.environ['GOOGLE_INFO']
+	email = request.environ['META_INFO']
 	user_id = User.get_user_id_by_google_id(email['audCode'])
 	if (post.get_poster_id() != user_id):
 		return generate_error_response(ERR_403, 403)
@@ -137,7 +138,7 @@ def vote_post(postid):
 	post = Post.find_post(postid)
 
 	# checks if user has already voted
-	email = request.environ['GOOGLE_INFO']
+	email = request.environ['META_INFO']
 	user_id = User.get_user_id_by_google_id(email['audCode'])
 	if (post.get_poster_id() != user_id):
 		return generate_error_response(ERR_403, 403)
