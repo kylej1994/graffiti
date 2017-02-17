@@ -40,6 +40,7 @@ class Auth_MiddleWare(object):
         if token is None:
             environ['NOID'] = True
             print 'idtoken field is none'
+            return self.app(environ, start_response)
 
 
         #Successful Validation
