@@ -2,6 +2,7 @@ import requests
 import os
 
 #'export DEBUG=True' to set to true
+#DEBUG: Flag to skip authorization
 DEBUG = os.getenv('DEBUG', False)
 if DEBUG == 'True':
     DEBUG = True
@@ -14,7 +15,7 @@ from werkzeug.wrappers import Request
 GOOGLE_CLIENT_ID = '360596307324-h5h550nfr8l1tfp2nk095d8d0vmeuonb.apps.googleusercontent.com'
 GOOGLE_CLIENT_SECRET = 'FG4gWI2naIbjkcSxEvZyE6Bb'
 
-class AuthMiddleWare(object):
+class Auth_MiddleWare(object):
     '''
     Auth WSGI middleware
     '''
@@ -27,7 +28,7 @@ class AuthMiddleWare(object):
 
         environ['NOID'] = False
         environ['BADTOKEN'] = False
-        environ['EMAIL'] = None
+        environ['META_INFO'] = None
 
         #Skip Auth if debugging, since tokens will always be invalid
         if DEBUG:
@@ -46,11 +47,12 @@ class AuthMiddleWare(object):
             idinfo = client.verify_id_token(token, GOOGLE_CLIENT_ID)
             audCode = idinfo['aud']
             gmail = idinfo['email']
-            return_info = dict([('email', gmail)])
+            # user_id = 
+            return_info = dict([('email', gmail), ('audCode', audCode)])
 
             #Return return_info w/ self.app
             print 'Successful validation'
-            environ['EMAIL'] = return_info
+            environ['META_INFO'] = return_info
 
         #Unsuccessful validation
         except crypt.AppIdentityError:

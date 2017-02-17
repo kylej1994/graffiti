@@ -23,7 +23,7 @@ def auth():
         idinfo = client.verify_id_token(token, GOOGLE_CLIENT_ID)
         audCode = idinfo['aud']
         gmail = idinfo['email']
-        return_info = dict([('email', gmail)])
+        return_info = dict([('email', gmail), ('audCode', audCode)])
 
         return return_info
 
