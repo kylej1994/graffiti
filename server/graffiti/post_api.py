@@ -113,11 +113,7 @@ def get_post_by_location():
 
 	#TODO format for returning multiple posts?
 	to_ret = {}
-	index = 0
-	for post in posts:
-		to_ret[index] = post.to_json_fields_for_FE()
-		index += 1
-
+	to_ret['posts'] = posts
 	return json.dumps(to_ret), 200
 
 @post_api.route('/post/<int:postid>/vote', methods=['PUT'])
