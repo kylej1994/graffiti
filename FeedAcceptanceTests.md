@@ -1,11 +1,17 @@
 # Feed Acceptance Tests
 
+### Setting up the mock server:
+`$ pip install Flask`
+`$ cd server/mock`
+`$ python __init__.py`
+
 ### Testing in Simulator
-To run Graffiti in Simulator, click the play button in the top left. You need to set your location in simulator:
+To run Graffiti in Simulator, click the play button in the top left. You can set your location in simulator:
 
 `Debug > Location > Custom Location`
 
-Then select custom location and set the latitude to `todo` and longitude to `todo`
+Then select custom location and set the latitude to `todo` and longitude to `todo`, but
+our mock server only has posts for a single location.
 
 #### Feed Layout
 * When there are no posts for a given location, the feed displays a message that there are no posts.
@@ -13,12 +19,15 @@ Then select custom location and set the latitude to `todo` and longitude to `tod
 * Display rating
 * Display default tag (profile picture)
 * Display the post message
+* With the mock server, there should be 10 posts, and they're all the same. They have all been upvoted.
 
 #### Voting on Posts
+* The vote buttons are colored to show how you voted on that post (ie: if you upvoted it, it is green)
 * The upvote button turns green when you tap it to upvote
-* If you tap the upvote button when you have already upvoted a post, the vote is ignored
+* If you tap the upvote button when you have already upvoted a post, the upvote is undone. The button turns black, and the rating decreases by 1.
 * The downvote button turns red when you tap it to downvote
-* If you tap the downvote button when you have already downvote a post, the vote is ignored
+* If you tap the downvote button when you have already downvote a post, the vote is undone.
+* If you downvote a post that you previously upvoted, the vote count decreases by 2 and the button turns read. The upvote button turns black.
 
 ### Refreshing the Feed
 * pull down on the feed to refresh Posts
