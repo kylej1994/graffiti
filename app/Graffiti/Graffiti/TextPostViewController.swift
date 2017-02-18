@@ -39,9 +39,7 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
-        
         let numberOfChars = newText.characters.count
         
         if(numberOfChars > 140){
@@ -78,7 +76,7 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         }
         
         let location = CLLocation.init(latitude: currentLatitude!, longitude: currentLongitude!)
-        
+    
         let postText = postTextView.text!
         
         let newPost:Post = Post(location: location, text: postText)!
@@ -91,8 +89,5 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
                 print(error)
             }
         }
-        
-        
     }
-    
 }
