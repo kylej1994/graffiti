@@ -91,41 +91,33 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
         usertextnew.resignFirstResponder()
         return true
     }
-    
-//    override func viewDidAppear(_ animated: Bool) {
-//        // Show keyboard by default
-//        super.viewDidLoad()
-//        usertextnew.becomeFirstResponder()
-//    }
 
-    func newuser(newuser: Dictionary<String, Any>) {
+    func newuser(newuser: [String : Any]) {
         let nu = newuser["new_user"]
         if (nu as? Bool == false) {
             print("current user already there")
-        usertextnew.isHidden = true
-          self.btnNewsFeed.isHidden = false
+            usertextnew.isHidden = true
+            self.btnNewsFeed.isHidden = false
         } else {
-        print ("new user")
-        self.btnNewsFeed.isHidden = true
-        untoolong.text = "You Must Enter a Username"
-        untoolong.isHidden = false
-        let user = newuser["user"] as! User
-        // setting current user
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-         appDelegate.currentUser = user
-         usertextnew.isHidden = false
-         usertextnew.becomeFirstResponder()
-         let username = usertextnew.text!
+            print ("new user")
+            self.btnNewsFeed.isHidden = true
+            untoolong.text = "You Must Enter a Username"
+            untoolong.isHidden = false
+            let user = newuser["user"] as! User
+            // setting current user
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.currentUser = user
+            usertextnew.isHidden = false
+            usertextnew.becomeFirstResponder()
+            let username = usertextnew.text!
             print(username)
             do {
                 try user.setUsername(username)
-                
             } catch{
                 untoolong.isHidden = false
                 
             }
             API.sharedInstance.updateUser(user: user) { res in
-                
                 switch res.result{
                 case.success:
                     self.usertextnew.isHidden = true
@@ -139,7 +131,6 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
                 }
             }
         }
-    
     }
     
     func showerrorlabel(){
