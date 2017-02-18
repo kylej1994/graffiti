@@ -226,6 +226,21 @@ class Post : Mappable {
         self.setVote(.upVote)
     }
     
+    public func noVote() {
+        let prevVote = self.getVote()
+        var rating = self.getRating()
+        switch prevVote {
+        case .upVote:
+            rating -= 1
+        case .downVote:
+            rating += 1
+        case .noVote:
+            return
+        }
+        self.setRating(rating)
+        self.setVote(.noVote)
+    }
+    
     // Function to downvote a post -- this time decrementing the 'rating' field
     public func downVote(){
         var dnRating = self.getRating()
