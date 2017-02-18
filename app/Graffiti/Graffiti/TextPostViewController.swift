@@ -29,6 +29,7 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         postTextView.layer.borderWidth = 1.0
         postTextView.layer.cornerRadius = 5.0
         
+        // use the singleton instead
         let manager = CLLocationManager()
         if CLLocationManager.locationServicesEnabled() {
             manager.startUpdatingLocation()
@@ -50,9 +51,11 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         if(numberOfChars > 140){
             charCount.textColor = UIColor.red
             charCount.text = String(140 - numberOfChars)
+            postButton.isEnabled = false
         } else {
             charCount.textColor = UIColor.black
             charCount.text = String(140 - numberOfChars)
+            postButton.isEnabled = true
         }
         
         return true
@@ -89,5 +92,9 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         //print("We did it!")
         
     }
+    
+//    func showLongPostAlert() {
+//        let alertController = UIAlertController(title: "Too long", message: <#T##String?#>, preferredStyle: <#T##UIAlertControllerStyle#>)
+//    }
     
 }
