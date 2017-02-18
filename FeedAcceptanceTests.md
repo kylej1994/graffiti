@@ -2,7 +2,9 @@
 
 ### Setting up the mock server:
 `$ pip install Flask`
+
 `$ cd server/mock`
+
 `$ python __init__.py`
 
 ### Testing in Simulator
@@ -10,8 +12,7 @@ To run Graffiti in Simulator, click the play button in the top left. You can set
 
 `Debug > Location > Custom Location`
 
-Then select custom location and set the latitude to `todo` and longitude to `todo`, but
-our mock server only has posts for a single location.
+Then select choose whatever location you want. The mock server returns posts regardless of location.
 
 #### Feed Layout
 * When there are no posts for a given location, the feed displays a message that there are no posts.
