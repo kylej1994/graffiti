@@ -126,14 +126,14 @@ class ApiTests: XCTestCase {
     }
     
     func testVoteOnPost() {
-        let vote: [String : Int] = ["vote": 1]
-        api.voteOnPost(postid: 1234, vote: vote["vote"]!) { (_) in }
+        let vote: VoteType = .upVote
+        api.voteOnPost(postid: 1234, vote: vote) { (_) in }
         
         let url = session.lastURL as? String
         XCTAssertEqual(url, "/post/1234")
         
         XCTAssertEqual(session.lastMethod, .put)
-        XCTAssertEqual(session.lastParameters as! [String : Int], vote)
+        XCTAssertEqual(session.lastParameters?["votes"] as! Int, vote.rawValue)
         
         let token = session.lastHeaders?["Authorization"]
         XCTAssertNotNil(token)
