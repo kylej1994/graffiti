@@ -96,55 +96,87 @@ class FeedTableViewController: UITableViewController {
         
         // get the Post from the array of Posts and fill the cell accordingly
         let post = posts[indexPath.row]
-        var rating = post.getRating()
-
         cell.textView.text = post.getText()
-        
         setRatingDisplay(cell: cell, post: post)
         setDateDisplay(cell: cell, post: post)
-        
-        // voting (this is so bad and dumb)
-        var didUpvote = false
-        var didDownvote = false
+        setVoteButtonDisplay(cell: cell, post: post)
         
         // handle upvote button tap
         cell.upvoteTapAction = { (cell) in
-            didDownvote = false
-            if !didUpvote {
-                print("entering the upvote stuff")
-                didUpvote = true
-                self.handleUpvote(cell: cell, currentRating: rating)
-                rating += 1 // this seems redundant but it isn't. setting the post rating doesn't work unless we refresh the table
-                post.setRating(rating + 1)
-                let indexOfPost = tableView.indexPath(for: cell)!.row
-                if let postid = self.posts[indexOfPost].getID() {
-                    self.sendVoteFor(postid: postid, vote: 1)
+            let indexOfPost = tableView.indexPath(for: cell)!.row
+            let chosenPost = self.posts[indexOfPost]
+            switch chosenPost.getVote() {
+            case .noVote:
+                cell.upvoteButton.setImage(UIImage(named: "upvote-green-50"), for: .normal)
+                chosenPost.upVote()
+                if let postid = chosenPost.getID() {
+                    self.sendVoteFor(postid: postid, vote: VoteType.upVote)
                 } else {
                     print("couldn't get postid. not sending upvote to server, but faking it in ui")
                 }
-            } else {
-                print("ignoring extra upvote button press")
+            // if the post was already upvoted, we send a noVote to undo the vote
+            case .upVote:
+                cell.downvoteButton.setImage(UIImage(named: "downvote-black-50"), for: .normal)
+                cell.upvoteButton.setImage(UIImage(named: "upvote-black-50"), for: .normal)
+                chosenPost.noVote()
+                if let postid = chosenPost.getID() {
+                    self.sendVoteFor(postid: postid, vote: VoteType.noVote)
+                } else {
+                    print("couldn't get postid. not sending upvote to server, but faking it in ui")
+                }
+            // if the user decides to upvote a post previously downvoted, the server handles it
+            case .downVote:
+                cell.upvoteButton.setImage(UIImage(named: "upvote-green-50"), for: .normal)
+                cell.downvoteButton.setImage(UIImage(named: "downvote-black-50"), for: .normal)
+                chosenPost.noVote()
+                chosenPost.upVote()
+                if let postid = chosenPost.getID() {
+                    self.sendVoteFor(postid: postid, vote: VoteType.upVote)
+                } else {
+                    print("couldn't get postid. not sending upvote to server, but faking it in ui")
+                }
             }
+            cell.votesLabel.text = String(chosenPost.getRating())
         }
-
+        
         // handle downvote button tap
         cell.downvoteTapAction = { (cell) in
-            didUpvote = false
-            if !didDownvote {
-                didDownvote = true
-                self.handleDownvote(cell: cell, currentRating: rating)
-                rating -= 1
-                post.setRating(rating - 1)
-                let indexOfPost = tableView.indexPath(for: cell)!.row
-                if let postid = self.posts[indexOfPost].getID() {
-                    self.sendVoteFor(postid: postid, vote: -1)
+            let indexOfPost = tableView.indexPath(for: cell)!.row
+            let chosenPost = self.posts[indexOfPost]
+            switch chosenPost.getVote() {
+            case .noVote:
+                cell.downvoteButton.setImage(UIImage(named: "downvote-red-50"), for: .normal)
+                chosenPost.downVote()
+                if let postid = chosenPost.getID() {
+                    self.sendVoteFor(postid: postid, vote: VoteType.downVote)
+                } else {
+                    print("couldn't get postid. not sending downvote to server, but faking it in ui")
+                }
+            // if the post was already downvoted, we send a noVote to undo the vote
+            case .downVote:
+                chosenPost.noVote()
+                cell.downvoteButton.setImage(UIImage(named: "downvote-black-50"), for: .normal)
+                if let postid = chosenPost.getID() {
+                    self.sendVoteFor(postid: postid, vote: VoteType.noVote)
                 } else {
                     print("couldn't get postid. not sending upvote to server, but faking it in ui")
                 }
-            } else {
-                print("ignoring extra downvote button press")
+            // if the user decides to downvote a post previously upvoted, the server handles it
+            case .upVote:
+                cell.downvoteButton.setImage(UIImage(named: "downvote-red-50"), for: .normal)
+                cell.upvoteButton.setImage(UIImage(named: "upvote-black-50"), for: .normal)
+                chosenPost.noVote()
+                chosenPost.downVote()
+                if let postid = chosenPost.getID() {
+                    self.sendVoteFor(postid: postid, vote: VoteType.downVote)
+                } else {
+                    print("couldn't get postid. not sending upvote to server, but faking it in ui")
+                }
             }
+            // update the vote label
+            cell.votesLabel.text = String(chosenPost.getRating())
         }
+
         return cell
     }
     
@@ -158,6 +190,21 @@ class FeedTableViewController: UITableViewController {
         }
     }
     
+    func setVoteButtonDisplay(cell: FeedTableViewTextCell, post: Post) {
+        let vote = post.getVote()
+        switch vote {
+        case .upVote:
+            cell.upvoteButton.setImage(UIImage(named: "upvote-green-50"), for: .normal)
+            cell.downvoteButton.setImage(UIImage(named: "downvote-black-50"), for: .normal)
+        case .downVote:
+            cell.downvoteButton.setImage(UIImage(named: "downvote-red-50"), for: .normal)
+            cell.upvoteButton.setImage(UIImage(named: "upvote-black-50"), for: .normal)
+        case .noVote:
+            cell.downvoteButton.setImage(UIImage(named: "downvote-black-50"), for: .normal)
+            cell.upvoteButton.setImage(UIImage(named: "upvote-black-50"), for: .normal)
+        }
+    }
+    
     func setDateDisplay(cell: FeedTableViewTextCell, post: Post) {
         if let dateAdded = post.getTimeAdded() {
             cell.dateLabel.text = getFormattedDate(date: dateAdded)
@@ -166,20 +213,9 @@ class FeedTableViewController: UITableViewController {
         }
     }
     
-    func handleUpvote(cell: FeedTableViewTextCell, currentRating: Int) {
-        cell.upvoteButton.setImage(UIImage(named: "upvote-green-50"), for: .normal)
-        cell.downvoteButton.setImage(UIImage(named: "downvote-black-50"), for: .normal)
-        cell.votesLabel.text = String(currentRating + 1)
-    }
     
-    func handleDownvote(cell: FeedTableViewTextCell, currentRating: Int) {
-        cell.downvoteButton.setImage(UIImage(named: "downvote-red-50"), for: .normal)
-        cell.upvoteButton.setImage(UIImage(named: "upvote-black-50"), for: .normal)
-        cell.votesLabel.text = String(currentRating - 1)
-    }
-    
-    // todo: change second param from int to enum: upvote or downvote
-    func sendVoteFor(postid: Int, vote: Int) {
+    // todo: read server response, use to update model
+    func sendVoteFor(postid: Int, vote: VoteType) {
         api.voteOnPost(postid: postid, vote: vote) { response in
             switch response.result {
             case .success:
