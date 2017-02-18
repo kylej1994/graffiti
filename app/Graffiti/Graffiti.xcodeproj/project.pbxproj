@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		598B435CBAD828D29AE71840 /* Pods_Graffiti.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 713DC8BD02EAC92DE23868C8 /* Pods_Graffiti.framework */; };
 		6FCDE8E4BD77B03A8F9D7EF3 /* Pods_GraffitiUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABFD6572D47051DFF80F7CD /* Pods_GraffitiUITests.framework */; };
+		73B16FB379DB7A340DB7C596 /* Pods_Graffiti_GraffitiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9191DEE2EC7B404737422033 /* Pods_Graffiti_GraffitiTests.framework */; };
 		766D1D3684E13C8778E03EA6 /* Pods_GraffitiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0DF8A503BE07DFF08436AA1 /* Pods_GraffitiTests.framework */; };
 		AD03CF721E4D5AB2003D3682 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD03CF711E4D5AB2003D3682 /* LocationService.swift */; };
 		AD03CF761E4E4BB7003D3682 /* MockLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD03CF751E4E4BB7003D3682 /* MockLocationManager.swift */; };
@@ -17,6 +18,7 @@
 		AD03CF7B1E4E4F92003D3682 /* LocationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD03CF7A1E4E4F92003D3682 /* LocationServiceTests.swift */; };
 		AD03CF7C1E4E6430003D3682 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD03CF711E4D5AB2003D3682 /* LocationService.swift */; };
 		AD3E23451E5123A80022C882 /* FeedTableViewTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3E23441E5123A80022C882 /* FeedTableViewTextCell.swift */; };
+		AD6935C21E552BFD00DE236C /* TimeAgo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6935C11E552BFD00DE236C /* TimeAgo.swift */; };
 		AD84BD311E4947330020505D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD301E4947330020505D /* AppDelegate.swift */; };
 		AD84BD361E4947330020505D /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD84BD341E4947330020505D /* Login.storyboard */; };
 		AD84BD381E4947330020505D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD84BD371E4947330020505D /* Assets.xcassets */; };
@@ -33,12 +35,18 @@
 		AD84BD761E4951D70020505D /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD751E4951D70020505D /* UserTests.swift */; };
 		AD84BD7C1E4952CA0020505D /* ProfileViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD7B1E4952CA0020505D /* ProfileViewControllerTests.swift */; };
 		AD84BD7E1E4952FB0020505D /* TextPostViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD7D1E4952FB0020505D /* TextPostViewControllerTests.swift */; };
+		ADD7F76F1E551F8B009BADC1 /* EmptyFeedBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD7F76E1E551F8A009BADC1 /* EmptyFeedBackgroundView.swift */; };
 		B33B07CC1E4AB6D2007025FB /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33B07CB1E4AB6D2007025FB /* Post.swift */; };
 		B33B07D01E4ACA8F007025FB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33B07CF1E4ACA8F007025FB /* User.swift */; };
 		B35620C31E4D396400F8CC9E /* PostTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35620C21E4D396400F8CC9E /* PostTest.swift */; };
 		D90D7A8C1E4E686700FB5AEE /* RequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90D7A8B1E4E686700FB5AEE /* RequestProtocol.swift */; };
 		D90D7A8D1E4E6ACE00FB5AEE /* RequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90D7A8B1E4E686700FB5AEE /* RequestProtocol.swift */; };
 		D90D7A8F1E4E6C5400FB5AEE /* MockRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90D7A8E1E4E6C5400FB5AEE /* MockRequest.swift */; };
+		D9141CA61E58E5B000FA04D0 /* Vote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DD58DE1E57A32600D9CB1D /* Vote.swift */; };
+		D9141CA71E58E5B900FA04D0 /* UserTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DD58E01E57AE3900D9CB1D /* UserTransform.swift */; };
+		D9141CA91E58E71C00FA04D0 /* AuthProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9141CA81E58E71C00FA04D0 /* AuthProtocol.swift */; };
+		D9141CAA1E58E72200FA04D0 /* AuthProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9141CA81E58E71C00FA04D0 /* AuthProtocol.swift */; };
+		D9141CAC1E58E7F800FA04D0 /* MockAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9141CAB1E58E7F800FA04D0 /* MockAuth.swift */; };
 		D99735A11E4E722F00DA5F29 /* ApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD771E4952330020505D /* ApiTests.swift */; };
 		D99735A21E4E722F00DA5F29 /* FeedViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD791E4952B20020505D /* FeedViewControllerTests.swift */; };
 		D9B5FAEB1E54FF9300DF87B2 /* LocationTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B5FAEA1E54FF9300DF87B2 /* LocationTransform.swift */; };
@@ -80,11 +88,13 @@
 		713DC8BD02EAC92DE23868C8 /* Pods_Graffiti.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Graffiti.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A8D950DFCFCDB465E06D7E9 /* Pods-Graffiti.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Graffiti.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Graffiti/Pods-Graffiti.debug.xcconfig"; sourceTree = "<group>"; };
 		8F280E8407B8FD52B58979CD /* Pods-GraffitiUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraffitiUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GraffitiUITests/Pods-GraffitiUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		9191DEE2EC7B404737422033 /* Pods_Graffiti_GraffitiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Graffiti_GraffitiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD03CF711E4D5AB2003D3682 /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		AD03CF751E4E4BB7003D3682 /* MockLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockLocationManager.swift; sourceTree = "<group>"; };
 		AD03CF771E4E4C91003D3682 /* LocationManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManagerProtocol.swift; sourceTree = "<group>"; };
 		AD03CF7A1E4E4F92003D3682 /* LocationServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationServiceTests.swift; sourceTree = "<group>"; };
 		AD3E23441E5123A80022C882 /* FeedTableViewTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedTableViewTextCell.swift; sourceTree = "<group>"; };
+		AD6935C11E552BFD00DE236C /* TimeAgo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeAgo.swift; sourceTree = "<group>"; };
 		AD84BD2D1E4947330020505D /* Graffiti.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Graffiti.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD84BD301E4947330020505D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD84BD351E4947330020505D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
@@ -110,13 +120,19 @@
 		AD84BD7B1E4952CA0020505D /* ProfileViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerTests.swift; sourceTree = "<group>"; };
 		AD84BD7D1E4952FB0020505D /* TextPostViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextPostViewControllerTests.swift; sourceTree = "<group>"; };
 		ADA147E95DA84165A40FB7DE /* Pods-GraffitiUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraffitiUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GraffitiUITests/Pods-GraffitiUITests.release.xcconfig"; sourceTree = "<group>"; };
+		ADD7F76E1E551F8A009BADC1 /* EmptyFeedBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyFeedBackgroundView.swift; sourceTree = "<group>"; };
 		B0DF8A503BE07DFF08436AA1 /* Pods_GraffitiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraffitiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B33B07CB1E4AB6D2007025FB /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		B33B07CF1E4ACA8F007025FB /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		B35620C21E4D396400F8CC9E /* PostTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTest.swift; sourceTree = "<group>"; };
+		BBE62083E99F119D724F35F1 /* Pods-Graffiti-GraffitiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Graffiti-GraffitiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Graffiti-GraffitiTests/Pods-Graffiti-GraffitiTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C80D2887D5FB884EC3F7D8C2 /* Pods-Graffiti-GraffitiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Graffiti-GraffitiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Graffiti-GraffitiTests/Pods-Graffiti-GraffitiTests.release.xcconfig"; sourceTree = "<group>"; };
 		D90D7A8B1E4E686700FB5AEE /* RequestProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestProtocol.swift; sourceTree = "<group>"; };
 		D90D7A8E1E4E6C5400FB5AEE /* MockRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRequest.swift; sourceTree = "<group>"; };
+		D9141CA81E58E71C00FA04D0 /* AuthProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthProtocol.swift; sourceTree = "<group>"; };
+		D9141CAB1E58E7F800FA04D0 /* MockAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAuth.swift; sourceTree = "<group>"; };
 		D9B5FAEA1E54FF9300DF87B2 /* LocationTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTransform.swift; sourceTree = "<group>"; };
+		D9C7CE431E58D36500B7F3AA /* GraffitiTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GraffitiTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		D9DD58DE1E57A32600D9CB1D /* Vote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vote.swift; sourceTree = "<group>"; };
 		D9DD58E01E57AE3900D9CB1D /* UserTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTransform.swift; sourceTree = "<group>"; };
 		D9E63B9F1E4D460900EE6C4B /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
@@ -140,6 +156,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				766D1D3684E13C8778E03EA6 /* Pods_GraffitiTests.framework in Frameworks */,
+				73B16FB379DB7A340DB7C596 /* Pods_Graffiti_GraffitiTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,6 +180,8 @@
 				0A8894365BAFDF25351179FA /* Pods-GraffitiTests.release.xcconfig */,
 				8F280E8407B8FD52B58979CD /* Pods-GraffitiUITests.debug.xcconfig */,
 				ADA147E95DA84165A40FB7DE /* Pods-GraffitiUITests.release.xcconfig */,
+				BBE62083E99F119D724F35F1 /* Pods-Graffiti-GraffitiTests.debug.xcconfig */,
+				C80D2887D5FB884EC3F7D8C2 /* Pods-Graffiti-GraffitiTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -227,6 +246,7 @@
 				AD84BD751E4951D70020505D /* UserTests.swift */,
 				AD84BD771E4952330020505D /* ApiTests.swift */,
 				AD84BD791E4952B20020505D /* FeedViewControllerTests.swift */,
+				D9C7CE431E58D36500B7F3AA /* GraffitiTests-Bridging-Header.h */,
 				AD84BD7B1E4952CA0020505D /* ProfileViewControllerTests.swift */,
 				AD84BD7D1E4952FB0020505D /* TextPostViewControllerTests.swift */,
 				B35620C21E4D396400F8CC9E /* PostTest.swift */,
@@ -248,6 +268,8 @@
 			isa = PBXGroup;
 			children = (
 				AD84BD5E1E4949260020505D /* FeedTableViewController.swift */,
+				AD6935C11E552BFD00DE236C /* TimeAgo.swift */,
+				ADD7F76E1E551F8A009BADC1 /* EmptyFeedBackgroundView.swift */,
 				AD84BD691E494AB50020505D /* Feed.storyboard */,
 				AD3E23441E5123A80022C882 /* FeedTableViewTextCell.swift */,
 			);
@@ -291,6 +313,7 @@
 				D9E63B9F1E4D460900EE6C4B /* API.swift */,
 				D9E63BA11E4D496E00EE6C4B /* ManagerProtocol.swift */,
 				D90D7A8B1E4E686700FB5AEE /* RequestProtocol.swift */,
+				D9141CA81E58E71C00FA04D0 /* AuthProtocol.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -301,6 +324,7 @@
 				AD03CF751E4E4BB7003D3682 /* MockLocationManager.swift */,
 				D9E63BA41E4D555E00EE6C4B /* MockSessionManager.swift */,
 				D90D7A8E1E4E6C5400FB5AEE /* MockRequest.swift */,
+				D9141CAB1E58E7F800FA04D0 /* MockAuth.swift */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -311,6 +335,7 @@
 				713DC8BD02EAC92DE23868C8 /* Pods_Graffiti.framework */,
 				B0DF8A503BE07DFF08436AA1 /* Pods_GraffitiTests.framework */,
 				1ABFD6572D47051DFF80F7CD /* Pods_GraffitiUITests.framework */,
+				9191DEE2EC7B404737422033 /* Pods_Graffiti_GraffitiTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -473,7 +498,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GraffitiTests/Pods-GraffitiTests-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Graffiti-GraffitiTests/Pods-Graffiti-GraffitiTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		05A6836C472E78DFC5D090CA /* [CP] Check Pods Manifest.lock */ = {
@@ -533,7 +558,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GraffitiTests/Pods-GraffitiTests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Graffiti-GraffitiTests/Pods-Graffiti-GraffitiTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B4FB242B591D701F1B87DA5C /* [CP] Embed Pods Frameworks */ = {
@@ -606,16 +631,19 @@
 				AD84BD611E49496D0020505D /* TextPostViewController.swift in Sources */,
 				D9B5FAEB1E54FF9300DF87B2 /* LocationTransform.swift in Sources */,
 				AD84BD631E4949860020505D /* ProfileViewController.swift in Sources */,
+				D9141CA91E58E71C00FA04D0 /* AuthProtocol.swift in Sources */,
 				B33B07D01E4ACA8F007025FB /* User.swift in Sources */,
 				AD84BD5F1E4949260020505D /* FeedTableViewController.swift in Sources */,
 				AD3E23451E5123A80022C882 /* FeedTableViewTextCell.swift in Sources */,
 				D90D7A8C1E4E686700FB5AEE /* RequestProtocol.swift in Sources */,
+				ADD7F76F1E551F8B009BADC1 /* EmptyFeedBackgroundView.swift in Sources */,
 				D9DD58DF1E57A32600D9CB1D /* Vote.swift in Sources */,
 				AD84BD731E494C320020505D /* LoginViewController.swift in Sources */,
 				D9DD58E11E57AE3900D9CB1D /* UserTransform.swift in Sources */,
 				B33B07CC1E4AB6D2007025FB /* Post.swift in Sources */,
 				D9E63BA01E4D460900EE6C4B /* API.swift in Sources */,
 				AD03CF781E4E4C91003D3682 /* LocationManagerProtocol.swift in Sources */,
+				AD6935C21E552BFD00DE236C /* TimeAgo.swift in Sources */,
 				AD03CF721E4D5AB2003D3682 /* LocationService.swift in Sources */,
 				AD84BD311E4947330020505D /* AppDelegate.swift in Sources */,
 				D9E63BA21E4D496E00EE6C4B /* ManagerProtocol.swift in Sources */,
@@ -639,9 +667,13 @@
 				AD03CF7B1E4E4F92003D3682 /* LocationServiceTests.swift in Sources */,
 				AD03CF761E4E4BB7003D3682 /* MockLocationManager.swift in Sources */,
 				AD03CF791E4E4C91003D3682 /* LocationManagerProtocol.swift in Sources */,
+				D9141CAC1E58E7F800FA04D0 /* MockAuth.swift in Sources */,
+				D9141CAA1E58E72200FA04D0 /* AuthProtocol.swift in Sources */,
 				F744D4141E4E842600C42677 /* Post.swift in Sources */,
 				AD03CF7C1E4E6430003D3682 /* LocationService.swift in Sources */,
 				AD84BD761E4951D70020505D /* UserTests.swift in Sources */,
+				D9141CA61E58E5B000FA04D0 /* Vote.swift in Sources */,
+				D9141CA71E58E5B900FA04D0 /* UserTransform.swift in Sources */,
 				B35620C31E4D396400F8CC9E /* PostTest.swift in Sources */,
 				D9E63BA61E4D633A00EE6C4B /* API.swift in Sources */,
 			);
@@ -864,7 +896,7 @@
 		};
 		AD84BD591E4947330020505D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 49AA21F62EF3FDFA9DD4607E /* Pods-GraffitiTests.debug.xcconfig */;
+			baseConfigurationReference = BBE62083E99F119D724F35F1 /* Pods-Graffiti-GraffitiTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -881,7 +913,7 @@
 		};
 		AD84BD5A1E4947330020505D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0A8894365BAFDF25351179FA /* Pods-GraffitiTests.release.xcconfig */;
+			baseConfigurationReference = C80D2887D5FB884EC3F7D8C2 /* Pods-Graffiti-GraffitiTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";

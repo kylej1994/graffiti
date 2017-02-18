@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 import AlamofireObjectMapper
+import GoogleSignIn
 
 // A completion closure invoked when requests complete
 typealias Handler = (DataResponse<Any>) -> Void
@@ -29,16 +30,18 @@ class API {
     
     //MARK Properties
     private let manager: ManagerProtocol
+    private let auth: AuthProtocol
     private let baseUrl = "http://127.0.0.1:5000"
     
-    init(manager: ManagerProtocol = Alamofire.SessionManager.default) {
+    init(manager: ManagerProtocol = Alamofire.SessionManager.default, auth: AuthProtocol = GIDSignIn.sharedInstance()) {
         self.manager = manager
+        self.auth = auth
     }
     
     //MARK Private Methods
     @discardableResult private func makeRequest(_ url: String, method: HTTPMethod, parameters: Parameters? = nil, encoding: ParameterEncoding = URLEncoding.default) -> RequestProtocol?{
         // Add Authentication token
-        guard let idToken = GIDSignIn.sharedInstance().currentUser?.authentication?.idToken else {
+        guard let idToken = auth.getIdToken() else {
             // User needs to be signed in
             // Navigate to SignIn View?
             return nil
@@ -172,8 +175,8 @@ class API {
         }
     }
     
-    func voteOnPost(postid: Int, vote: Int, handler: @escaping PostHandler) {
-        let parameters = ["vote": vote]
+    func voteOnPost(postid: Int, vote: VoteType, handler: @escaping PostHandler) {
+        let parameters = ["vote": vote.rawValue]
         makeRequest("/post/\(postid)/vote", method: .put, parameters: parameters, encoding: JSONEncoding.default)?.responseObject(completionHandler: handler)
     }
 }
