@@ -32,23 +32,36 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         </textView>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7AH-iB-j81">
-                                            <rect key="frame" x="8" y="99" width="22" height="22"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" title="Button" image="upvote-black-50"/>
-                                        </button>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AQi-hy-mG8">
-                                            <rect key="frame" x="8" y="115" width="22" height="22"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" title="Button" image="downvote-black-50"/>
-                                        </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JU0-SS-ZyY">
-                                            <rect key="frame" x="37" y="107" width="11" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="XbI-WS-FYf">
+                                            <rect key="frame" x="8" y="91.5" width="50.5" height="50"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="hFH-VP-7Vv">
+                                                    <rect key="frame" x="0.0" y="0.0" width="25" height="50"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7AH-iB-j81">
+                                                            <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
+                                                            <state key="normal" image="upvote-black-50"/>
+                                                            <connections>
+                                                                <action selector="tapUpvote:" destination="Pud-ZO-sRW" eventType="touchUpInside" id="czp-QQ-UVL"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AQi-hy-mG8">
+                                                            <rect key="frame" x="0.0" y="25" width="25" height="25"/>
+                                                            <state key="normal" image="downvote-black-50"/>
+                                                            <connections>
+                                                                <action selector="tapDownvote:" destination="Pud-ZO-sRW" eventType="touchUpInside" id="2lV-hQ-PrT"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                </stackView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JU0-SS-ZyY">
+                                                    <rect key="frame" x="40" y="0.0" width="10.5" height="50"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cat-prof-100" translatesAutoresizingMaskIntoConstraints="NO" id="jbE-n0-jhT">
                                             <rect key="frame" x="297" y="71" width="70" height="70"/>
                                             <constraints>
@@ -56,18 +69,32 @@
                                                 <constraint firstAttribute="width" constant="70" id="vTc-NA-aBG"/>
                                             </constraints>
                                         </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time ago" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZNV-pv-8KQ">
+                                            <rect key="frame" x="160" y="120.5" width="135" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="topMargin" secondItem="ifq-Jr-j4V" secondAttribute="top" id="58b-2n-ik0"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="ifq-Jr-j4V" secondAttribute="trailing" constant="65" id="Bd7-S6-8xZ"/>
+                                        <constraint firstAttribute="leadingMargin" secondItem="XbI-WS-FYf" secondAttribute="leading" id="EDZ-sT-heT"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="jbE-n0-jhT" secondAttribute="bottom" id="Nso-cz-6Me"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="ZNV-pv-8KQ" secondAttribute="bottom" id="Uur-E3-pJC"/>
+                                        <constraint firstItem="jbE-n0-jhT" firstAttribute="leading" secondItem="ZNV-pv-8KQ" secondAttribute="trailing" constant="2" id="WRS-KS-Q9N"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="jbE-n0-jhT" secondAttribute="trailing" id="XRP-7n-PSG"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="ifq-Jr-j4V" secondAttribute="bottom" constant="33" id="YVr-vP-Fwk"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="XbI-WS-FYf" secondAttribute="bottom" id="jc7-op-bP3"/>
+                                        <constraint firstItem="ZNV-pv-8KQ" firstAttribute="leading" secondItem="Eik-o5-MaK" secondAttribute="leadingMargin" constant="152" id="kTd-59-I18"/>
                                         <constraint firstAttribute="leadingMargin" secondItem="ifq-Jr-j4V" secondAttribute="leading" id="zbS-Lk-kan"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="dateLabel" destination="ZNV-pv-8KQ" id="Px1-5e-0s8"/>
+                                    <outlet property="downvoteButton" destination="AQi-hy-mG8" id="wxw-Ig-Wyh"/>
                                     <outlet property="textView" destination="ifq-Jr-j4V" id="D5q-QT-srp"/>
+                                    <outlet property="upvoteButton" destination="7AH-iB-j81" id="fyW-4m-XEl"/>
                                     <outlet property="votesLabel" destination="JU0-SS-ZyY" id="a6s-Gr-CnY"/>
                                 </connections>
                             </tableViewCell>
@@ -79,6 +106,11 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Feed" id="UfD-gP-5Ci"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="ccE-Lz-mql">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <attributedString key="attributedTitle"/>
+                    </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XAi-yO-duV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

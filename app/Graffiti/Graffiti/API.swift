@@ -172,8 +172,8 @@ class API {
         }
     }
     
-    func voteOnPost(postid: Int, vote: Int, handler: @escaping PostHandler) {
-        let parameters = ["vote": vote]
+    func voteOnPost(postid: Int, vote: VoteType, handler: @escaping PostHandler) {
+        let parameters = ["vote": vote.rawValue]
         makeRequest("/post/\(postid)/vote", method: .put, parameters: parameters, encoding: JSONEncoding.default)?.responseObject(completionHandler: handler)
     }
 }
