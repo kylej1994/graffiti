@@ -38,9 +38,8 @@ def user_login():
 	if (email is None):
 		return generate_error_response(ERR_401, 401);
 	print email
-	user_id = User.get_user_id_by_google_aud(email['audCode'])
+	user = User.get_user_by_google_aud(email['audCode'])
 	print user_id
-	user = db.session.query(User).filter(User.user_id==user_id).first()
 	print user
 
 	if (user):
