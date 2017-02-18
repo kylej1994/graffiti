@@ -12,7 +12,9 @@ import CoreLocation
 class TextPostViewController: UIViewController, UITextViewDelegate {
 
     // MARK: Properties
-    
+    let locationManager = LocationService.sharedInstance
+    var currentLatitude: CLLocationDegrees? = CLLocationDegrees()
+    var currentLongitude: CLLocationDegrees? = CLLocationDegrees()
     @IBOutlet weak var postTextView: UITextView!
     @IBOutlet weak var postButton: UIButton!
     @IBOutlet weak var charCount: UITextView!
@@ -28,13 +30,7 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         postTextView.layer.borderColor = UIColor.black.cgColor
         postTextView.layer.borderWidth = 1.0
         postTextView.layer.cornerRadius = 5.0
-        
-        // use the singleton instead
-        let manager = CLLocationManager()
-        if CLLocationManager.locationServicesEnabled() {
-            manager.startUpdatingLocation()
-        }
-        
+        locationManager.startUpdatingLocation()
     }
 
     override func didReceiveMemoryWarning() {
@@ -70,31 +66,33 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
     
     @IBAction func postGraffiti(_ sender: UIButton) {
         
-        //let locationService = LocationService.sharedInstance
-        //let lat = locationService.getLatitude()!
-        //let long = locationService.getLongitude()!
+        currentLongitude = locationManager.getLongitude()
+        currentLatitude = locationManager.getLatitude()
+        if currentLongitude == nil {
+            print("long was nil so setting to 0")
+            currentLongitude = 0.0
+        }
+        if currentLatitude == nil {
+            print("lat was nil so setting to 0")
+            currentLatitude = 0.0
+        }
         
-        
-        let lat:Double = 0.0
-        let long:Double = 0.0
-        let location = CLLocation.init(latitude: lat, longitude: long)
+        let location = CLLocation.init(latitude: currentLatitude!, longitude: currentLongitude!)
         
         let postText = postTextView.text!
         
         let newPost:Post = Post(location: location, text: postText)!
         
         API.sharedInstance.createPost(post: newPost){ response in
-            if(response.result.isFailure){
-                print(response.result.debugDescription)
+            switch response.result {
+            case.success:
+                print("we sent a post with location \(location)")
+            case .failure(let error):
+                print(error)
             }
         }
         
-        //print("We did it!")
         
     }
-    
-//    func showLongPostAlert() {
-//        let alertController = UIAlertController(title: "Too long", message: <#T##String?#>, preferredStyle: <#T##UIAlertControllerStyle#>)
-//    }
     
 }
