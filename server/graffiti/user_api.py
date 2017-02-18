@@ -34,12 +34,16 @@ def generate_error_response(message, code):
 @user_api.route('/user/login', methods=['GET'])
 def user_login():
 	email = request.environ['META_INFO']
-	if (email['NOID'] or email['BADTOKEN']):
+	print request.environ
+	if (email is None):
 		return generate_error_response(ERR_401, 401);
-	user_id = User.get_user_id_by_google_id(email['audCode'])
+	print email
+	user_id = User.get_user_id_by_google_aud(email['audCode'])
+	print user_id
 	user = db.session.query(User).filter(User.user_id==user_id).first()
+	print user
 
-	if (user):		
+	if (user):
 		# login with idToken passed in through header
 		is_new_user = False
 	else:
@@ -47,7 +51,7 @@ def user_login():
 		user = User('', google_aud, '', '', '', '')
 		user.save_user()
 		is_new_user = True
-	
+
 	# return whether its a new user and the associated user object
 	return json.dumps(dict(
 		new_user=is_new_user,
@@ -61,7 +65,7 @@ def get_user(userid):
 	# return 404 if not found
 	if (user is None):
 		return generate_error_response(ERR_404, 404)
-	
+
 	return user.to_json_fields_for_FE(), 200
 
 @user_api.route('/user/<int:userid>', methods=['PUT'])
@@ -75,7 +79,7 @@ def update_user(userid):
 
 	if (not data or 'userid' not in data):
 		return generate_error_response(ERR_400_invalid, 400);
-	
+
 	# TODO check id from header
 	if (int(data['userid']) != userid):
 		return generate_error_response(ERR_403_update, 403);
@@ -92,7 +96,7 @@ def update_user(userid):
 		username_taken = True
 	else:
 		good_inputs = good_inputs and user.set_username(username)
-	
+
 	# Not sure if all these checks are necessary?
 	if (data['name'] != user.get_name()):
 		good_inputs = good_inputs and user.set_name(data['name'])

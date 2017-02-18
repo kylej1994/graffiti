@@ -162,7 +162,7 @@ class User(db.Model):
 
     # finds the user_id of a user given a google_aud
     @staticmethod
-    def get_user_id_by_google_aud(self, google_aud):
+    def get_user_id_by_google_aud(google_aud):
         return db.session.query(User).filter(User.google_aud==google_aud).first().user_id
 
     # finds a user given a user id
