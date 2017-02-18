@@ -6,6 +6,15 @@ from flask import Blueprint, request
 
 post_api = Blueprint('post_api', __name__)
 
+fake_user = dict(
+	userid=1,
+	username='hothjylewis',
+	name="Hot and Bothered",
+	email="comeNfind@me.com",
+	bio="Yum yum yum!",
+	phone_number="1234567890"
+)
+
 fake_dict = dict(
 		postid=1,
 		text='This one is for you, Henry ;)',
@@ -13,7 +22,8 @@ fake_dict = dict(
 			longitude=41.792279,
 			latitude=-87.599954),
 		created_at=datetime.datetime(1995, 05, 23, 11, 11, 11, 111).isoformat(),
-		posterid=3,
+		poster=fake_user,
+		current_user_vote=1,
 		num_votes=102)
 fake_response = json.dumps(fake_dict)
 
@@ -73,8 +83,10 @@ def get_post_by_location():
 	lat = request.args.get('latitude')
 	lon = request.args.get('longitude')
 
-	return json.dumps([fake_dict, fake_dict, fake_dict, fake_dict, fake_dict,
-		fake_dict, fake_dict, fake_dict, fake_dict, fake_dict])
+	return json.dumps(dict(
+		posts=[fake_dict, fake_dict, fake_dict, fake_dict, fake_dict,
+				fake_dict, fake_dict, fake_dict, fake_dict, fake_dict]
+	))
 
 @post_api.route('/post/<int:postid>/vote', methods=['PUT'])
 def vote_post(postid):

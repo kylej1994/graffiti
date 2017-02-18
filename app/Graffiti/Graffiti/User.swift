@@ -31,19 +31,21 @@ class User : Mappable {
     private var username: String?
     private var name: String?
     private var email: String?
+    private var phoneNumber: String?
     private var userImage: UIImage?
-    private var textTag: String?
+    private var bio: String?
     private var imageTag: UIImage?
     
     //MARK: Initialization
     
-    init(id: Int, username: String? = nil, name: String? = nil, email: String? = nil, userImage: UIImage? = nil, textTag: String? = nil, imageTag: UIImage? = nil){
+    init(id: Int, username: String? = nil, name: String? = nil, email: String? = nil, phoneNumber: String? = nil, userImage: UIImage? = nil, bio: String? = nil, imageTag: UIImage? = nil){
         self.id = id
         self.username = username
         self.name = name
         self.email = email
+        self.phoneNumber = phoneNumber
         self.userImage = userImage
-        self.textTag = textTag
+        self.bio = bio
         self.imageTag = imageTag
     }
     
@@ -57,11 +59,12 @@ class User : Mappable {
     }
     
     func mapping(map: Map) {
-        id       <- map["userid"]
-        username <- map["username"]
-        name     <- map["name"]
-        email    <- map["email"]
-        textTag  <- map["textTag"]
+        id          <- map["userid"]
+        username    <- map["username"]
+        name        <- map["name"]
+        email       <- map["email"]
+        phoneNumber <- map["phone_number"]
+        bio         <- map["bio"]
     }
     
     //MARK: Getters
@@ -82,12 +85,16 @@ class User : Mappable {
         return email
     }
     
+    public func getPhoneNumber()->String?{
+        return phoneNumber
+    }
+    
     public func getUserImage() -> UIImage?{
         return userImage
     }
     
-    public func getTextTag() -> String?{
-        return textTag
+    public func getBio() -> String?{
+        return bio
     }
     
     public func getImageTag() -> UIImage?{
@@ -96,7 +103,7 @@ class User : Mappable {
     
     //MARK: Setters
     
-    public func setUsername(_ username:String) throws {
+    public func setUsername(_ username: String) throws {
         if(username.characters.count > 100){
             throw UserError.tooManyChars
         } else {
@@ -104,12 +111,16 @@ class User : Mappable {
         }
     }
     
-    public func setName(_ name:String) {
+    public func setName(_ name: String) {
         self.name = name
     }
     
-    public func setEmail(_ email:String) {
-        self.username = email
+    public func setEmail(_ email: String) {
+        self.email = email
+    }
+    
+    public func setPhoneNumber(_ phoneNumber: String) {
+        self.phoneNumber = phoneNumber
     }
     
     public func setUserImage(_ UImage: UIImage){
@@ -120,7 +131,7 @@ class User : Mappable {
         self.imageTag = TImage
     }
     
-    public func setImage(_ textTag: String){
-        self.textTag = textTag
+    public func setBio(_ bio: String){
+        self.bio = bio
     }
 }
