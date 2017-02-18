@@ -16,13 +16,16 @@ class APITestCase(unittest.TestCase):
         self.db_fd, graffiti.app.config['DATABASE'] = tempfile.mkstemp()
         graffiti.app.config['TESTING'] = True
         with graffiti.app.app_context():
-            # initializes the database that is used
+            # initializes and fills the database that is used
             graffiti.init_db()
+            graffiti.fill_db()
 
     def tearDown(self):
         os.close(self.db_fd)
         os.unlink(graffiti.app.config['DATABASE'])
-
+        with graffiti.app.app_context():
+            # clears the database that is used
+            graffiti.clear_db()
 
 if __name__ == '__main__':
     unittest.main()

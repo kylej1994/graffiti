@@ -95,6 +95,7 @@ class User(db.Model):
     # No validations implemented
     def set_google_aud(self, google_aud):
         self.google_aud = google_aud
+        return True
 
     # Only alnum or _ in username. Between 3 and 25 chars inclusive.
     def set_username(self, username):
@@ -124,10 +125,12 @@ class User(db.Model):
     # No validations implemented
     def set_bio(self, bio):
         self.bio = bio
+        return True
 
     # No validations implemented
     def set_email(self, email):
         self.email = email
+        return True
 
     # Only bool
     def set_has_been_suspended(self, suspended):
@@ -139,8 +142,6 @@ class User(db.Model):
 
     # TODO reevaluate this
     def to_json_fields_for_FE(self):
-        print self.name
-        print self.username
         return json.dumps(dict(
             userid=self.user_id,
             username=self.username,
@@ -169,5 +170,3 @@ class User(db.Model):
     @staticmethod
     def find_user(user_id):
         return db.session.query(User).filter(User.user_id==userid).first()
-
-    

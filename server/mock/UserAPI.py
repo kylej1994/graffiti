@@ -9,10 +9,11 @@ user_api = Blueprint('user_api', __name__)
 
 fake_dict = dict(
 	userid=1,
-	username='hothjylewis',
+	username='hylewis',
 	name="Hot and Bothered",
 	email="comeNfind@me.com",
-	bio="Yum yum yum!"
+	bio="Yum yum yum!",
+	phone_number="1234567890"
 )
 fake_response = json.dumps(fake_dict)
 
