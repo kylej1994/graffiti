@@ -4,25 +4,22 @@ import unittest
 
 from flask_api_test import APITestCase
 sys.path.append('..')
-from graffiti import graffiti, db, user
-from user import User 
+from graffiti import graffiti, user
+from graffiti.user import User
 
-import geoalchemy
 
-class UserTestCase(APITestCase):
+class UserTestCase():
     user = User("easmith", 
             "1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com",
             "9172825753", "name", "email@email.com", "text_tag")
 
     def setUp(self):
-        super(APITestCase, self).setUp()
         self.app = graffiti.app.test_client()
         db.create_all()
         db.session.add(user)
         db.session.commit()
 
     def tearDown(self):
-        super(APITestCase, self).tearDown()
         db.session.remove()
         db.drop_all()
 

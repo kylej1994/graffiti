@@ -4,12 +4,12 @@ import unittest
 
 from flask_api_test import APITestCase
 sys.path.append('..')
-from graffiti import graffiti, db, post
-from post import Post
+from graffiti import graffiti, post, user
+from graffiti.user import User
+from graffiti.graffiti import db
 
 from datetime import datetime, date
 import time
-import geoalchemy
 
 class PostTestCase():
 
@@ -38,8 +38,8 @@ class PostTestCase():
     # tests that the poster id (user_id) of the post is being set correctly
     def test_get_poster_id(self):
         post = db.query(Post).filter(Post.poster_username=="username").first()
-        self.assertTrue(post.get_poster_id() == user1.get_user_id())
-        self.assertFalse(post.get_poster_id() == user1.get_user_id() + 1)
+        assert (post.get_poster_id() == user1.get_user_id())
+        assert (post.get_poster_id() != user1.get_user_id() + 1)
 
     def test_set_votes(self):
         post = db.query(Post).filter(Post.poster_username=="username").first()
