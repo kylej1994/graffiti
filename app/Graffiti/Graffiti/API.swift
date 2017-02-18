@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 import AlamofireObjectMapper
+import GoogleSignIn
 
 // A completion closure invoked when requests complete
 typealias Handler = (DataResponse<Any>) -> Void

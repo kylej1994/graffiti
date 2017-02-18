@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GoogleSignIn
 
 protocol AuthProtocol {
     func getIdToken() -> String?

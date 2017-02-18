@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_GraffitiTestsVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_GraffitiTestsVersionString[];
+FOUNDATION_EXPORT double Pods_Graffiti_GraffitiTestsVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_Graffiti_GraffitiTestsVersionString[];
 
