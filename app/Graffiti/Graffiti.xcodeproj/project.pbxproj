@@ -55,6 +55,7 @@
 		F744D4131E4E77C300C42677 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F744D4121E4E77C300C42677 /* GoogleService-Info.plist */; };
 		F744D4141E4E842600C42677 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33B07CB1E4AB6D2007025FB /* Post.swift */; };
 		F744D4151E4E860400C42677 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33B07CF1E4ACA8F007025FB /* User.swift */; };
+		F79A41101E56875B00E5CFDD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD301E4947330020505D /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -641,6 +642,7 @@
 				D90D7A8F1E4E6C5400FB5AEE /* MockRequest.swift in Sources */,
 				D9B5FAEC1E552E2800DF87B2 /* LocationTransform.swift in Sources */,
 				D99735A11E4E722F00DA5F29 /* ApiTests.swift in Sources */,
+				F79A41101E56875B00E5CFDD /* AppDelegate.swift in Sources */,
 				D99735A21E4E722F00DA5F29 /* FeedViewControllerTests.swift in Sources */,
 				D9E63BA51E4D555E00EE6C4B /* MockSessionManager.swift in Sources */,
 				D9E63BA71E4D639100EE6C4B /* ManagerProtocol.swift in Sources */,
