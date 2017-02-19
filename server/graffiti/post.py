@@ -11,6 +11,7 @@ from time import time
 
 from geoalchemy2.functions import ST_DFullyWithin
 from geoalchemy2.shape import from_shape
+from geoalchemy2.types import Geometry
 from shapely.geometry import Point
 
 class Post(db.Model):
@@ -20,7 +21,7 @@ class Post(db.Model):
     text = db.Column(db.String(100))
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
-    #loc = db.Column(Geography(geometry_type='POINT', srid=4326))
+    loc = db.Column(Geometry(geometry_type='POINT', srid=4326))
     created_at = db.Column(db.DateTime)
     poster_id = db.Column(db.Integer)
     num_votes = db.Column(db.Integer)
