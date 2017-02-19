@@ -9,8 +9,10 @@ from user import User
 from datetime import datetime
 from time import time
 
+from geoalchemy2.elements import WKTElement
 from geoalchemy2.functions import ST_DFullyWithin
 from geoalchemy2.shape import from_shape
+from geoalchemy2 import Geometry
 from shapely.geometry import Point
 
 class Post(db.Model):
@@ -20,7 +22,7 @@ class Post(db.Model):
     text = db.Column(db.String(100))
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
-    #loc = db.Column(Geography(geometry_type='POINT', srid=4326))
+    loc = db.Column(Geometry(geometry_type='POINT', srid=4326))
     created_at = db.Column(db.DateTime)
     poster_id = db.Column(db.Integer)
     num_votes = db.Column(db.Integer)
@@ -32,6 +34,9 @@ class Post(db.Model):
         self.created_at = datetime.fromtimestamp(time()).isoformat()
         self.poster_id = poster_id
         self.num_votes = 0
+        # latitude comes first
+        loc = 'POINT(' + str(latitude) + ' ' + str(longitude) + ')'
+        self.loc = WKTElement(loc, srid=4326)
 
     def __repr__(self):
         return '<post_id {}>'.format(self.post_id)
@@ -85,15 +90,10 @@ class Post(db.Model):
     @staticmethod
     def find_posts_within_loc(lon, lat, radius):
         distance = radius * 0.014472 #convert to degrees
-        center_point = Point(lon, lat)
-        print type(lon)
-        print type(lat)
-        wkb_element = from_shape(center_point)
-        print type(wkb_element)
-        print '4'
+        loc = 'POINT(' + str(lat) + ' ' + str(lon) + ')'
+        wkt_element = WKTElement(loc, srid=4326)
         posts = db.session.query(Post).filter(ST_DFullyWithin(\
-            Point(Post.longitude, Post.latitude), wkb_element, distance)).all()
-        print '5'
+            Post.loc, wkt_element, distance)).all()
         return posts
 
 
