@@ -123,13 +123,14 @@ def get_post_by_location():
 	# query db for all posts in this area
 	lat = (float)(request.args.get('latitude'))
 	lon = (float)(request.args.get('longitude'))
-	radius = 5 #to be changed later
-	print 'yet to find posts'
+	radius = 5 # TODO find out what number this should be
 	posts = Post.find_posts_within_loc(lon, lat, radius)
-	print 'found posts'
 
 	to_ret = {}
-	to_ret['posts'] = posts
+	jsonified_posts = []
+	for post in posts:
+		jsonified_posts.append(json.loads(post.to_json_fields_for_FE()))
+	to_ret['posts'] = jsonified_posts
 	return json.dumps(to_ret), 200
 
 @post_api.route('/post/<int:postid>/vote', methods=['PUT'])
