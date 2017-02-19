@@ -4,7 +4,6 @@ import auth_Middleware
 from flask import Flask, request, abort
 from oauth2client import client, crypt
 from flask.ext.sqlalchemy import SQLAlchemy
-import geoalchemy2
 
 app = Flask(__name__)
 app.config.from_pyfile('graffiti.cfg')
