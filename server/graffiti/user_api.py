@@ -34,24 +34,23 @@ def generate_error_response(message, code):
 @user_api.route('/user/login', methods=['GET'])
 def user_login():
 	email = request.environ['META_INFO']
-	if (email['NOID'] or email['BADTOKEN']):
+	if (email is None):
 		return generate_error_response(ERR_401, 401);
-	user_id = User.get_user_id_by_google_id(email['audCode'])
-	user = db.session.query(User).filter(User.user_id==user_id).first()
+	user = User.get_user_by_google_aud(email['audCode'])
 
-	if (user):		
+	if (user):
 		# login with idToken passed in through header
 		is_new_user = False
 	else:
 		# create new User object with next userId and empty strings for other fields
-		user = User('', google_aud, '', '', '', '')
+		user = User('', email['audCode'], '', '', email['email'], '')
 		user.save_user()
 		is_new_user = True
-	
+
 	# return whether its a new user and the associated user object
 	return json.dumps(dict(
 		new_user=is_new_user,
-		user=user)), 200
+		user=json.loads(user.to_json_fields_for_FE()))), 200
 
 @user_api.route('/user/<int:userid>', methods=['GET'])
 def get_user(userid):
@@ -61,7 +60,7 @@ def get_user(userid):
 	# return 404 if not found
 	if (user is None):
 		return generate_error_response(ERR_404, 404)
-	
+
 	return user.to_json_fields_for_FE(), 200
 
 @user_api.route('/user/<int:userid>', methods=['PUT'])
@@ -75,7 +74,7 @@ def update_user(userid):
 
 	if (not data or 'userid' not in data):
 		return generate_error_response(ERR_400_invalid, 400);
-	
+
 	# TODO check id from header
 	if (int(data['userid']) != userid):
 		return generate_error_response(ERR_403_update, 403);
@@ -88,22 +87,24 @@ def update_user(userid):
 	username = data['username']
 	existing = db.session.query(User).filter(User.username==username).first()
 	username_taken = False
-	if (existing):
+	# If the user wants to change their username to an existing username
+	if (user.get_username() != username and existing):
 		username_taken = True
 	else:
 		good_inputs = good_inputs and user.set_username(username)
-	
+
 	# Not sure if all these checks are necessary?
-	if (data['name'] != user.get_name()):
+	if ('name' in data and data['name'] != user.get_name()):
 		good_inputs = good_inputs and user.set_name(data['name'])
 
-	if (data['email'] != user.get_email()):
+	if ('email' in data and data['email'] != user.get_email()):
 		good_inputs = good_inputs and user.set_email(data['email'])
 
-	if (data['phone_number'] != user.get_phone_number()):
+	if ('phone_number' in data and \
+		 data['phone_number'] != user.get_phone_number()):
 		good_inputs = good_inputs and user.set_phone_number(data['phone_number'])
 
-	if (data['bio'] != user.get_bio()):
+	if ('bio' in data and data['bio'] != user.get_bio()):
 		good_inputs = good_inputs and user.set_bio(data['bio'])
 
 	user.save_user()

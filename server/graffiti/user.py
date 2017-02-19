@@ -89,9 +89,6 @@ class User(db.Model):
     def get_has_been_suspended(self):
         return self.has_been_suspended
 
-    def get_user_id_by_google_aud(self, google_aud):
-        return db.session.query(User).filter(User.google_aud==google_aud).first().user_id
-
     # No validations implemented
     def set_google_aud(self, google_aud):
         self.google_aud = google_aud
@@ -140,7 +137,6 @@ class User(db.Model):
         else:
             return False
 
-    # TODO reevaluate this
     def to_json_fields_for_FE(self):
         return json.dumps(dict(
             userid=self.user_id,
@@ -160,10 +156,10 @@ class User(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-    # finds the user_id of a user given a google_aud
+    # finds a user given a google_aud
     @staticmethod
-    def get_user_id_by_google_aud(self, google_aud):
-        return db.session.query(User).filter(User.google_aud==google_aud).first().user_id
+    def get_user_by_google_aud(aud):
+        return db.session.query(User).filter(User.google_aud==aud).first()
 
     # finds a user given a user id
     # returns None if user_id is not in the db
