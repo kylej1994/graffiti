@@ -25,7 +25,7 @@ class APITestCase(unittest.TestCase):
         os.unlink(graffiti.app.config['DATABASE'])
         with graffiti.app.app_context():
             # clears the database that is used
-            graffiti.clear_db()
+            graffiti.clear_db_of_everything()
 
 if __name__ == '__main__':
     unittest.main()

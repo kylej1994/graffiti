@@ -4,44 +4,59 @@ import unittest
 
 from flask_api_test import APITestCase
 sys.path.append('..')
-from graffiti import graffiti, db
-from graffiti.models import User #this doesnt exist yet
+from graffiti import graffiti, user
+from graffiti.user import User
 
-import geoalchemy
-from geoalchemy.postgis import PGComparator
 
-class UserTestCase(APITestCase):
+class UserTestCase():
+    user = User("easmith", 
+            "1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com",
+            "9172825753", "name", "email@email.com", "text_tag")
 
     def setUp(self):
-        super(APITestCase, self).setUp()
         self.app = graffiti.app.test_client()
         db.create_all()
-        db.session.add(User("easmith", 
-            "1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com",
-            "9172825753"))
-        db.session.flush()
+        db.session.add(user)
+        db.session.commit()
 
     def tearDown(self):
-        super(APITestCase, self).tearDown()
         db.session.remove()
         db.drop_all()
 
-    def test_fetch_user(self):
-        user = db.query(User).filter(User.username=="easmith").first()
+    def test_get_user_id(self):
+        test_user = db.query(User).filter(User.username=="easmith").first()
+        self.assertTrue(test_user.get_user_id() == user.get_user_id())
+
+    def test_get_username(self):
+        test_user = db.query(User).filter(User.username=="easmith").first()
+        self.assertTrue(test_user.get_username() == user.get_username())
+
+    def test_get_phone_number(self):
+        test_user = db.query(User).filter(User.username=="easmith").first()
+        self.assertTrue(test_user.get_phone_number() == user.get_phone_number())
+
+    def test_get_name(self):
+        test_user = db.query(User).filter(User.username=="easmith").first()
+        self.assertTrue(test_user.get_name() == user.get_name())
+
+    def test_get_user(self):
+        user = User.find_user(user.get_user_id())
         self.assertTrue(user.username == "easmith")
         self.assertTrue(user.google_aud == "1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com")
         self.assertTrue(user.has_been_suspended == False)
-
-        self.assertFalse(db.query(User).filter(User.username=="rony").first())
+        self.assertTrue(user.name == "name")
+        self.assertTrue(user.email == "email@email.com")
+        self.assertTrue(user.bio == "text_tag")
+        no_user = User.find_user(user.get_user_id() + 1000)
+        self.assertIsNone(no_user)
 
     def test_change_suspension(self):
         user = db.query(User).filter(User.username=="easmith").first()
-        # Below function has not yet been implemented
-        user.change_suspension(True);
+        user.set_has_been_suspended(True)
         self.assertTrue(db.query(User).filter(User.username=="easmith").first().has_been_suspended == True)
-        user.change_suspension(True);
+        user.set_has_been_suspended(True)
         self.assertTrue(db.query(User).filter(User.username=="easmith").first().has_been_suspended == True)
-        user.change_suspension(False);
+        user.set_has_been_suspended(False)
         self.assertTrue(db.query(User).filter(User.username=="easmith").first().has_been_suspended == False)
 
     def test_adding_duplicate_user_parameters(self):
@@ -68,10 +83,10 @@ class UserTestCase(APITestCase):
     def test_delete_user(self):
         # Below function has not yet been implemented
         user2 = User("ron", "4555", "9274859273")
-        assertFalse(user2.delete())
+        assertFalse(user2.delete_user())
 
         user = db.query(User).filter(User.username=="easmith").first()
-        assertTrue(user.delete())
+        assertTrue(user.delete_user())
 
         assertIsNone(db.query(User).filter(User.username=="easmith").first())
 
