@@ -34,12 +34,9 @@ def generate_error_response(message, code):
 @user_api.route('/user/login', methods=['GET'])
 def user_login():
 	email = request.environ['META_INFO']
-	print request.environ
 	if (email is None):
 		return generate_error_response(ERR_401, 401);
-	print email
 	user = User.get_user_by_google_aud(email['audCode'])
-	print user
 
 	if (user):
 		# login with idToken passed in through header
@@ -53,7 +50,7 @@ def user_login():
 	# return whether its a new user and the associated user object
 	return json.dumps(dict(
 		new_user=is_new_user,
-		user=user.to_json_fields_for_FE())), 200
+		user=json.loads(user.to_json_fields_for_FE()))), 200
 
 @user_api.route('/user/<int:userid>', methods=['GET'])
 def get_user(userid):
@@ -97,16 +94,17 @@ def update_user(userid):
 		good_inputs = good_inputs and user.set_username(username)
 
 	# Not sure if all these checks are necessary?
-	if (data['name'] != user.get_name()):
+	if ('name' in data and data['name'] != user.get_name()):
 		good_inputs = good_inputs and user.set_name(data['name'])
 
-	if (data['email'] != user.get_email()):
+	if ('email' in data and data['email'] != user.get_email()):
 		good_inputs = good_inputs and user.set_email(data['email'])
 
-	if (data['phone_number'] != user.get_phone_number()):
+	if ('phone_number' in data and \
+		 data['phone_number'] != user.get_phone_number()):
 		good_inputs = good_inputs and user.set_phone_number(data['phone_number'])
 
-	if (data['bio'] != user.get_bio()):
+	if ('bio' in data and data['bio'] != user.get_bio()):
 		good_inputs = good_inputs and user.set_bio(data['bio'])
 
 	user.save_user()
