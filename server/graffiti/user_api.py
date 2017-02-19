@@ -39,7 +39,6 @@ def user_login():
 		return generate_error_response(ERR_401, 401);
 	print email
 	user = User.get_user_by_google_aud(email['audCode'])
-	print user_id
 	print user
 
 	if (user):
@@ -47,14 +46,14 @@ def user_login():
 		is_new_user = False
 	else:
 		# create new User object with next userId and empty strings for other fields
-		user = User('', google_aud, '', '', '', '')
+		user = User('', email['audCode'], '', '', email['email'], '')
 		user.save_user()
 		is_new_user = True
 
 	# return whether its a new user and the associated user object
 	return json.dumps(dict(
 		new_user=is_new_user,
-		user=user)), 200
+		user=user.to_json_fields_for_FE())), 200
 
 @user_api.route('/user/<int:userid>', methods=['GET'])
 def get_user(userid):
@@ -91,7 +90,8 @@ def update_user(userid):
 	username = data['username']
 	existing = db.session.query(User).filter(User.username==username).first()
 	username_taken = False
-	if (existing):
+	# If the user wants to change their username to an existing username
+	if (user.get_username() != username and existing):
 		username_taken = True
 	else:
 		good_inputs = good_inputs and user.set_username(username)
