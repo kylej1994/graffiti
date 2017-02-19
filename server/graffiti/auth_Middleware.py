@@ -1,18 +1,19 @@
 import requests
 import os
+import re
 
 #'export DEBUG=True' to set to true
 #DEBUG: Flag to skip authorization
 DEBUG = os.getenv('DEBUG', False)
 if DEBUG == 'True':
     DEBUG = True
-else: 
+else:
     DEBUG = False
 
 from oauth2client import client, crypt
 from werkzeug.wrappers import Request
 
-GOOGLE_CLIENT_ID = '360596307324-h5h550nfr8l1tfp2nk095d8d0vmeuonb.apps.googleusercontent.com'
+GOOGLE_CLIENT_ID = '13231237482-s7mfuli2va5deig9q2a20r8ju54duojp.apps.googleusercontent.com'
 GOOGLE_CLIENT_SECRET = 'FG4gWI2naIbjkcSxEvZyE6Bb'
 
 class Auth_MiddleWare(object):
@@ -36,7 +37,14 @@ class Auth_MiddleWare(object):
 
 
         request = Request(environ, shallow=True)
-        token = request.headers.get('idToken')
+
+        token = None
+        bearerPattern = re.compile('Bearer (.*)')
+        tokenPayload = request.headers.get('Authorization')
+        if tokenPayload is not None:
+            match = bearerPattern.match(tokenPayload)
+            if match is not None:
+                token = match.group(1)
         if token is None:
             environ['NOID'] = True
             return self.app(environ, start_response)
@@ -47,7 +55,7 @@ class Auth_MiddleWare(object):
             idinfo = client.verify_id_token(token, GOOGLE_CLIENT_ID)
             audCode = idinfo['aud']
             gmail = idinfo['email']
-            # user_id = 
+            # user_id =
             return_info = dict([('email', gmail), ('audCode', audCode)])
 
             #Return return_info w/ self.app

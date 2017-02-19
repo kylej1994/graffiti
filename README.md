@@ -15,6 +15,7 @@ Documentation
 -------------
 * [API Docs](https://github.com/kylej1994/graffiti/wiki/API-Documentation)
 * [iOS Unit Test Info](iOSTestInfo.md)
+* [Milestone 3B Readme](https://github.com/kylej1994/graffiti/wiki/Milestone-3.b)
 
 Contributing
 ------------

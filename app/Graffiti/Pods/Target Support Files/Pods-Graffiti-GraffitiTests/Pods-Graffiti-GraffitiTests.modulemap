@@ -1,0 +1,6 @@
+framework module Pods_Graffiti_GraffitiTests {
+  umbrella header "Pods-Graffiti-GraffitiTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
