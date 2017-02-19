@@ -34,7 +34,9 @@ def generate_error_response(message, code):
 @user_api.route('/user/login', methods=['GET'])
 def user_login():
 	email = request.environ['META_INFO']
-	if (email is None):
+	no_id = request.environ['NOID']
+    bad_token = request.environ['BADTOKEN']
+	if (email is None or no_id or bad_token):
 		return generate_error_response(ERR_401, 401);
 	user = User.get_user_by_google_aud(email['audCode'])
 
