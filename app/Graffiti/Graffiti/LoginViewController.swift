@@ -50,6 +50,24 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
         toggleAuthUI()
     }
     
+    // call these functions to show alerts instead of labels
+    // *but* for things like username too long, you should just stop letting user enter
+    // text once the text is 100 characters...
+    func showAlert(messageTitle: String, message: String) {
+        let alertController = UIAlertController(title: messageTitle, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func loginErrorAlert() {
+        showAlert(messageTitle: "Error Connecting to Account", message: "ID Token from Google is missing")
+    }
+    
+    func usernameTooLongAlert() {
+        showAlert(messageTitle: "Username too long", message: "Your username must be under 100 characters")
+    }
+    
     func showGoogleSignIn() {
         btnSignIn = GIDSignInButton(frame: CGRect(0,0,230,48))
         btnSignIn.center = view.center
