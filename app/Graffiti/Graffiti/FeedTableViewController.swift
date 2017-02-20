@@ -7,10 +7,9 @@
 //
 
 import UIKit
-import CoreLocation //see if i can delete
+import CoreLocation
 class FeedTableViewController: UITableViewController {
-    // reference: https://github.com/uchicago-mobi/mpcs51030-2016-winter-assignment-5-aaizuss/blob/master/Issues/Issues/DataTableViewController.swift
-    // activty indicator var
+    // todo at some point: add loading animation
     let api = API.sharedInstance
     let locationManager = LocationService.sharedInstance
     var posts: [Post] = []
@@ -20,51 +19,57 @@ class FeedTableViewController: UITableViewController {
     var currentLatitude: CLLocationDegrees? = CLLocationDegrees()
     var currentLongitude: CLLocationDegrees? = CLLocationDegrees()
     
+    // we load the data in view did appear so the feed gets filled asap
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        DispatchQueue.main.async {
+            self.getPostsByLocation()
+            self.tableView.reloadData()
+        }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        locationManager.startUpdatingLocation()
+        
+        DispatchQueue.main.async {
+            self.getPostsByLocation()
+            self.tableView.reloadData()
+        }
+        
+        // add refresh control for pull to refresh
+        self.refreshControl?.addTarget(self, action: #selector(refreshFeed), for: .valueChanged)
+    }
+    
+    
+    // get the current location and request list of posts
     func getPostsByLocation() {
-        // make network request
         currentLongitude = locationManager.getLongitude()
         currentLatitude = locationManager.getLatitude()
+        
+        // Bypass Simulator
         if currentLongitude == nil {
             print("long was nil so setting to default")
-            currentLongitude = 41.792279
+            currentLongitude = 0.0
         }
         if currentLatitude == nil {
             print("lat was nil so setting to default")
-            currentLatitude = -87.599954
+            currentLatitude = 0.0
         }
         
+        // Get Posts
         api.getPosts(longitude: currentLongitude!, latitude: currentLatitude!) { response in
             switch response.result {
             case .success:
-                print("hello i am in success")
                 if let json = response.result.value as? [String:Any],
                     let posts = json["posts"] as? [Post] {
-                    print(posts)
                     self.posts = posts
                 }
             case .failure(let error):
                 print(error)
             }
         }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        getPostsByLocation()
-
-        // add refresh control
-        self.refreshControl?.addTarget(self, action: #selector(refreshFeed), for: .valueChanged)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     // MARK: - Table view data source
@@ -75,6 +80,8 @@ class FeedTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let numRows = posts.count
+        
+        // Display a message about lack of posts when there are no posts
         if numRows == 0 {
             setupEmptyBackgroundView()
             tableView.separatorStyle = .none
@@ -83,10 +90,11 @@ class FeedTableViewController: UITableViewController {
             tableView.separatorStyle = .singleLine
             tableView.backgroundView?.isHidden = true
         }
+        
         return numRows
     }
-
     
+    // TODO refactor this
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "FeedCell"
 
@@ -96,82 +104,128 @@ class FeedTableViewController: UITableViewController {
             fatalError("The dequeue cell is not an instance of FeedTableViewTextCell.")
         }
         
-        // this is where we get the post from the post model
+        // get the Post from the array of Posts and fill the cell accordingly
         let post = posts[indexPath.row]
-        var rating = post.getRating()
-
         cell.textView.text = post.getText()
+        setDisplay(cell: cell, post: post)
         
-        // vote label
+        // handle upvote button tap
+        cell.upvoteTapAction = { (cell) in
+            let indexOfPost = tableView.indexPath(for: cell)!.row
+            let chosenPost = self.posts[indexOfPost]
+            
+            switch chosenPost.getVote() {
+            case .noVote:
+                chosenPost.upVote()
+                if let postid = chosenPost.getID() {
+                    self.sendVoteFor(postid: postid, vote: VoteType.upVote)
+                } else {
+                    print("couldn't get postid. not sending upvote to server, but faking it in ui")
+                }
+            // if the post was already upvoted, we send a noVote to undo the vote
+            case .upVote:
+                chosenPost.noVote()
+                if let postid = chosenPost.getID() {
+                    self.sendVoteFor(postid: postid, vote: VoteType.noVote)
+                } else {
+                    print("couldn't get postid. not sending upvote to server, but faking it in ui")
+                }
+            // if the user decides to upvote a post previously downvoted, the server handles it
+            case .downVote:
+                chosenPost.noVote()
+                chosenPost.upVote()
+                if let postid = chosenPost.getID() {
+                    self.sendVoteFor(postid: postid, vote: VoteType.upVote)
+                } else {
+                    print("couldn't get postid. not sending upvote to server, but faking it in ui")
+                }
+            }
+            
+            // update display
+            self.setDisplay(cell: cell, post: chosenPost)
+        }
+        
+        // handle downvote button tap
+        cell.downvoteTapAction = { (cell) in
+            let indexOfPost = tableView.indexPath(for: cell)!.row
+            let chosenPost = self.posts[indexOfPost]
+            
+            switch chosenPost.getVote() {
+            case .noVote:
+                chosenPost.downVote()
+                if let postid = chosenPost.getID() {
+                    self.sendVoteFor(postid: postid, vote: VoteType.downVote)
+                } else {
+                    print("couldn't get postid. not sending downvote to server, but faking it in ui")
+                }
+            // if the post was already downvoted, we send a noVote to undo the vote
+            case .downVote:
+                chosenPost.noVote()
+                if let postid = chosenPost.getID() {
+                    self.sendVoteFor(postid: postid, vote: VoteType.noVote)
+                } else {
+                    print("couldn't get postid. not sending upvote to server, but faking it in ui")
+                }
+            // if the user decides to downvote a post previously upvoted, the server handles it
+            case .upVote:
+                chosenPost.noVote()
+                chosenPost.downVote()
+                if let postid = chosenPost.getID() {
+                    self.sendVoteFor(postid: postid, vote: VoteType.downVote)
+                } else {
+                    print("couldn't get postid. not sending upvote to server, but faking it in ui")
+                }
+            }
+            
+            // update display
+            self.setDisplay(cell: cell, post: chosenPost)
+        }
+
+        return cell
+    }
+    
+    func setDisplay(cell: FeedTableViewTextCell, post: Post) {
+        setRatingDisplay(cell: cell, post: post)
+        setDateDisplay(cell: cell, post: post)
+        setVoteButtonDisplay(cell: cell, post: post)
+    }
+    
+    func setRatingDisplay(cell: FeedTableViewTextCell, post: Post) {
+        let rating = post.getRating()
         cell.votesLabel.text = String(rating)
         if rating < 0 {
             cell.votesLabel.textColor = UIColor(red:0.76, green:0.25, blue:0.25, alpha:1.0)
         } else {
             cell.votesLabel.textColor = UIColor(red:0.40, green:0.78, blue:0.49, alpha:1.0)
         }
-        
+    }
+    
+    func setVoteButtonDisplay(cell: FeedTableViewTextCell, post: Post) {
+        let vote = post.getVote()
+        switch vote {
+        case .upVote:
+            cell.upvoteButton.setImage(UIImage(named: "upvote-green-50"), for: .normal)
+            cell.downvoteButton.setImage(UIImage(named: "downvote-black-50"), for: .normal)
+        case .downVote:
+            cell.downvoteButton.setImage(UIImage(named: "downvote-red-50"), for: .normal)
+            cell.upvoteButton.setImage(UIImage(named: "upvote-black-50"), for: .normal)
+        case .noVote:
+            cell.downvoteButton.setImage(UIImage(named: "downvote-black-50"), for: .normal)
+            cell.upvoteButton.setImage(UIImage(named: "upvote-black-50"), for: .normal)
+        }
+    }
+    
+    func setDateDisplay(cell: FeedTableViewTextCell, post: Post) {
         if let dateAdded = post.getTimeAdded() {
             cell.dateLabel.text = getFormattedDate(date: dateAdded)
         } else {
             cell.dateLabel.text = "Just Now"
         }
-        
-        // voting
-        var didUpvote = false
-        var didDownvote = false
-        cell.upvoteTapAction = { (cell) in
-            didDownvote = false
-            if !didUpvote {
-                print("entering the upvote stuff")
-                didUpvote = true
-                self.handleUpvote(cell: cell, currentRating: rating)
-                rating += 1 // this seems redundant but it isn't. setting the post rating doesn't work unless we refresh the table
-                post.setRating(rating + 1)
-                let indexOfPost = tableView.indexPath(for: cell)!.row
-                if let postid = self.posts[indexOfPost].getID() {
-                    self.sendVoteFor(postid: postid, vote: 1)
-                } else {
-                    print("couldn't get postid. not sending upvote to server, but faking it in ui")
-                }
-            } else {
-                print("ignoring extra upvote button press")
-            }
-        }
-
-        cell.downvoteTapAction = { (cell) in
-            didUpvote = true
-            if !didDownvote {
-                didDownvote = true
-                self.handleDownvote(cell: cell, currentRating: rating)
-                rating -= 1
-                post.setRating(rating - 1)
-                let indexOfPost = tableView.indexPath(for: cell)!.row
-                if let postid = self.posts[indexOfPost].getID() {
-                    self.sendVoteFor(postid: postid, vote: -1)
-                } else {
-                    print("couldn't get postid. not sending upvote to server, but faking it in ui")
-                }
-            } else {
-                print("ignoring extra downvote button press")
-            }
-        }
-        return cell
     }
     
-    func handleUpvote(cell: FeedTableViewTextCell, currentRating: Int) {
-        cell.upvoteButton.setImage(UIImage(named: "upvote-green-50"), for: .normal)
-        cell.downvoteButton.setImage(UIImage(named: "downvote-black-50"), for: .normal)
-        cell.votesLabel.text = String(currentRating + 1)
-    }
     
-    func handleDownvote(cell: FeedTableViewTextCell, currentRating: Int) {
-        cell.downvoteButton.setImage(UIImage(named: "downvote-red-50"), for: .normal)
-        cell.upvoteButton.setImage(UIImage(named: "upvote-black-50"), for: .normal)
-        cell.votesLabel.text = String(currentRating - 1)
-    }
-    
-    // todo: change second param from int to enum: upvote or downvote
-    func sendVoteFor(postid: Int, vote: Int) {
+    // todo: read server response, use to update model
+    func sendVoteFor(postid: Int, vote: VoteType) {
         api.voteOnPost(postid: postid, vote: vote) { response in
             switch response.result {
             case .success:
@@ -185,7 +239,7 @@ class FeedTableViewController: UITableViewController {
         }
     }
     
-    
+    // Refresh the feed (request posts from API and fill the table) when user pulls down on table
     func refreshFeed(sender: UIRefreshControl) {
         print("we will refresh here")
         getPostsByLocation()
@@ -193,20 +247,10 @@ class FeedTableViewController: UITableViewController {
         refreshControl?.endRefreshing()
     }
     
+    // convert the date from the date posted to time since posted
     func getFormattedDate(date: Date) -> String {
         let formatter = DateFormatter()
         return formatter.timeSince(from: date as NSDate, numericDates: true)
     }
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

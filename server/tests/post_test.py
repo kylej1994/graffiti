@@ -1,130 +1,132 @@
+import os
 import json
 import sys
 import unittest
+import tempfile
 
 from flask_api_test import APITestCase
 sys.path.append('..')
-from graffiti import graffiti, db
-from graffiti.models import Post #this doesnt exist yet
+from graffiti import graffiti, user, post
+from graffiti.user import User
+from graffiti.post import Post
+from graffiti.graffiti import db
+
 from datetime import datetime, date
 import time
 
-import geoalchemy
+# note: poster_id aka user_id will always be 1
+poster_id = 1
 
-class PostTestCase():
+class PostTestCase(unittest.TestCase):
 
     def setUp(self):
         self.db_fd, graffiti.app.config['DATABASE'] = tempfile.mkstemp()
         graffiti.app.config['TESTING'] = True
-
-        self.app = graffiti.app.test_client()
-        db.create_all()
-        db.session.add(Post("text", 51.5192028, -0.140863, "username"))
-        db.session.flush()
-
         with graffiti.app.app_context():
-            # initializes the database that is used
+            # initializes and fills the database that is used
             graffiti.init_db()
+            graffiti.fill_db()
 
     def tearDown(self):
-        super(APITestCase, self).tearDown()
-        db.session.remove()
-        db.drop_all()
+        os.close(self.db_fd)
+        os.unlink(graffiti.app.config['DATABASE'])
+        with graffiti.app.app_context():
+            # clears the database that is used
+            graffiti.clear_db_of_everything()
 
-    def test_increment_votes(self):
-        post = db.query(Post).filter(Post.poster_username=="username").first()
+    # tests that the poster id (user_id) of the post is being set correctly
+    def test_get_poster_id(self):
+        post = db.session.query(Post).filter(Post.poster_id==poster_id).first()
+        self.assertTrue(post.get_poster_id() == poster_id)
+        self.assertFalse(post.get_poster_id() == 100)
+
+    # tests that all posts of a user are being retrieved appropriately
+    def test_find_user_posts(self):
+        posts = Post.find_user_posts(poster_id)
+        self.assertTrue(len(posts) == 4)
+
+    # tests that a post is being stored into the database correctly
+    def test_save_post(self):
+        post = Post('to_save', 123, 123, poster_id)
+        post.save_post()
+        self.assertTrue(len(Post.find_user_posts(poster_id)) == 5)
+
+    def test_find_post(self):
+        post = Post.find_post(poster_id)
+        self.assertIsNotNone(post)
+        self.assertTrue(post.get_poster_id() == poster_id)
+        self.assertTrue(post.get_text() == 'text')
+
+    def test_set_votes(self):
+        post = db.session.query(Post).filter(Post.poster_id==poster_id).first()
+        post_id = post.post_id
         self.assertTrue(post.num_votes == 0)
-        post.increment_votes()
-        self.assertTrue(db.query(Post).filter(Post.poster_username=="username").first().num_votes == 1)
-        post.increment_votes()
-        self.assertTrue(db.query(Post).filter(Post.poster_username=="username").first().num_votes == 2)
+        # tests increment votes
+        post.set_vote(1)
+        self.assertTrue(db.session.query(Post).filter(Post.post_id==post_id).first().num_votes == 1)
+        # tests decrement votes
+        post.set_vote(-1)
+        self.assertTrue(db.session.query(Post).filter(Post.post_id==post_id).first().num_votes == 0)
 
-    def test_decrement_votes(self):
-        post = db.query(Post).filter(Post.poster_username=="username").first()
-        post.increment_votes()
-        post.increment_votes()
-        post.decrement_votes()
-        self.assertTrue(db.query(Post).filter(Post.poster_username=="username").first().num_votes == 1)
-        post.decrement_votes()
-        self.assertTrue(db.query(Post).filter(Post.poster_username=="username").first().num_votes == 0)
-        post.decrement_votes()
-        self.assertTrue(db.query(Post).filter(Post.poster_username=="username").first().num_votes == -1)
-
-    def test_get_created_at(self):
-        before = time.time()
-        new_post = Post("text2", 51.5192028, -0.140863, "username2")
-        db.session.add(new_post)
-        db.session.flush()
-        after = time.time()
-        middle = time.mktime(db.query(Post).filter(Post.poster_username=="username2").first().created_at.timetuple())
-        assertTrue(before <= middle <= after)
 
     def test_get_text(self):
-        post = db.query(Post).filter(Post.poster_username=="username").first()
+        post = db.session.query(Post).filter(Post.poster_id==poster_id).first()
         text = post.get_text()
         self.assertIsNotNone(text)
         self.assertTrue(text == "text")
         self.assertFalse(text == "username")
 
-    def test_get_poster_username(self):
-        post = db.query(Post).filter(Post.poster_username=="username").first()
-        username = post.test_get_poster_username()
-        self.assertIsNotNone(username)
-        self.assertTrue(username == "username")
-        self.assertFalse(username == "text")
+    def test_find_posts_within_loc(self):
+        graffiti.clear_db_of_everything()
+        graffiti.init_db()
 
-    #change the function def of delete_post() to return bool
-    def test_delete_post(self):
-        post2 = Post("text2", -37.8167, 144.9667, "username2")
-        assertFalse(post2.delete_post())
-        post = db.query(Post).filter(Post.poster_username=="username").first()
-        assertTrue(post.delete_post())
-        assertIsNone(db.query(Post).filter(Post.poster_username=="username").first())
-
-
-    def test_get_nearby_posts(self):
         longitude = 51.5192028
         latitude = -0.140863
         hackney_longitude = 51.5457865
         hackney_latitude = -0.0554184
         aus_longitude = -37.8167
-        aus_langititude = 144.9667
+        aus_latitude = 144.9667
 
-        db.session.add(Post("in australia", -37.8167, 144.9667, "username2"))
-        db.session.add(Post("in hackney", 51.5457865, -0.0554184, "username2"))
+        to_add3 = Post('in london', 51.5192028, -0.140863, 1)
+        to_add = Post('in australia', -37.8167, 144.9667, 1)
+        to_add2 = Post('in hackney', 51.5457865, -0.0554184, 1)
+        to_add3.save_post()
+        to_add.save_post()
+        to_add2.save_post()
 
         distance1 = 1
         distance2 = 10000
         distance3 = 16900 * 1000
 
-        post = db.query(Post).filter(Post.poster_username=="username").first()
-
         #gets all post within distance 1 
-        posts = post.get_nearby_posts(distance1)
-        assertTrue(posts.size() == 1)
-        assertTrue(posts[0].longitude == post.longitude)
-        assertTrue(posts[0].latitude == post.latitude)
+        posts = Post.find_posts_within_loc(longitude, latitude, distance1)
+        self.assertTrue(posts[0].longitude == longitude)
+        self.assertTrue(posts[0].latitude == latitude)
 
         #gets all two posts within distance 2, should get 2 posts in the UK
-        posts = post.get_nearby_posts(distance2)
-        assertTrue(posts.size() == 2)
-        assertTrue(posts[0].longitude == longitude)
-        assertTrue(posts[0].latitude == latitude)
-        assertTrue(posts[1].longitude == hackney_longitude)
-        assertTrue(posts[1].latitude == hackney_latitude)
+        posts = Post.find_posts_within_loc(longitude, latitude, distance2)
+        self.assertTrue(posts[0].longitude == longitude)
+        self.assertTrue(posts[0].latitude == latitude)
+        self.assertTrue(posts[1].longitude == hackney_longitude)
+        self.assertTrue(posts[1].latitude == hackney_latitude)
    		
    		#gets all three posts within distance 3
-        posts = post.get_nearby_posts(distance3)
-        assertTrue(posts.size() == 3)
-        assertTrue(posts[0].longitude == longitude)
-        assertTrue(posts[0].latitude == latitude)
-        assertTrue(posts[1].longitude == hackney_longitude)
-        assertTrue(posts[1].latitude == hackney_latitude)
-        assertTrue(posts[2].longitude == aus_longitude)
-        assertTrue(posts[2].latitude == aus_latitude)
+        posts = Post.find_posts_within_loc(longitude, latitude, distance3)
+        self.assertTrue(posts[0].longitude == longitude)
+        self.assertTrue(posts[0].latitude == latitude)
+        self.assertTrue(posts[2].longitude == hackney_longitude)
+        self.assertTrue(posts[2].latitude == hackney_latitude)
+        self.assertTrue(posts[1].longitude == aus_longitude)
+        self.assertTrue(posts[1].latitude == aus_latitude)
 
 
-
+    def test_delete_post(self):
+        to_delete = Post("text2", 51.5192024, -0.140862, poster_id)
+        db.session.add(to_delete)
+        db.session.commit()
+        post_id = to_delete.post_id
+        to_delete.delete_post()
+        self.assertIsNone(db.session.query(Post).filter(Post.post_id==post_id).first())
 
 if __name__ == '__main__':
     unittest.main()

@@ -16,7 +16,7 @@ fake_response = json.dumps(dict(
 		textTag="Yum yum yum!"))
 
 #string error messages
-ERR_400_invalid = "User information is invalid"
+ERR_400_invalid = "User information is invalid."
 ERR_400_taken = "Specified username is already taken."
 ERR_401 = "User idToken is missing."
 ERR_403_friends = "User is not friends."
@@ -32,27 +32,27 @@ def generate_error_response(message, code):
 
 
 @user_api.route('/user/login', methods=['GET'])
-def user_login():	
-	id_token = not None #TODO
-	if (id_token == None):
-			return generate_error_response(ERR_401, 401);
+def user_login():
+	email = request.environ['META_INFO']
+	no_id = request.environ['NOID']
+	bad_token = request.environ['BADTOKEN']
+	if (email is None or no_id or bad_token):
+		return generate_error_response(ERR_401, 401);
+	user = User.get_user_by_google_aud(email['audCode'])
 
-	# Find user via id_token
-
-	if (user):		
+	if (user):
 		# login with idToken passed in through header
-		# TODO
 		is_new_user = False
 	else:
 		# create new User object with next userId and empty strings for other fields
-		user = User('', google_aud, '', '', '', '')
+		user = User('', email['audCode'], '', '', email['email'], '')
 		user.save_user()
 		is_new_user = True
-	
+
 	# return whether its a new user and the associated user object
 	return json.dumps(dict(
 		new_user=is_new_user,
-		user=user)), 200
+		user=json.loads(user.to_json_fields_for_FE()))), 200
 
 @user_api.route('/user/<int:userid>', methods=['GET'])
 def get_user(userid):
@@ -62,52 +62,59 @@ def get_user(userid):
 	# return 404 if not found
 	if (user is None):
 		return generate_error_response(ERR_404, 404)
-	
+
 	return user.to_json_fields_for_FE(), 200
 
 @user_api.route('/user/<int:userid>', methods=['PUT'])
 def update_user(userid):
 	# checks for necessary data params
-	data = request.get_json()
-	if ('userid' not in data):
+	try:
+		data = request.get_json()
+	except:
+		# if there is no data with the PUT request
 		return generate_error_response(ERR_400_invalid, 400);
-	
+
+	if (not data or 'userid' not in data):
+		return generate_error_response(ERR_400_invalid, 400);
+
 	# TODO check id from header
 	if (int(data['userid']) != userid):
 		return generate_error_response(ERR_403_update, 403);
 
-	# Call set functions and update rtn_val
-	rtn_val = True
+	# Call set functions and update good_inputs
+	good_inputs = True
 
 	# checks if a user with specified username already exists
 	user = db.session.query(User).filter(User.user_id==userid).first()
 	username = data['username']
 	existing = db.session.query(User).filter(User.username==username).first()
 	username_taken = False
-	if (existing):
+	# If the user wants to change their username to an existing username
+	if (user.get_username() != username and existing):
 		username_taken = True
 	else:
-		rtn_val = rtn_val and user.set_username(username)
-	
+		good_inputs = good_inputs and user.set_username(username)
+
 	# Not sure if all these checks are necessary?
-	if (data['name'] != user.get_name()):
-		rtn_val = rtn_val and user.set_name(data['name'])
+	if ('name' in data and data['name'] != user.get_name()):
+		good_inputs = good_inputs and user.set_name(data['name'])
 
-	if (data['email'] != user.get_email()):
-		rtn_val = rtn_val and user.set_email(data['email'])
+	if ('email' in data and data['email'] != user.get_email()):
+		good_inputs = good_inputs and user.set_email(data['email'])
 
-	if (data['phone_number'] != user.get_phone_number()):
-		rtn_val = rtn_val and user.set_phone_number(data['phone_number'])
+	if ('phone_number' in data and \
+		 data['phone_number'] != user.get_phone_number()):
+		good_inputs = good_inputs and user.set_phone_number(data['phone_number'])
 
-	if (data['bio'] != user.get_bio()):
-		rtn_val = rtn_val and user.set_bio(data['bio'])
+	if ('bio' in data and data['bio'] != user.get_bio()):
+		good_inputs = good_inputs and user.set_bio(data['bio'])
 
 	user.save_user()
 
 	# Evaluate bools
 	if (username_taken):
 		return generate_error_response(ERR_400_taken, 400)
-	if (rtn_val == False):
+	if (not good_inputs):
 		return generate_error_response(ERR_400_invalid, 400)
 
 	return user.to_json_fields_for_FE(), 200
@@ -115,7 +122,9 @@ def update_user(userid):
 @user_api.route('/user/<int:userid>/posts', methods=['GET'])
 def get_user_posts(userid):
 	# look for user to make sure this user exists
-	user = User.find_user(userid)
+	# not sure why this doesnt work...
+	#user = User.find_user(userid)
+	user = db.session.query(User).filter(User.user_id==userid).first()
 
 	# return 404 if not found
 	if (user is None):
@@ -123,12 +132,11 @@ def get_user_posts(userid):
 
 	# TODO check id from header
 
-	Post.find_user_posts(userid)
+	posts = Post.find_user_posts(userid)
 
 	to_rtn = {}
 	posts_arr = []
 	for post in posts:
-		print post
 		posts_arr.append(post.to_json_fields_for_FE())
 
 	to_rtn['posts'] = posts_arr

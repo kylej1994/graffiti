@@ -11,12 +11,13 @@ import CoreLocation
 
 class ApiTests: XCTestCase {
     let session = MockSessionManager()
+    let auth = MockAuth()
     var api: API!
     
     override func setUp() {
         super.setUp()
         
-        api = API(manager: session)
+        api = API(manager: session, auth: auth)
     }
     
     //MARK: User Call Tests
@@ -126,14 +127,14 @@ class ApiTests: XCTestCase {
     }
     
     func testVoteOnPost() {
-        let vote: [String : Int] = ["vote": 1]
-        api.voteOnPost(postid: 1234, vote: vote["vote"]!) { (_) in }
+        let vote: VoteType = .upVote
+        api.voteOnPost(postid: 1234, vote: vote) { (_) in }
         
         let url = session.lastURL as? String
-        XCTAssertEqual(url, "/post/1234")
+        XCTAssertEqual(url, "/post/1234/vote")
         
         XCTAssertEqual(session.lastMethod, .put)
-        XCTAssertEqual(session.lastParameters as! [String : Int], vote)
+        XCTAssertEqual(session.lastParameters?["vote"] as! Int, vote.rawValue)
         
         let token = session.lastHeaders?["Authorization"]
         XCTAssertNotNil(token)

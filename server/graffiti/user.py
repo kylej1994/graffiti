@@ -10,6 +10,8 @@ from datetime import datetime
 from time import time
 
 import geoalchemy2
+import re
+EMAIL_REGEX = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
 class User(db.Model):
     __tablename__ = 'user'
@@ -43,13 +45,11 @@ class User(db.Model):
     def validate_username(self, username):
         if (len(username) > 25 or len(username) < 3):
             return False
-        # if (re.match('^\w+$', username)):
-        #     return False
         return True
 
-    # Only alpha. Fewer than or equal to 50 characters.
+    # Only alpha and whitespace. Fewer than or equal to 50 characters.
     def validate_name(self, name):
-        if (len(name) > 50):
+        if (len(name) > 50 or not re.match('^[\d\s\w]+$', name)):
             return False
         return True
 
@@ -92,6 +92,7 @@ class User(db.Model):
     # No validations implemented
     def set_google_aud(self, google_aud):
         self.google_aud = google_aud
+        return True
 
     # Only alnum or _ in username. Between 3 and 25 chars inclusive.
     def set_username(self, username):
@@ -118,13 +119,15 @@ class User(db.Model):
         else:
             return False
 
-    # No validations implemented
     def set_bio(self, bio):
         self.bio = bio
+        return True
 
-    # No validations implemented
     def set_email(self, email):
+        if not EMAIL_REGEX.match(email):
+            return False
         self.email = email
+        return True
 
     # Only bool
     def set_has_been_suspended(self, suspended):
@@ -134,10 +137,7 @@ class User(db.Model):
         else:
             return False
 
-    # TODO reevaluate this
     def to_json_fields_for_FE(self):
-        print self.name
-        print self.username
         return json.dumps(dict(
             userid=self.user_id,
             username=self.username,
@@ -156,8 +156,13 @@ class User(db.Model):
         db.session.delete(self)
         db.session.commit()
 
+    # finds a user given a google_aud
+    @staticmethod
+    def get_user_by_google_aud(aud):
+        return db.session.query(User).filter(User.google_aud==aud).first()
+
     # finds a user given a user id
     # returns None if user_id is not in the db
     @staticmethod
     def find_user(user_id):
-        db.session.query(User).filter(User.user_id==userid).first()
+        return db.session.query(User).filter(User.user_id==user_id).first()

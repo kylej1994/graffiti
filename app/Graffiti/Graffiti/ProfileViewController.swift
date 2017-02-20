@@ -140,6 +140,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func btnDisconnectPressed(_ sender: UIButton) {
+        //TODO
         self.navigationController?.popToRootViewController(animated: true)
         
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)

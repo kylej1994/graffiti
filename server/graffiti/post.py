@@ -9,7 +9,11 @@ from user import User
 from datetime import datetime
 from time import time
 
-import geoalchemy2
+from geoalchemy2.elements import WKTElement
+from geoalchemy2.functions import ST_DFullyWithin
+from geoalchemy2.shape import from_shape
+from geoalchemy2 import Geometry
+from shapely.geometry import Point
 
 class Post(db.Model):
     __tablename__ = 'post'
@@ -18,7 +22,7 @@ class Post(db.Model):
     text = db.Column(db.String(100))
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
-    #loc = db.Column(Geography(geometry_type='POINT', srid=4326))
+    loc = db.Column(Geometry(geometry_type='POINT', srid=4326))
     created_at = db.Column(db.DateTime)
     poster_id = db.Column(db.Integer)
     num_votes = db.Column(db.Integer)
@@ -30,6 +34,9 @@ class Post(db.Model):
         self.created_at = datetime.fromtimestamp(time()).isoformat()
         self.poster_id = poster_id
         self.num_votes = 0
+        # latitude comes first
+        loc = 'POINT(' + str(latitude) + ' ' + str(longitude) + ')'
+        self.loc = WKTElement(loc, srid=4326)
 
     def __repr__(self):
         return '<post_id {}>'.format(self.post_id)
@@ -47,7 +54,10 @@ class Post(db.Model):
             num_votes=self.num_votes))
 
     def get_poster_id(self):
-        return self.poster_id;
+        return self.poster_id
+
+    def get_text(self):
+        return self.text
 
     # saves the post into the db
     def save_post(self):
@@ -66,7 +76,6 @@ class Post(db.Model):
 
     # finds a post given a post id
     # returns None if post_id is not in the db
-    # NOTE will this conflict with the namespace of the DB model???
     @staticmethod
     def find_post(postid):
         return db.session.query(Post).filter(Post.post_id==postid).first()
@@ -74,16 +83,16 @@ class Post(db.Model):
     # finds all post of a given user_id
     @staticmethod
     def find_user_posts(user_id):
-        return db.session.query(Post).filter(Post.poster_id==user_id)
+        return db.session.query(Post).filter(Post.poster_id==user_id).all()
 
     # finds posts within a certain radius of a coordinate
     @staticmethod
     def find_posts_within_loc(lon, lat, radius):
         distance = radius * 0.014472 #convert to degrees
-        center_point = Point(lon, lat)
-        wkb_element = from_shape(center_point)
-        posts = db.session.query(Post).filter(func.ST_DFullyWithin(\
-            Point(Post.longitude, Post.latitude), wkb_element, distance)).all()
+        loc = 'POINT(' + str(lat) + ' ' + str(lon) + ')'
+        wkt_element = WKTElement(loc, srid=4326)
+        posts = db.session.query(Post).filter(ST_DFullyWithin(\
+            Post.loc, wkt_element, distance)).all()
         return posts
 
 
