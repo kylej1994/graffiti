@@ -10,7 +10,7 @@ import UIKit
 
 class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDelegate {
     
-    //var btnSignIn : UIButton!
+    let appDelegate : AppDelegate = UIApplication.shared.delegate as! AppDelegate
     var btnSignIn : GIDSignInButton!
     var label : UILabel!
     @IBOutlet var btnNewsFeed: UIButton!
@@ -23,10 +23,15 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
         self.usertextnew.delegate = self
         
         showGoogleSignIn()
-
         usertextnew.isHidden = true
-
+        btnNewsFeed.isHidden = true
+        
+        GIDSignIn.sharedInstance().signInSilently()
+    }
+    
+    func showGoogleSignIn() {
         // Sign In Label
+        // TODO: move this to the storyboard
         label = UILabel(frame: CGRect(0,0,200,100))
         label.center = CGPoint(view.center.x, 300)
         label.numberOfLines = 0 //Multi-lines
@@ -34,12 +39,15 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
         label.textColor = UIColor.white
         label.textAlignment = NSTextAlignment.center
         view.addSubview(label)
-    
-        NotificationCenter.default.addObserver(self, selector: #selector(receiveToggleAuthUINotification(_:)),
-        name: NSNotification.Name(rawValue: "ToggleAuthUINotification"),object: nil)
         
-        toggleAuthUI()
+        
+        btnSignIn = GIDSignInButton(frame: CGRect(0,0,230,48))
+        btnSignIn.center = view.center
+        btnSignIn.style = GIDSignInButtonStyle.wide
+        view.addSubview(btnSignIn)
     }
+    
+    // MARK: Alerts
     
     // call these functions to show alerts instead of labels
     // *but* for things like username too long, you should just stop letting user enter
@@ -51,28 +59,27 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
         self.present(alertController, animated: true, completion: nil)
     }
     
+    func showSignInErrorAlert() {
+        showAlert(messageTitle: "Error Signing In", message: "There was a problem signing in with Google.")
+    }
+    
     func showLoginErrorAlert() {
-        showAlert(messageTitle: "Error Connecting to Account", message: "ID Token from Google is missing")
+        showAlert(messageTitle: "Error Connecting to Account", message: "ID Token from Google is missing.")
     }
     
     func showWhoopsAlert() {
-        showAlert(messageTitle: "Whoops", message: "Couldn't connect to server to log in")
+        showAlert(messageTitle: "Whoops", message: "Couldn't connect to server to log in.")
     }
     
     func showUsernameTooLongAlert() {
-        showAlert(messageTitle: "Username too long", message: "Your username must be under 100 characters")
+        showAlert(messageTitle: "Username too long", message: "Your username must be under 100 characters.")
     }
     
     func showUsernameTakenAlert() {
-        showAlert(messageTitle: "That username is taken", message: "Please enter a different username")
+        showAlert(messageTitle: "That username is taken", message: "Please enter a different username.")
     }
     
-    func showGoogleSignIn() {
-        btnSignIn = GIDSignInButton(frame: CGRect(0,0,230,48))
-        btnSignIn.center = view.center
-        btnSignIn.style = GIDSignInButtonStyle.wide
-        view.addSubview(btnSignIn)
-    }
+    // MARK: UITextFieldDelegate
     
     private func textViewDidBeginEditing(_ textView: UITextView) {
         usertextnew.text = ""
@@ -80,83 +87,93 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        let user = self.appDelegate.currentUser!
+        
         // Hide the keyboard.
         usertextnew.resignFirstResponder()
+        
+        let username = usertextnew.text!
+        print(username)
+        
+        do {
+            try user.setUsername(username)
+        } catch{
+            showUsernameTooLongAlert()
+            return false
+        }
+        
+        API.sharedInstance.updateUser(user: user) { res in
+            switch res.result{
+            case.success:
+                self.btnNewsFeed.isHidden = false
+                // TODO: Navigate to Feed
+            case.failure:
+                self.showUsernameTakenAlert()
+                self.usertextnew.becomeFirstResponder()
+            }
+        }
         return true
     }
 
-    func newuser(newuser: [String : Any]) {
-        let nu = newuser["new_user"]
-        if (nu as? Bool == false) {
-            print("current user already there")
-            usertextnew.isHidden = true
-            self.btnNewsFeed.isHidden = false
-        } else {
-            print ("new user")
-            self.btnNewsFeed.isHidden = true
-            let user = newuser["user"] as! User
-            
-            // setting current user
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            appDelegate.currentUser = user
-            usertextnew.isHidden = false
-            usertextnew.becomeFirstResponder()
-            let username = usertextnew.text!
-            print(username)
-            do {
-                try user.setUsername(username)
-            } catch{
-                showUsernameTooLongAlert()
-            }
-            API.sharedInstance.updateUser(user: user) { res in
-                switch res.result{
-                case.success:
-                    self.btnNewsFeed.isHidden = false
-                case.failure:
-                    self.showUsernameTakenAlert()
+    func handleNewUser(user: User) {
+        print ("new user")
+        
+        usertextnew.isHidden = false
+        btnSignIn.isHidden = true
+        
+        usertextnew.becomeFirstResponder()
+    }
+    
+    // This function is called after a successful Google login
+    func login() {
+        API.sharedInstance.login() { res in
+            switch res.result {
+            case .success:
+                if
+                    let loginPayload = res.result.value as? [String : Any],
+                    let newUser = loginPayload["new_user"] as? Bool,
+                    let user = loginPayload["user"] as? User
+                {
+                    self.appDelegate.currentUser = user
+                    if newUser {
+                        self.handleNewUser(user: user)
+                    } else {
+                        // TODO: Navigate to Feed
+                        self.btnNewsFeed.isHidden = false
+                    }
+                } else {
+                    self.showLoginErrorAlert()
                 }
+            case .failure:
+                self.showWhoopsAlert()
+                self.showGoogleSignIn()
             }
         }
     }
     
   
     func toggleAuthUI() {
-        if (GIDSignIn.sharedInstance().hasAuthInKeychain()){
-            // Signed in
-            btnNewsFeed.isHidden = true
-            btnSignIn.isHidden = true
-            usertextnew.isHidden = true
-            
-            // Added to handle if user is already signed in 
-            if (GIDSignIn.sharedInstance().currentUser == nil) {
-                print("no user info")
-                GIDSignIn.sharedInstance().signInSilently()
-            }
-            
-        } else {
-            
-            // Not Signed In
-            btnNewsFeed.isHidden = true
-            btnSignIn.isHidden = false
-            usertextnew.isHidden = true
-        }
+        
+//        if (GIDSignIn.sharedInstance().hasAuthInKeychain()){
+//            // Signed in
+//            btnNewsFeed.isHidden = true
+//            btnSignIn.isHidden = true
+//            usertextnew.isHidden = true
+//            
+//            // Added to handle if user is already signed in 
+//            if (GIDSignIn.sharedInstance().currentUser == nil) {
+//                print("no user info")
+//                GIDSignIn.sharedInstance().signInSilently()
+//            }
+//            
+//        } else {
+//            
+//            // Not Signed In
+//            btnNewsFeed.isHidden = true
+//            btnSignIn.isHidden = false
+//            usertextnew.isHidden = true
+//        }
     }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "ToggleAuthUINotification"), object: nil)
-    }
-    
-    @objc func receiveToggleAuthUINotification(_ notification: NSNotification) {
-        if (notification.name == NSNotification.Name(rawValue: "ToggleAuthUINotification")) {
-            self.toggleAuthUI()
-            if notification.userInfo != nil {
-                let userInfo:Dictionary<String,String?> =
-                    notification.userInfo as! Dictionary<String,String?>
-                self.label.text = userInfo["statusText"]!
-            }
-        }
-    }
-    
 }
 
 

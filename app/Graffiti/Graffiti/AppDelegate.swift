@@ -45,29 +45,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     // Sign In Handler
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!,
               withError error: Error!) {
+        let loginViewController = GIDSignIn.sharedInstance().uiDelegate as! LoginViewController
         if let error = error {
             print("\(error.localizedDescription)")
-            // Silent
-            NotificationCenter.default.post(
-                name: Notification.Name(rawValue: "ToggleAuthUINotification"), object: nil, userInfo: nil)
+            loginViewController.showSignInErrorAlert()
         } else {
             // Successful Sign in
-            API.sharedInstance.login() { res in
-                let lvc = GIDSignIn.sharedInstance().uiDelegate as? LoginViewController
-                switch res.result {
-                case .success:
-                    lvc?.newuser(newuser: res.result.value as! Dictionary<String, Any>)
-                case .failure:
-                    lvc?.showWhoopsAlert()
-                    lvc?.showGoogleSignIn()
-                }
-            }
-            
-            let fullName = user.profile.name
-            NotificationCenter.default.post(
-                name: Notification.Name(rawValue: "ToggleAuthUINotification"),
-                object: nil,
-                userInfo: ["statusText": "Signed in Google user:\(fullName!)"])
+            loginViewController.login()
         }
     }
     
@@ -75,9 +59,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!,
               withError error: Error!) {
         // Perform any operations when the user disconnects from app here.
-        NotificationCenter.default.post(
-            name: Notification.Name(rawValue: "ToggleAuthUINotification"),
-            object: nil,
-            userInfo: ["statusText": "User has disconnected."])
     }
 }
