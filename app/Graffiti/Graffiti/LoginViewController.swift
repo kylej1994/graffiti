@@ -13,8 +13,6 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
     //var btnSignIn : UIButton!
     var btnSignIn : GIDSignInButton!
     var label : UILabel!
-    var loginerror : UILabel!
-    var untoolong : UILabel!
     @IBOutlet var btnNewsFeed: UIButton!
     @IBOutlet weak var usertextnew: UITextField!
     
@@ -25,15 +23,9 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
         self.usertextnew.delegate = self
         
         showGoogleSignIn()
-        
-        // add labels to view as subviews
-        loginErrorLabel()
-        usernameTooLongLabel()
 
-        loginerror.isHidden = true
         usertextnew.isHidden = true
-        untoolong.isHidden = true
-        
+
         // Sign In Label
         label = UILabel(frame: CGRect(0,0,200,100))
         label.center = CGPoint(view.center.x, 300)
@@ -63,6 +55,10 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
         showAlert(messageTitle: "Error Connecting to Account", message: "ID Token from Google is missing")
     }
     
+    func showWhopsAlert() {
+        showAlert(messageTitle: "Whoops", message: "Couldn't connect to server to log in")
+    }
+    
     func showUsernameTooLongAlert() {
         showAlert(messageTitle: "Username too long", message: "Your username must be under 100 characters")
     }
@@ -77,30 +73,6 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
         btnSignIn.style = GIDSignInButtonStyle.wide
         view.addSubview(btnSignIn)
     }
-    
-    func loginErrorLabel() {
-        loginerror = UILabel(frame: CGRect(0,0,200,100))
-        loginerror.text = "There Was an Error Connecting to Account, Idtoken from Google is Missing"
-        loginerror.numberOfLines = 4 //Multi-lines
-        loginerror.font = loginerror.font.withSize(10)
-        loginerror.center = CGPoint(view.center.x, 250)
-        loginerror.textColor = UIColor.red
-        loginerror.textAlignment = NSTextAlignment.center
-        view.addSubview(loginerror)
-    }
-    
-    func usernameTooLongLabel() {
-        untoolong = UILabel(frame: CGRect(0,0,200,100))
-        untoolong.text = "The Username you have entered is too long. It must be under 100 characters"
-        untoolong.numberOfLines = 4 //Multi-lines
-        untoolong.font = loginerror.font.withSize(10)
-        untoolong.center = CGPoint(view.center.x, 400)
-        untoolong.textColor = UIColor.red
-        untoolong.textAlignment = NSTextAlignment.center
-        view.addSubview(untoolong)
-    }
-    
-    
     
     private func textViewDidBeginEditing(_ textView: UITextView) {
         usertextnew.text = ""
@@ -122,9 +94,8 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
         } else {
             print ("new user")
             self.btnNewsFeed.isHidden = true
-            untoolong.text = "You Must Enter a Username"
-            untoolong.isHidden = false
             let user = newuser["user"] as! User
+            
             // setting current user
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             appDelegate.currentUser = user
@@ -135,27 +106,17 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
             do {
                 try user.setUsername(username)
             } catch{
-                untoolong.isHidden = false
-                
+                showUsernameTooLongAlert()
             }
             API.sharedInstance.updateUser(user: user) { res in
                 switch res.result{
                 case.success:
-                    self.usertextnew.isHidden = true
-                    self.untoolong.isHidden = true
                     self.btnNewsFeed.isHidden = false
-                    print("why")
-                    
                 case.failure:
-                    self.untoolong.text = "Please Re-enter a new Username. That Username is already taken"
-                    self.untoolong.isHidden = false
+                    self.showUsernameTakenAlert()
                 }
             }
         }
-    }
-    
-    func showerrorlabel(){
-        loginerror.isHidden = false
     }
     
   
@@ -164,9 +125,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
             // Signed in
             btnNewsFeed.isHidden = true
             btnSignIn.isHidden = true
-            loginerror.isHidden = true
             usertextnew.isHidden = true
-            untoolong.isHidden = true
             
             // Added to handle if user is already signed in 
             if (GIDSignIn.sharedInstance().currentUser == nil) {
@@ -179,9 +138,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
             // Not Signed In
             btnNewsFeed.isHidden = true
             btnSignIn.isHidden = false
-            loginerror.isHidden = true
             usertextnew.isHidden = true
-            untoolong.isHidden = true
         }
     }
     
