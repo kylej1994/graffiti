@@ -10,7 +10,6 @@ from graffiti.models import User, UserPost
 import geoalchemy
 
 class UserPostTestCase(unittest.TestCase):
-
     def setUp(self):
         self.db_fd, graffiti.app.config['DATABASE'] = tempfile.mkstemp()
         graffiti.app.config['TESTING'] = True

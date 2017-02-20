@@ -1,117 +1,149 @@
 import json
+import os
 import sys
+import tempfile
 import unittest
 
 from flask_api_test import APITestCase
 sys.path.append('..')
-from graffiti import graffiti, db
-from graffiti.models import User #this doesnt exist yet
+from graffiti import graffiti, user
+from graffiti.user import User
+from graffiti.post import Post
+from graffiti.graffiti import db
 
-import geoalchemy
-from geoalchemy.postgis import PGComparator
+user_id = 1
 
-class UserTestCase(APITestCase):
+class UserTestCase(unittest.TestCase):
 
     def setUp(self):
-        super(APITestCase, self).setUp()
-        self.app = graffiti.app.test_client()
-        db.create_all()
-        db.session.add(User("easmith", 
-            "1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com",
-            "9172825753"))
-        db.session.flush()
+        self.db_fd, graffiti.app.config['DATABASE'] = tempfile.mkstemp()
+        graffiti.app.config['TESTING'] = True
+        with graffiti.app.app_context():
+            # initializes and fills the database that is used
+            graffiti.init_db()
+            graffiti.fill_db()
 
     def tearDown(self):
-        super(APITestCase, self).tearDown()
-        db.session.remove()
-        db.drop_all()
+        os.close(self.db_fd)
+        os.unlink(graffiti.app.config['DATABASE'])
+        with graffiti.app.app_context():
+            # clears the database that is used
+            graffiti.clear_db_of_everything()
 
-    def test_fetch_user(self):
-        user = db.query(User).filter(User.username=="easmith").first()
-        self.assertTrue(user.username == "easmith")
-        self.assertTrue(user.google_aud == "1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com")
-        self.assertTrue(user.has_been_suspended == False)
+    def test_get_user_id(self):
+        test_user = db.session.query(User).filter(User.username=="easmith").first()
+        self.assertTrue(test_user.get_user_id() == user_id)
 
-        self.assertFalse(db.query(User).filter(User.username=="rony").first())
+    def test_get_username(self):
+        test_user = db.session.query(User).filter(User.username=="easmith").first()
+        self.assertTrue(test_user.get_username() == 'easmith')
+
+    def test_get_phone_number(self):
+        test_user = db.session.query(User).filter(User.username=="easmith").first()
+        self.assertTrue(test_user.get_phone_number() == '9172825753')
+
+    def test_get_name(self):
+        test_user = db.session.query(User).filter(User.username=="easmith").first()
+        self.assertTrue(test_user.get_name() == 'Emma Smith')
+
+    def test_get_bio(self):
+        test_user = db.session.query(User).filter(User.username=="easmith").first()
+        self.assertTrue(test_user.get_bio() == 'My name is jablonk')
+
+    def test_get_user(self):
+        test_user = User.find_user(user_id)
+        self.assertTrue(test_user.username == "easmith")
+        self.assertTrue(test_user.google_aud == "1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com")
+        self.assertTrue(test_user.has_been_suspended == False)
+        self.assertTrue(test_user.name == 'Emma Smith')
+        self.assertTrue(test_user.email == 'kat@lu.com')
+        self.assertTrue(test_user.bio == 'My name is jablonk')
+        no_user = User.find_user(1000)
+        self.assertIsNone(no_user)
 
     def test_change_suspension(self):
-        user = db.query(User).filter(User.username=="easmith").first()
-        # Below function has not yet been implemented
-        user.change_suspension(True);
-        self.assertTrue(db.query(User).filter(User.username=="easmith").first().has_been_suspended == True)
-        user.change_suspension(True);
-        self.assertTrue(db.query(User).filter(User.username=="easmith").first().has_been_suspended == True)
-        user.change_suspension(False);
-        self.assertTrue(db.query(User).filter(User.username=="easmith").first().has_been_suspended == False)
+        test_user = db.session.query(User).filter(User.username=="easmith").first()
+        test_user.set_has_been_suspended(True)
+        self.assertTrue(db.session.query(User)
+            .filter(User.username=="easmith").first().has_been_suspended == True)
+        test_user.set_has_been_suspended(True)
+        self.assertTrue(db.session.query(User)
+            .filter(User.username=="easmith").first().has_been_suspended == True)
+        test_user.set_has_been_suspended(False)
+        self.assertTrue(db.session.query(User)
+            .filter(User.username=="easmith").first().has_been_suspended == False)
 
-    def test_adding_duplicate_user_parameters(self):
-        # Duplicate username
-        self.assertFalse(db.session.add(User("easmith", 
-            "auth",
-            "6462825753")))
-
-        # Duplicate auth
-        self.assertFalse(db.session.add(User("willem", 
-            "1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com",
-            "4462825753")))
-
-        # Duplicate phone
-        self.assertFalse(db.session.add(User("ron", 
-            "444-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com",
-            "9172825753")))
-
-        # No duplicates
-        self.assertTrue(db.session.add(User("amanda", 
-            "4344-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com",
-            "5172825753")))
+    def test_save_user(self):
+        user = User("easmith3", 
+            "B1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com",
+            "9172825753", "name", "email@email.com", "text_tag")
+        user.save_user()
+        self.assertIsNotNone(db.session.query(User).filter(User.username=='easmith3').first())
+        user.delete_user()
 
     def test_delete_user(self):
         # Below function has not yet been implemented
-        user2 = User("ron", "4555", "9274859273")
-        assertFalse(user2.delete())
+        user = User("easmith2", 
+            "A1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com",
+            "9172825753", "name", "email@email.com", "text_tag")
+        user.save_user()
+        user.delete_user()
+        self.assertIsNone(db.session.query(User).filter(User.username=="easmith2").first())
 
-        user = db.query(User).filter(User.username=="easmith").first()
-        assertTrue(user.delete())
+    # checks that the google_aud part of the compound key of User
+    # retrieves and identifies the right user
+    def test_get_user_by_google_aud(self):
+        google_aud = "A1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com"
+        user = User("easmith2", 
+            google_aud, "9172825753", "name", "email@email.com", "text_tag")
+        user.save_user()
+        gotten = User.get_user_by_google_aud(google_aud)
+        self.assertIsNotNone(gotten)
+        self.assertTrue(gotten.user_id == user.user_id)
+        self.assertTrue(gotten.google_aud == google_aud)
+        user.delete_user()
 
-        assertIsNone(db.query(User).filter(User.username=="easmith").first())
 
+    ## testing setters
 
-    # Below are commented-out but related tests to be implemented for the API
-    # def test_set_username(self):
-    #   # Below function on restrictions on username creation have not yet been implemented
-    #   self.assertFalse(db.session.add(User("!easmith", 
-    #       "1",
-    #       "9172825751"))
-    #   self.assertFalse(db.session.add(User("s*smith", 
-    #       "1",
-    #       "9172825751"))
-    #   self.assertFalse(db.session.add(User("easmith-", 
-    #       "1",
-    #       "9172825751"))
-    #   self.assertFalse(db.session.add(User("easmieasmieasmieasmieasmi", 
-    #       "1",
-    #       "9172825751"))
+    # tests username for between 3 - 25 characters
+    def test_set_username(self):
+        user = User("easmith3", 
+            "B1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com",
+            "9172825753", "name", "email@email.com", "text_tag")
+        invalid_username = 'abcdefghijklmnopqrstuvwxyz'
+        valid_username = 'abcdefghijklmnopqrstuvwxy'
+        self.assertFalse(user.set_username(invalid_username))
+        self.assertTrue(user.set_username(valid_username))
+        invalid_username = 'ab'
+        valid_username = 'abc'
+        self.assertFalse(user.set_username(invalid_username))
+        self.assertTrue(user.set_username(valid_username))
 
-    # def test_set_phone_number(self):
-    #   # Below function on restrictions on phone number creation have not yet been implemented
-    #   self.assertFalse(db.session.add(User("easmith", 
-    #       "1",
-    #       "91728257511"))
-    #   self.assertFalse(db.session.add(User("easmith", 
-    #       "1",
-    #       "917282575"))
-    #   self.assertTrue(db.session.add(User("easmith", 
-    #       "1",
-    #       "917-282-5751"))
-    #   self.assertTrue(db.session.add(User("easmith", 
-    #       "1",
-    #       "917-28257-51"))
-    #   self.assertTrue(db.session.add(User("easmith", 
-    #       "1",
-    #       "---9172825751"))
-    #   self.assertTrue(db.session.add(User("easmith", 
-    #       "1",
-    #       "917282875a"))
+    def test_set_phone_number(self):
+        user = User("easmith3", 
+            "B1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com",
+            "9172825753", "name", "email@email.com", "text_tag")
+        invalid_phone = '123456789012'
+        valid_phone = '1234567890'
+        self.assertFalse(user.set_phone_number(invalid_phone))
+        self.assertTrue(user.set_phone_number(valid_phone))
+
+    def test_set_name(self):
+        user = User("easmith3", 
+            "B1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com",
+            "9172825753", "name", "email@email.com", "text_tag")
+        invalid_name = "2348!*384"
+        invalid_name2 = 'B1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6\
+        381.apps.googleusercontent.comB1008719970978-hb24n2dstb40o45d\
+        4feuo2ukqmcc6381.apps.googleusercontent.comB1008719970978-hb2'
+        valid_name = 'ron1'
+        valid_name2 = 'kyle'
+        self.assertFalse(user.set_name(invalid_name))
+        self.assertFalse(user.set_name(invalid_name2))
+        self.assertTrue(user.set_name(valid_name))
+        self.assertTrue(user.set_name(valid_name2))
+
 
 if __name__ == '__main__':
     unittest.main()
