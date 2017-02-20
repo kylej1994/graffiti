@@ -5,32 +5,26 @@ import unittest
 from flask_api_test import APITestCase
 sys.path.append('..')
 from graffiti import graffiti, db
-from graffiti.models import User #this doesnt exist yet
+from graffiti.models import User, UserPost
 
 import geoalchemy
-from geoalchemy.postgis import PGComparator
 
-class UserPostTestCase(APITestCase):
+class UserPostTestCase(unittest.TestCase):
 
     def setUp(self):
-        super(APITestCase, self).setUp()
-        self.app = graffiti.app.test_client()
-        db.create_all()
-        db.session.add(UserPost("easmith", 
-            1,
-            False))
-        db.session.add(UserPost("easmith", 
-            2,
-            True))
-        db.session.add(UserPost("ron", 
-            1,
-            False))
-        db.session.flush()
+        self.db_fd, graffiti.app.config['DATABASE'] = tempfile.mkstemp()
+        graffiti.app.config['TESTING'] = True
+        with graffiti.app.app_context():
+            # initializes and fills the database that is used
+            graffiti.init_db()
+            graffiti.fill_db()
 
     def tearDown(self):
-        super(APITestCase, self).tearDown()
-        db.session.remove()
-        db.drop_all()
+        os.close(self.db_fd)
+        os.unlink(graffiti.app.config['DATABASE'])
+        with graffiti.app.app_context():
+            # clears the database that is used
+            graffiti.clear_db_of_everything()
 
     def test_fetch_user(self):
         self.assertTrue(userpost = db.query(UserPost).filter(UserPost.username=="easmith").filter(UserPost.post_id=="2").first())
