@@ -1,13 +1,19 @@
 import json
+import os
 import sys
+import tempfile
 import unittest
 
-from flask_api_test import APITestCase
 sys.path.append('..')
-from graffiti import graffiti, db
-from graffiti.models import User, UserPost
+from graffiti import graffiti, user, userpost, post
+from graffiti.user import User
+from graffiti.post import Post
+from graffiti.userpost import UserPost
+from graffiti.graffiti import db
 
-import geoalchemy
+user_id = 1
+post_id = 1
+vote = 0
 
 class UserPostTestCase(unittest.TestCase):
     def setUp(self):
@@ -25,20 +31,28 @@ class UserPostTestCase(unittest.TestCase):
             # clears the database that is used
             graffiti.clear_db_of_everything()
 
-    def test_fetch_user(self):
-        self.assertTrue(userpost = db.query(UserPost).filter(UserPost.username=="easmith").filter(UserPost.post_id=="2").first())
-        self.assertTrue(user.username == "easmith")
-        self.assertTrue(user.post_id == 2)
-        self.assertTrue(user.vote == True)
+    def test_get_user_id(self):
+        userpost = db.session.query(UserPost).filter(UserPost.user_id==user_id)\
+            .filter(UserPost.post_id==post_id).first()
+        self.assertTrue(userpost.get_user_id() == user_id)
 
-        self.assertFalse(userpost2 = db.query(UserPost).filter(UserPost.username=="rony").filter(UserPost.post_id=="1").first())
-        
-        self.assertTrue(userpost = db.query(UserPost).filter(UserPost.username=="easmith").filter(UserPost.post_id=="1").first())
-        self.assertTrue(user.vote == False)
+    def test_get_post_id(self):
+        userpost = db.session.query(UserPost).filter(UserPost.user_id==user_id)\
+            .filter(UserPost.post_id==post_id).first()
+        self.assertTrue(userpost.get_post_id() == post_id)
 
-        self.assertFalse(userpost = db.query(UserPost).filter(UserPost.username=="ron").filter(UserPost.post_id=="2").first())
-        self.assertTrue(userpost = db.query(UserPost).filter(UserPost.username=="ron").filter(UserPost.post_id=="1").first())
-        self.assertTrue(user.vote == False)
+    def test_get_vote(self):
+        userpost = db.session.query(UserPost).filter(UserPost.user_id==user_id)\
+            .filter(UserPost.post_id==post_id).first()
+        self.assertTrue(userpost.get_vote() == vote)
+        post = Post.find_post(post_id)
+        post.set_vote(1)
+        self.assertTrue(userpost.get_vote() == vote + 1)
+
+    def test_get_post_vote_by_user(self):
+        fetched_vote = UserPost.get_post_vote_by_user(user_id, post_id)
+        self.assertTrue(fetched_vote == vote)
+
     
 
 if __name__ == '__main__':
