@@ -55,7 +55,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
         showAlert(messageTitle: "Error Connecting to Account", message: "ID Token from Google is missing")
     }
     
-    func showWhopsAlert() {
+    func showWhoopsAlert() {
         showAlert(messageTitle: "Whoops", message: "Couldn't connect to server to log in")
     }
     

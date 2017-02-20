@@ -58,7 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                 case .success:
                     lvc?.newuser(newuser: res.result.value as! Dictionary<String, Any>)
                 case .failure:
-                    lvc?.showWhopsAlert()
+                    lvc?.showWhoopsAlert()
                     lvc?.showGoogleSignIn()
                 }
             }
