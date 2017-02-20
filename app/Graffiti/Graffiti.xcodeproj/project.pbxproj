@@ -35,7 +35,7 @@
 		AD84BD761E4951D70020505D /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD751E4951D70020505D /* UserTests.swift */; };
 		AD84BD7C1E4952CA0020505D /* ProfileViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD7B1E4952CA0020505D /* ProfileViewControllerTests.swift */; };
 		AD84BD7E1E4952FB0020505D /* TextPostViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD7D1E4952FB0020505D /* TextPostViewControllerTests.swift */; };
-		B307B6351E569E6200419FE9 /* HeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B307B6341E569E6200419FE9 /* HeaderCell.swift */; };
+		AD87E4541E5BB152007B6E12 /* ProfileHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD87E4531E5BB152007B6E12 /* ProfileHeaderCell.swift */; };
 		ADD7F76F1E551F8B009BADC1 /* EmptyFeedBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD7F76E1E551F8A009BADC1 /* EmptyFeedBackgroundView.swift */; };
 		B33B07CC1E4AB6D2007025FB /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33B07CB1E4AB6D2007025FB /* Post.swift */; };
 		B33B07D01E4ACA8F007025FB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33B07CF1E4ACA8F007025FB /* User.swift */; };
@@ -120,10 +120,10 @@
 		AD84BD791E4952B20020505D /* FeedViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewControllerTests.swift; sourceTree = "<group>"; };
 		AD84BD7B1E4952CA0020505D /* ProfileViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerTests.swift; sourceTree = "<group>"; };
 		AD84BD7D1E4952FB0020505D /* TextPostViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextPostViewControllerTests.swift; sourceTree = "<group>"; };
+		AD87E4531E5BB152007B6E12 /* ProfileHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileHeaderCell.swift; sourceTree = "<group>"; };
 		ADA147E95DA84165A40FB7DE /* Pods-GraffitiUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraffitiUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GraffitiUITests/Pods-GraffitiUITests.release.xcconfig"; sourceTree = "<group>"; };
 		ADD7F76E1E551F8A009BADC1 /* EmptyFeedBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyFeedBackgroundView.swift; sourceTree = "<group>"; };
 		B0DF8A503BE07DFF08436AA1 /* Pods_GraffitiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraffitiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B307B6341E569E6200419FE9 /* HeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderCell.swift; sourceTree = "<group>"; };
 		B33B07CB1E4AB6D2007025FB /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		B33B07CF1E4ACA8F007025FB /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		B35620C21E4D396400F8CC9E /* PostTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTest.swift; sourceTree = "<group>"; };
@@ -295,8 +295,8 @@
 				AD84BD671E494A170020505D /* UserProfile.storyboard */,
 				AD84BD621E4949860020505D /* ProfileViewController.swift */,
 				B33B07CF1E4ACA8F007025FB /* User.swift */,
-				B307B6341E569E6200419FE9 /* HeaderCell.swift */,
 				D9DD58E01E57AE3900D9CB1D /* UserTransform.swift */,
+				AD87E4531E5BB152007B6E12 /* ProfileHeaderCell.swift */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -632,7 +632,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD84BD611E49496D0020505D /* TextPostViewController.swift in Sources */,
-				B307B6351E569E6200419FE9 /* HeaderCell.swift in Sources */,
 				D9B5FAEB1E54FF9300DF87B2 /* LocationTransform.swift in Sources */,
 				AD84BD631E4949860020505D /* ProfileViewController.swift in Sources */,
 				D9141CA91E58E71C00FA04D0 /* AuthProtocol.swift in Sources */,
@@ -648,6 +647,7 @@
 				D9E63BA01E4D460900EE6C4B /* API.swift in Sources */,
 				AD03CF781E4E4C91003D3682 /* LocationManagerProtocol.swift in Sources */,
 				AD6935C21E552BFD00DE236C /* TimeAgo.swift in Sources */,
+				AD87E4541E5BB152007B6E12 /* ProfileHeaderCell.swift in Sources */,
 				AD03CF721E4D5AB2003D3682 /* LocationService.swift in Sources */,
 				AD84BD311E4947330020505D /* AppDelegate.swift in Sources */,
 				D9E63BA21E4D496E00EE6C4B /* ManagerProtocol.swift in Sources */,
