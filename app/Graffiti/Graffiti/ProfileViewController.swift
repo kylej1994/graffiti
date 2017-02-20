@@ -112,15 +112,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             tableView.rowHeight = 160
             if let username = user!.getUsername() {
                 userName = username
-            } else {
-                userName = "no_name_yet"
             }
             
             if let tag = user!.getUserImage() {
                 profilePicture = tag
-            } else {
-                // user has no image - use default image
-                profilePicture = UIImage(named: "cat-prof-100")
             }
             
             cell.usernameLabel.text = self.userName
