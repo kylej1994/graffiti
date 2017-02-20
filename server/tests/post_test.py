@@ -77,8 +77,18 @@ class PostTestCase(unittest.TestCase):
         self.assertFalse(text == "username")
 
     def test_find_posts_within_loc(self):
+        # set up for testing locations
         graffiti.clear_db_of_everything()
         graffiti.init_db()
+
+        # user must exist in db before posts
+        db.session.add(User('easmith', \
+        "1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com", \
+        '9172825753', \
+        'Emma Smith', \
+        'kat@lu.com', \
+        'My name is jablonk'))
+        db.session.commit()
 
         longitude = 51.5192028
         latitude = -0.140863
@@ -98,6 +108,7 @@ class PostTestCase(unittest.TestCase):
         distance2 = 10000
         distance3 = 16900 * 1000
 
+        ### begin tests
         #gets all post within distance 1 
         posts = Post.find_posts_within_loc(longitude, latitude, distance1)
         self.assertTrue(posts[0].longitude == longitude)

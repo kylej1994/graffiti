@@ -47,10 +47,8 @@ def clear_db_of_everything():
 def fill_db():
 	# Sample values
 	db.create_all()
-	db.session.add(Post('text', 51.5192028, -0.140863, 1))
-	db.session.add(Post('text2', 51.5192028, -0.140863, 1))
-	db.session.add(Post('post_location_1', -51.5192028, 0.140863, 1))
-	db.session.add(Post('post_location_2', -51.5192028, 0.140863, 1))
+	# need to add the user first into the db
+	# due to UserPost foreign key constraints that relies on user_id
 	db.session.add(User('easmith', \
 		"1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com", \
 		'9172825753', \
@@ -58,6 +56,18 @@ def fill_db():
 		'kat@lu.com', \
 		'My name is jablonk'))
 	db.session.commit()
+	post = Post('text', 51.5192028, -0.140863, 1)
+	post2 = Post('text2', 51.5192028, -0.140863, 1)
+	post3 = Post('post_location_1', -51.5192028, 0.140863, 1)
+	post4 = Post('post_location_2', -51.5192028, 0.140863, 1)
+	post.save_post()
+	post2.save_post()
+	post3.save_post()
+	post4.save_post()
+	# db.session.add(Post('text', 51.5192028, -0.140863, 1))
+	# db.session.add(Post('text2', 51.5192028, -0.140863, 1))
+	# db.session.add(Post('post_location_1', -51.5192028, 0.140863, 1))
+	# db.session.add(Post('post_location_2', -51.5192028, 0.140863, 1))
 	return 'added sample records\n'
 
 print clear_db_of_everything()

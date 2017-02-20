@@ -5,6 +5,7 @@ from graffiti import db
 from sqlalchemy import Column, Float, Integer, String
 from sqlalchemy.dialects.postgresql import JSON
 from user import User
+from userpost import UserPost
 
 from datetime import datetime
 from time import time
@@ -63,6 +64,9 @@ class Post(db.Model):
     def save_post(self):
         db.session.add(self)
         db.session.commit()
+        userpost = UserPost(self.poster_id, self.post_id, self.num_votes)
+        db.session.add(userpost)
+        db.session.commit()
 
     # deletes the post from the db
     def delete_post(self):
@@ -72,6 +76,9 @@ class Post(db.Model):
     # applies the vote to the post
     def set_vote(self, vote):
         self.num_votes += vote
+        userpost = db.session.query(UserPost).filter(UserPost.post_id==self.post_id)\
+            .filter(UserPost.user_id==self.poster_id).first()
+        userpost.vote += vote
         db.session.commit()
 
     # finds a post given a post id
