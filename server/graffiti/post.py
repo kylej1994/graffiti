@@ -76,7 +76,6 @@ class Post(db.Model):
 
     # finds a post given a post id
     # returns None if post_id is not in the db
-    # NOTE will this conflict with the namespace of the DB model???
     @staticmethod
     def find_post(postid):
         return db.session.query(Post).filter(Post.post_id==postid).first()
@@ -84,7 +83,7 @@ class Post(db.Model):
     # finds all post of a given user_id
     @staticmethod
     def find_user_posts(user_id):
-        return db.session.query(Post).filter(Post.poster_id==user_id)
+        return db.session.query(Post).filter(Post.poster_id==user_id).all()
 
     # finds posts within a certain radius of a coordinate
     @staticmethod

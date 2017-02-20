@@ -14,6 +14,7 @@ app.wsgi_app = auth_Middleware.Auth_MiddleWare(app.wsgi_app)
 
 @app.route('/initdb')
 def init_db():
+	db.session.commit()
 	db.drop_all()
 	db.create_all()
 	return 'initted the db\n'
@@ -24,6 +25,7 @@ print init_db()
 # objects import db in their respective files.
 from post import Post
 from user import User
+from userpost import UserPost
 
 from post_api import post_api
 from user_api import user_api
@@ -34,6 +36,9 @@ app.register_blueprint(post_api)
 # FOR TESTING PURPOSES ONLY
 @app.route('/cleardb')
 def clear_db_of_everything():
+	# need this otherwise postgresql freezes
+	db.session.commit()
+	db.session.close_all()
 	db.drop_all()
 	return 'dropped\n'
 
