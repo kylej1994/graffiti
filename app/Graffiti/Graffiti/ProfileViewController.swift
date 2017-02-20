@@ -21,13 +21,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     var posts: [Post] = []
     
     var user:User? = nil
-    var profilePicture:UIImage? = nil
-    var userName:String? = nil
     
     var btnDisconnect : UIButton!
     var label : UILabel!
     var btnSignOut: UIButton!
-    
     
     @IBOutlet var tableView: UITableView!
     
@@ -111,14 +108,16 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             let cell:ProfileHeaderCell = self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as! ProfileHeaderCell
             tableView.rowHeight = 160
             if let username = user!.getUsername() {
-                userName = username
+                cell.usernameLabel.text = username
             }
             
             if let tag = user!.getUserImage() {
-                profilePicture = tag
+                cell.profileImageView.image = tag
             }
             
-            cell.usernameLabel.text = self.userName
+            if let bio = user!.getBio() {
+                cell.bioLabel.text = bio
+            }
         
             return cell
         } else {
