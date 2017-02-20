@@ -74,7 +74,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
-        if let someuser = appDelegate.currentUser {self.user = someuser}
+        if let user = appDelegate.currentUser {
+            print("app delegate current user can be unwrapped")
+            self.user = user
+        } else {
+            print("sadness")
+        }
         
         let uId: Int = user!.getId()
         
@@ -106,7 +111,15 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             userName = user!.getUsername()!
             
-            profilePicture = user!.getUserImage()
+            // problem from before: all of this assumes that the user has all of these attributes, and they don't necessarily
+            // this should use the default image
+            if let tag = user!.getUserImage() {
+                profilePicture = tag
+            } else {
+                // user has no image - use default image
+                profilePicture = UIImage(named: "cat-prof-100")
+            }
+            
         
             cell.myView.backgroundColor = UIColor(patternImage: self.profilePicture!)
             cell.myCellLabel.text = self.userName
