@@ -15,7 +15,6 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
     var label : UILabel!
     var loginerror : UILabel!
     var untoolong : UILabel!
-    var logo : UIImageView!
     @IBOutlet var btnNewsFeed: UIButton!
     @IBOutlet weak var usertextnew: UITextField!
     
@@ -60,12 +59,16 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
         self.present(alertController, animated: true, completion: nil)
     }
     
-    func loginErrorAlert() {
+    func showLoginErrorAlert() {
         showAlert(messageTitle: "Error Connecting to Account", message: "ID Token from Google is missing")
     }
     
-    func usernameTooLongAlert() {
+    func showUsernameTooLongAlert() {
         showAlert(messageTitle: "Username too long", message: "Your username must be under 100 characters")
+    }
+    
+    func showUsernameTakenAlert() {
+        showAlert(messageTitle: "That username is taken", message: "Please enter a different username")
     }
     
     func showGoogleSignIn() {
