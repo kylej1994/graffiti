@@ -41,6 +41,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         getPostsByUser()
         
+        // we should change this so we use IBOutlets
         btnSignOut = UIButton(frame: CGRect(0,0,100,30))
         btnSignOut.center = CGPoint(view.center.x, 500)
         btnSignOut.setTitle("Sign Out", for: UIControlState.normal)
@@ -107,12 +108,14 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if(indexPath.row == 0){
-            let cell:HeaderCell = self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as! HeaderCell
+            let cell:ProfileHeaderCell = self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as! ProfileHeaderCell
+            tableView.rowHeight = 160
+            if let username = user!.getUsername() {
+                userName = username
+            } else {
+                userName = "no_name_yet"
+            }
             
-            userName = user!.getUsername()!
-            
-            // problem from before: all of this assumes that the user has all of these attributes, and they don't necessarily
-            // this should use the default image
             if let tag = user!.getUserImage() {
                 profilePicture = tag
             } else {
@@ -120,13 +123,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                 profilePicture = UIImage(named: "cat-prof-100")
             }
             
-        
-            cell.myView.backgroundColor = UIColor(patternImage: self.profilePicture!)
-            cell.myCellLabel.text = self.userName
+            cell.usernameLabel.text = self.userName
         
             return cell
         } else {
             let cellIdentifier = "FeedCell"
+            tableView.rowHeight = 120
             
             // downcast cell to the custom cell class
             // guard safely unwraps the optional
