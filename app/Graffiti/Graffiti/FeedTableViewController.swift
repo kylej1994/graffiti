@@ -65,6 +65,7 @@ class FeedTableViewController: UITableViewController {
                 if let json = response.result.value as? [String:Any],
                     let posts = json["posts"] as? [Post] {
                     self.posts = posts
+                    self.tableView.reloadData()
                 }
             case .failure(let error):
                 print(error)
