@@ -22,8 +22,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var user:User? = nil
     
-    var btnDisconnect : UIButton!
-    var label : UILabel!
     var btnSignOut: UIButton!
     
     @IBOutlet var tableView: UITableView!
@@ -35,36 +33,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         DispatchQueue.main.async {
             self.getPostsByUser()
-            self.tableView.reloadData()
         }
-        
-        // we should change this so we use IBOutlets
-        btnSignOut = UIButton(frame: CGRect(0,0,100,30))
-        btnSignOut.center = CGPoint(view.center.x, 500)
-        btnSignOut.setTitle("Sign Out", for: UIControlState.normal)
-        btnSignOut.setTitleColor(UIColor.blue, for: UIControlState.normal)
-        btnSignOut.setTitleColor(UIColor.cyan, for: UIControlState.highlighted)
-        btnSignOut.addTarget(self, action: #selector(btnSignOutPressed(_:)), for: UIControlEvents.touchUpInside)
-        view.addSubview(btnSignOut)
-        
-        btnDisconnect = UIButton(frame: CGRect(0,0,100,30))
-        btnDisconnect.center = CGPoint(view.center.x, 200)
-        btnDisconnect.setTitle("Disconnect", for: UIControlState.normal)
-        btnDisconnect.setTitleColor(UIColor.blue, for: UIControlState.normal)
-        btnDisconnect.setTitleColor(UIColor.cyan, for: UIControlState.highlighted)
-        btnDisconnect.addTarget(self, action: #selector(btnDisconnectPressed(_:)), for: UIControlEvents.touchUpInside)
-        view.addSubview(btnDisconnect)
-        
-        label = UILabel(frame: CGRect(0,0,200,100))
-        label.center = CGPoint(view.center.x, 300)
-        label.numberOfLines = 0 //Multi-lines
-        label.text = "Please Sign in to Graffiti Using Google"
-        label.textColor = UIColor.cyan
-        label.textAlignment = NSTextAlignment.center
-        view.addSubview(label)
-        
-        label.isHidden = true
-        btnDisconnect.isHidden = true
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -110,9 +79,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     // create a cell for each table view row
     // would be nice to be able to reuse FeedViewController code...
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print(self.posts.count)
         if(indexPath.row == 0){
-            print("index path row is 0")
             let cell:ProfileHeaderCell = self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as! ProfileHeaderCell
             tableView.rowHeight = 160
             if let username = user!.getUsername() {
@@ -130,7 +97,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             return cell
         } else {
             let cellIdentifier = "FeedCell"
-            print("*** we here")
             // downcast cell to the custom cell class
             // guard safely unwraps the optional
             guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? FeedTableViewTextCell else {
@@ -166,27 +132,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             cell.dateLabel.text = "Just Now"
         }
     }
-    
-    // what is the difference between sign out and disconnect?? 
-    // I added a Sign Out button in storyboard to eventually replace both of these
-    func btnSignOutPressed(_ sender: UIButton) {
+    @IBAction func tapSignOut(_ sender: UIButton) {
         GIDSignIn.sharedInstance().disconnect()
-        label.text = "Disconnecting."
-    }
-    
-    func btnDisconnectPressed(_ sender: UIButton) {
-        //TODO
-        //self.navigationController?.popToRootViewController(animated: true)
-        
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let nextviewController = storyBoard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
-        self.present(nextviewController, animated: true, completion: nil)
-        
-        
-        label.text = "Signed out."
-        label.isHidden = false
-        LoginViewController().toggleAuthUI()
-        
     }
 
     
@@ -194,17 +141,4 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         let formatter = DateFormatter()
         return formatter.timeSince(from: date as NSDate, numericDates: true)
     }
-
-    
-    // method to run when table view cell is tapped
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("You tapped cell number \(indexPath.row).")
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
 }

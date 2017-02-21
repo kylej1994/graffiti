@@ -48,6 +48,9 @@
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="feI-bH-6Oo">
                                             <rect key="frame" x="307" y="8" width="60" height="30"/>
                                             <state key="normal" title="Sign Out"/>
+                                            <connections>
+                                                <action selector="tapSignOut:" destination="hKj-P1-oZR" eventType="touchUpInside" id="AuI-i7-HwL"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <constraints>
