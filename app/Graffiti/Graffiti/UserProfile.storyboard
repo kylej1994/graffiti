@@ -45,8 +45,13 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="feI-bH-6Oo">
+                                            <rect key="frame" x="307" y="8" width="60" height="30"/>
+                                            <state key="normal" title="Sign Out"/>
+                                        </button>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="topMargin" secondItem="feI-bH-6Oo" secondAttribute="top" id="BAD-sF-mWJ"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="XqD-YD-y4O" secondAttribute="trailing" id="FF5-Nr-yx9"/>
                                         <constraint firstItem="0jK-Y3-AWl" firstAttribute="leading" secondItem="bJq-zl-Y9L" secondAttribute="trailing" constant="16" id="HJk-ej-0a8"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="0jK-Y3-AWl" secondAttribute="trailing" constant="11" id="Hwu-8Y-ad8"/>
@@ -54,6 +59,7 @@
                                         <constraint firstItem="bJq-zl-Y9L" firstAttribute="bottom" secondItem="0jK-Y3-AWl" secondAttribute="bottom" id="VQo-kj-3RW"/>
                                         <constraint firstItem="XqD-YD-y4O" firstAttribute="top" secondItem="cwF-gP-YuW" secondAttribute="topMargin" constant="7" id="eKy-SB-ozr"/>
                                         <constraint firstItem="0jK-Y3-AWl" firstAttribute="top" secondItem="XqD-YD-y4O" secondAttribute="bottom" constant="2" id="gVH-Z4-BBZ"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="feI-bH-6Oo" secondAttribute="trailing" id="kDF-4w-ex1"/>
                                         <constraint firstAttribute="leadingMargin" secondItem="bJq-zl-Y9L" secondAttribute="leading" id="lFJ-hq-UOv"/>
                                         <constraint firstItem="bJq-zl-Y9L" firstAttribute="top" secondItem="XqD-YD-y4O" secondAttribute="top" id="lQm-An-X8z"/>
                                     </constraints>

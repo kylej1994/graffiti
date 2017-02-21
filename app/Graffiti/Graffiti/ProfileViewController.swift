@@ -28,19 +28,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBOutlet var tableView: UITableView!
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        DispatchQueue.main.async {
-            self.getPostsByUser()
-            self.tableView.reloadData()
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        tableView.delegate = self
-        tableView.dataSource = self
         
         tableView.contentInset.top = 20
         
@@ -76,6 +65,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         label.isHidden = true
         btnDisconnect.isHidden = true
+        
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
 
     }
     
@@ -97,8 +89,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             case .success:
                 if let json = response.result.value as? [String:Any],
                     let posts = json["posts"] as? [Post] {
-                    print(posts)
                     self.posts = posts
+                    self.tableView.reloadData() //essential for table to actually display the data
                 }
             case .failure(let error):
                 print(error)
@@ -111,10 +103,16 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         return self.posts.count + 1
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
     // create a cell for each table view row
     // would be nice to be able to reuse FeedViewController code...
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        print(self.posts.count)
         if(indexPath.row == 0){
+            print("index path row is 0")
             let cell:ProfileHeaderCell = self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as! ProfileHeaderCell
             tableView.rowHeight = 160
             if let username = user!.getUsername() {
@@ -132,7 +130,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             return cell
         } else {
             let cellIdentifier = "FeedCell"
-            print("we here")
+            print("*** we here")
             // downcast cell to the custom cell class
             // guard safely unwraps the optional
             guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? FeedTableViewTextCell else {
@@ -144,7 +142,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             cell.textView.text = post.getText()
             setRatingDisplay(cell: cell, post: post)
-            setRatingDisplay(cell: cell, post: post)
+            setDateDisplay(cell: cell, post: post)
             
             return cell
         }
@@ -164,10 +162,13 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         if let dateAdded = post.getTimeAdded() {
             cell.dateLabel.text = getFormattedDate(date: dateAdded)
         } else {
+            print("no time added - using a default")
             cell.dateLabel.text = "Just Now"
         }
     }
     
+    // what is the difference between sign out and disconnect?? 
+    // I added a Sign Out button in storyboard to eventually replace both of these
     func btnSignOutPressed(_ sender: UIButton) {
         GIDSignIn.sharedInstance().disconnect()
         label.text = "Disconnecting."
