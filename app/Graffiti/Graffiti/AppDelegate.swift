@@ -57,7 +57,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                 switch res.result {
                 case .success:
                     lvc?.newuser(newuser: res.result.value as! Dictionary<String, Any>)
-                    self.currentUser = User(id: 10, username: "aaizuss", name: "Amanda", email: "aaizuss@gmail.com", phoneNumber: "", userImage: nil, bio: "bio", imageTag: nil) // this is temporary
                 case .failure:
                     lvc?.showerrorlabel()
                 }
