@@ -105,8 +105,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
         API.sharedInstance.updateUser(user: user) { res in
             switch res.result{
             case.success:
-                self.btnNewsFeed.isHidden = false
-                // TODO: Navigate to Feed
+                self.navigateToTabs()
             case.failure:
                 self.showUsernameTakenAlert()
                 self.usertextnew.becomeFirstResponder()
@@ -138,8 +137,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
                     if newUser {
                         self.handleNewUser(user: user)
                     } else {
-                        // TODO: Navigate to Feed
-                        self.btnNewsFeed.isHidden = false
+                        self.navigateToTabs()
                     }
                 } else {
                     self.showLoginErrorAlert()
@@ -149,6 +147,12 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
                 self.showGoogleSignIn()
             }
         }
+    }
+    
+    func navigateToTabs() {
+        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = mainStoryboard.instantiateViewController(withIdentifier: "Main") as! UITabBarController
+        UIApplication.shared.keyWindow?.rootViewController = viewController
     }
     
   
