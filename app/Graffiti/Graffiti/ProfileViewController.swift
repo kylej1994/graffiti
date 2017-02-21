@@ -8,21 +8,10 @@
 
 import UIKit
 
-enum MyRows: Int {
-    case banner = 0
-    case categories
-}
-
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    // Don't forget to enter this in IB also
-    let cellReuseIdentifier = "header"
-    
     var posts: [Post] = []
-    
-    var user:User? = nil
-    
-    var btnSignOut: UIButton!
+    var user: User? = nil
     
     @IBOutlet var tableView: UITableView!
     
@@ -80,6 +69,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     // would be nice to be able to reuse FeedViewController code...
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if(indexPath.row == 0){
+            let cellReuseIdentifier = "header"
             let cell:ProfileHeaderCell = self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as! ProfileHeaderCell
             tableView.rowHeight = 160
             if let username = user!.getUsername() {
@@ -128,17 +118,16 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         if let dateAdded = post.getTimeAdded() {
             cell.dateLabel.text = getFormattedDate(date: dateAdded)
         } else {
-            print("no time added - using a default")
             cell.dateLabel.text = "Just Now"
         }
     }
-    @IBAction func tapSignOut(_ sender: UIButton) {
-        GIDSignIn.sharedInstance().disconnect()
-    }
-
     
     func getFormattedDate(date: Date) -> String {
         let formatter = DateFormatter()
         return formatter.timeSince(from: date as NSDate, numericDates: true)
+    }
+    
+    @IBAction func tapSignOut(_ sender: UIButton) {
+        GIDSignIn.sharedInstance().disconnect()
     }
 }
