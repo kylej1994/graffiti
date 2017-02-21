@@ -25,8 +25,6 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
         showGoogleSignIn()
         usertextnew.isHidden = true
         btnNewsFeed.isHidden = true
-        
-        GIDSignIn.sharedInstance().signInSilently()
     }
     
     func showGoogleSignIn() {
@@ -121,32 +119,6 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
         btnSignIn.isHidden = true
         
         usertextnew.becomeFirstResponder()
-    }
-    
-    // This function is called after a successful Google login
-    func login() {
-        API.sharedInstance.login() { res in
-            switch res.result {
-            case .success:
-                if
-                    let loginPayload = res.result.value as? [String : Any],
-                    let newUser = loginPayload["new_user"] as? Bool,
-                    let user = loginPayload["user"] as? User
-                {
-                    self.appDelegate.currentUser = user
-                    if newUser {
-                        self.handleNewUser(user: user)
-                    } else {
-                        self.navigateToTabs()
-                    }
-                } else {
-                    self.showLoginErrorAlert()
-                }
-            case .failure:
-                self.showWhoopsAlert()
-                self.showGoogleSignIn()
-            }
-        }
     }
     
     func navigateToTabs() {
