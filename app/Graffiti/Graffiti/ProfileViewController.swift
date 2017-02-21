@@ -28,6 +28,14 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBOutlet var tableView: UITableView!
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        DispatchQueue.main.async {
+            self.getPostsByUser()
+            self.tableView.reloadData()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,7 +44,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         tableView.contentInset.top = 20
         
-        getPostsByUser()
+        DispatchQueue.main.async {
+            self.getPostsByUser()
+            self.tableView.reloadData()
+        }
         
         // we should change this so we use IBOutlets
         btnSignOut = UIButton(frame: CGRect(0,0,100,30))
@@ -69,7 +80,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func getPostsByUser() {
-        
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         if let user = appDelegate.currentUser {
@@ -85,7 +95,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         API.sharedInstance.getUserPosts(userid: uId) { response in
             switch response.result {
             case .success:
-                print("hello i am in success")
                 if let json = response.result.value as? [String:Any],
                     let posts = json["posts"] as? [Post] {
                     print(posts)
@@ -103,6 +112,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     // create a cell for each table view row
+    // would be nice to be able to reuse FeedViewController code...
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if(indexPath.row == 0){
             let cell:ProfileHeaderCell = self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as! ProfileHeaderCell
@@ -122,8 +132,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             return cell
         } else {
             let cellIdentifier = "FeedCell"
-            tableView.rowHeight = 120
-            
+            print("we here")
             // downcast cell to the custom cell class
             // guard safely unwraps the optional
             guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? FeedTableViewTextCell else {
@@ -132,14 +141,30 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             // this is where we get the post from the post model
             let post = posts[indexPath.row]
-            let rating = post.getRating()
             
             cell.textView.text = post.getText()
-            cell.votesLabel.text = String(rating)
-            
-            //cell.dateLabel.text = post.getTimeAdded()
+            setRatingDisplay(cell: cell, post: post)
+            setRatingDisplay(cell: cell, post: post)
             
             return cell
+        }
+    }
+    
+    func setRatingDisplay(cell: FeedTableViewTextCell, post: Post) {
+        let rating = post.getRating()
+        cell.votesLabel.text = String(rating)
+        if rating < 0 {
+            cell.votesLabel.textColor = UIColor(red:0.76, green:0.25, blue:0.25, alpha:1.0)
+        } else {
+            cell.votesLabel.textColor = UIColor(red:0.40, green:0.78, blue:0.49, alpha:1.0)
+        }
+    }
+    
+    func setDateDisplay(cell: FeedTableViewTextCell, post: Post) {
+        if let dateAdded = post.getTimeAdded() {
+            cell.dateLabel.text = getFormattedDate(date: dateAdded)
+        } else {
+            cell.dateLabel.text = "Just Now"
         }
     }
     
@@ -150,7 +175,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func btnDisconnectPressed(_ sender: UIButton) {
         //TODO
-        self.navigationController?.popToRootViewController(animated: true)
+        //self.navigationController?.popToRootViewController(animated: true)
         
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let nextviewController = storyBoard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
@@ -164,7 +189,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
 
     
-    
+    func getFormattedDate(date: Date) -> String {
+        let formatter = DateFormatter()
+        return formatter.timeSince(from: date as NSDate, numericDates: true)
+    }
 
     
     // method to run when table view cell is tapped

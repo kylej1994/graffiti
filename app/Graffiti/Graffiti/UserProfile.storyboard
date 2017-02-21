@@ -64,6 +64,51 @@
                                     <outlet property="usernameLabel" destination="XqD-YD-y4O" id="F0v-eH-ZbA"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="159" id="eUv-ST-CRp" customClass="FeedTableViewTextCell" customModule="Graffiti" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="187" width="375" height="159"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eUv-ST-CRp" id="VyF-wB-ggM">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="158"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Text post body goes here. Hardest part of finals: finding an open reg cubicle." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="lUW-2p-jIr">
+                                            <rect key="frame" x="8" y="8" width="353" height="88"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time ago" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oNQ-kx-WWa">
+                                            <rect key="frame" x="179" y="129" width="182" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="42" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kYd-ch-Tyy">
+                                            <rect key="frame" x="8" y="128" width="21" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="leadingMargin" secondItem="lUW-2p-jIr" secondAttribute="leading" id="7ay-pQ-iKk"/>
+                                        <constraint firstItem="oNQ-kx-WWa" firstAttribute="leading" secondItem="VyF-wB-ggM" secondAttribute="leadingMargin" constant="171" id="CKd-vp-ZUO"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="kYd-ch-Tyy" secondAttribute="bottom" constant="1" id="Nyq-Pf-EI0"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="oNQ-kx-WWa" secondAttribute="trailing" constant="6" id="OlP-89-aRb"/>
+                                        <constraint firstAttribute="leadingMargin" secondItem="kYd-ch-Tyy" secondAttribute="leading" id="PGN-Dq-HLy"/>
+                                        <constraint firstAttribute="topMargin" secondItem="lUW-2p-jIr" secondAttribute="top" id="U2K-HX-z0h"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="lUW-2p-jIr" secondAttribute="trailing" constant="6" id="XBm-og-lfs"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="oNQ-kx-WWa" secondAttribute="bottom" constant="9" id="ygC-Q0-Gxs"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="dateLabel" destination="oNQ-kx-WWa" id="Etz-I2-yan"/>
+                                    <outlet property="textView" destination="lUW-2p-jIr" id="FqX-uy-N65"/>
+                                    <outlet property="votesLabel" destination="kYd-ch-Tyy" id="Lmc-yH-HL2"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="hKj-P1-oZR" id="7tx-pj-nwO"/>
