@@ -10,7 +10,6 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    var btnDisconnect : UIButton!
     var label : UILabel!
     var btnSignOut: UIButton!
     
@@ -25,14 +24,6 @@ class ProfileViewController: UIViewController {
         btnSignOut.addTarget(self, action: #selector(btnSignOutPressed(_:)), for: UIControlEvents.touchUpInside)
         view.addSubview(btnSignOut)
         
-        btnDisconnect = UIButton(frame: CGRect(0,0,100,30))
-        btnDisconnect.center = CGPoint(view.center.x, 200)
-        btnDisconnect.setTitle("Disconnect", for: UIControlState.normal)
-        btnDisconnect.setTitleColor(UIColor.blue, for: UIControlState.normal)
-        btnDisconnect.setTitleColor(UIColor.cyan, for: UIControlState.highlighted)
-        btnDisconnect.addTarget(self, action: #selector(btnDisconnectPressed(_:)), for: UIControlEvents.touchUpInside)
-        view.addSubview(btnDisconnect)
-        
         label = UILabel(frame: CGRect(0,0,200,100))
         label.center = CGPoint(view.center.x, 300)
         label.numberOfLines = 0 //Multi-lines
@@ -42,27 +33,8 @@ class ProfileViewController: UIViewController {
         view.addSubview(label)
         
         label.isHidden = true
-        btnDisconnect.isHidden = true
 
         // Do any additional setup after loading the view.
-    }
-    
-    func btnDisconnectPressed(_ sender: UIButton) {
-        //TODO
-        self.navigationController?.popToRootViewController(animated: true)
-        
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let nextviewController = storyBoard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
-        self.present(nextviewController, animated: true, completion: nil)
-        
-        
-        label.text = "Signed out."
-        label.isHidden = false
-        LoginViewController().toggleAuthUI()
-        
-        
-       
-        
     }
     
     func btnSignOutPressed(_ sender: UIButton) {

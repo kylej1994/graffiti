@@ -137,30 +137,6 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
         let viewController = mainStoryboard.instantiateViewController(withIdentifier: "Main") as! UITabBarController
         UIApplication.shared.keyWindow?.rootViewController = viewController
     }
-    
-  
-    func toggleAuthUI() {
-        
-//        if (GIDSignIn.sharedInstance().hasAuthInKeychain()){
-//            // Signed in
-//            btnNewsFeed.isHidden = true
-//            btnSignIn.isHidden = true
-//            usertextnew.isHidden = true
-//            
-//            // Added to handle if user is already signed in 
-//            if (GIDSignIn.sharedInstance().currentUser == nil) {
-//                print("no user info")
-//                GIDSignIn.sharedInstance().signInSilently()
-//            }
-//            
-//        } else {
-//            
-//            // Not Signed In
-//            btnNewsFeed.isHidden = true
-//            btnSignIn.isHidden = false
-//            usertextnew.isHidden = true
-//        }
-    }
 }
 
 
