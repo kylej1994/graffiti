@@ -77,6 +77,10 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
         showAlert(messageTitle: "That username is taken", message: "Please enter a different username.")
     }
     
+    func showUpdateUserAlert() {
+        showAlert(messageTitle: "Update Profile Error", message: "There was a problem updating your profile.  Pleasure try again.")
+    }
+    
     // MARK: UITextFieldDelegate
     
     private func textViewDidBeginEditing(_ textView: UITextView) {
@@ -103,6 +107,13 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
         API.sharedInstance.updateUser(user: user) { res in
             switch res.result{
             case.success:
+                do {
+                    try user.update(res.result.value)
+                } catch {
+                    self.showUpdateUserAlert()
+                    self.usertextnew.becomeFirstResponder()
+                    return
+                }
                 self.navigateToTabs()
             case.failure:
                 self.showUsernameTakenAlert()

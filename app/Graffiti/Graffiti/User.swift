@@ -12,12 +12,17 @@ import UIKit
 
 enum UserError: Error, Equatable {
     case tooManyChars
+    case notSameUser
 }
 
 func ==(lhs: UserError, rhs: UserError) -> Bool {
     switch (lhs, rhs) {
     case (.tooManyChars, .tooManyChars):
         return true
+    case (.notSameUser, .notSameUser):
+        return true
+    default:
+        return false
     }
 }
 
@@ -133,5 +138,31 @@ class User : Mappable {
     
     public func setBio(_ bio: String){
         self.bio = bio
+    }
+    
+    public func update(_ user: User?) throws {
+        if user?.getId() != self.getId() {
+            throw UserError.notSameUser
+        }
+        
+        if let username = user?.getUsername() {
+            try self.setUsername(username)
+        }
+        
+        if let name = user?.getName() {
+            self.setName(name)
+        }
+        
+        if let email = user?.getEmail() {
+            self.setEmail(email)
+        }
+        
+        if let phoneNum = user?.getPhoneNumber() {
+            self.setPhoneNumber(phoneNum)
+        }
+        
+        if let bio = user?.getBio() {
+            self.setBio(bio)
+        }
     }
 }

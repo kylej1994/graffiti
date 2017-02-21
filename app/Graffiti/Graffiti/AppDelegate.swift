@@ -62,7 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             loginViewController.showSignInErrorAlert()
         } else {
             // Successful Sign in
-            self.login()
+            self.login(googleUser: user)
         }
     }
     
@@ -70,12 +70,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!,
               withError error: Error!) {
         // Perform any operations when the user disconnects from app here.
-        self.window?.rootViewController = loginViewController
-        self.window?.makeKeyAndVisible()
+        navigateToLogin()
     }
     
     // This function is called after a successful Google login
-    func login() {
+    func login(googleUser: GIDGoogleUser) {
         API.sharedInstance.login() { res in
             switch res.result {
             case .success:
@@ -86,6 +85,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                 {
                     self.currentUser = user
                     if newUser {
+                        user.setEmail(googleUser.profile.email)
+                        user.setName(googleUser.profile.name)
                         self.navigateToLogin()
                         self.loginViewController.handleNewUser(user: user)
                     } else {
