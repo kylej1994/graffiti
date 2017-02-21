@@ -15,6 +15,7 @@ import CoreLocation
 enum PostError: Error, Equatable {
     case tooManyChars
     case invalidLifetime
+    case notSamePost
 }
 
 func ==(lhs: PostError, rhs: PostError) -> Bool {
@@ -22,6 +23,8 @@ func ==(lhs: PostError, rhs: PostError) -> Bool {
         case (.tooManyChars, .tooManyChars):
             return true
         case (.invalidLifetime, .invalidLifetime):
+            return true
+        case (.notSamePost, .notSamePost):
             return true
         case _:
             return false
@@ -247,5 +250,35 @@ class Post : Mappable {
         dnRating -= 1
         setRating(dnRating)
         self.setVote(.downVote)
+    }
+    
+    public func update(post: Post?) throws {
+        if (post?.getID() != self.getID()) {
+            throw PostError.notSamePost
+        }
+        
+        if let text = post?.getText() {
+            try self.setText(text)
+        }
+        if let location = post?.getLocation() {
+            self.setLocation(location)
+        }
+        if let timeAdded = post?.getTimeAdded() {
+            self.setTimeAdded(timeAdded)
+        }
+        if let rating = post?.getRating() {
+            self.setRating(rating)
+        }
+        if let vote = post?.getVote() {
+            self.setVote(vote)
+        }
+        if
+            let poster = self.poster,
+            let newPoster = post?.getPoster()
+        {
+            try poster.update(newPoster)
+        } else {
+            self.poster = post?.getPoster()
+        }
     }
 }

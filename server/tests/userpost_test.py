@@ -4,16 +4,14 @@ import unittest
 
 from flask_api_test import APITestCase
 sys.path.append('..')
-from graffiti import graffiti, db
-from graffiti.models import User #this doesnt exist yet
+from graffiti import graffiti, user
+from graffiti.userpost import UserPost
+from graffiti.user import User
 
-import geoalchemy
-from geoalchemy.postgis import PGComparator
 
-class UserPostTestCase(APITestCase):
-
+class UserPostTestCase():
+    db = graffiti.db
     def setUp(self):
-        super(APITestCase, self).setUp()
         self.app = graffiti.app.test_client()
         db.create_all()
         db.session.add(UserPost("easmith", 
@@ -28,7 +26,6 @@ class UserPostTestCase(APITestCase):
         db.session.flush()
 
     def tearDown(self):
-        super(APITestCase, self).tearDown()
         db.session.remove()
         db.drop_all()
 
