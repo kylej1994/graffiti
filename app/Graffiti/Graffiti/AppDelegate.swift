@@ -13,6 +13,8 @@ import GoogleSignIn
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     var window: UIWindow?
     var loginViewController: LoginViewController!
+    var tabsViewController: UITabBarController!
+    var onboardingViewController: UIViewController!
     
     // MARK: App Properties
     var currentUser: User?
@@ -21,8 +23,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     // Finished Launching
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Init LoginViewController
+        // Init View Controller
         loginViewController = UIStoryboard(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+        tabsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Main") as! UITabBarController
+        onboardingViewController = UIStoryboard(name: "Onboarding", bundle: nil).instantiateViewController(withIdentifier: "OnboardingViewController")
         
         // Initialize sign-in
         var configureError: NSError?
@@ -87,10 +91,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                     if newUser {
                         user.setEmail(googleUser.profile.email)
                         user.setName(googleUser.profile.name)
-                        self.navigateToLogin()
-                        self.loginViewController.handleNewUser(user: user)
+                        self.navigateToOnboarding()
                     } else {
-                        self.loginViewController.navigateToTabs()
+                        self.navigateToTabs()
                     }
                 } else {
                     self.navigateToLogin()
@@ -99,13 +102,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             case .failure:
                 self.navigateToLogin()
                 self.loginViewController.showWhoopsAlert()
-                self.loginViewController.showGoogleSignIn()
             }
         }
     }
     
     func navigateToLogin() {
         self.window?.rootViewController = loginViewController
+        self.window?.makeKeyAndVisible()
+    }
+    
+    func navigateToTabs() {
+        self.window?.rootViewController = tabsViewController
+        self.window?.makeKeyAndVisible()
+    }
+    
+    func navigateToOnboarding() {
+        self.window?.rootViewController = onboardingViewController
         self.window?.makeKeyAndVisible()
     }
 }

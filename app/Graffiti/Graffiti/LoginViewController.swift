@@ -8,23 +8,18 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDelegate {
+class LoginViewController: UIViewController, GIDSignInUIDelegate {
     
     let appDelegate : AppDelegate = UIApplication.shared.delegate as! AppDelegate
     var btnSignIn : GIDSignInButton!
     var label : UILabel!
-    @IBOutlet var btnNewsFeed: UIButton!
-    @IBOutlet weak var usertextnew: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         GIDSignIn.sharedInstance().uiDelegate = self
-        self.usertextnew.delegate = self
         
         showGoogleSignIn()
-        usertextnew.isHidden = true
-        btnNewsFeed.isHidden = true
     }
     
     func showGoogleSignIn() {
@@ -68,69 +63,9 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, UITextFieldDel
     func showWhoopsAlert() {
         showAlert(messageTitle: "Whoops", message: "Couldn't connect to server to log in.")
     }
-    
-    func showUsernameTooLongAlert() {
-        showAlert(messageTitle: "Username too long", message: "Your username must be under 100 characters.")
-    }
-    
-    func showUsernameTakenAlert() {
-        showAlert(messageTitle: "That username is taken", message: "Please enter a different username.")
-    }
-    
-    func showUpdateUserAlert() {
-        showAlert(messageTitle: "Update Profile Error", message: "There was a problem updating your profile.  Pleasure try again.")
-    }
+
     
     // MARK: UITextFieldDelegate
-    
-    private func textViewDidBeginEditing(_ textView: UITextView) {
-        usertextnew.text = ""
-        usertextnew.textColor = UIColor .black
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        let user = self.appDelegate.currentUser!
-        
-        // Hide the keyboard.
-        usertextnew.resignFirstResponder()
-        
-        let username = usertextnew.text!
-        print(username)
-        
-        do {
-            try user.setUsername(username)
-        } catch{
-            showUsernameTooLongAlert()
-            return false
-        }
-        
-        API.sharedInstance.updateUser(user: user) { res in
-            switch res.result{
-            case.success:
-                do {
-                    try user.update(res.result.value)
-                } catch {
-                    self.showUpdateUserAlert()
-                    self.usertextnew.becomeFirstResponder()
-                    return
-                }
-                self.navigateToTabs()
-            case.failure:
-                self.showUsernameTakenAlert()
-                self.usertextnew.becomeFirstResponder()
-            }
-        }
-        return true
-    }
-
-    func handleNewUser(user: User) {
-        print ("new user")
-        
-        usertextnew.isHidden = false
-        btnSignIn.isHidden = true
-        
-        usertextnew.becomeFirstResponder()
-    }
     
     func navigateToTabs() {
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
