@@ -7,7 +7,7 @@ from sqlalchemy.dialects.postgresql import JSON
 from user import User
 from userpost import UserPost
 
-from time import time
+import time
 
 from geoalchemy2.elements import WKTElement
 from geoalchemy2.functions import ST_DFullyWithin
