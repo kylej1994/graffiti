@@ -84,14 +84,15 @@ def delete_post(postid):
 	if (post is None):
 		return generate_error_response(ERR_404, 404)
 
-	# TODO check user_id
-	# if (post.get_user_id() != request.get_json()['user_id']):
-	# 	return generate_error_response(ERR_403, 403);
+	info = request.environ['META_INFO']
+	no_id = request.environ['NOID']
+	bad_token = request.environ['BADTOKEN']
+	if (info is None or no_id or bad_token):
+		return generate_error_response(ERR_403, 403)
+	user = User.get_user_by_google_aud(info['audCode'])
 
-	# email = request.environ['META_INFO']
-	# user_id = User.get_user_id_by_google_id(email['audCode'])
-	# if (post.get_poster_id() != user_id):
-	# 	return generate_error_response(ERR_403, 403)
+	if (post.get_user_id() != user.get_user_id()):
+		return generate_error_response(ERR_403, 403);
 
 	jsonified_post = post.to_json_fields_for_FE()
 	post.delete_post()
