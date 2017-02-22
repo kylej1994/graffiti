@@ -37,7 +37,7 @@ def user_login():
 	no_id = request.environ['NOID']
 	bad_token = request.environ['BADTOKEN']
 	if (email is None or no_id or bad_token):
-		return generate_error_response(ERR_401, 401);
+		return generate_error_response(ERR_401, 401)
 	user = User.get_user_by_google_aud(email['audCode'])
 
 	if (user):
@@ -72,22 +72,30 @@ def update_user(userid):
 		data = request.get_json()
 	except:
 		# if there is no data with the PUT request
-		return generate_error_response(ERR_400_invalid, 400);
+		return generate_error_response(ERR_400_invalid, 400)
 
 	if (not data or 'userid' not in data):
-		return generate_error_response(ERR_400_invalid, 400);
+		return generate_error_response(ERR_400_invalid, 400)
 
-	# TODO check id from header
-	if (int(data['userid']) != userid):
-		return generate_error_response(ERR_403_update, 403);
+	info = request.environ['META_INFO']
+	no_id = request.environ['NOID']
+	bad_token = request.environ['BADTOKEN']
+	if (info is None or no_id or bad_token):
+		return generate_error_response(ERR_403, 403)
+	user = User.get_user_by_google_aud(info['audCode'])
+
+	if (user is None):
+		return generate_error_response(ERR_404, 404)
+
+	if (int(data['userid']) != userid and user.get_user_id() != userid):
+		return generate_error_response(ERR_403_update, 403)
 
 	# Call set functions and update good_inputs
 	good_inputs = True
 
 	# checks if a user with specified username already exists
-	user = db.session.query(User).filter(User.user_id==userid).first()
 	username = data['username']
-	existing = find_user_by_username(username)
+	existing = User.find_user_by_username(username)
 	username_taken = False
 	# If the user wants to change their username to an existing username
 	if (user.get_username() != username and existing):
@@ -99,9 +107,6 @@ def update_user(userid):
 	if ('name' in data and data['name'] != user.get_name()):
 		good_inputs = good_inputs and user.set_name(data['name'])
 
-	if ('email' in data and data['email'] != user.get_email()):
-		good_inputs = good_inputs and user.set_email(data['email'])
-
 	if ('phone_number' in data and \
 		 data['phone_number'] != user.get_phone_number()):
 		good_inputs = good_inputs and user.set_phone_number(data['phone_number'])
@@ -109,7 +114,12 @@ def update_user(userid):
 	if ('bio' in data and data['bio'] != user.get_bio()):
 		good_inputs = good_inputs and user.set_bio(data['bio'])
 
+	# save user before check email because even if user wants to change email,
+	# the other fields should still be modified.
 	user.save_user()
+
+	if ('email' in data and data['email'] != user.get_email()):
+		return generate_error_response(ERR_403_email, 403)
 
 	# Evaluate bools
 	if (username_taken):
