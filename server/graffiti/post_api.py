@@ -74,7 +74,7 @@ def create_post():
 	post = Post(text, lon, lat, user_id)
 	post.save_post()
 
-	return post.to_json_fields_for_FE(), 200
+	return post.to_json_fields_for_FE(user_id), 200
 
 @post_api.route('/post/<int:postid>', methods=['DELETE'])
 def delete_post(postid):

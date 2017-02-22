@@ -152,7 +152,8 @@ def get_user_posts(userid):
 	to_rtn = {}
 	posts_arr = []
 	for post in posts:
-		posts_arr.append(json.loads(post.to_json_fields_for_FE()))
+		posts_arr.append(json.loads(post.to_json_fields_for_FE(\
+			user.get_user_id())))
 
 	to_rtn['posts'] = posts_arr
 
