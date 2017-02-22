@@ -3,6 +3,7 @@ import json
 
 from flask import Blueprint, request
 from post import Post
+from user import User
 from userpost import UserPost
 
 post_api = Blueprint('post_api', __name__)
@@ -53,21 +54,22 @@ def create_post():
 	text = str(data['text'])
 	lon = (float)(data['location']['longitude'])
 	lat = (float)(data['location']['latitude'])
-	# TODO retrieve idToken to find poster_id
-	# make sure this user exists
-	user_id = 1
 
-	#validates the text field for the post
-	# if (self.validate_text(text) == False):
-	# 	return generate_error_response(ERR_400, 400); 
-
-	# email = request.environ['META_INFO']
-	# user_id = User.get_user_id_by_google_id(email['audCode'])
-	# google_aud = email['audCode']
-
-	#validates the text field for the post
-	if (not validate_text(text)):
+	info = request.environ['META_INFO']
+	no_id = request.environ['NOID']
+	bad_token = request.environ['BADTOKEN']
+	if (info is None or no_id or bad_token):
 		return generate_error_response(ERR_400, 400)
+	user = User.get_user_by_google_aud(info['audCode'])
+
+	if (user is None):
+		return generate_error_response(ERR_400, 400)
+
+	user_id = user.get_user_id()
+
+	# validates the text field for the post
+	if (not validate_text(text)):
+		return generate_error_response(ERR_400, 400); 
 
 	post = Post(text, lon, lat, user_id)
 	post.save_post()
