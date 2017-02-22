@@ -12,10 +12,10 @@ import CoreLocation
 class TextPostViewController: UIViewController, UITextViewDelegate {
 
     // MARK: Properties
+    let charLimit = 140
     let locationManager = LocationService.sharedInstance
     var currentLatitude: CLLocationDegrees? = CLLocationDegrees()
     var currentLongitude: CLLocationDegrees? = CLLocationDegrees()
-    var postText: String = String()
     
     @IBOutlet weak var postButton: UIButton!
     @IBOutlet weak var postTextView: UITextView!
@@ -38,11 +38,6 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         postTextView.delegate = self
         setupTextViewDisplay()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     func setupTextViewDisplay() {
         postTextView.text = "What's happening?"
@@ -51,24 +46,21 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         postTextView.layer.borderWidth = 1.0
         postTextView.layer.cornerRadius = 5.0
     }
+    
     // MARK: UITextViewDelegate
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
         let numberOfChars = newText.characters.count
-        // hide keyboard when user taps "done"
-        if newText == "\n" {
-            textView.resignFirstResponder()
-            return false
-        }
-        if(numberOfChars > 140){
+
+        if(numberOfChars > charLimit){
             charCountLabel.textColor = UIColor.red
-            charCountLabel.text = String(140 - numberOfChars)
+            charCountLabel.text = String(charLimit - numberOfChars)
             postButton.isEnabled = false
         } else if (numberOfChars == 0) {
             postButton.isEnabled = false
         } else {
             charCountLabel.textColor = UIColor.darkGray
-            charCountLabel.text = String(140 - numberOfChars)
+            charCountLabel.text = String(charLimit - numberOfChars)
             postButton.isEnabled = true
         }
         return true
@@ -79,13 +71,6 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         postTextView.textColor = UIColor.black
         
     }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        postText = postTextView.text!
-    }
-    
-    
-    // should i show and hide the keyboard somewhere?
     
     
     @IBAction func postTextGraffiti(_ sender: UIButton) {
@@ -102,7 +87,7 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         
         let location = CLLocation.init(latitude: currentLatitude!, longitude: currentLongitude!)
         
-        let newPost:Post = Post(location: location, text: postText)!
+        let newPost:Post = Post(location: location, text: postTextView.text!)!
         
         API.sharedInstance.createPost(post: newPost){ response in
             switch response.result {
@@ -119,12 +104,5 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
     
     @IBAction func tapCancel(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
-    }
-    
-    // MARK: Navigation
-    
-    // todo - unwind segue for post? (instead of pop view controller)?
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        super.prepare(for: segue, sender: sender)
     }
 }
