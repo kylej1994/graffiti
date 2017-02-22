@@ -62,15 +62,10 @@ def create_post():
 		return generate_error_response(ERR_400, 400)
 	user = User.get_user_by_google_aud(info['audCode'])
 
-	if (user is None):
+	if (user is None or not validate_text(text)):
 		return generate_error_response(ERR_400, 400)
 
 	user_id = user.get_user_id()
-
-	# validates the text field for the post
-	if (not validate_text(text)):
-		return generate_error_response(ERR_400, 400); 
-
 	post = Post(text, lon, lat, user_id)
 	post.save_post()
 
@@ -91,10 +86,10 @@ def delete_post(postid):
 		return generate_error_response(ERR_403, 403)
 	user = User.get_user_by_google_aud(info['audCode'])
 
-	if (post.get_user_id() != user.get_user_id()):
-		return generate_error_response(ERR_403, 403);
+	if (user is None or post.get_user_id() != user.get_user_id()):
+		return generate_error_response(ERR_403, 403)
 
-	jsonified_post = post.to_json_fields_for_FE()
+	jsonified_post = post.to_json_fields_for_FE(user.get_user_id())
 	post.delete_post()
 
 	return jsonified_post, 200
