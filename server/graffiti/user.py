@@ -164,5 +164,9 @@ class User(db.Model):
     # finds a user given a user id
     # returns None if user_id is not in the db
     @staticmethod
-    def find_user(user_id):
+    def find_user_by_id(user_id):
         return db.session.query(User).filter(User.user_id==user_id).first()
+
+    @staticmethod
+    def find_user_by_username(username):
+        return db.session.query(User).filter(User.username==username).first()

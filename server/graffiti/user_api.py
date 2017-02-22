@@ -57,7 +57,7 @@ def user_login():
 @user_api.route('/user/<int:userid>', methods=['GET'])
 def get_user(userid):
 	# look for user
-	user = db.session.query(User).filter(User.user_id==userid).first()
+	user = User.find_user_by_id(userid)
 
 	# return 404 if not found
 	if (user is None):
@@ -87,7 +87,7 @@ def update_user(userid):
 	# checks if a user with specified username already exists
 	user = db.session.query(User).filter(User.user_id==userid).first()
 	username = data['username']
-	existing = db.session.query(User).filter(User.username==username).first()
+	existing = find_user_by_username(username)
 	username_taken = False
 	# If the user wants to change their username to an existing username
 	if (user.get_username() != username and existing):
@@ -122,9 +122,7 @@ def update_user(userid):
 @user_api.route('/user/<int:userid>/posts', methods=['GET'])
 def get_user_posts(userid):
 	# look for user to make sure this user exists
-	# not sure why this doesnt work...
-	#user = User.find_user(userid)
-	user = db.session.query(User).filter(User.user_id==userid).first()
+	user = User.find_user_by_id(userid)
 
 	# return 404 if not found
 	if (user is None):
