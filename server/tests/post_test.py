@@ -57,17 +57,19 @@ class PostTestCase(unittest.TestCase):
         self.assertTrue(post.get_poster_id() == poster_id)
         self.assertTrue(post.get_text() == 'text')
 
-    def test_set_votes(self):
+    def test_set_vote(self):
         post = db.session.query(Post).filter(Post.poster_id==poster_id).first()
         post_id = post.post_id
         self.assertTrue(post.num_votes == 0)
-        # tests increment votes
         post.set_vote(1)
         self.assertTrue(db.session.query(Post).filter(Post.post_id==post_id).first().num_votes == 1)
-        # tests decrement votes
-        post.set_vote(-1)
-        self.assertTrue(db.session.query(Post).filter(Post.post_id==post_id).first().num_votes == 0)
 
+    def test_apply_vote(self):
+        post_id1 = 1
+        self.assertTrue(Post.apply_vote(poster_id, post_id1, 1))
+        #should not be able to apply vote more than once per user per post
+        self.assertFalse(Post.apply_vote(poster_id, post_id1, -1))
+        self.assertTrue(Post.find_post(post_id1).num_votes == 1)
 
     def test_get_text(self):
         post = db.session.query(Post).filter(Post.poster_id==poster_id).first()
@@ -77,8 +79,18 @@ class PostTestCase(unittest.TestCase):
         self.assertFalse(text == "username")
 
     def test_find_posts_within_loc(self):
+        # set up for testing locations
         graffiti.clear_db_of_everything()
         graffiti.init_db()
+
+        # user must exist in db before posts
+        db.session.add(User('easmith', \
+        "1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com", \
+        '9172825753', \
+        'Emma Smith', \
+        'kat@lu.com', \
+        'My name is jablonk'))
+        db.session.commit()
 
         longitude = 51.5192028
         latitude = -0.140863
@@ -98,6 +110,7 @@ class PostTestCase(unittest.TestCase):
         distance2 = 10000
         distance3 = 16900 * 1000
 
+        ### begin tests
         #gets all post within distance 1 
         posts = Post.find_posts_within_loc(longitude, latitude, distance1)
         self.assertTrue(posts[0].longitude == longitude)

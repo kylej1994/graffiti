@@ -24,20 +24,21 @@ class UserPost(db.Model):
     def __repr__(self):
         return '<username {}'.format(self.username) + ' post_id {}>'.format(self.post_id)
 
-    def get_username(self):
-        return username
+    def get_user_id(self):
+        return self.user_id
 
     def get_post_id(self):
-        return post_id
+        return self.post_id
 
     def get_vote(self):
-        return vote
+        return self.vote
 
     def set_vote(self, vote):
         self.vote = vote
         db.session.commit()
 
     @staticmethod
-    def get_post_vote_by_user(user_id, post_id):
+    def get_votes_by_ids(user_id, post_id):
         return db.session.query(UserPost).filter(UserPost.post_id==post_id and \
             UserPost.user_id==user_id).first().get_vote()
+    
