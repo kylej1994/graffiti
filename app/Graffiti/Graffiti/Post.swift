@@ -18,6 +18,11 @@ enum PostError: Error, Equatable {
     case notSamePost
 }
 
+enum PostType {
+    case TextPost
+    case ImagePost
+}
+
 func ==(lhs: PostError, rhs: PostError) -> Bool {
     switch (lhs, rhs) {
         case (.tooManyChars, .tooManyChars):
@@ -69,7 +74,8 @@ class Post : Mappable {
           poster: User? = nil,
           text: String = "", image: UIImage? = nil,
           timeAdded: Date? = nil, includeTag: Bool = false,
-          visibilityType: VisType = .Public, lifetime: Int = defaultLifetime, vote: VoteType = .noVote){
+          visibilityType: VisType = .Public, lifetime: Int = defaultLifetime,
+          vote: VoteType = .noVote, postType: PostType = .TextPost){
         
         // Initialize all the things!
         self.ID = ID
