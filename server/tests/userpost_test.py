@@ -13,7 +13,7 @@ from graffiti.graffiti import db
 
 user_id = 1
 post_id = 1
-vote = 0
+vote = 1
 
 class UserPostTestCase(unittest.TestCase):
     def setUp(self):
@@ -32,25 +32,26 @@ class UserPostTestCase(unittest.TestCase):
             graffiti.clear_db_of_everything()
 
     def test_get_user_id(self):
+        Post.apply_vote(user_id, post_id, vote)
         userpost = db.session.query(UserPost).filter(UserPost.user_id==user_id)\
             .filter(UserPost.post_id==post_id).first()
         self.assertTrue(userpost.get_user_id() == user_id)
 
     def test_get_post_id(self):
+        Post.apply_vote(user_id, post_id, vote)
         userpost = db.session.query(UserPost).filter(UserPost.user_id==user_id)\
             .filter(UserPost.post_id==post_id).first()
         self.assertTrue(userpost.get_post_id() == post_id)
 
     def test_get_vote(self):
+        Post.apply_vote(user_id, post_id, vote)
         userpost = db.session.query(UserPost).filter(UserPost.user_id==user_id)\
             .filter(UserPost.post_id==post_id).first()
         self.assertTrue(userpost.get_vote() == vote)
-        post = Post.find_post(post_id)
-        post.set_vote(1)
-        self.assertTrue(userpost.get_vote() == vote + 1)
 
-    def test_get_post_vote_by_user(self):
-        fetched_vote = UserPost.get_post_vote_by_user(user_id, post_id)
+    def test_get_votes_by_ids(self):
+        Post.apply_vote(user_id, post_id, vote)
+        fetched_vote = UserPost.get_votes_by_ids(user_id, post_id)
         self.assertTrue(fetched_vote == vote)
 
     
