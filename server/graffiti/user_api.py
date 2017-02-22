@@ -33,19 +33,19 @@ def generate_error_response(message, code):
 
 @user_api.route('/user/login', methods=['GET'])
 def user_login():
-	email = request.environ['META_INFO']
+	info = request.environ['META_INFO']
 	no_id = request.environ['NOID']
 	bad_token = request.environ['BADTOKEN']
-	if (email is None or no_id or bad_token):
+	if (info is None or no_id or bad_token):
 		return generate_error_response(ERR_401, 401)
-	user = User.get_user_by_google_aud(email['audCode'])
+	user = User.get_user_by_google_aud(info['audCode'])
 
 	if (user):
 		# login with idToken passed in through header
 		is_new_user = False
 	else:
 		# create new User object with next userId and empty strings for other fields
-		user = User('', email['audCode'], '', '', email['email'], '')
+		user = User('', info['audCode'], '', '', info['email'], '')
 		user.save_user()
 		is_new_user = True
 
@@ -81,7 +81,7 @@ def update_user(userid):
 	no_id = request.environ['NOID']
 	bad_token = request.environ['BADTOKEN']
 	if (info is None or no_id or bad_token):
-		return generate_error_response(ERR_403, 403)
+		return generate_error_response(ERR_403_update, 403)
 	user = User.get_user_by_google_aud(info['audCode'])
 
 	if (user is None):
@@ -138,7 +138,14 @@ def get_user_posts(userid):
 	if (user is None):
 		return generate_error_response(ERR_404, 404)
 
-	# TODO check id from header
+	info = request.environ['META_INFO']
+	no_id = request.environ['NOID']
+	bad_token = request.environ['BADTOKEN']
+	if (info is None or no_id or bad_token):
+		return generate_error_response(ERR_403_posts, 403)
+
+	if (user.get_google_aud != info['audCode'])
+		return generate_error_response(ERR_403_posts)
 
 	posts = Post.find_user_posts(userid)
 
