@@ -7,8 +7,7 @@ from sqlalchemy.dialects.postgresql import JSON
 from user import User
 from userpost import UserPost
 
-from datetime import datetime
-from time import time
+import time
 
 from geoalchemy2.elements import WKTElement
 from geoalchemy2.functions import ST_DFullyWithin
@@ -24,7 +23,7 @@ class Post(db.Model):
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
     loc = db.Column(Geometry(geometry_type='POINT', srid=4326))
-    created_at = db.Column(db.DateTime)
+    created_at = db.Column(db.Float)
     poster_id = db.Column(db.Integer)
     num_votes = db.Column(db.Integer)
 
@@ -32,7 +31,7 @@ class Post(db.Model):
         self.text = text
         self.longitude = longitude
         self.latitude = latitude
-        self.created_at = datetime.fromtimestamp(time()).isoformat()
+        self.created_at = time.time()
         self.poster_id = poster_id
         self.num_votes = 0
         # latitude comes first
@@ -50,7 +49,7 @@ class Post(db.Model):
             location=dict(
                 longitude=self.longitude,
                 latitude=self.latitude),
-            created_at=str(self.created_at),
+            created_at=self.created_at,
             poster=user.to_json_fields_for_FE(),
             num_votes=self.num_votes))
 
