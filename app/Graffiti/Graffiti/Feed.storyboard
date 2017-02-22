@@ -107,7 +107,7 @@
                     <navigationItem key="navigationItem" title="Feed" id="ELO-Y3-tf9">
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="cmE-m1-wv0">
                             <connections>
-                                <segue destination="PCG-gw-YFa" kind="show" id="LQw-yR-CBP"/>
+                                <segue destination="PCG-gw-YFa" kind="presentation" identifier="CreatePost" id="LQw-yR-CBP"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

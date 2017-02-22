@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="4G5-6D-FEh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="RVC-fD-mP6">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Text Post View Controller-->
+        <!--New Graffiti-->
         <scene sceneID="bGW-p0-DJc">
             <objects>
                 <viewController storyboardIdentifier="TextPost" id="4G5-6D-FEh" customClass="TextPostViewController" customModule="Graffiti" customModuleProvider="target" sceneMemberID="viewController">
@@ -25,7 +25,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="140" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Icc-Mv-BBU">
                                 <rect key="frame" x="278" y="340" width="29" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CWN-s3-0OE">
@@ -37,17 +37,17 @@
                                 </connections>
                             </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="elp-7Q-qoR">
-                                <rect key="frame" x="137" y="28" width="101" height="29"/>
+                                <rect key="frame" x="137" y="72" width="101" height="29"/>
                                 <segments>
                                     <segment title="Text"/>
                                     <segment title="Photo"/>
                                 </segments>
                             </segmentedControl>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="8aG-3Q-96z">
-                                <rect key="frame" x="16" y="74" width="343" height="250"/>
+                                <rect key="frame" x="16" y="118" width="343" height="206"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -64,6 +64,13 @@
                             <constraint firstItem="CWN-s3-0OE" firstAttribute="leading" secondItem="Icc-Mv-BBU" secondAttribute="trailing" constant="12" id="m0f-tf-naJ"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="New Graffiti" id="eUf-Fr-1zR">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="X9X-BJ-LqE">
+                            <connections>
+                                <action selector="tapCancel:" destination="4G5-6D-FEh" id="2Fz-Pt-l3Z"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="charCountLabel" destination="Icc-Mv-BBU" id="IMR-SW-cGF"/>
                         <outlet property="postButton" destination="CWN-s3-0OE" id="65n-gq-6Vk"/>
@@ -71,6 +78,24 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h39-Py-3va" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="815.20000000000005" y="842.42878560719646"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="tys-BJ-5HA">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="RVC-fD-mP6" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="7dE-YI-aW6">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="4G5-6D-FEh" kind="relationship" relationship="rootViewController" id="cIc-HN-Fs4"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aoE-XC-TKQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-124" y="842.42878560719646"/>
         </scene>

@@ -55,7 +55,11 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
         let numberOfChars = newText.characters.count
-        
+        // hide keyboard when user taps "done"
+        if newText == "\n" {
+            textView.resignFirstResponder()
+            return false
+        }
         if(numberOfChars > 140){
             charCountLabel.textColor = UIColor.red
             charCountLabel.text = String(140 - numberOfChars)
@@ -63,7 +67,7 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         } else if (numberOfChars == 0) {
             postButton.isEnabled = false
         } else {
-            charCountLabel.textColor = UIColor.black
+            charCountLabel.textColor = UIColor.darkGray
             charCountLabel.text = String(140 - numberOfChars)
             postButton.isEnabled = true
         }
@@ -79,6 +83,7 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
         postText = postTextView.text!
     }
+    
     
     // should i show and hide the keyboard somewhere?
     
@@ -109,6 +114,17 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         }
         
         // return to presenting view controller
-        let _ = self.navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func tapCancel(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    // MARK: Navigation
+    
+    // todo - unwind segue for post? (instead of pop view controller)?
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
     }
 }
