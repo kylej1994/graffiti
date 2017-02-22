@@ -19,6 +19,16 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var postButton: UIButton!
     @IBOutlet weak var charCount: UITextView!
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        locationManager.startUpdatingLocation()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        locationManager.stopUpdatingLocation()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,7 +40,6 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         postTextView.layer.borderColor = UIColor.black.cgColor
         postTextView.layer.borderWidth = 1.0
         postTextView.layer.cornerRadius = 5.0
-        locationManager.startUpdatingLocation()
     }
 
     override func didReceiveMemoryWarning() {
