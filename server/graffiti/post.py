@@ -80,6 +80,12 @@ class Post(db.Model):
     # right now, if a user votes, then they cannot change their vote
     @staticmethod
     def apply_vote(user_id, post_id, vote):
+
+        #if the post dne, return false
+        post = Post.find_post(post_id)
+        if post is None:
+            return False
+
         userpost = db.session.query(UserPost).filter(UserPost.post_id==post_id)\
             .filter(UserPost.user_id==user_id).first()
         # if the post has not been voted on by this user, we create an entry
@@ -91,7 +97,7 @@ class Post(db.Model):
             userpost.set_vote(vote)
         else:
             return False
-        post = Post.find_post(post_id)
+    
         post.num_votes += vote
         db.session.commit()
         return True
