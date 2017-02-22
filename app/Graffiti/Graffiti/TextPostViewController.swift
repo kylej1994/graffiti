@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class TextPostViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
+class TextPostViewController: UIViewController, UITextViewDelegate {
 
     // MARK: Properties
     let locationManager = LocationService.sharedInstance
