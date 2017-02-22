@@ -143,22 +143,26 @@ def get_post_by_location():
 
 @post_api.route('/post/<int:postid>/vote', methods=['PUT'])
 def vote_post(postid):
-	# no checking of authentication is happening yet...
+	vote = int(request.get_json()['vote'])
+	post = Post.find_post(postid)
+
+	if (post is None):
+		return generate_error_response(ERR_404, 404)
+
+	info = request.environ['META_INFO']
+	no_id = request.environ['NOID']
+	bad_token = request.environ['BADTOKEN']
+	if (info is None or no_id or bad_token):
+		return generate_error_response(ERR_403, 403)
+	user = User.get_user_by_google_aud(info['audCode'])
+
+	if (user is None):
+		return generate_error_response(ERR_403, 403)
 
 	# determine whether it is an upvote or downvote
 	# look through User-Posts table to determine if the specified user has
 	# already voted on this post
-	# modify accordingly
-	# return postid of post and new num votes
+	# modify accordingly (using Post.apply_vote? maybe)
 
-	vote = int(request.get_json()['vote'])
-	post = Post.find_post(postid)
-
-	# checks if user has already voted
-	email = request.environ['META_INFO']
-	user_id = User.get_user_id_by_google_id(email['audCode'])
-	if (post.get_poster_id() != user_id):
-		return generate_error_response(ERR_403, 403)
-
-	post.set_vote(vote)
+	# post.set_vote(vote)
 	return post.to_json_fields_for_FE(), 200
