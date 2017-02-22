@@ -57,17 +57,19 @@ class PostTestCase(unittest.TestCase):
         self.assertTrue(post.get_poster_id() == poster_id)
         self.assertTrue(post.get_text() == 'text')
 
-    def test_set_votes(self):
+    def test_set_vote(self):
         post = db.session.query(Post).filter(Post.poster_id==poster_id).first()
         post_id = post.post_id
         self.assertTrue(post.num_votes == 0)
-        # tests increment votes
         post.set_vote(1)
         self.assertTrue(db.session.query(Post).filter(Post.post_id==post_id).first().num_votes == 1)
-        # tests decrement votes
-        post.set_vote(-1)
-        self.assertTrue(db.session.query(Post).filter(Post.post_id==post_id).first().num_votes == 0)
 
+    def test_apply_vote(self):
+        post_id1 = 1
+        self.assertTrue(Post.apply_vote(poster_id, post_id1, 1))
+        #should not be able to apply vote more than once per user per post
+        self.assertFalse(Post.apply_vote(poster_id, post_id1, -1))
+        self.assertTrue(Post.find_post(post_id1).num_votes == 1)
 
     def test_get_text(self):
         post = db.session.query(Post).filter(Post.poster_id==poster_id).first()

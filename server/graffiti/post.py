@@ -64,22 +64,37 @@ class Post(db.Model):
     def save_post(self):
         db.session.add(self)
         db.session.commit()
-        userpost = UserPost(self.poster_id, self.post_id, self.num_votes)
-        db.session.add(userpost)
-        db.session.commit()
 
     # deletes the post from the db
     def delete_post(self):
         db.session.delete(self)
         db.session.commit()
 
-    # applies the vote to the post
     def set_vote(self, vote):
         self.num_votes += vote
-        userpost = db.session.query(UserPost).filter(UserPost.post_id==self.post_id)\
-            .filter(UserPost.user_id==self.poster_id).first()
-        userpost.vote += vote
         db.session.commit()
+
+
+    # applies the vote to the post given a user_id, post_id, and vote
+    # returns true if the vote could be applied, false otherwise
+    # right now, if a user votes, then they cannot change their vote
+    @staticmethod
+    def apply_vote(user_id, post_id, vote):
+        userpost = db.session.query(UserPost).filter(UserPost.post_id==post_id)\
+            .filter(UserPost.user_id==user_id).first()
+        # if the post has not been voted on by this user, we create an entry
+        # and add it to the db
+        if userpost is None:
+            userpost = UserPost(user_id, post_id, vote)
+            db.session.add(userpost)
+        elif userpost.get_vote() == 0:
+            userpost.set_vote(vote)
+        else:
+            return False
+        post = Post.find_post(post_id)
+        post.num_votes += vote
+        db.session.commit()
+        return True
 
     # finds a post given a post id
     # returns None if post_id is not in the db
