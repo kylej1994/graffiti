@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="uIs-UI-GOw">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="4G5-6D-FEh">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -10,99 +10,69 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Create-->
-        <scene sceneID="Fho-tb-Lx4">
+        <!--Text Post View Controller-->
+        <scene sceneID="bGW-p0-DJc">
             <objects>
-                <viewController id="uIs-UI-GOw" customClass="TextPostViewController" customModule="Graffiti" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TextPost" id="4G5-6D-FEh" customClass="TextPostViewController" customModule="Graffiti" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="8Hs-g9-DE6"/>
-                        <viewControllerLayoutGuide type="bottom" id="QTv-y6-MsM"/>
+                        <viewControllerLayoutGuide type="top" id="j9x-Hr-KXW"/>
+                        <viewControllerLayoutGuide type="bottom" id="hWb-mN-HOS"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Ypg-Gq-hxg">
+                    <view key="view" contentMode="scaleToFill" id="lfs-Kr-udQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="hBF-3v-Tec">
-                                <rect key="frame" x="16" y="80" width="343" height="338"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Bzx-ry-6aM">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="278.5"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Graffiti" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YRo-RP-g7L">
-                                                <rect key="frame" x="0.0" y="0.0" width="91.5" height="20.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="l2I-57-J9F">
-                                                <rect key="frame" x="0.0" y="28.5" width="343" height="250"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="250" id="KDU-KT-3iD"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                            </textView>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstItem="l2I-57-J9F" firstAttribute="leading" secondItem="Bzx-ry-6aM" secondAttribute="leading" id="1xJ-vu-kb1"/>
-                                            <constraint firstAttribute="trailing" secondItem="l2I-57-J9F" secondAttribute="trailing" id="se9-bM-G62"/>
-                                        </constraints>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tY7-8s-6nU">
-                                        <rect key="frame" x="243" y="278.5" width="100" height="59.5"/>
-                                        <subviews>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="140" textAlignment="right" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d0h-Hd-q51">
-                                                <rect key="frame" x="0.0" y="0.0" width="50" height="59.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                            </textView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iNO-b0-fjn">
-                                                <rect key="frame" x="50" y="0.0" width="50" height="59.5"/>
-                                                <state key="normal" image="spray_can_50"/>
-                                                <connections>
-                                                    <action selector="postGraffiti:" destination="uIs-UI-GOw" eventType="touchUpInside" id="pVB-LK-KA0"/>
-                                                    <segue destination="Crc-Th-kfR" kind="show" id="lNh-wD-nt9"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="Bzx-ry-6aM" firstAttribute="leading" secondItem="hBF-3v-Tec" secondAttribute="leading" id="PhU-iX-dzF"/>
-                                </constraints>
-                            </stackView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="What's happening?" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9x6-7r-30B">
+                                <rect key="frame" x="16" y="80" width="343" height="237"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="140" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Icc-Mv-BBU">
+                                <rect key="frame" x="278" y="340" width="29" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CWN-s3-0OE">
+                                <rect key="frame" x="319" y="332" width="40" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="Post"/>
+                                <connections>
+                                    <action selector="postTextGraffiti:" destination="4G5-6D-FEh" eventType="touchUpInside" id="TO2-tv-AVF"/>
+                                </connections>
+                            </button>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="elp-7Q-qoR">
+                                <rect key="frame" x="137" y="28" width="101" height="29"/>
+                                <segments>
+                                    <segment title="Text"/>
+                                    <segment title="Photo"/>
+                                </segments>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="QTv-y6-MsM" firstAttribute="top" secondItem="hBF-3v-Tec" secondAttribute="bottom" constant="200" id="bHv-QH-HAt"/>
-                            <constraint firstItem="hBF-3v-Tec" firstAttribute="top" secondItem="8Hs-g9-DE6" secondAttribute="bottom" constant="60" id="hnD-dO-lXg"/>
-                            <constraint firstItem="hBF-3v-Tec" firstAttribute="leading" secondItem="Ypg-Gq-hxg" secondAttribute="leadingMargin" id="yrQ-Hu-g9r"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="hBF-3v-Tec" secondAttribute="trailing" id="zts-Aj-N31"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="CWN-s3-0OE" secondAttribute="trailing" id="3D1-QO-dl5"/>
+                            <constraint firstItem="hWb-mN-HOS" firstAttribute="top" secondItem="9x6-7r-30B" secondAttribute="bottom" constant="350" id="7ui-Qe-2A7"/>
+                            <constraint firstItem="9x6-7r-30B" firstAttribute="top" secondItem="j9x-Hr-KXW" secondAttribute="bottom" constant="60" id="9Cz-xN-qjA"/>
+                            <constraint firstItem="Icc-Mv-BBU" firstAttribute="top" secondItem="9x6-7r-30B" secondAttribute="bottom" constant="23" id="DwO-O6-jbp"/>
+                            <constraint firstItem="elp-7Q-qoR" firstAttribute="centerX" secondItem="lfs-Kr-udQ" secondAttribute="centerX" id="Snt-yW-hEg"/>
+                            <constraint firstItem="elp-7Q-qoR" firstAttribute="top" secondItem="j9x-Hr-KXW" secondAttribute="bottom" constant="8" id="V5d-4N-Ie5"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="9x6-7r-30B" secondAttribute="leading" id="bDF-vb-NsN"/>
+                            <constraint firstItem="CWN-s3-0OE" firstAttribute="leading" secondItem="Icc-Mv-BBU" secondAttribute="trailing" constant="12" id="m0f-tf-naJ"/>
+                            <constraint firstItem="CWN-s3-0OE" firstAttribute="top" secondItem="9x6-7r-30B" secondAttribute="bottom" constant="15" id="pI7-qs-WsO"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="9x6-7r-30B" secondAttribute="trailing" id="xjJ-q5-Uzl"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Create" id="ixh-MU-IeK"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="charCount" destination="d0h-Hd-q51" id="7D4-Sc-ARL"/>
-                        <outlet property="postButton" destination="iNO-b0-fjn" id="Ezk-eA-ErV"/>
-                        <outlet property="postTextView" destination="l2I-57-J9F" id="iLr-LZ-1cU"/>
+                        <outlet property="charCountLabel" destination="Icc-Mv-BBU" id="IMR-SW-cGF"/>
+                        <outlet property="postButton" destination="CWN-s3-0OE" id="65n-gq-6Vk"/>
+                        <outlet property="postTextField" destination="9x6-7r-30B" id="qIr-FL-9VA"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="IKt-KO-12X" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h39-Py-3va" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1066.4000000000001" y="842.42878560719646"/>
-        </scene>
-        <!--Main-->
-        <scene sceneID="1VY-NW-i3t">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Main" id="Crc-Th-kfR" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HAU-0E-5Zf" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-513" y="898"/>
+            <point key="canvasLocation" x="-124" y="842.42878560719646"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="spray_can_50" width="50" height="50"/>
-    </resources>
 </document>

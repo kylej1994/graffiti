@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="gOu-UN-Bxg">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="gOu-UN-Bxg">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -21,22 +21,11 @@
                     <connections>
                         <segue destination="ltR-nt-Xlc" kind="relationship" relationship="viewControllers" id="opE-56-7g4"/>
                         <segue destination="4zO-DJ-obg" kind="relationship" relationship="viewControllers" id="bsg-MK-9Ng"/>
-                        <segue destination="4xh-ag-j8b" kind="relationship" relationship="viewControllers" id="Xt3-Nr-w90"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8PW-FP-JvK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1410" y="-123"/>
-        </scene>
-        <!--TextPost-->
-        <scene sceneID="6uh-HQ-WFC">
-            <objects>
-                <viewControllerPlaceholder storyboardName="TextPost" id="4xh-ag-j8b" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="W0L-Qf-E9n"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zvu-B2-etC" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1066" y="843"/>
         </scene>
         <!--UserProfile-->
         <scene sceneID="ovX-lp-JBA">

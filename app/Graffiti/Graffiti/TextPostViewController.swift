@@ -9,15 +9,17 @@
 import UIKit
 import CoreLocation
 
-class TextPostViewController: UIViewController, UITextViewDelegate {
+class TextPostViewController: UIViewController, UITextFieldDelegate {
 
     // MARK: Properties
     let locationManager = LocationService.sharedInstance
     var currentLatitude: CLLocationDegrees? = CLLocationDegrees()
     var currentLongitude: CLLocationDegrees? = CLLocationDegrees()
-    @IBOutlet weak var postTextView: UITextView!
+    var postText: String = String()
+    
     @IBOutlet weak var postButton: UIButton!
-    @IBOutlet weak var charCount: UITextView!
+    @IBOutlet weak var postTextField: UITextField!
+    @IBOutlet weak var charCountLabel: UILabel!
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -31,15 +33,11 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.postTextView.delegate = self
-        // Do any additional setup after loading the view.
         
-        postTextView.text = "What's new?"
-        postTextView.textColor = UIColor .lightGray
-        postTextView.layer.borderColor = UIColor.black.cgColor
-        postTextView.layer.borderWidth = 1.0
-        postTextView.layer.cornerRadius = 5.0
+        // handle text field's user input through delegate callbacks
+        postTextField.delegate = self
+        
+        postTextField.layer.cornerRadius = 5.0
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,32 +45,41 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
-        let numberOfChars = newText.characters.count
-        
-        if(numberOfChars > 140){
-            charCount.textColor = UIColor.red
-            charCount.text = String(140 - numberOfChars)
+    
+    // MARK: UITextFieldDelegate
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        postTextField.textColor = UIColor.black
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let numChars = textField.text!.characters.count +  (textField.text!.characters.count - range.length)
+        if numChars > 140 {
+            charCountLabel.textColor = UIColor.red
+            charCountLabel.text = String(140 - numChars)
+            postButton.isEnabled = false
+        } else if numChars == 0 {
             postButton.isEnabled = false
         } else {
-            charCount.textColor = UIColor.black
-            charCount.text = String(140 - numberOfChars)
+            charCountLabel.textColor = UIColor.gray
+            charCountLabel.text = String(140 - numChars)
             postButton.isEnabled = true
         }
         
         return true
     }
     
-    
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        postTextView.text = ""
-        postTextView.textColor = UIColor .black
-    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        postText = postTextField.text!
     }
     
-    @IBAction func postGraffiti(_ sender: UIButton) {
-        
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // Hide the keyboard.
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    
+    @IBAction func postTextGraffiti(_ sender: UIButton) {
         currentLongitude = locationManager.getLongitude()
         currentLatitude = locationManager.getLatitude()
         if currentLongitude == nil {
@@ -85,8 +92,6 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         }
         
         let location = CLLocation.init(latitude: currentLatitude!, longitude: currentLongitude!)
-    
-        let postText = postTextView.text!
         
         let newPost:Post = Post(location: location, text: postText)!
         
@@ -98,5 +103,8 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
                 print(error)
             }
         }
+        
+        // return to presenting view controller
+        let _ = self.navigationController?.popViewController(animated: true)
     }
 }
