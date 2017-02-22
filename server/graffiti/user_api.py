@@ -144,15 +144,15 @@ def get_user_posts(userid):
 	if (info is None or no_id or bad_token):
 		return generate_error_response(ERR_403_posts, 403)
 
-	if (user.get_google_aud != info['audCode'])
-		return generate_error_response(ERR_403_posts)
+	if (user.get_google_aud != info['audCode']):
+		return generate_error_response(ERR_403_posts, 403)
 
 	posts = Post.find_user_posts(userid)
 
 	to_rtn = {}
 	posts_arr = []
 	for post in posts:
-		posts_arr.append(post.to_json_fields_for_FE())
+		posts_arr.append(json.loads(post.to_json_fields_for_FE()))
 
 	to_rtn['posts'] = posts_arr
 
