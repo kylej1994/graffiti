@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class TextPostViewController: UIViewController, UITextFieldDelegate {
+class TextPostViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
 
     // MARK: Properties
     let locationManager = LocationService.sharedInstance
@@ -18,7 +18,7 @@ class TextPostViewController: UIViewController, UITextFieldDelegate {
     var postText: String = String()
     
     @IBOutlet weak var postButton: UIButton!
-    @IBOutlet weak var postTextField: UITextField!
+    @IBOutlet weak var postTextView: UITextView!
     @IBOutlet weak var charCountLabel: UILabel!
     
     override func viewDidAppear(_ animated: Bool) {
@@ -35,9 +35,8 @@ class TextPostViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         // handle text field's user input through delegate callbacks
-        postTextField.delegate = self
-        
-        postTextField.layer.cornerRadius = 5.0
+        postTextView.delegate = self
+        setupTextViewDisplay()
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,38 +44,43 @@ class TextPostViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    
-    // MARK: UITextFieldDelegate
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        postTextField.textColor = UIColor.black
+    func setupTextViewDisplay() {
+        postTextView.text = "What's happening?"
+        postTextView.textColor = UIColor .lightGray
+        postTextView.layer.borderColor = UIColor.black.cgColor
+        postTextView.layer.borderWidth = 1.0
+        postTextView.layer.cornerRadius = 5.0
     }
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let numChars = textField.text!.characters.count +  (textField.text!.characters.count - range.length)
-        if numChars > 140 {
+    // MARK: UITextViewDelegate
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
+        let numberOfChars = newText.characters.count
+        
+        if(numberOfChars > 140){
             charCountLabel.textColor = UIColor.red
-            charCountLabel.text = String(140 - numChars)
+            charCountLabel.text = String(140 - numberOfChars)
             postButton.isEnabled = false
-        } else if numChars == 0 {
+        } else if (numberOfChars == 0) {
             postButton.isEnabled = false
         } else {
-            charCountLabel.textColor = UIColor.gray
-            charCountLabel.text = String(140 - numChars)
+            charCountLabel.textColor = UIColor.black
+            charCountLabel.text = String(140 - numberOfChars)
             postButton.isEnabled = true
         }
+        return true
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        postTextView.text = ""
+        postTextView.textColor = UIColor.black
         
-        return true
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        postText = postTextField.text!
+    func textViewDidEndEditing(_ textView: UITextView) {
+        postText = postTextView.text!
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        // Hide the keyboard.
-        textField.resignFirstResponder()
-        return true
-    }
+    // should i show and hide the keyboard somewhere?
     
     
     @IBAction func postTextGraffiti(_ sender: UIButton) {
