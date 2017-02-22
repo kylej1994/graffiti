@@ -246,7 +246,6 @@ class FeedTableViewController: UITableViewController {
     
     // Refresh the feed (request posts from API and fill the table) when user pulls down on table
     func refreshFeed(sender: UIRefreshControl) {
-        print("we will refresh here")
         getPostsByLocation()
         self.tableView.reloadData()
         refreshControl?.endRefreshing()
