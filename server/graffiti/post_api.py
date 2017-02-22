@@ -96,23 +96,22 @@ def delete_post(postid):
 
 @post_api.route('/post/<int:postid>', methods=['GET'])
 def get_post(postid):
-	# no checking of authentication is happening yet...
-
-	# look for post
-	# if found, retrieve it and return jsonified object with 200
-	# if found but dif user, return 403
-	# if not found, return 404
 	post = Post.find_post(postid)
 	
 	if (post is None):
 		return generate_error_response(ERR_404, 404)
 
-	# email = request.environ['META_INFO']
-	# user_id = User.get_user_id_by_google_id(email['audCode'])
-	# if (post.get_poster_id() != user_id):
-	# 	return generate_error_response(ERR_403, 403)
+	info = request.environ['META_INFO']
+	no_id = request.environ['NOID']
+	bad_token = request.environ['BADTOKEN']
+	if (info is None or no_id or bad_token):
+		return generate_error_response(ERR_403, 403)
+	user = User.get_user_by_google_aud(info['audCode'])
 
-	return post.to_json_fields_for_FE(), 200
+	if (user is None):
+		return generate_error_response(ERR_403, 403)
+
+	return post.to_json_fields_for_FE(user.get_user_id()), 200
 
 @post_api.route('/post', methods=['GET'])
 def get_post_by_location():
@@ -124,10 +123,21 @@ def get_post_by_location():
 	radius = 5 # TODO find out what number this should be
 	posts = Post.find_posts_within_loc(lon, lat, radius)
 
+	info = request.environ['META_INFO']
+	no_id = request.environ['NOID']
+	bad_token = request.environ['BADTOKEN']
+	if (info is None or no_id or bad_token):
+		return generate_error_response(ERR_403, 403)
+	user = User.get_user_by_google_aud(info['audCode'])
+
+	if (user is None):
+		return generate_error_response(ERR_403, 403)
+
 	to_ret = {}
 	jsonified_posts = []
 	for post in posts:
-		jsonified_posts.append(json.loads(post.to_json_fields_for_FE()))
+		jsonified_posts.append(json.loads(post.to_json_fields_for_FE(\
+			user.get_user_id())))
 	to_ret['posts'] = jsonified_posts
 	return json.dumps(to_ret), 200
 
