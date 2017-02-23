@@ -99,6 +99,16 @@ class PostTests: XCTestCase {
             XCTAssertEqual(passPost.getLocation(), SUPERsecretLocation)
             XCTAssertEqual(passPost.getVisType(), .Private)
             XCTAssertEqual(passPost.getLifetime(), 7)
+            
+            // ==================================================== //
+            // ~~~~~~~~~~~~~~~~ Interation 4 Tests ~~~~~~~~~~~~~~~~ //
+            // ==================================================== //
+            
+            _ = passPost.setPostType(.ImagePost)
+            XCTAssertEqual(passPost.getPostType(), .ImagePost)
+            
+            // lol that's it
+            
         } catch {
             XCTFail("Wrong Error!")
         }
