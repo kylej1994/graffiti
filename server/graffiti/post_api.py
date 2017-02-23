@@ -25,7 +25,7 @@ fake_response = json.dumps(fake_dict)
 #string error messages
 ERR_400 = "Post information was invalid."
 ERR_403 = "Post is not owned by user."
-ERR_403_vote = "User has already voted."
+ERR_403_vote = "Post cannot be voted on by user."
 ERR_404 = "Post not found."
 
 def validate_vote(vote):
@@ -143,26 +143,31 @@ def get_post_by_location():
 
 @post_api.route('/post/<int:postid>/vote', methods=['PUT'])
 def vote_post(postid):
-	vote = int(request.get_json()['vote'])
+	data = request.get_json()
+	info = request.environ['META_INFO']
+	no_id = request.environ['NOID']
+	bad_token = request.environ['BADTOKEN']
+	if (info is None or no_id or bad_token):
+		return generate_error_response(ERR_403_vote, 403)
+	user = User.get_user_by_google_aud(info['audCode'])
+
+	if (user is None):
+		return generate_error_response(ERR_403_vote, 403)
+
+	# checks for necessary data params
+	if ('vote' not in data):
+		return generate_error_response(ERR_400, 400)
+
+	# create a new post and add it to the db session
+	vote = int(data['vote'])
+
+	# find the post to vote on
 	post = Post.find_post(postid)
 
 	if (post is None):
 		return generate_error_response(ERR_404, 404)
 
-	info = request.environ['META_INFO']
-	no_id = request.environ['NOID']
-	bad_token = request.environ['BADTOKEN']
-	if (info is None or no_id or bad_token):
-		return generate_error_response(ERR_403, 403)
-	user = User.get_user_by_google_aud(info['audCode'])
+	# Call apply_vote
+	apply_vote(user.get_user_id(), postid, vote)
 
-	if (user is None):
-		return generate_error_response(ERR_403, 403)
-
-	# determine whether it is an upvote or downvote
-	# look through User-Posts table to determine if the specified user has
-	# already voted on this post
-	# modify accordingly (using Post.apply_vote? maybe)
-
-	# post.set_vote(vote)
 	return post.to_json_fields_for_FE(), 200
