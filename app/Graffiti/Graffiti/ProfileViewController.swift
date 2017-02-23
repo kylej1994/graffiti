@@ -14,13 +14,17 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     var user: User? = nil
     
     @IBOutlet var tableView: UITableView!
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        tableView.reloadData()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.contentInset.top = 20
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         if let user = appDelegate.currentUser {
             print("app delegate current user can be unwrapped")
