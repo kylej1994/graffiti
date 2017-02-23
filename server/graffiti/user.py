@@ -14,7 +14,7 @@ import re
 EMAIL_REGEX = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
 class User(db.Model):
-    __tablename__ = 'user'
+    __tablename__ = 'users'
 
     # Only alnum or _ in username. Between 3 and 25 chars inclusive
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
