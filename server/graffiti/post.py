@@ -7,8 +7,7 @@ from sqlalchemy.dialects.postgresql import JSON
 from user import User
 from userpost import UserPost
 
-from datetime import datetime
-from time import time
+import time
 
 from geoalchemy2.elements import WKTElement
 from geoalchemy2.functions import ST_DFullyWithin
@@ -24,7 +23,7 @@ class Post(db.Model):
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
     loc = db.Column(Geometry(geometry_type='POINT', srid=4326))
-    created_at = db.Column(db.DateTime)
+    created_at = db.Column(db.Float)
     poster_id = db.Column(db.Integer)
     num_votes = db.Column(db.Integer)
 
@@ -32,7 +31,7 @@ class Post(db.Model):
         self.text = text
         self.longitude = longitude
         self.latitude = latitude
-        self.created_at = datetime.fromtimestamp(time()).isoformat()
+        self.created_at = time.time()
         self.poster_id = poster_id
         self.num_votes = 0
         # latitude comes first
@@ -42,17 +41,20 @@ class Post(db.Model):
     def __repr__(self):
         return '<post_id {}>'.format(self.post_id)
 
-    def to_json_fields_for_FE(self):
-        user = db.session.query(User).filter(User.user_id==self.poster_id).first()
+    def to_json_fields_for_FE(self, current_user_id):
+        user = User.find_user_by_id(self.poster_id)
+        cur_user_vote = UserPost.get_vote_by_ids(current_user_id, self.post_id)
+        cur_user_vote = cur_user_vote if cur_user_vote else 0
         return json.dumps(dict(
             postid=self.post_id,
             text=self.text,
             location=dict(
                 longitude=self.longitude,
                 latitude=self.latitude),
-            created_at=str(self.created_at),
+            created_at=self.created_at,
             poster=user.to_json_fields_for_FE(),
-            num_votes=self.num_votes))
+            num_votes=self.num_votes,
+            current_user_vote=cur_user_vote))
 
     def get_poster_id(self):
         return self.poster_id
