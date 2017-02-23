@@ -144,7 +144,7 @@ def get_user_posts(userid):
 	if (info is None or no_id or bad_token):
 		return generate_error_response(ERR_403_posts, 403)
 
-	if (user.get_google_aud != info['audCode']):
+	if (user.get_google_aud() != info['audCode']):
 		return generate_error_response(ERR_403_posts, 403)
 
 	posts = Post.find_user_posts(userid)
