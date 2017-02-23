@@ -17,7 +17,7 @@ class TextPostViewController: UIViewController, UITextViewDelegate, UIImagePicke
     var currentLatitude: CLLocationDegrees? = CLLocationDegrees()
     var currentLongitude: CLLocationDegrees? = CLLocationDegrees()
     
-    @IBOutlet weak var text_photoToggle: UISegmentedControl!
+    
     @IBOutlet weak var postButton: UIButton!
     @IBOutlet weak var postTextView: UITextView!
     @IBOutlet weak var charCountLabel: UILabel!
