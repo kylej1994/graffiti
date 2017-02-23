@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ejl-bh-ipv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C68" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ejl-bh-ipv">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -107,7 +107,7 @@
                     <navigationItem key="navigationItem" title="Feed" id="ELO-Y3-tf9">
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="cmE-m1-wv0">
                             <connections>
-                                <segue destination="PCG-gw-YFa" kind="presentation" identifier="CreatePost" id="LQw-yR-CBP"/>
+                                <segue destination="PCG-gw-YFa" kind="presentation" id="mV9-kY-Wkd"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -125,7 +125,7 @@
         <!--TextPost-->
         <scene sceneID="opk-R0-b5w">
             <objects>
-                <viewControllerPlaceholder storyboardIdentifier="TextPost" storyboardName="TextPost" id="PCG-gw-YFa" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardIdentifier="Post" storyboardName="TextPost" id="PCG-gw-YFa" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PK2-9x-Xoe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1244" y="-587"/>

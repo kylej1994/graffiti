@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class TextPostViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate {
+class TextPostViewController: UIViewController, UITextViewDelegate {
 
     // MARK: Properties
     let charLimit = 140
