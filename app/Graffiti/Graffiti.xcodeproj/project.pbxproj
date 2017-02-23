@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C5C40A81E5E826F0073FE69 /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5C40A71E5E826F0073FE69 /* FXBlurView.m */; };
 		598B435CBAD828D29AE71840 /* Pods_Graffiti.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 713DC8BD02EAC92DE23868C8 /* Pods_Graffiti.framework */; };
 		6FCDE8E4BD77B03A8F9D7EF3 /* Pods_GraffitiUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABFD6572D47051DFF80F7CD /* Pods_GraffitiUITests.framework */; };
 		73B16FB379DB7A340DB7C596 /* Pods_Graffiti_GraffitiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9191DEE2EC7B404737422033 /* Pods_Graffiti_GraffitiTests.framework */; };
@@ -85,6 +86,8 @@
 		0A8894365BAFDF25351179FA /* Pods-GraffitiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraffitiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GraffitiTests/Pods-GraffitiTests.release.xcconfig"; sourceTree = "<group>"; };
 		1ABFD6572D47051DFF80F7CD /* Pods_GraffitiUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraffitiUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		49AA21F62EF3FDFA9DD4607E /* Pods-GraffitiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraffitiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GraffitiTests/Pods-GraffitiTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4C5C40A61E5E826F0073FE69 /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FXBlurView.h; path = "../../../../Downloads/TB_TwitterUI-master/TB_TwitterHeader/FXBlurView.h"; sourceTree = "<group>"; };
+		4C5C40A71E5E826F0073FE69 /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FXBlurView.m; path = "../../../../Downloads/TB_TwitterUI-master/TB_TwitterHeader/FXBlurView.m"; sourceTree = "<group>"; };
 		6672CC941A4504DECB751DAE /* Pods-Graffiti.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Graffiti.release.xcconfig"; path = "Pods/Target Support Files/Pods-Graffiti/Pods-Graffiti.release.xcconfig"; sourceTree = "<group>"; };
 		713DC8BD02EAC92DE23868C8 /* Pods_Graffiti.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Graffiti.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A8D950DFCFCDB465E06D7E9 /* Pods-Graffiti.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Graffiti.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Graffiti/Pods-Graffiti.debug.xcconfig"; sourceTree = "<group>"; };
@@ -234,6 +237,8 @@
 				AD84BD391E4947330020505D /* LaunchScreen.storyboard */,
 				AD84BD301E4947330020505D /* AppDelegate.swift */,
 				AD84BD371E4947330020505D /* Assets.xcassets */,
+				4C5C40A61E5E826F0073FE69 /* FXBlurView.h */,
+				4C5C40A71E5E826F0073FE69 /* FXBlurView.m */,
 				F744D4121E4E77C300C42677 /* GoogleService-Info.plist */,
 				F7B0C1121E4AD29E00ED031B /* Graffiti-Bridging-Header.h */,
 			);
@@ -633,6 +638,7 @@
 			files = (
 				AD84BD611E49496D0020505D /* TextPostViewController.swift in Sources */,
 				D9B5FAEB1E54FF9300DF87B2 /* LocationTransform.swift in Sources */,
+				4C5C40A81E5E826F0073FE69 /* FXBlurView.m in Sources */,
 				AD84BD631E4949860020505D /* ProfileViewController.swift in Sources */,
 				D9141CA91E58E71C00FA04D0 /* AuthProtocol.swift in Sources */,
 				B33B07D01E4ACA8F007025FB /* User.swift in Sources */,

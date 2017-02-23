@@ -10,6 +10,17 @@ import UIKit
 
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    //~~//
+    let offset_HeaderStop:CGFloat = 40.0 // At this offset the Header stops its transformations
+    let offset_B_LabelHeader:CGFloat = 95.0 // At this offset the Black label reaches the Header
+    let distance_W_LabelHeader:CGFloat = 35.0 // The distance between the bottom of the Header and the top of the White Label
+    
+    @IBOutlet weak var header: UIView!
+    @IBOutlet weak var headerLabel: UILabel!
+    @IBOutlet weak var bioLabel: UILabel!
+    
+    @IBOutlet weak var profilePicture: UIImageView!
+   
     var posts: [Post] = []
     var user: User? = nil
     
@@ -18,7 +29,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.contentInset.top = 20
+        //tableView.contentInset.top = 20
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
@@ -28,14 +39,16 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         } else {
             print("sadness")
         }
-
         
-        DispatchQueue.main.async {
+        // DispatchQueue.main.async {
             self.getPostsByUser()
-        }
+        //}
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        
+        headerLabel.text = user?.getUsername()
+        bioLabel.text = user?.getBio()
 
     }
     
@@ -60,7 +73,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.posts.count + 1
+        return self.posts.count
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -70,40 +83,21 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     // create a cell for each table view row
     // would be nice to be able to reuse FeedViewController code...
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if(indexPath.row == 0){
-            let cellReuseIdentifier = "header"
-            let cell:ProfileHeaderCell = self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as! ProfileHeaderCell
-            tableView.rowHeight = 160
-            if let username = user!.getUsername() {
-                cell.usernameLabel.text = username
-            }
-            
-            if let tag = user!.getUserImage() {
-                cell.profileImageView.image = tag
-            }
-            
-            if let bio = user!.getBio() {
-                cell.bioLabel.text = bio
-            }
-        
-            return cell
-        } else {
-            let cellIdentifier = "FeedCell"
-            // downcast cell to the custom cell class
-            // guard safely unwraps the optional
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? FeedTableViewTextCell else {
-                fatalError("The dequeue cell is not an instance of FeedTableViewTextCell.")
-            }
-            
-            // this is where we get the post from the post model
-            let post = posts[indexPath.row - 1]
-            
-            cell.textView.text = post.getText()
-            setRatingDisplay(cell: cell, post: post)
-            setDateDisplay(cell: cell, post: post)
-            
-            return cell
+        let cellIdentifier = "FeedCell"
+        // downcast cell to the custom cell class
+        // guard safely unwraps the optional
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? FeedTableViewTextCell else {
+            fatalError("The dequeue cell is not an instance of FeedTableViewTextCell.")
         }
+            
+        // this is where we get the post from the post model
+        let post = posts[indexPath.row]
+            
+        cell.textView.text = post.getText()
+        setRatingDisplay(cell: cell, post: post)
+        setDateDisplay(cell: cell, post: post)
+            
+        return cell
     }
     
     func setRatingDisplay(cell: FeedTableViewTextCell, post: Post) {
