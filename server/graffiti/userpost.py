@@ -37,8 +37,12 @@ class UserPost(db.Model):
         self.vote = vote
         db.session.commit()
 
+    # returns none if the specified user has not voted on the specified post
     @staticmethod
-    def get_votes_by_ids(user_id, post_id):
-        return db.session.query(UserPost).filter(UserPost.post_id==post_id and \
-            UserPost.user_id==user_id).first().get_vote()
+    def get_vote_by_ids(user_id, post_id):
+        try:
+            return db.session.query(UserPost).filter(UserPost.post_id==post_id\
+                and UserPost.user_id==user_id).first().get_vote()
+        except:
+            return None
     

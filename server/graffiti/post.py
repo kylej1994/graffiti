@@ -41,8 +41,10 @@ class Post(db.Model):
     def __repr__(self):
         return '<post_id {}>'.format(self.post_id)
 
-    def to_json_fields_for_FE(self):
-        user = db.session.query(User).filter(User.user_id==self.poster_id).first()
+    def to_json_fields_for_FE(self, current_user_id):
+        user = User.find_user_by_id(self.poster_id)
+        cur_user_vote = UserPost.get_vote_by_id(current_user_id, self.post_id)
+        cur_user_vote = cur_user_vote if cur_user_vote else 0
         return json.dumps(dict(
             postid=self.post_id,
             text=self.text,
@@ -51,7 +53,8 @@ class Post(db.Model):
                 latitude=self.latitude),
             created_at=self.created_at,
             poster=user.to_json_fields_for_FE(),
-            num_votes=self.num_votes))
+            num_votes=self.num_votes,
+            current_user_vote=cur_user_vote))
 
     def get_poster_id(self):
         return self.poster_id
