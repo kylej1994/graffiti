@@ -22,16 +22,20 @@ class FeedTableViewController: UITableViewController {
     // we load the data in view did appear so the feed gets filled asap
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+        locationManager.startUpdatingLocation()
         DispatchQueue.main.async {
             self.getPostsByLocation()
             self.tableView.reloadData()
         }
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        locationManager.stopUpdatingLocation()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        locationManager.startUpdatingLocation()
         
         DispatchQueue.main.async {
             self.getPostsByLocation()
@@ -242,7 +246,6 @@ class FeedTableViewController: UITableViewController {
     
     // Refresh the feed (request posts from API and fill the table) when user pulls down on table
     func refreshFeed(sender: UIRefreshControl) {
-        print("we will refresh here")
         getPostsByLocation()
         self.tableView.reloadData()
         refreshControl?.endRefreshing()

@@ -3,6 +3,7 @@ import json
 
 from flask import Blueprint, request
 from post import Post
+from user import User
 from userpost import UserPost
 
 post_api = Blueprint('post_api', __name__)
@@ -53,26 +54,22 @@ def create_post():
 	text = str(data['text'])
 	lon = (float)(data['location']['longitude'])
 	lat = (float)(data['location']['latitude'])
-	# TODO retrieve idToken to find poster_id
-	# make sure this user exists
-	user_id = 1
 
-	#validates the text field for the post
-	# if (self.validate_text(text) == False):
-	# 	return generate_error_response(ERR_400, 400); 
+	info = request.environ['META_INFO']
+	no_id = request.environ['NOID']
+	bad_token = request.environ['BADTOKEN']
+	if (info is None or no_id or bad_token):
+		return generate_error_response(ERR_400, 400)
+	user = User.get_user_by_google_aud(info['audCode'])
 
-	# email = request.environ['META_INFO']
-	# user_id = User.get_user_id_by_google_id(email['audCode'])
-	# google_aud = email['audCode']
-
-	#validates the text field for the post
-	if (not validate_text(text)):
+	if (user is None or not validate_text(text)):
 		return generate_error_response(ERR_400, 400)
 
+	user_id = user.get_user_id()
 	post = Post(text, lon, lat, user_id)
 	post.save_post()
 
-	return post.to_json_fields_for_FE(), 200
+	return post.to_json_fields_for_FE(user_id), 200
 
 @post_api.route('/post/<int:postid>', methods=['DELETE'])
 def delete_post(postid):
@@ -82,39 +79,39 @@ def delete_post(postid):
 	if (post is None):
 		return generate_error_response(ERR_404, 404)
 
-	# TODO check user_id
-	# if (post.get_user_id() != request.get_json()['user_id']):
-	# 	return generate_error_response(ERR_403, 403);
+	info = request.environ['META_INFO']
+	no_id = request.environ['NOID']
+	bad_token = request.environ['BADTOKEN']
+	if (info is None or no_id or bad_token):
+		return generate_error_response(ERR_403, 403)
+	user = User.get_user_by_google_aud(info['audCode'])
 
-	# email = request.environ['META_INFO']
-	# user_id = User.get_user_id_by_google_id(email['audCode'])
-	# if (post.get_poster_id() != user_id):
-	# 	return generate_error_response(ERR_403, 403)
+	if (user is None or post.get_user_id() != user.get_user_id()):
+		return generate_error_response(ERR_403, 403)
 
-	jsonified_post = post.to_json_fields_for_FE()
+	jsonified_post = post.to_json_fields_for_FE(user.get_user_id())
 	post.delete_post()
 
 	return jsonified_post, 200
 
 @post_api.route('/post/<int:postid>', methods=['GET'])
 def get_post(postid):
-	# no checking of authentication is happening yet...
-
-	# look for post
-	# if found, retrieve it and return jsonified object with 200
-	# if found but dif user, return 403
-	# if not found, return 404
 	post = Post.find_post(postid)
 	
 	if (post is None):
 		return generate_error_response(ERR_404, 404)
 
-	# email = request.environ['META_INFO']
-	# user_id = User.get_user_id_by_google_id(email['audCode'])
-	# if (post.get_poster_id() != user_id):
-	# 	return generate_error_response(ERR_403, 403)
+	info = request.environ['META_INFO']
+	no_id = request.environ['NOID']
+	bad_token = request.environ['BADTOKEN']
+	if (info is None or no_id or bad_token):
+		return generate_error_response(ERR_403, 403)
+	user = User.get_user_by_google_aud(info['audCode'])
 
-	return post.to_json_fields_for_FE(), 200
+	if (user is None):
+		return generate_error_response(ERR_403, 403)
+
+	return post.to_json_fields_for_FE(user.get_user_id()), 200
 
 @post_api.route('/post', methods=['GET'])
 def get_post_by_location():
@@ -126,31 +123,46 @@ def get_post_by_location():
 	radius = 5 # TODO find out what number this should be
 	posts = Post.find_posts_within_loc(lon, lat, radius)
 
+	info = request.environ['META_INFO']
+	no_id = request.environ['NOID']
+	bad_token = request.environ['BADTOKEN']
+	if (info is None or no_id or bad_token):
+		return generate_error_response(ERR_403, 403)
+	user = User.get_user_by_google_aud(info['audCode'])
+
+	if (user is None):
+		return generate_error_response(ERR_403, 403)
+
 	to_ret = {}
 	jsonified_posts = []
 	for post in posts:
-		jsonified_posts.append(json.loads(post.to_json_fields_for_FE()))
+		jsonified_posts.append(json.loads(post.to_json_fields_for_FE(\
+			user.get_user_id())))
 	to_ret['posts'] = jsonified_posts
 	return json.dumps(to_ret), 200
 
 @post_api.route('/post/<int:postid>/vote', methods=['PUT'])
 def vote_post(postid):
-	# no checking of authentication is happening yet...
+	vote = int(request.get_json()['vote'])
+	post = Post.find_post(postid)
+
+	if (post is None):
+		return generate_error_response(ERR_404, 404)
+
+	info = request.environ['META_INFO']
+	no_id = request.environ['NOID']
+	bad_token = request.environ['BADTOKEN']
+	if (info is None or no_id or bad_token):
+		return generate_error_response(ERR_403, 403)
+	user = User.get_user_by_google_aud(info['audCode'])
+
+	if (user is None):
+		return generate_error_response(ERR_403, 403)
 
 	# determine whether it is an upvote or downvote
 	# look through User-Posts table to determine if the specified user has
 	# already voted on this post
-	# modify accordingly
-	# return postid of post and new num votes
+	# modify accordingly (using Post.apply_vote? maybe)
 
-	vote = int(request.get_json()['vote'])
-	post = Post.find_post(postid)
-
-	# checks if user has already voted
-	email = request.environ['META_INFO']
-	user_id = User.get_user_id_by_google_id(email['audCode'])
-	if (post.get_poster_id() != user_id):
-		return generate_error_response(ERR_403, 403)
-
-	post.set_vote(vote)
+	# post.set_vote(vote)
 	return post.to_json_fields_for_FE(), 200

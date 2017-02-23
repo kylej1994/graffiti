@@ -23,7 +23,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="159"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HKn-pQ-lNR" id="cwF-gP-YuW">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="158"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="158.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cat-prof-100" translatesAutoresizingMaskIntoConstraints="NO" id="bJq-zl-Y9L">
@@ -77,7 +77,7 @@
                                 <rect key="frame" x="0.0" y="187" width="375" height="159"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eUv-ST-CRp" id="VyF-wB-ggM">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="158"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="158.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Text post body goes here. Hardest part of finals: finding an open reg cubicle." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="lUW-2p-jIr">
@@ -133,7 +133,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GEV-Pl-Jxa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-68" y="127.28635682158921"/>
+            <point key="canvasLocation" x="-711" y="57"/>
         </scene>
     </scenes>
     <resources>
