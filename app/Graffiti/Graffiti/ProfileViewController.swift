@@ -83,6 +83,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     // create a cell for each table view row
     // would be nice to be able to reuse FeedViewController code...
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        tableView.rowHeight = 160
+        
         let cellIdentifier = "FeedCell"
         // downcast cell to the custom cell class
         // guard safely unwraps the optional
