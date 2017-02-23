@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class TextPostViewController: UIViewController, UITextViewDelegate {
+class TextPostViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate {
 
     // MARK: Properties
     let charLimit = 140
@@ -17,6 +17,7 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
     var currentLatitude: CLLocationDegrees? = CLLocationDegrees()
     var currentLongitude: CLLocationDegrees? = CLLocationDegrees()
     
+    @IBOutlet weak var text_photoToggle: UISegmentedControl!
     @IBOutlet weak var postButton: UIButton!
     @IBOutlet weak var postTextView: UITextView!
     @IBOutlet weak var charCountLabel: UILabel!
@@ -101,6 +102,8 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         // return to presenting view controller
         dismiss(animated: true, completion: nil)
     }
+
+        
     
     @IBAction func tapCancel(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)

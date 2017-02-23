@@ -42,6 +42,9 @@
                                     <segment title="Text"/>
                                     <segment title="Photo"/>
                                 </segments>
+                                <connections>
+                                    <action selector="segmentcontrolaction:" destination="4G5-6D-FEh" eventType="valueChanged" id="C8o-Za-HDh"/>
+                                </connections>
                             </segmentedControl>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="8aG-3Q-96z">
                                 <rect key="frame" x="16" y="118" width="343" height="206"/>
@@ -75,18 +78,19 @@
                         <outlet property="charCountLabel" destination="Icc-Mv-BBU" id="IMR-SW-cGF"/>
                         <outlet property="postButton" destination="CWN-s3-0OE" id="65n-gq-6Vk"/>
                         <outlet property="postTextView" destination="8aG-3Q-96z" id="jlQ-Az-0dg"/>
+                        <outlet property="text_photoToggle" destination="elp-7Q-qoR" id="uGN-CD-MOt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h39-Py-3va" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="815.20000000000005" y="842.42878560719646"/>
+            <point key="canvasLocation" x="881" y="842"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="tys-BJ-5HA">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="RVC-fD-mP6" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="7dE-YI-aW6">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="7dE-YI-aW6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
