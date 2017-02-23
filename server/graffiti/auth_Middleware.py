@@ -53,7 +53,7 @@ class Auth_MiddleWare(object):
         #Successful Validation
         try:
             idinfo = client.verify_id_token(token, GOOGLE_CLIENT_ID)
-            audCode = idinfo['aud']
+            audCode = idinfo['sub']
             gmail = idinfo['email']
             # user_id =
             return_info = dict([('email', gmail), ('audCode', audCode)])
