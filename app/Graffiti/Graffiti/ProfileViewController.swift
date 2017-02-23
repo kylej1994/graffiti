@@ -25,13 +25,18 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     var user: User? = nil
     
     @IBOutlet var tableView: UITableView!
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        getPostsByUser()
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //tableView.contentInset.top = 20
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         if let user = appDelegate.currentUser {
             print("app delegate current user can be unwrapped")
@@ -40,9 +45,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             print("sadness")
         }
         
-        // DispatchQueue.main.async {
-            self.getPostsByUser()
-        //}
+        self.getPostsByUser()
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
