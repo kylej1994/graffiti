@@ -14,7 +14,7 @@ import re
 EMAIL_REGEX = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
 class User(db.Model):
-    __tablename__ = 'user'
+    __tablename__ = 'users'
 
     # Only alnum or _ in username. Between 3 and 25 chars inclusive
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -164,5 +164,11 @@ class User(db.Model):
     # finds a user given a user id
     # returns None if user_id is not in the db
     @staticmethod
-    def find_user(user_id):
+    def find_user_by_id(user_id):
         return db.session.query(User).filter(User.user_id==user_id).first()
+
+    # finds a user given a username
+    # returns None if username is not in the db
+    @staticmethod
+    def find_user_by_username(username):
+        return db.session.query(User).filter(User.username==username).first()

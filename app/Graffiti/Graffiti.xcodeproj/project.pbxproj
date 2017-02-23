@@ -11,7 +11,6 @@
 		598B435CBAD828D29AE71840 /* Pods_Graffiti.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 713DC8BD02EAC92DE23868C8 /* Pods_Graffiti.framework */; };
 		6FCDE8E4BD77B03A8F9D7EF3 /* Pods_GraffitiUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABFD6572D47051DFF80F7CD /* Pods_GraffitiUITests.framework */; };
 		73B16FB379DB7A340DB7C596 /* Pods_Graffiti_GraffitiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9191DEE2EC7B404737422033 /* Pods_Graffiti_GraffitiTests.framework */; };
-		766D1D3684E13C8778E03EA6 /* Pods_GraffitiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0DF8A503BE07DFF08436AA1 /* Pods_GraffitiTests.framework */; };
 		AD03CF721E4D5AB2003D3682 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD03CF711E4D5AB2003D3682 /* LocationService.swift */; };
 		AD03CF761E4E4BB7003D3682 /* MockLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD03CF751E4E4BB7003D3682 /* MockLocationManager.swift */; };
 		AD03CF781E4E4C91003D3682 /* LocationManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD03CF771E4E4C91003D3682 /* LocationManagerProtocol.swift */; };
@@ -126,7 +125,6 @@
 		AD87E4531E5BB152007B6E12 /* ProfileHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileHeaderCell.swift; sourceTree = "<group>"; };
 		ADA147E95DA84165A40FB7DE /* Pods-GraffitiUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraffitiUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GraffitiUITests/Pods-GraffitiUITests.release.xcconfig"; sourceTree = "<group>"; };
 		ADD7F76E1E551F8A009BADC1 /* EmptyFeedBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyFeedBackgroundView.swift; sourceTree = "<group>"; };
-		B0DF8A503BE07DFF08436AA1 /* Pods_GraffitiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraffitiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B33B07CB1E4AB6D2007025FB /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		B33B07CF1E4ACA8F007025FB /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		B35620C21E4D396400F8CC9E /* PostTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTest.swift; sourceTree = "<group>"; };
@@ -160,7 +158,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				766D1D3684E13C8778E03EA6 /* Pods_GraffitiTests.framework in Frameworks */,
 				73B16FB379DB7A340DB7C596 /* Pods_Graffiti_GraffitiTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -341,7 +338,6 @@
 			isa = PBXGroup;
 			children = (
 				713DC8BD02EAC92DE23868C8 /* Pods_Graffiti.framework */,
-				B0DF8A503BE07DFF08436AA1 /* Pods_GraffitiTests.framework */,
 				1ABFD6572D47051DFF80F7CD /* Pods_GraffitiUITests.framework */,
 				9191DEE2EC7B404737422033 /* Pods_Graffiti_GraffitiTests.framework */,
 			);
