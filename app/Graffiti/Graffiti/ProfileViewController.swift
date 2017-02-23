@@ -28,11 +28,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         } else {
             print("sadness")
         }
-
         
-        DispatchQueue.main.async {
-            self.getPostsByUser()
-        }
+        self.getPostsByUser()
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
