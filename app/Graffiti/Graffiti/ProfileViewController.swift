@@ -20,6 +20,16 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         tableView.contentInset.top = 20
         
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        if let user = appDelegate.currentUser {
+            print("app delegate current user can be unwrapped")
+            self.user = user
+        } else {
+            print("sadness")
+        }
+
+        
         DispatchQueue.main.async {
             self.getPostsByUser()
         }
@@ -30,14 +40,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func getPostsByUser() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        if let user = appDelegate.currentUser {
-            print("app delegate current user can be unwrapped")
-            self.user = user
-        } else {
-            print("sadness")
-        }
         
         let uId: Int = user!.getId()
         
@@ -94,7 +96,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
             
             // this is where we get the post from the post model
-            let post = posts[indexPath.row]
+            let post = posts[indexPath.row - 1]
             
             cell.textView.text = post.getText()
             setRatingDisplay(cell: cell, post: post)

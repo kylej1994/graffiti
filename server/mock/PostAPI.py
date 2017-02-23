@@ -1,4 +1,4 @@
-import datetime
+import time
 import json
 
 from flask import Blueprint, request
@@ -21,7 +21,7 @@ fake_dict = dict(
 		location=dict(
 			longitude=41.792279,
 			latitude=-87.599954),
-		created_at=datetime.datetime(1995, 05, 23, 11, 11, 11, 111).isoformat(),
+		created_at=time.time(),
 		poster=fake_user,
 		current_user_vote=1,
 		num_votes=102)
