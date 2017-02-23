@@ -18,7 +18,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        tableView.reloadData()
+        getPostsByUser()
     }
     
     override func viewDidLoad() {
@@ -33,7 +33,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             print("sadness")
         }
         
-        self.getPostsByUser()
+        getPostsByUser()
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
