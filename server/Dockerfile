@@ -25,3 +25,4 @@ RUN pip install psycopg2
 RUN pip install requests
 
 ADD graffiti/__init__.py /graffiti/__init__.py
+# add the rest of the files too
