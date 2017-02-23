@@ -43,7 +43,7 @@ class Post(db.Model):
 
     def to_json_fields_for_FE(self, current_user_id):
         user = User.find_user_by_id(self.poster_id)
-        cur_user_vote = UserPost.get_vote_by_id(current_user_id, self.post_id)
+        cur_user_vote = UserPost.get_vote_by_ids(current_user_id, self.post_id)
         cur_user_vote = cur_user_vote if cur_user_vote else 0
         return json.dumps(dict(
             postid=self.post_id,
