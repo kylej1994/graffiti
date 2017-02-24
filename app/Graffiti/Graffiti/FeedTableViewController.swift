@@ -68,7 +68,7 @@ class FeedTableViewController: UITableViewController {
                 }
             case .failure(let error):
                 print(error)
-                // show an alert that we couldn't load posts?
+                self.showFeedFailureAlert()
             }
         }
     }
@@ -257,6 +257,17 @@ class FeedTableViewController: UITableViewController {
     func getFormattedDate(date: Date) -> String {
         let formatter = DateFormatter()
         return formatter.timeSince(from: date as NSDate, numericDates: true)
+    }
+    
+    func showAlert(messageTitle: String, message: String) {
+        let alertController = UIAlertController(title: messageTitle, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func showFeedFailureAlert() {
+        showAlert(messageTitle: "Can't load latest posts", message: "")
     }
 
 }
