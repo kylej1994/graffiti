@@ -12,7 +12,7 @@ import UIKit
 extension FeedTableViewController {
     func setupEmptyBackgroundView() {
         let emptyView = UIView(frame: view.bounds)
-        emptyView.addSubview(label(withMessage: "There's nothing nearby"))
+        emptyView.addSubview(label(withMessage: "Looking for posts..."))
         tableView.backgroundView = emptyView
         view.setNeedsLayout()
         view.layoutIfNeeded()
