@@ -64,6 +64,15 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let whitespaceSet = NSCharacterSet.whitespacesAndNewlines
+        if let _ = string.rangeOfCharacter(from: whitespaceSet) {
+            return false
+        } else {
+            return true
+        }
+    }
+    
     func showAlert(messageTitle: String, message: String) {
         let alertController = UIAlertController(title: messageTitle, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
