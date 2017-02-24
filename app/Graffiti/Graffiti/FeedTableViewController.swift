@@ -21,14 +21,14 @@ class FeedTableViewController: UITableViewController {
     
     // we load the data in view did appear so the feed gets filled asap
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
+        super.viewDidAppear(animated)
         locationManager.startUpdatingLocation()
 
         self.getPostsByLocation()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(true)
+        super.viewDidDisappear(animated)
         locationManager.stopUpdatingLocation()
     }
     
@@ -210,9 +210,9 @@ class FeedTableViewController: UITableViewController {
                     print("sending vote")
                     if let postFromServer = response.result.value {
                         // set post rating and vote based on the server's response
-                        // not sure if this eliminates some of the frontend logic...
                         post.setRating(postFromServer.getRating())
                         post.setVote(postFromServer.getVote())
+                        self.tableView.reloadData()
                         print("just updated post model: vote: \(post.getVote()) rating: \(post.getRating())")
                     }
                 case .failure(let error):
