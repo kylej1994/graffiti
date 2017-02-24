@@ -144,44 +144,64 @@ class PostTestCase(APITestCase):
         self.check_post_fields(
             data[1], 4, 'post_location_2', location, 0)
 
-    # def test_vote_on_post(self):
-    #     post_text = 'omg first graffiti post'
-    #     lat = 29.12123
-    #     lon = 32.12943
-    #     location = dict(
-    #         latitude=lat,
-    #         longitude=lon)
-    #     self.create_post(post_text, location)
+    def test_vote_on_post(self):
+        post_text = 'omg first graffiti post'
+        lat = 29.12123
+        lon = 32.12943
+        location = dict(
+            latitude=lat,
+            longitude=lon)
+        self.create_post(post_text, location)
 
-    #     # upvote by 1 vote, twice
-    #     self.app.put('/post/postid=1',
-    #             data=dict(vote=1),
-    #             headers=dict(
-    #                 idToken=9402234123712),
-    #         follow_redirects=True)
-    #     rv = self.app.put('/post/postid=1',
-    #             data=dict(vote=1),
-    #             headers=dict(
-    #                 idToken=9402234123712),
-    #         follow_redirects=True)
+        # upvote by 1 vote, twice
+        rv0 = self.app.put('/post/postid=1',
+                data=dict(vote=1),
+                headers=dict(
+                    idToken=9402234123712),
+            follow_redirects=True)
+        rv1 = self.app.put('/post/postid=1',
+                data=dict(vote=1),
+                headers=dict(
+                    idToken=9402234123712),
+            follow_redirects=True)
 
-    #     assert rv.status_code == 200
+        # downvote
+        rv2 = self.app.put('/post/postid=1',
+                data=dict(vote=-3),
+                headers=dict(
+                    idToken=9402234123712),
+            follow_redirects=True)
 
-    #     data = json.loads(rv.data)
-    #     assert data['postid'] == 1
-    #     assert data['num_vote'] == 2
+        assert rv0.status_code == 200
+        assert rv1.status_code == 200
+        assert rv2.status_code == 200
 
-    # def test_vote_on_nonexistent_post(self):
-    #     rv = self.app.put('/post/postid=1',
-    #             data=dict(vote=1),
-    #             headers=dict(
-    #                 idToken=9402234123712),
-    #         follow_redirects=True)
+        data = json.loads(rv0.data)
+        assert data['postid'] == 1
+        assert data['num_vote'] == 1
+        assert data['current_user_vote'] == 1
 
-    #     assert rv.status_code == 404
+        data = json.loads(rv1.data)
+        assert data['postid'] == 1
+        assert data['num_vote'] == 1
+        assert data['current_user_vote'] == 1
 
-    #     data = json.loads(rv.data)
-    #     assert data['error'] == "Post not found."
+        data = json.loads(rv2.data)
+        assert data['postid'] == 1
+        assert data['num_vote'] == -1
+        assert data['current_user_vote'] == -1
+
+    def test_vote_on_nonexistent_post(self):
+        rv = self.app.put('/post/postid=1',
+                data=dict(vote=1),
+                headers=dict(
+                    idToken=9402234123712),
+            follow_redirects=True)
+
+        assert rv.status_code == 404
+
+        data = json.loads(rv.data)
+        assert data['error'] == "Post not found."
 
 
 if __name__ == '__main__':
