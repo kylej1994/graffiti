@@ -16,6 +16,7 @@ import time
 
 # note: poster_id aka user_id will always be 1
 poster_id = 1
+poster_id2 = 2
 
 class PostTestCase(unittest.TestCase):
 
@@ -61,15 +62,49 @@ class PostTestCase(unittest.TestCase):
         post = db.session.query(Post).filter(Post.poster_id==poster_id).first()
         post_id = post.post_id
         self.assertTrue(post.num_votes == 0)
-        post.set_vote(1)
-        self.assertTrue(db.session.query(Post).filter(Post.post_id==post_id).first().num_votes == 1)
+        post.set_vote(2)
+        self.assertTrue(db.session.query(Post).filter(Post.post_id==post_id).first().num_votes == 2)
+
+    def test_increment_vote(self):
+        post = db.session.query(Post).filter(Post.poster_id==poster_id).first()
+        post_id = post.post_id
+        self.assertTrue(post.num_votes == 0)
+        post.increment_vote(1)
+        post.increment_vote(1)
+        post.increment_vote(1)
+        self.assertTrue(db.session.query(Post).filter(Post.post_id==post_id).first().num_votes == 3)
 
     def test_apply_vote(self):
-        post_id1 = 1
-        self.assertTrue(Post.apply_vote(poster_id, post_id1, 1))
-        #should not be able to apply vote more than once per user per post
-        self.assertFalse(Post.apply_vote(poster_id, post_id1, -1))
-        self.assertTrue(Post.find_post(post_id1).num_votes == 1)
+        db.session.add(User('katlu', \
+        "1208719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com", \
+        '6465263918', \
+        'Ron Yehoshua', \
+        'kyle@jablonk.net', \
+        'Yeah'))
+        poster_id2 = 2
+
+        post = db.session.query(Post).filter(Post.poster_id==poster_id).first()
+        post_id = post.post_id
+        # Upvote
+        self.assertTrue(Post.apply_vote(poster_id, post_id, 1))
+        self.assertTrue(db.session.query(Post).filter(Post.post_id==post_id).first().num_votes == 1)
+        self.assertTrue(db.session.query(UserPost).filter(UserPost.user_id==poster_id)\
+            .filter(UserPost.post_id==post_id).first().num_votes == 1)
+        # Downvote
+        self.assertTrue(Post.apply_vote(poster_id, post_id, -1))
+        self.assertTrue(db.session.query(Post).filter(Post.post_id==post_id).first().num_votes == -1)
+        self.assertTrue(db.session.query(UserPost).filter(UserPost.user_id==poster_id)\
+            .filter(UserPost.post_id==post_id).first().num_votes == -1)
+        # New user, vote positive value
+        self.assertTrue(Post.apply_vote(poster_id2, post_id, 3))
+        self.assertTrue(db.session.query(Post).filter(Post.post_id==post_id).first().num_votes == 0)
+        self.assertTrue(db.session.query(UserPost).filter(UserPost.user_id==poster_id2)\
+            .filter(UserPost.post_id==post_id).first().num_votes == 1)
+        # First user change vote, neutral
+        self.assertTrue(Post.apply_vote(poster_id, post_id, 0))
+        self.assertTrue(db.session.query(Post).filter(Post.post_id==post_id).first().num_votes == 1)
+        self.assertTrue(db.session.query(UserPost).filter(UserPost.user_id==poster_id)\
+            .filter(UserPost.post_id==post_id).first().num_votes == 0)
 
     def test_get_text(self):
         post = db.session.query(Post).filter(Post.poster_id==poster_id).first()
@@ -140,6 +175,15 @@ class PostTestCase(unittest.TestCase):
         post_id = to_delete.post_id
         to_delete.delete_post()
         self.assertIsNone(db.session.query(Post).filter(Post.post_id==post_id).first())
+
+    # iteration 2 tests
+    # tests that the stored image location matches the image associated w post
+    def test_get_img_file_loc(self):
+        img_url = 'some_url_tbd'
+        post_id = 1
+        post = db.session.query(Post).filter(Post.post_id==post_id).first()
+        self.assertTrue(post.get_img_file_loc() == img_url)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -11,7 +11,7 @@ import geoalchemy2
 class UserPost(db.Model):
     __tablename__ = 'userpost'
 
-    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), primary_key=True)
     post_id = db.Column(db.Integer, db.ForeignKey('post.post_id'), primary_key=True)
     vote = db.Column(db.Integer)
 
