@@ -13,10 +13,13 @@ import UIKit
 enum UserError: Error, Equatable {
     case tooManyChars
     case notSameUser
+    case tooFewChars
 }
 
 func ==(lhs: UserError, rhs: UserError) -> Bool {
     switch (lhs, rhs) {
+    case (.tooFewChars, .tooFewChars):
+        return true
     case (.tooManyChars, .tooManyChars):
         return true
     case (.notSameUser, .notSameUser):
@@ -109,8 +112,10 @@ class User : Mappable {
     //MARK: Setters
     
     public func setUsername(_ username: String) throws {
-        if(username.characters.count > 100){
+        if(username.characters.count > 25){
             throw UserError.tooManyChars
+        } else if(username.characters.count < 3) {
+            throw UserError.tooFewChars
         } else {
             self.username = username
         }
