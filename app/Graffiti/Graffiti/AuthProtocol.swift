@@ -10,11 +10,11 @@ import Foundation
 import GoogleSignIn
 
 protocol AuthProtocol {
-    func getIdToken() -> String?
+    func getIdToken(handler: @escaping GIDAuthenticationHandler)
 }
 
 extension GIDSignIn : AuthProtocol {
-    func getIdToken() -> String? {
-        return self.currentUser?.authentication?.idToken
+    func getIdToken(handler: @escaping GIDAuthenticationHandler) {
+        self.currentUser?.authentication?.getTokensWithHandler(handler)
     }
 }
