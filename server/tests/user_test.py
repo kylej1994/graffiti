@@ -144,6 +144,13 @@ class UserTestCase(unittest.TestCase):
         self.assertTrue(user.set_name(valid_name))
         self.assertTrue(user.set_name(valid_name2))
 
+    # iteration 2 tests
+    # tests that the stored image location matches the picture associated w user
+    def test_get_img_file_loc(self):
+        img_url = 'some_url_tbd'
+        user = db.session.query(User).filter(User.user_id==user_id).first()
+        self.assertTrue(user.get_img_file_loc() == img_url)
+
 
 if __name__ == '__main__':
     unittest.main()
