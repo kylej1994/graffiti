@@ -175,7 +175,6 @@ class API {
         }
     }
     
-    //Needs testing
     func getUserPosts(userid: Int, handler: @escaping Handler) {
         makeRequest("/user/\(userid)/posts", method: .get) { requestResult in
             switch requestResult {
