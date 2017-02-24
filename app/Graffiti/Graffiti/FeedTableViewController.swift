@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 
 class FeedTableViewController: UITableViewController {
-    // todo at some point: add loading animation
+
     let api = API.sharedInstance
     let locationManager = LocationService.sharedInstance
     var posts: [Post] = []
