@@ -18,6 +18,7 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
     var currentLongitude: CLLocationDegrees? = CLLocationDegrees()
     
     
+    @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var postButton: UIButton!
     @IBOutlet weak var postTextView: UITextView!
     @IBOutlet weak var charCountLabel: UILabel!
@@ -104,8 +105,8 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
     }
 
         
-    
-    @IBAction func tapCancel(_ sender: UIBarButtonItem) {
+    @IBAction func tapCancel(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
+    
 }

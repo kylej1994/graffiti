@@ -81,11 +81,11 @@ class PostViewController: UIViewController {
     
     private func updateView() {
         if SegmentedControl.selectedSegmentIndex == 0 {
-            remove(asChildViewController: textPostViewController)
-            add(asChildViewController: photoPostViewController)
-        } else {
             remove(asChildViewController: photoPostViewController)
             add(asChildViewController: textPostViewController)
+        } else {
+            remove(asChildViewController: textPostViewController)
+            add(asChildViewController: photoPostViewController)
         }
     }
     
