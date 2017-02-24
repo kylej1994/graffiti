@@ -141,8 +141,12 @@ class User : Mappable {
         self.imageTag = TImage
     }
     
-    public func setBio(_ bio: String){
-        self.bio = bio
+    public func setBio(_ bio: String) throws {
+        if bio.characters.count > 140 {
+            throw UserError.tooManyChars
+        } else {
+            self.bio = bio
+        }
     }
     
     public func update(_ user: User?) throws {
@@ -167,7 +171,7 @@ class User : Mappable {
         }
         
         if let bio = user?.getBio() {
-            self.setBio(bio)
+            try self.setBio(bio)
         }
     }
 }
