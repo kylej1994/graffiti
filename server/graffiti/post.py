@@ -26,8 +26,9 @@ class Post(db.Model):
     created_at = db.Column(db.Float)
     poster_id = db.Column(db.Integer)
     num_votes = db.Column(db.Integer)
+    img_file_loc = db.Column(db.String(100))
 
-    def __init__(self, text, longitude, latitude, poster_id):
+    def __init__(self, text, longitude, latitude, poster_id, img_loc=''):
         self.text = text
         self.longitude = longitude
         self.latitude = latitude
@@ -37,6 +38,7 @@ class Post(db.Model):
         # latitude comes first
         loc = 'POINT(' + str(latitude) + ' ' + str(longitude) + ')'
         self.loc = WKTElement(loc, srid=4326)
+        self.img_file_loc = img_loc
 
     def __repr__(self):
         return '<post_id {}>'.format(self.post_id)
@@ -73,6 +75,10 @@ class Post(db.Model):
         db.session.commit()
 
     def set_vote(self, vote):
+        self.num_votes = vote
+        db.session.commit()
+
+    def increment_vote(self, vote):
         self.num_votes += vote
         db.session.commit()
 
@@ -82,19 +88,37 @@ class Post(db.Model):
     # right now, if a user votes, then they cannot change their vote
     @staticmethod
     def apply_vote(user_id, post_id, vote):
+
+        #if the post dne, return false
+        post = Post.find_post(post_id)
+        if post is None:
+            return False
+
         userpost = db.session.query(UserPost).filter(UserPost.post_id==post_id)\
             .filter(UserPost.user_id==user_id).first()
         # if the post has not been voted on by this user, we create an entry
         # and add it to the db
+
+        # Standardize values
+        if (vote > 1):
+            vote = 1;
+        elif (vote < -1):
+            vote = -1;
+
+        # Edit userpost table
         if userpost is None:
             userpost = UserPost(user_id, post_id, vote)
             db.session.add(userpost)
-        elif userpost.get_vote() == 0:
-            userpost.set_vote(vote)
+            difference = vote
         else:
-            return False
+            currentvote = userpost.get_vote()
+            difference = vote - currentvote
+            userpost.set_vote(vote)
+
+        # Change value of votes on that post
         post = Post.find_post(post_id)
-        post.num_votes += vote
+        post.increment_vote(difference)
+
         db.session.commit()
         return True
 

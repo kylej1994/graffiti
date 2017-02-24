@@ -27,8 +27,10 @@ class User(db.Model):
     bio = db.Column(db.String(160))
     join_timestamp = db.Column(db.DateTime)
     has_been_suspended = db.Column(db.Boolean)
+    img_tag_file_loc = db.Column(db.String(100))
 
-    def __init__(self, username, google_aud, phone_number, name, email, bio):
+    def __init__(self, username, google_aud, phone_number, name, email, bio,\
+        img_tag=''):
         self.set_username(username)
         self.set_google_aud(google_aud)
         self.set_phone_number(phone_number)
@@ -37,6 +39,7 @@ class User(db.Model):
         self.join_timestamp = datetime.fromtimestamp(time()).isoformat()
         self.set_bio(bio)
         self.has_been_suspended = False
+        self.img_tag_file_loc = img_tag
 
     def __repr__(self):
         return '<username {}>'.format(self.username)
