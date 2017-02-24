@@ -39,7 +39,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is a bio! I am not a lizard man. No, really." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8ac-DH-Cn0" userLabel="bioLabel">
-                                        <rect key="frame" x="125" y="41" width="218" height="81.5"/>
+                                        <rect key="frame" x="125" y="41" width="218" height="82"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -51,6 +51,9 @@
                                             <constraint firstAttribute="width" constant="60" id="xWe-Id-GtC"/>
                                         </constraints>
                                         <state key="normal" title="Sign Out"/>
+                                        <connections>
+                                            <action selector="tapSignOut:" destination="URQ-RM-cvq" eventType="touchUpInside" id="eFN-pj-yfb"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -77,7 +80,7 @@
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="159" id="eUv-ST-CRp" customClass="FeedTableViewTextCell" customModule="Graffiti" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="343" height="159"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eUv-ST-CRp" id="VyF-wB-ggM">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" tableViewCell="eUv-ST-CRp" id="VyF-wB-ggM">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="158"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -130,6 +133,7 @@
                             <constraint firstItem="ElB-YB-X7m" firstAttribute="top" secondItem="j5e-8x-3P8" secondAttribute="bottom" id="C0e-rl-P3y"/>
                             <constraint firstItem="FuT-gb-KDt" firstAttribute="top" secondItem="Zk1-Wy-usy" secondAttribute="bottom" id="HNA-DB-qsg"/>
                             <constraint firstItem="ElB-YB-X7m" firstAttribute="leading" secondItem="xjT-CT-PzB" secondAttribute="leadingMargin" id="h5T-6b-nyY"/>
+                            <constraint firstItem="FuT-gb-KDt" firstAttribute="top" secondItem="Zk1-Wy-usy" secondAttribute="bottom" id="nUv-kH-uKa"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ElB-YB-X7m" secondAttribute="trailing" id="naA-K3-M8o"/>
                             <constraint firstItem="Zk1-Wy-usy" firstAttribute="leading" secondItem="xjT-CT-PzB" secondAttribute="leadingMargin" id="pHc-ZK-ujA"/>
                             <constraint firstItem="Zk1-Wy-usy" firstAttribute="top" secondItem="ElB-YB-X7m" secondAttribute="bottom" id="toF-Ac-3QR"/>
