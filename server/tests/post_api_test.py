@@ -49,8 +49,8 @@ class PostTestCase(APITestCase):
         assert rv.status_code == 200
 
         data = json.loads(rv.data)
-        # postid 5 because 4 posts made in graffiti.py
-        self.check_post_fields(data, 5, post_text, location, 0)
+        # postid 6 because 5 posts made in graffiti.py
+        self.check_post_fields(data, 6, post_text, location, 0)
 
     def test_create_invalid_post(self):
         # no location fields, hence, invalid
@@ -89,25 +89,17 @@ class PostTestCase(APITestCase):
         data = json.loads(rv.data)
         assert data['error'] == "Post not found."
 
-    # def test_delete_post_invalid_owner(self):
-    #     # creates post with postid 1
-    #     post_text = 'omg first graffiti post'
-    #     lat = 29.12123
-    #     lon = 32.12943
-    #     location = dict(
-    #         latitude=lat,
-    #         longitude=lon)
-    #     rv = self.create_post(post_text, location)
+    def test_delete_post_invalid_owner(self):
+        # The debugging auth has the hardcoded values for user with id 1, and
+        # this call attempts to delete a post made by user with id 2, i.e.
+        # this is not good behaviour
+        rv = self.app.delete('/post/5',
+            follow_redirects=True)
 
+        assert rv.status_code == 403
 
-    #     # request has no idToken in the header
-    #     rv = self.app.delete('/post/postid=1',
-    #         follow_redirects=True)
-
-    #     assert rv.status_code == 403
-
-    #     data = json.loads(rv.data)
-    #     assert data['error'] == "Post is not owned by user."
+        data = json.loads(rv.data)
+        assert data['error'] == "Post is not owned by user."
 
     def test_get_post(self):
         location = dict(
@@ -118,8 +110,6 @@ class PostTestCase(APITestCase):
                 headers=dict(
                     idToken=9402234123712),
             follow_redirects=True)
-
-        print rv.status_code
 
         assert rv.status_code == 200
 
@@ -137,21 +127,22 @@ class PostTestCase(APITestCase):
         data = json.loads(rv.data)
         assert data['error'] == "Post not found."
 
-    # def test_get_post_by_location(self):
-    #     rv = self.app.get("/post?longitude=-51.5192028&latitude=0.140863",
-    #             headers=dict(
-    #                 idToken=9402234123712),
-    #         follow_redirects=True)
+    def test_get_post_by_location(self):
+        location = dict(
+            longitude=-51.5192028, 
+            latitude=0.140863)
+        rv = self.app.get("/post?longitude=-51.5192028&latitude=0.140863",
+                headers=dict(
+                    idToken=9402234123712),
+            follow_redirects=True)
 
-    #     print rv.status_code
+        assert rv.status_code == 200
 
-    #     assert rv.status_code == 200
-
-    #     data = json.loads(rv.data)
-    #     self.check_post_fields(
-    #         data[0], 1, post_text1, location, 1, 'jeffdean', 0)
-    #     self.check_post_fields(
-    #         data[1], 2, post_text2, location, 2, 'jeffdean', 0)
+        data = json.loads(rv.data)['posts']
+        self.check_post_fields(
+            data[0], 3, 'post_location_1', location, 0)
+        self.check_post_fields(
+            data[1], 4, 'post_location_2', location, 0)
 
     # def test_vote_on_post(self):
     #     post_text = 'omg first graffiti post'

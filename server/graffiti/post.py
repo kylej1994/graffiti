@@ -26,8 +26,9 @@ class Post(db.Model):
     created_at = db.Column(db.Float)
     poster_id = db.Column(db.Integer)
     num_votes = db.Column(db.Integer)
+    img_file_loc = db.Column(db.String(100))
 
-    def __init__(self, text, longitude, latitude, poster_id):
+    def __init__(self, text, longitude, latitude, poster_id, img_loc=''):
         self.text = text
         self.longitude = longitude
         self.latitude = latitude
@@ -37,6 +38,7 @@ class Post(db.Model):
         # latitude comes first
         loc = 'POINT(' + str(latitude) + ' ' + str(longitude) + ')'
         self.loc = WKTElement(loc, srid=4326)
+        self.img_file_loc = img_loc
 
     def __repr__(self):
         return '<post_id {}>'.format(self.post_id)

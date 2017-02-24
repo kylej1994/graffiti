@@ -86,7 +86,7 @@ def delete_post(postid):
 		return generate_error_response(ERR_403, 403)
 	user = User.get_user_by_google_aud(info['audCode'])
 
-	if (user is None or post.get_user_id() != user.get_user_id()):
+	if (user is None or post.get_poster_id() != user.get_user_id()):
 		return generate_error_response(ERR_403, 403)
 
 	jsonified_post = post.to_json_fields_for_FE(user.get_user_id())
