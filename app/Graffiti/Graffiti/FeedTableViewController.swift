@@ -218,7 +218,6 @@ class FeedTableViewController: UITableViewController {
     }
     
     
-    // todo: read server response, use to update model
     func sendVoteFor(indexPath: IndexPath, vote: VoteType, reset: @escaping () -> ()) {
         let post = posts[indexPath.row]
         if let postid = post.getID() {
