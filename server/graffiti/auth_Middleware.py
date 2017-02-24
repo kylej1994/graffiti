@@ -33,6 +33,10 @@ class Auth_MiddleWare(object):
 
         #Skip Auth if debugging, since tokens will always be invalid
         if DEBUG:
+            # testing purposes only - matches with sample values in fill_db()
+            return_info = dict([('email', 'kat@lu.com'),\
+                ('audCode', '1008719970978')])
+            environ['META_INFO'] = return_info
             return self.app(environ, start_response)
 
 
@@ -53,7 +57,7 @@ class Auth_MiddleWare(object):
         #Successful Validation
         try:
             idinfo = client.verify_id_token(token, GOOGLE_CLIENT_ID)
-            audCode = idinfo['aud']
+            audCode = idinfo['sub']
             gmail = idinfo['email']
             # user_id =
             return_info = dict([('email', gmail), ('audCode', audCode)])

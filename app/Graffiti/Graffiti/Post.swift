@@ -18,6 +18,11 @@ enum PostError: Error, Equatable {
     case notSamePost
 }
 
+enum PostType: Int {
+    case TextPost = 0
+    case ImagePost = 1
+}
+
 func ==(lhs: PostError, rhs: PostError) -> Bool {
     switch (lhs, rhs) {
         case (.tooManyChars, .tooManyChars):
@@ -47,6 +52,7 @@ class Post : Mappable {
     private var poster: User?
     
     // The text and image associated with this post
+    private var postType: PostType = .TextPost
     private var text: String = ""
     private var image: UIImage?
     
@@ -69,7 +75,8 @@ class Post : Mappable {
           poster: User? = nil,
           text: String = "", image: UIImage? = nil,
           timeAdded: Date? = nil, includeTag: Bool = false,
-          visibilityType: VisType = .Public, lifetime: Int = defaultLifetime, vote: VoteType = .noVote){
+          visibilityType: VisType = .Public, lifetime: Int = defaultLifetime,
+          vote: VoteType = .noVote, postType: PostType = .TextPost){
         
         // Initialize all the things!
         self.ID = ID
@@ -127,6 +134,10 @@ class Post : Mappable {
         return ID
     }
     
+    public func getPostType()->PostType{
+        return postType
+    }
+    
     public func getText()->String{
         return text
     }
@@ -180,6 +191,10 @@ class Post : Mappable {
     
     public func setVote(_ vote: VoteType) {
         self.vote = vote
+    }
+    
+    public func setPostType(_ type:PostType) {
+        self.postType = type
     }
     
     public func setImage(_ image: UIImage){

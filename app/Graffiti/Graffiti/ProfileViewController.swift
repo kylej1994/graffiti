@@ -10,27 +10,32 @@ import UIKit
 
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    //~~//
+    let offset_HeaderStop:CGFloat = 40.0 // At this offset the Header stops its transformations
+    let offset_B_LabelHeader:CGFloat = 95.0 // At this offset the Black label reaches the Header
+    let distance_W_LabelHeader:CGFloat = 35.0 // The distance between the bottom of the Header and the top of the White Label
+    
+    @IBOutlet weak var header: UIView!
+    @IBOutlet weak var headerLabel: UILabel!
+    @IBOutlet weak var bioLabel: UILabel!
+    
+    @IBOutlet weak var profilePicture: UIImageView!
+   
     var posts: [Post] = []
     var user: User? = nil
     
     @IBOutlet var tableView: UITableView!
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        getPostsByUser()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.contentInset.top = 20
-        
-        DispatchQueue.main.async {
-            self.getPostsByUser()
-        }
-        
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-
-    }
-    
-    func getPostsByUser() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        //tableView.contentInset.top = 20
         
         if let user = appDelegate.currentUser {
             print("app delegate current user can be unwrapped")
@@ -38,6 +43,18 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         } else {
             print("sadness")
         }
+        
+        getPostsByUser()
+        
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        
+        headerLabel.text = user?.getUsername()
+        bioLabel.text = user?.getBio()
+
+    }
+    
+    func getPostsByUser() {
         
         let uId: Int = user!.getId()
         
@@ -56,9 +73,72 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
+    //~~~//
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        let offset = scrollView.contentOffset.y
+        var avatarTransform = CATransform3DIdentity
+        var headerTransform = CATransform3DIdentity
+        var tableViewTransform = CATransform3DIdentity
+        
+        //var tableViewScale = CATransform3DIdentity
+        
+        // PULL DOWN -----------------
+        
+        // Header -----------
+        
+        headerTransform = CATransform3DTranslate(headerTransform, 0, -offset, 0)
+        
+        // Table View -----------
+        
+        if(offset < 150.0){
+            print(tableView.frame.height.description)
+            tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -offset, 0)
+            if(offset > 0.0){
+            tableView.frame.size = CGSize(tableView.contentSize.width, tableView.frame.height + offset) //and vice versa when keyboard is dismissed
+            }
+            let bounds = UIScreen.main.bounds
+            let height = bounds.size.height
+            if(tableView.frame.height > height){
+                tableView.frame.size = CGSize(tableView.contentSize.width, height - 80) //and vice versa when keyboard is dismissed
+            }
+            
+            
+        } else {
+            print("oh hey")
+            tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -150, 0)
+            
+        }
+        // Avatar -----------
+            
+        let avatarScaleFactor = (min(offset_HeaderStop, offset)) / profilePicture.bounds.height / 0.8 // Slow down the animation
+        let avatarSizeVariation = ((profilePicture.bounds.height * (1.0 + avatarScaleFactor)) - profilePicture.bounds.height) / 1.4
+        avatarTransform = CATransform3DTranslate(avatarTransform, 0, avatarSizeVariation, 0)
+        avatarTransform = CATransform3DScale(avatarTransform, 1.0 - avatarScaleFactor, 1.0 - avatarScaleFactor, 0)
+            
+        if offset <= offset_HeaderStop {
+            if profilePicture.layer.zPosition < header.layer.zPosition{
+                header.layer.zPosition = 0
+            }
+                
+        }else {
+            if profilePicture.layer.zPosition >= header.layer.zPosition{
+                header.layer.zPosition = 2
+            }
+        }
+        
+        tableView.layer.transform = tableViewTransform
+        //tableView.layer.transform = tableViewScale
+        header.layer.transform = headerTransform
+        profilePicture.layer.transform = avatarTransform
+    }
+    
+
+    //~~~//
+    
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.posts.count + 1
+        return self.posts.count
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -68,40 +148,23 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     // create a cell for each table view row
     // would be nice to be able to reuse FeedViewController code...
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if(indexPath.row == 0){
-            let cellReuseIdentifier = "header"
-            let cell:ProfileHeaderCell = self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as! ProfileHeaderCell
-            tableView.rowHeight = 160
-            if let username = user!.getUsername() {
-                cell.usernameLabel.text = username
-            }
-            
-            if let tag = user!.getUserImage() {
-                cell.profileImageView.image = tag
-            }
-            
-            if let bio = user!.getBio() {
-                cell.bioLabel.text = bio
-            }
+        tableView.rowHeight = 160
         
-            return cell
-        } else {
-            let cellIdentifier = "FeedCell"
-            // downcast cell to the custom cell class
-            // guard safely unwraps the optional
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? FeedTableViewTextCell else {
-                fatalError("The dequeue cell is not an instance of FeedTableViewTextCell.")
-            }
-            
-            // this is where we get the post from the post model
-            let post = posts[indexPath.row]
-            
-            cell.textView.text = post.getText()
-            setRatingDisplay(cell: cell, post: post)
-            setDateDisplay(cell: cell, post: post)
-            
-            return cell
+        let cellIdentifier = "FeedCell"
+        // downcast cell to the custom cell class
+        // guard safely unwraps the optional
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? FeedTableViewTextCell else {
+            fatalError("The dequeue cell is not an instance of FeedTableViewTextCell.")
         }
+            
+        // this is where we get the post from the post model
+        let post = posts[indexPath.row]
+            
+        cell.textView.text = post.getText()
+        setRatingDisplay(cell: cell, post: post)
+        setDateDisplay(cell: cell, post: post)
+            
+        return cell
     }
     
     func setRatingDisplay(cell: FeedTableViewTextCell, post: Post) {

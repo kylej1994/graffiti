@@ -16,6 +16,7 @@ import time
 
 # note: poster_id aka user_id will always be 1
 poster_id = 1
+poster_id2 = 2
 
 class PostTestCase(unittest.TestCase):
 
@@ -57,17 +58,53 @@ class PostTestCase(unittest.TestCase):
         self.assertTrue(post.get_poster_id() == poster_id)
         self.assertTrue(post.get_text() == 'text')
 
-    def test_set_votes(self):
+    def test_set_vote(self):
         post = db.session.query(Post).filter(Post.poster_id==poster_id).first()
         post_id = post.post_id
         self.assertTrue(post.num_votes == 0)
-        # tests increment votes
-        post.set_vote(1)
-        self.assertTrue(db.session.query(Post).filter(Post.post_id==post_id).first().num_votes == 1)
-        # tests decrement votes
-        post.set_vote(-1)
-        self.assertTrue(db.session.query(Post).filter(Post.post_id==post_id).first().num_votes == 0)
+        post.set_vote(2)
+        self.assertTrue(db.session.query(Post).filter(Post.post_id==post_id).first().num_votes == 2)
 
+    def test_increment_vote(self):
+        post = db.session.query(Post).filter(Post.poster_id==poster_id).first()
+        post_id = post.post_id
+        self.assertTrue(post.num_votes == 0)
+        post.increment_vote(1)
+        post.increment_vote(1)
+        post.increment_vote(1)
+        self.assertTrue(db.session.query(Post).filter(Post.post_id==post_id).first().num_votes == 3)
+
+    def test_apply_vote(self):
+        db.session.add(User('katlu', \
+        "1208719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com", \
+        '6465263918', \
+        'Ron Yehoshua', \
+        'kyle@jablonk.net', \
+        'Yeah'))
+        poster_id2 = 2
+
+        post = db.session.query(Post).filter(Post.poster_id==poster_id).first()
+        post_id = post.post_id
+        # Upvote
+        self.assertTrue(Post.apply_vote(poster_id, post_id, 1))
+        self.assertTrue(db.session.query(Post).filter(Post.post_id==post_id).first().num_votes == 1)
+        self.assertTrue(db.session.query(UserPost).filter(UserPost.user_id==poster_id)\
+            .filter(UserPost.post_id==post_id).first().num_votes == 1)
+        # Downvote
+        self.assertTrue(Post.apply_vote(poster_id, post_id, -1))
+        self.assertTrue(db.session.query(Post).filter(Post.post_id==post_id).first().num_votes == -1)
+        self.assertTrue(db.session.query(UserPost).filter(UserPost.user_id==poster_id)\
+            .filter(UserPost.post_id==post_id).first().num_votes == -1)
+        # New user, vote positive value
+        self.assertTrue(Post.apply_vote(poster_id2, post_id, 3))
+        self.assertTrue(db.session.query(Post).filter(Post.post_id==post_id).first().num_votes == 0)
+        self.assertTrue(db.session.query(UserPost).filter(UserPost.user_id==poster_id2)\
+            .filter(UserPost.post_id==post_id).first().num_votes == 1)
+        # First user change vote, neutral
+        self.assertTrue(Post.apply_vote(poster_id, post_id, 0))
+        self.assertTrue(db.session.query(Post).filter(Post.post_id==post_id).first().num_votes == 1)
+        self.assertTrue(db.session.query(UserPost).filter(UserPost.user_id==poster_id)\
+            .filter(UserPost.post_id==post_id).first().num_votes == 0)
 
     def test_get_text(self):
         post = db.session.query(Post).filter(Post.poster_id==poster_id).first()
@@ -77,8 +114,18 @@ class PostTestCase(unittest.TestCase):
         self.assertFalse(text == "username")
 
     def test_find_posts_within_loc(self):
+        # set up for testing locations
         graffiti.clear_db_of_everything()
         graffiti.init_db()
+
+        # user must exist in db before posts
+        db.session.add(User('easmith', \
+        "1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com", \
+        '9172825753', \
+        'Emma Smith', \
+        'kat@lu.com', \
+        'My name is jablonk'))
+        db.session.commit()
 
         longitude = 51.5192028
         latitude = -0.140863
@@ -98,6 +145,7 @@ class PostTestCase(unittest.TestCase):
         distance2 = 10000
         distance3 = 16900 * 1000
 
+        ### begin tests
         #gets all post within distance 1 
         posts = Post.find_posts_within_loc(longitude, latitude, distance1)
         self.assertTrue(posts[0].longitude == longitude)
@@ -127,6 +175,15 @@ class PostTestCase(unittest.TestCase):
         post_id = to_delete.post_id
         to_delete.delete_post()
         self.assertIsNone(db.session.query(Post).filter(Post.post_id==post_id).first())
+
+    # iteration 2 tests
+    # tests that the stored image location matches the image associated w post
+    def test_get_img_file_loc(self):
+        img_url = 'some_url_tbd'
+        post_id = 1
+        post = db.session.query(Post).filter(Post.post_id==post_id).first()
+        self.assertTrue(post.get_img_file_loc() == img_url)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -47,16 +47,23 @@ def clear_db_of_everything():
 def fill_db():
 	# Sample values
 	db.create_all()
-	db.session.add(Post('text', 51.5192028, -0.140863, 1))
-	db.session.add(Post('text2', 51.5192028, -0.140863, 1))
-	db.session.add(Post('post_location_1', -51.5192028, 0.140863, 1))
-	db.session.add(Post('post_location_2', -51.5192028, 0.140863, 1))
 	db.session.add(User('easmith', \
-		"1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com", \
+		'1008719970978', \
 		'9172825753', \
 		'Emma Smith', \
 		'kat@lu.com', \
 		'My name is jablonk'))
+	db.session.add(User('user2', \
+		'1008719970979', \
+		'1234567801', \
+		'Smith Emma', \
+		'lu@kat.com', \
+		'My name is jablonkadonk'))
+	db.session.add(Post('text', 51.5192028, -0.140863, 1))
+	db.session.add(Post('text2', 51.5192028, -0.140863, 1))
+	db.session.add(Post('post_location_1', -51.5192028, 0.140863, 1))
+	db.session.add(Post('post_location_2', -51.5192028, 0.140863, 1))
+	db.session.add(Post('post_location_2', -51.5192028, 0.140863, 2))
 	db.session.commit()
 	return 'added sample records\n'
 

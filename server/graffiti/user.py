@@ -14,7 +14,7 @@ import re
 EMAIL_REGEX = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
 class User(db.Model):
-    __tablename__ = 'user'
+    __tablename__ = 'users'
 
     # Only alnum or _ in username. Between 3 and 25 chars inclusive
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -27,8 +27,10 @@ class User(db.Model):
     bio = db.Column(db.String(160))
     join_timestamp = db.Column(db.DateTime)
     has_been_suspended = db.Column(db.Boolean)
+    img_tag_file_loc = db.Column(db.String(100))
 
-    def __init__(self, username, google_aud, phone_number, name, email, bio):
+    def __init__(self, username, google_aud, phone_number, name, email, bio,\
+        img_tag=''):
         self.set_username(username)
         self.set_google_aud(google_aud)
         self.set_phone_number(phone_number)
@@ -37,6 +39,7 @@ class User(db.Model):
         self.join_timestamp = datetime.fromtimestamp(time()).isoformat()
         self.set_bio(bio)
         self.has_been_suspended = False
+        self.img_tag_file_loc = img_tag
 
     def __repr__(self):
         return '<username {}>'.format(self.username)
@@ -164,5 +167,11 @@ class User(db.Model):
     # finds a user given a user id
     # returns None if user_id is not in the db
     @staticmethod
-    def find_user(user_id):
+    def find_user_by_id(user_id):
         return db.session.query(User).filter(User.user_id==user_id).first()
+
+    # finds a user given a username
+    # returns None if username is not in the db
+    @staticmethod
+    def find_user_by_username(username):
+        return db.session.query(User).filter(User.username==username).first()
