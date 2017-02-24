@@ -19,6 +19,8 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         usernameTextField.delegate = self
         usernameTextField.text = ""
         usernameTextField.becomeFirstResponder()
+        usernameTextField.autocorrectionType = .no
+        usernameTextField.clearButtonMode = .whileEditing
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -38,11 +40,11 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         
         do {
             try user.setUsername(username)
-        } catch{
-            showUsernameTooLongAlert()
+        } catch {
+            showUsernameInvalidAlert()
             return false
         }
-        
+    
         API.sharedInstance.updateUser(user: user) { res in
             switch res.result{
             case.success:
@@ -62,6 +64,15 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let whitespaceSet = NSCharacterSet.whitespacesAndNewlines
+        if let _ = string.rangeOfCharacter(from: whitespaceSet) {
+            return false
+        } else {
+            return true
+        }
+    }
+    
     func showAlert(messageTitle: String, message: String) {
         let alertController = UIAlertController(title: messageTitle, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
@@ -70,7 +81,15 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     }
     
     func showUsernameTooLongAlert() {
-        showAlert(messageTitle: "Username too long", message: "Your username must be under 100 characters.")
+        showAlert(messageTitle: "Username too long", message: "Your username must be under 26 characters.")
+    }
+    
+    func showUsernameTooShortAlert() {
+        showAlert(messageTitle: "Username too short", message: "Your username must be at least 3 characters")
+    }
+    
+    func showUsernameInvalidAlert() {
+        showAlert(messageTitle: "Invalid Username", message: "Your username must be between 3 and 25 alphanumeric characters")
     }
     
     func showUsernameTakenAlert() {
