@@ -1,6 +1,7 @@
 import json
 import sys
 import unittest
+import Image
 
 from flask_api_test import APITestCase
 sys.path.append('..')
@@ -94,7 +95,31 @@ class UserTestCase(APITestCase):
                     name='Team Graffiti',
                     email='kat@lu.com',
                     bio='This is my tag.',
-                    phone_number='1234567890'
+                    phone_number='1234567890',
+                    img_tag=[]
+                    )),
+                content_type='application/json',
+                follow_redirects=True)
+
+        assert rv.status_code == 200
+
+        data = json.loads(rv.data)
+        self.check_user_fields(data, 1, 'l33t', 'Team Graffiti',
+            'kat@lu.com', 'This is my tag.', '1234567890')
+
+    def test_update_existent_user_with_image(self):
+        img = Image.open('cat-pic.png')
+        # Uses the sample user made in graffiti.py
+        # note that userid and emails are immutable
+        rv = self.app.put('/user/1',
+                data=json.dumps(dict(
+                    userid=1,
+                    username='l33t',
+                    name='Team Graffiti',
+                    email='kat@lu.com',
+                    bio='This is my tag.',
+                    phone_number='1234567890',
+                    img_tag=img.getdata()
                     )),
                 content_type='application/json',
                 follow_redirects=True)
@@ -113,7 +138,7 @@ class UserTestCase(APITestCase):
 
     def test_get_nonexistent_user_posts(self):
         # 2 users made in graffiti.py
-        rv = self.app.get('/user/3/posts',
+        rv = self.app.get('/user/17/posts',
                 follow_redirects=True)
 
         assert rv.status_code == 404

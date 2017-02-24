@@ -37,7 +37,7 @@ class PostTestCase(APITestCase):
 
 
     """ Post related API calls. """    
-    def test_create_post(self):
+    def test_create_text_post(self):
         post_text = 'omg first graffiti post'
         lat = 29.12123
         lon = 32.12943
@@ -45,6 +45,28 @@ class PostTestCase(APITestCase):
             latitude=lat,
             longitude=lon)
         rv = self.create_post(post_text, location)
+
+        assert rv.status_code == 200
+
+        data = json.loads(rv.data)
+        # postid 6 because 5 posts made in graffiti.py
+        self.check_post_fields(data, 6, post_text, location, 0)
+
+    def test_create_img_post(self):
+        post_img = Image.open('cat-pic.png')
+        img_data = img_tag=img.getdata()
+        lat = 29.12123
+        lon = 32.12943
+        location = dict(
+            latitude=lat,
+            longitude=lon)
+        data=json.dumps(dict(
+                    image=img_data,
+                    location=location))
+        return self.app.post('/post',
+                data=data,
+                content_type='application/json',
+            follow_redirects=True)
 
         assert rv.status_code == 200
 
