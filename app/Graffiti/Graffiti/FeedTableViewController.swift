@@ -127,16 +127,16 @@ class FeedTableViewController: UITableViewController {
             switch chosenPost.getVote() {
             case .noVote:
                 chosenPost.upVote()
-                self.sendVoteFor(indexPath: chosenPath, vote: VoteType.upVote, reset: resetVote)
+                self.sendVoteFor(indexPath: chosenPath, vote: VoteType.upVote, resetVote: resetVote)
             // if the post was already upvoted, we send a noVote to undo the vote
             case .upVote:
                 chosenPost.noVote()
-                self.sendVoteFor(indexPath: chosenPath, vote: VoteType.noVote, reset: resetVote)
+                self.sendVoteFor(indexPath: chosenPath, vote: VoteType.noVote, resetVote: resetVote)
             // if the user decides to upvote a post previously downvoted, the server handles it
             case .downVote:
                 chosenPost.noVote()
                 chosenPost.upVote()
-                self.sendVoteFor(indexPath: chosenPath, vote: VoteType.upVote, reset: resetVote)
+                self.sendVoteFor(indexPath: chosenPath, vote: VoteType.upVote, resetVote: resetVote)
             }
             
             // update display
@@ -159,16 +159,16 @@ class FeedTableViewController: UITableViewController {
             switch chosenPost.getVote() {
             case .noVote:
                 chosenPost.downVote()
-                self.sendVoteFor(indexPath: chosenPath, vote: VoteType.downVote, reset: resetVote)
+                self.sendVoteFor(indexPath: chosenPath, vote: VoteType.downVote, resetVote: resetVote)
             // if the post was already downvoted, we send a noVote to undo the vote
             case .downVote:
                 chosenPost.noVote()
-                self.sendVoteFor(indexPath: chosenPath, vote: VoteType.noVote, reset: resetVote)
+                self.sendVoteFor(indexPath: chosenPath, vote: VoteType.noVote, resetVote: resetVote)
             // if the user decides to downvote a post previously upvoted, the server handles it
             case .upVote:
                 chosenPost.noVote()
                 chosenPost.downVote()
-                self.sendVoteFor(indexPath: chosenPath, vote: VoteType.downVote, reset: resetVote)
+                self.sendVoteFor(indexPath: chosenPath, vote: VoteType.downVote, resetVote: resetVote)
             }
             
             // update display
@@ -218,7 +218,7 @@ class FeedTableViewController: UITableViewController {
     }
     
     
-    func sendVoteFor(indexPath: IndexPath, vote: VoteType, reset: @escaping () -> ()) {
+    func sendVoteFor(indexPath: IndexPath, vote: VoteType, resetVote: @escaping () -> ()) {
         let post = posts[indexPath.row]
         if let postid = post.getID() {
             api.voteOnPost(postid: postid, vote: vote) { response in
@@ -234,7 +234,7 @@ class FeedTableViewController: UITableViewController {
                     }
                 case .failure(let error):
                     print("sending vote failed")
-                    reset()
+                    resetVote()
                     print(error)
                 }
             }
