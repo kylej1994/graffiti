@@ -118,28 +118,16 @@ class FeedTableViewController: UITableViewController {
             switch chosenPost.getVote() {
             case .noVote:
                 chosenPost.upVote()
-                if let postid = chosenPost.getID() {
-                    self.sendVoteFor(post: chosenPost, postid: postid, vote: VoteType.upVote)
-                } else {
-                    print("couldn't get postid. not sending upvote to server, but faking it in ui")
-                }
+                self.sendVoteFor(post: chosenPost, vote: VoteType.upVote)
             // if the post was already upvoted, we send a noVote to undo the vote
             case .upVote:
                 chosenPost.noVote()
-                if let postid = chosenPost.getID() {
-                    self.sendVoteFor(post: chosenPost, postid: postid, vote: VoteType.noVote)
-                } else {
-                    print("couldn't get postid. not sending upvote to server, but faking it in ui")
-                }
+                self.sendVoteFor(post: chosenPost, vote: VoteType.noVote)
             // if the user decides to upvote a post previously downvoted, the server handles it
             case .downVote:
                 chosenPost.noVote()
                 chosenPost.upVote()
-                if let postid = chosenPost.getID() {
-                    self.sendVoteFor(post: chosenPost, postid: postid, vote: VoteType.upVote)
-                } else {
-                    print("couldn't get postid. not sending upvote to server, but faking it in ui")
-                }
+                self.sendVoteFor(post: chosenPost, vote: VoteType.upVote)
             }
             
             // update display
@@ -154,28 +142,16 @@ class FeedTableViewController: UITableViewController {
             switch chosenPost.getVote() {
             case .noVote:
                 chosenPost.downVote()
-                if let postid = chosenPost.getID() {
-                    self.sendVoteFor(post: chosenPost, postid: postid, vote: VoteType.downVote)
-                } else {
-                    print("couldn't get postid. not sending downvote to server, but faking it in ui")
-                }
+                self.sendVoteFor(post: chosenPost, vote: VoteType.downVote)
             // if the post was already downvoted, we send a noVote to undo the vote
             case .downVote:
                 chosenPost.noVote()
-                if let postid = chosenPost.getID() {
-                    self.sendVoteFor(post: chosenPost, postid: postid, vote: VoteType.noVote)
-                } else {
-                    print("couldn't get postid. not sending upvote to server, but faking it in ui")
-                }
+                self.sendVoteFor(post: chosenPost, vote: VoteType.noVote)
             // if the user decides to downvote a post previously upvoted, the server handles it
             case .upVote:
                 chosenPost.noVote()
                 chosenPost.downVote()
-                if let postid = chosenPost.getID() {
-                    self.sendVoteFor(post: chosenPost, postid: postid, vote: VoteType.downVote)
-                } else {
-                    print("couldn't get postid. not sending upvote to server, but faking it in ui")
-                }
+                self.sendVoteFor(post: chosenPost, vote: VoteType.downVote)
             }
             
             // update display
@@ -226,23 +202,26 @@ class FeedTableViewController: UITableViewController {
     
     
     // todo: read server response, use to update model
-    func sendVoteFor(post: Post, postid: Int, vote: VoteType) {
-        api.voteOnPost(postid: postid, vote: vote) { response in
-            switch response.result {
-            case .success:
-                print("sending vote")
-                let updatedPost = response.result.value
-                if let postFromServer = updatedPost {
-                    // set post rating and vote based on the server's response
-                    // not sure if this eliminates some of the frontend logic...
-                    post.setRating(postFromServer.getRating())
-                    post.setVote(postFromServer.getVote())
-                    print("just updated post model: vote: \(post.getVote()) rating: \(post.getRating())")
+    func sendVoteFor(post: Post, vote: VoteType) {
+        if let postid = post.getID() {
+            api.voteOnPost(postid: postid, vote: vote) { response in
+                switch response.result {
+                case .success:
+                    print("sending vote")
+                    if let postFromServer = response.result.value {
+                        // set post rating and vote based on the server's response
+                        // not sure if this eliminates some of the frontend logic...
+                        post.setRating(postFromServer.getRating())
+                        post.setVote(postFromServer.getVote())
+                        print("just updated post model: vote: \(post.getVote()) rating: \(post.getRating())")
+                    }
+                case .failure(let error):
+                    print("sending vote failed")
+                    print(error)
                 }
-            case .failure(let error):
-                print("sending vote failed")
-                print(error)
             }
+        } else {
+            print("couldn't get postid. not sending upvote to server, but faking it in ui")
         }
     }
     
