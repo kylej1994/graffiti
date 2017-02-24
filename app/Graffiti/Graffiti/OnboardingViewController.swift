@@ -20,6 +20,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         usernameTextField.text = ""
         usernameTextField.becomeFirstResponder()
         usernameTextField.autocorrectionType = .no
+        usernameTextField.clearButtonMode = .whileEditing
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -39,11 +40,11 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         
         do {
             try user.setUsername(username)
-        } catch{
-            showUsernameTooLongAlert()
+        } catch {
+            showUsernameInvalidAlert()
             return false
         }
-        
+    
         API.sharedInstance.updateUser(user: user) { res in
             switch res.result{
             case.success:
@@ -71,7 +72,15 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     }
     
     func showUsernameTooLongAlert() {
-        showAlert(messageTitle: "Username too long", message: "Your username must be under 100 characters.")
+        showAlert(messageTitle: "Username too long", message: "Your username must be under 26 characters.")
+    }
+    
+    func showUsernameTooShortAlert() {
+        showAlert(messageTitle: "Username too short", message: "Your username must be at least 3 characters")
+    }
+    
+    func showUsernameInvalidAlert() {
+        showAlert(messageTitle: "Invalid Username", message: "Your username must be between 3 and 25 alphanumeric characters")
     }
     
     func showUsernameTakenAlert() {
