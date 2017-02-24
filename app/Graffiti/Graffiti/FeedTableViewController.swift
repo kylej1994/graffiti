@@ -66,11 +66,32 @@ class FeedTableViewController: UITableViewController {
                     let posts = json["posts"] as? [Post] {
                     self.posts = posts
                     self.tableView.reloadData()
+                    if posts.count == 0 {
+                        self.showNoPostsTable()
+                    }
                 }
             case .failure(let error):
                 print(error)
                 self.showFeedFailureAlert()
             }
+        }
+    }
+    
+    // todo: test this - ask server to return no posts
+    func showNoPostsTable() {
+        setupEmptyBackgroundView(withMessage: "There are no posts nearby.")
+        tableView.separatorStyle = .none
+        tableView.backgroundView?.isHidden = false
+    }
+    
+    func setupTableViewForNumRows(_ numRows: Int) {
+        if numRows == 0 {
+            setupEmptyBackgroundView(withMessage: "Looking for posts...")
+            tableView.separatorStyle = .none
+            tableView.backgroundView?.isHidden = false
+        } else {
+            tableView.separatorStyle = .singleLine
+            tableView.backgroundView?.isHidden = true
         }
     }
 
@@ -83,15 +104,7 @@ class FeedTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let numRows = posts.count
         
-        // Display a message about lack of posts when there are no posts
-        if numRows == 0 {
-            setupEmptyBackgroundView()
-            tableView.separatorStyle = .none
-            tableView.backgroundView?.isHidden = false
-        } else {
-            tableView.separatorStyle = .singleLine
-            tableView.backgroundView?.isHidden = true
-        }
+        setupTableViewForNumRows(numRows)
         
         return numRows
     }
