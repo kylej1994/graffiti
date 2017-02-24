@@ -226,7 +226,6 @@ class FeedTableViewController: UITableViewController {
     
     
     // todo: read server response, use to update model
-    // issue: we can't update a post because we can't get the post based on postid
     func sendVoteFor(post: Post, postid: Int, vote: VoteType) {
         api.voteOnPost(postid: postid, vote: vote) { response in
             switch response.result {
@@ -234,6 +233,8 @@ class FeedTableViewController: UITableViewController {
                 print("sending vote")
                 let updatedPost = response.result.value
                 if let postFromServer = updatedPost {
+                    // set post rating and vote based on the server's response
+                    // not sure if this eliminates some of the frontend logic...
                     post.setRating(postFromServer.getRating())
                     post.setVote(postFromServer.getVote())
                     print("just updated post model: vote: \(post.getVote()) rating: \(post.getRating())")
