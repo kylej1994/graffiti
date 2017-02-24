@@ -23,10 +23,9 @@ class FeedTableViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         locationManager.startUpdatingLocation()
-        DispatchQueue.main.async {
-            self.getPostsByLocation()
-            self.tableView.reloadData()
-        }
+
+        self.getPostsByLocation()
+
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -37,10 +36,7 @@ class FeedTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        DispatchQueue.main.async {
-            self.getPostsByLocation()
-            self.tableView.reloadData()
-        }
+        self.getPostsByLocation()
         
         // add refresh control for pull to refresh
         self.refreshControl?.addTarget(self, action: #selector(refreshFeed), for: .valueChanged)
