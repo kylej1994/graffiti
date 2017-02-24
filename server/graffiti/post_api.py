@@ -145,11 +145,14 @@ def get_post_by_location():
 def vote_post(postid):
 	data = request.get_json()
 	info = request.environ['META_INFO']
+	print info
 	no_id = request.environ['NOID']
 	bad_token = request.environ['BADTOKEN']
 	if (info is None or no_id or bad_token):
 		return generate_error_response(ERR_403_vote, 403)
+	print info['audCode']
 	user = User.get_user_by_google_aud(info['audCode'])
+	print user
 
 	if (user is None):
 		return generate_error_response(ERR_403_vote, 403)
@@ -168,6 +171,6 @@ def vote_post(postid):
 		return generate_error_response(ERR_404, 404)
 
 	# Call apply_vote
-	apply_vote(user.get_user_id(), postid, vote)
+	post.apply_vote(user.get_user_id(), postid, vote)
 
-	return post.to_json_fields_for_FE(), 200
+	return post.to_json_fields_for_FE(user.get_user_id()), 200
