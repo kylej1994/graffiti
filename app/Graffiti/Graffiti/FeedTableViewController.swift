@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+
 class FeedTableViewController: UITableViewController {
     // todo at some point: add loading animation
     let api = API.sharedInstance
@@ -115,19 +116,27 @@ class FeedTableViewController: UITableViewController {
             let chosenPath = tableView.indexPath(for: cell)!
             let chosenPost = self.posts[chosenPath.row]
             
+            let oldVote = chosenPost.getVote()
+            let oldRating = chosenPost.getRating()
+            let resetVote: () -> () = { _ in
+                chosenPost.setVote(oldVote)
+                chosenPost.setRating(oldRating)
+                self.tableView.reloadRows(at: [chosenPath], with: .none)
+            }
+            
             switch chosenPost.getVote() {
             case .noVote:
                 chosenPost.upVote()
-                self.sendVoteFor(indexPath: chosenPath, vote: VoteType.upVote)
+                self.sendVoteFor(indexPath: chosenPath, vote: VoteType.upVote, reset: resetVote)
             // if the post was already upvoted, we send a noVote to undo the vote
             case .upVote:
                 chosenPost.noVote()
-                self.sendVoteFor(indexPath: chosenPath, vote: VoteType.noVote)
+                self.sendVoteFor(indexPath: chosenPath, vote: VoteType.noVote, reset: resetVote)
             // if the user decides to upvote a post previously downvoted, the server handles it
             case .downVote:
                 chosenPost.noVote()
                 chosenPost.upVote()
-                self.sendVoteFor(indexPath: chosenPath, vote: VoteType.upVote)
+                self.sendVoteFor(indexPath: chosenPath, vote: VoteType.upVote, reset: resetVote)
             }
             
             // update display
@@ -138,20 +147,28 @@ class FeedTableViewController: UITableViewController {
         cell.downvoteTapAction = { (cell) in
             let chosenPath = tableView.indexPath(for: cell)!
             let chosenPost = self.posts[chosenPath.row]
+
+            let oldVote = chosenPost.getVote()
+            let oldRating = chosenPost.getRating()
+            let resetVote: () -> () = { _ in
+                chosenPost.setVote(oldVote)
+                chosenPost.setRating(oldRating)
+                self.tableView.reloadRows(at: [chosenPath], with: .none)
+            }
             
             switch chosenPost.getVote() {
             case .noVote:
                 chosenPost.downVote()
-                self.sendVoteFor(indexPath: chosenPath, vote: VoteType.downVote)
+                self.sendVoteFor(indexPath: chosenPath, vote: VoteType.downVote, reset: resetVote)
             // if the post was already downvoted, we send a noVote to undo the vote
             case .downVote:
                 chosenPost.noVote()
-                self.sendVoteFor(indexPath: chosenPath, vote: VoteType.noVote)
+                self.sendVoteFor(indexPath: chosenPath, vote: VoteType.noVote, reset: resetVote)
             // if the user decides to downvote a post previously upvoted, the server handles it
             case .upVote:
                 chosenPost.noVote()
                 chosenPost.downVote()
-                self.sendVoteFor(indexPath: chosenPath, vote: VoteType.downVote)
+                self.sendVoteFor(indexPath: chosenPath, vote: VoteType.downVote, reset: resetVote)
             }
             
             // update display
@@ -202,7 +219,7 @@ class FeedTableViewController: UITableViewController {
     
     
     // todo: read server response, use to update model
-    func sendVoteFor(indexPath: IndexPath, vote: VoteType) {
+    func sendVoteFor(indexPath: IndexPath, vote: VoteType, reset: @escaping () -> ()) {
         let post = posts[indexPath.row]
         if let postid = post.getID() {
             api.voteOnPost(postid: postid, vote: vote) { response in
@@ -218,11 +235,12 @@ class FeedTableViewController: UITableViewController {
                     }
                 case .failure(let error):
                     print("sending vote failed")
+                    reset()
                     print(error)
                 }
             }
         } else {
-            print("couldn't get postid. not sending upvote to server, but faking it in ui")
+            print("couldn't get postid.")
         }
     }
     
