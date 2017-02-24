@@ -8,13 +8,21 @@
 
 import Foundation
 import GoogleSignIn
+import Alamofire
 
 protocol AuthProtocol {
-    func getIdToken(handler: @escaping GIDAuthenticationHandler)
+    func getIdToken(handler: @escaping (Result<String>) -> Void)
 }
 
 extension GIDSignIn : AuthProtocol {
-    func getIdToken(handler: @escaping GIDAuthenticationHandler) {
-        self.currentUser?.authentication?.getTokensWithHandler(handler)
+    func getIdToken(handler: @escaping (Result<String>) -> Void) {
+        self.currentUser?.authentication?.getTokensWithHandler() { authentication, err in
+            if let err = err {
+                handler(Result.failure(err))
+                return
+            }
+            
+            handler(Result.success(authentication!.idToken))
+        }
     }
 }

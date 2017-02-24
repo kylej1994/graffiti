@@ -44,28 +44,24 @@ class API {
     //MARK Private Methods
     @discardableResult private func makeRequest(_ url: String, method: HTTPMethod, parameters: Parameters? = nil, encoding: ParameterEncoding = URLEncoding.default, handler: @escaping RequestHandler) {
         
-        auth.getIdToken() { authentication, err in
-            if let err = err {
-                handler(Result.failure(err))
-                return
+        auth.getIdToken() { tokenResult in
+            switch tokenResult {
+            case .success:
+                let idToken = tokenResult.value
+                
+                // Attach idToken
+                let headers = ["Authorization": "Bearer \(idToken)"]
+                
+                // Construct Url
+                let fullUrl = self.baseUrl + url
+                
+                // Make request
+                let request = self.manager.makeRequest(fullUrl, method: method, parameters: parameters,
+                                                       encoding: encoding, headers: headers).defaultValidate()
+                handler(Result.success(request))
+            case .failure(let error):
+                handler(Result.failure(error))
             }
-            
-            // Get idToken
-            guard let idToken = authentication?.idToken else {
-                handler(Result.failure(APIError.noIdToken))
-                return
-            }
-            
-            // Attach idToken
-            let headers = ["Authorization": "Bearer \(idToken)"]
-            
-            // Construct Url
-            let fullUrl = self.baseUrl + url
-            
-            // Make request
-            let request = self.manager.makeRequest(fullUrl, method: method, parameters: parameters,
-                                       encoding: encoding, headers: headers).defaultValidate()
-            handler(Result.success(request))
         }
     }
     

@@ -7,9 +7,10 @@
 //
 
 import Foundation
+import Alamofire
 
 class MockAuth : AuthProtocol {
-    func getIdToken() -> String? {
-        return "Token"
+    func getIdToken(handler: @escaping (Result<String>) -> Void) {
+        handler(Result.success("Token"))
     }
 }
