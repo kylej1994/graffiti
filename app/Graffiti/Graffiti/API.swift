@@ -47,7 +47,10 @@ class API {
         auth.getIdToken() { tokenResult in
             switch tokenResult {
             case .success:
-                let idToken = tokenResult.value
+                guard let idToken = tokenResult.value else {
+                    handler(Result.failure(APIError.noIdToken))
+                    return
+                }
                 
                 // Attach idToken
                 let headers = ["Authorization": "Bearer \(idToken)"]
