@@ -107,7 +107,7 @@
                     <navigationItem key="navigationItem" title="Feed" id="ELO-Y3-tf9">
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="cmE-m1-wv0">
                             <connections>
-                                <segue destination="PCG-gw-YFa" kind="presentation" id="mV9-kY-Wkd"/>
+                                <segue destination="zJ0-M6-etu" kind="presentation" id="fNg-it-Tpm"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -123,12 +123,12 @@
             <point key="canvasLocation" x="712.79999999999995" y="-471.8140929535233"/>
         </scene>
         <!--TextPost-->
-        <scene sceneID="opk-R0-b5w">
+        <scene sceneID="giM-pa-JsE">
             <objects>
-                <viewControllerPlaceholder storyboardIdentifier="Post" storyboardName="TextPost" id="PCG-gw-YFa" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="PK2-9x-Xoe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewControllerPlaceholder storyboardName="TextPost" id="zJ0-M6-etu" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6qp-Mu-FY5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1244" y="-587"/>
+            <point key="canvasLocation" x="1549" y="-403"/>
         </scene>
         <!--Feed-->
         <scene sceneID="mjW-Qv-VE0">

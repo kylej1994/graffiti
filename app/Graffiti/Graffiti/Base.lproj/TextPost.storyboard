@@ -13,7 +13,7 @@
         <!--Post View Controller-->
         <scene sceneID="oHo-Q8-cFT">
             <objects>
-                <viewController storyboardIdentifier="Post" id="o7M-k0-MgX" customClass="PostViewController" customModule="Graffiti" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PostViewController" id="o7M-k0-MgX" customClass="PostViewController" customModule="Graffiti" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="42R-v5-8q6"/>
                         <viewControllerLayoutGuide type="bottom" id="fFb-Vv-CYA"/>
@@ -31,24 +31,27 @@
                     </view>
                     <navigationItem key="navigationItem" id="wwS-9s-JVb">
                         <nil key="title"/>
-                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="BLy-Ok-V0C">
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="Nc3-wV-7Oz">
                             <rect key="frame" x="113" y="7" width="150" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
-                                <segment title="Text"/>
-                                <segment title="Photo"/>
+                                <segment title="First"/>
+                                <segment title="Second"/>
                             </segments>
                         </segmentedControl>
                     </navigationItem>
+                    <connections>
+                        <outlet property="SegmentedControl" destination="Nc3-wV-7Oz" id="ur1-Xb-1zO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3PE-Q3-om1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="952.79999999999995" y="842.42878560719646"/>
+            <point key="canvasLocation" x="951" y="901"/>
         </scene>
         <!--New Graffiti-->
         <scene sceneID="bGW-p0-DJc">
             <objects>
-                <viewController storyboardIdentifier="TextPost" id="4G5-6D-FEh" customClass="TextPostViewController" customModule="Graffiti" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TextPostViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="4G5-6D-FEh" customClass="TextPostViewController" customModule="Graffiti" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="j9x-Hr-KXW"/>
                         <viewControllerLayoutGuide type="bottom" id="hWb-mN-HOS"/>
@@ -71,29 +74,20 @@
                                     <action selector="postTextGraffiti:" destination="4G5-6D-FEh" eventType="touchUpInside" id="TO2-tv-AVF"/>
                                 </connections>
                             </button>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="elp-7Q-qoR">
-                                <rect key="frame" x="137" y="72" width="101" height="29"/>
-                                <segments>
-                                    <segment title="Text"/>
-                                    <segment title="Photo"/>
-                                </segments>
-                            </segmentedControl>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="8aG-3Q-96z">
-                                <rect key="frame" x="16" y="118" width="343" height="206"/>
+                                <rect key="frame" x="16" y="74" width="343" height="250"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
                             </textView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.18985164179814285" green="1" blue="0.21220092199269525" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="leadingMargin" secondItem="8aG-3Q-96z" secondAttribute="leading" id="2pG-cR-Ea5"/>
                             <constraint firstAttribute="trailingMargin" secondItem="CWN-s3-0OE" secondAttribute="trailing" id="3D1-QO-dl5"/>
                             <constraint firstItem="Icc-Mv-BBU" firstAttribute="top" secondItem="8aG-3Q-96z" secondAttribute="bottom" constant="16" id="4Kg-zA-1UE"/>
                             <constraint firstItem="hWb-mN-HOS" firstAttribute="top" secondItem="8aG-3Q-96z" secondAttribute="bottom" constant="343" id="IhQ-59-1ld"/>
                             <constraint firstItem="8aG-3Q-96z" firstAttribute="top" secondItem="j9x-Hr-KXW" secondAttribute="bottom" constant="54" id="MfZ-sS-HqZ"/>
-                            <constraint firstItem="elp-7Q-qoR" firstAttribute="centerX" secondItem="lfs-Kr-udQ" secondAttribute="centerX" id="Snt-yW-hEg"/>
-                            <constraint firstItem="elp-7Q-qoR" firstAttribute="top" secondItem="j9x-Hr-KXW" secondAttribute="bottom" constant="8" id="V5d-4N-Ie5"/>
                             <constraint firstAttribute="trailingMargin" secondItem="8aG-3Q-96z" secondAttribute="trailing" id="WbU-d4-WwH"/>
                             <constraint firstItem="CWN-s3-0OE" firstAttribute="top" secondItem="8aG-3Q-96z" secondAttribute="bottom" constant="8" id="iXj-J2-sHG"/>
                             <constraint firstItem="CWN-s3-0OE" firstAttribute="leading" secondItem="Icc-Mv-BBU" secondAttribute="trailing" constant="12" id="m0f-tf-naJ"/>
@@ -114,7 +108,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h39-Py-3va" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2002" y="887"/>
+            <point key="canvasLocation" x="2121" y="663"/>
+        </scene>
+        <!--Photo Post View Controller-->
+        <scene sceneID="Zsi-0q-CAv">
+            <objects>
+                <viewController storyboardIdentifier="PhotoPostViewController" id="UTj-fH-Uda" customClass="PhotoPostViewController" customModule="Graffiti" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sX5-XT-bOh"/>
+                        <viewControllerLayoutGuide type="bottom" id="Hiw-hh-jSA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0Np-Si-hqi">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="0.19331941975267153" blue="0.13942612166907598" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="z9S-ei-nCT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2118" y="1364"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="tys-BJ-5HA">
