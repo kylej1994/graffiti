@@ -10,16 +10,16 @@ import Foundation
 import UIKit
 
 extension FeedTableViewController {
-    func setupEmptyBackgroundView() {
+    func setupEmptyBackgroundView(withMessage message: String) {
         let emptyView = UIView(frame: view.bounds)
-        emptyView.addSubview(label(withMessage: "Looking for posts..."))
+        emptyView.addSubview(label(withMessage: message))
         tableView.backgroundView = emptyView
         view.setNeedsLayout()
         view.layoutIfNeeded()
     }
     
     func label(withMessage text: String) -> UILabel {
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 20))
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 40))
         label.text = text
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 20)
