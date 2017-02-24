@@ -19,6 +19,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         usernameTextField.delegate = self
         usernameTextField.text = ""
         usernameTextField.becomeFirstResponder()
+        usernameTextField.autocorrectionType = .no
     }
     
     override func viewDidAppear(_ animated: Bool) {
