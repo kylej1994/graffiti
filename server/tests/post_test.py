@@ -176,5 +176,14 @@ class PostTestCase(unittest.TestCase):
         to_delete.delete_post()
         self.assertIsNone(db.session.query(Post).filter(Post.post_id==post_id).first())
 
+    # iteration 2 tests
+    # tests that the stored image location matches the image associated w post
+    def test_get_img_file_loc(self):
+        img_url = 'some_url_tbd'
+        post_id = 1
+        post = db.session.query(Post).filter(Post.post_id==post_id).first()
+        self.assertTrue(post.get_img_file_loc() == img_url)
+
+
 if __name__ == '__main__':
     unittest.main()
