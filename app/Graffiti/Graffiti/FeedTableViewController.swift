@@ -25,7 +25,6 @@ class FeedTableViewController: UITableViewController {
         locationManager.startUpdatingLocation()
 
         self.getPostsByLocation()
-
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -69,6 +68,7 @@ class FeedTableViewController: UITableViewController {
                 }
             case .failure(let error):
                 print(error)
+                // show an alert that we couldn't load posts?
             }
         }
     }
@@ -119,7 +119,7 @@ class FeedTableViewController: UITableViewController {
             case .noVote:
                 chosenPost.upVote()
                 if let postid = chosenPost.getID() {
-                    self.sendVoteFor(postid: postid, vote: VoteType.upVote)
+                    self.sendVoteFor(post: chosenPost, postid: postid, vote: VoteType.upVote)
                 } else {
                     print("couldn't get postid. not sending upvote to server, but faking it in ui")
                 }
@@ -127,7 +127,7 @@ class FeedTableViewController: UITableViewController {
             case .upVote:
                 chosenPost.noVote()
                 if let postid = chosenPost.getID() {
-                    self.sendVoteFor(postid: postid, vote: VoteType.noVote)
+                    self.sendVoteFor(post: chosenPost, postid: postid, vote: VoteType.noVote)
                 } else {
                     print("couldn't get postid. not sending upvote to server, but faking it in ui")
                 }
@@ -136,7 +136,7 @@ class FeedTableViewController: UITableViewController {
                 chosenPost.noVote()
                 chosenPost.upVote()
                 if let postid = chosenPost.getID() {
-                    self.sendVoteFor(postid: postid, vote: VoteType.upVote)
+                    self.sendVoteFor(post: chosenPost, postid: postid, vote: VoteType.upVote)
                 } else {
                     print("couldn't get postid. not sending upvote to server, but faking it in ui")
                 }
@@ -155,7 +155,7 @@ class FeedTableViewController: UITableViewController {
             case .noVote:
                 chosenPost.downVote()
                 if let postid = chosenPost.getID() {
-                    self.sendVoteFor(postid: postid, vote: VoteType.downVote)
+                    self.sendVoteFor(post: chosenPost, postid: postid, vote: VoteType.downVote)
                 } else {
                     print("couldn't get postid. not sending downvote to server, but faking it in ui")
                 }
@@ -163,7 +163,7 @@ class FeedTableViewController: UITableViewController {
             case .downVote:
                 chosenPost.noVote()
                 if let postid = chosenPost.getID() {
-                    self.sendVoteFor(postid: postid, vote: VoteType.noVote)
+                    self.sendVoteFor(post: chosenPost, postid: postid, vote: VoteType.noVote)
                 } else {
                     print("couldn't get postid. not sending upvote to server, but faking it in ui")
                 }
@@ -172,7 +172,7 @@ class FeedTableViewController: UITableViewController {
                 chosenPost.noVote()
                 chosenPost.downVote()
                 if let postid = chosenPost.getID() {
-                    self.sendVoteFor(postid: postid, vote: VoteType.downVote)
+                    self.sendVoteFor(post: chosenPost, postid: postid, vote: VoteType.downVote)
                 } else {
                     print("couldn't get postid. not sending upvote to server, but faking it in ui")
                 }
@@ -226,13 +226,18 @@ class FeedTableViewController: UITableViewController {
     
     
     // todo: read server response, use to update model
-    func sendVoteFor(postid: Int, vote: VoteType) {
+    // issue: we can't update a post because we can't get the post based on postid
+    func sendVoteFor(post: Post, postid: Int, vote: VoteType) {
         api.voteOnPost(postid: postid, vote: vote) { response in
             switch response.result {
             case .success:
                 print("sending vote")
                 let updatedPost = response.result.value
-                print(updatedPost?.getRating() as Any)
+                if let postFromServer = updatedPost {
+                    post.setRating(postFromServer.getRating())
+                    post.setVote(postFromServer.getVote())
+                    print("just updated post model: vote: \(post.getVote()) rating: \(post.getRating())")
+                }
             case .failure(let error):
                 print("sending vote failed")
                 print(error)
