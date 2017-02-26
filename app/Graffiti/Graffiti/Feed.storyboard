@@ -99,6 +99,82 @@
                                     <outlet property="votesLabel" destination="JU0-SS-ZyY" id="a6s-Gr-CnY"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImageCell" rowHeight="360" id="1br-WE-5MN" customClass="FeedImageCell" customModule="Graffiti" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="178" width="375" height="360"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1br-WE-5MN" id="fUL-PT-hn9">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="359"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image-post-example" translatesAutoresizingMaskIntoConstraints="NO" id="5fa-bP-f7l">
+                                            <rect key="frame" x="8" y="8" width="359" height="286.5"/>
+                                        </imageView>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="1nG-Px-izM">
+                                            <rect key="frame" x="8" y="301.5" width="50.5" height="50"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="fhN-aV-Hzw">
+                                                    <rect key="frame" x="0.0" y="0.0" width="25" height="50"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="akB-9X-7Vr">
+                                                            <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
+                                                            <state key="normal" image="upvote-black-50"/>
+                                                            <connections>
+                                                                <action selector="tapUpvote:" destination="1br-WE-5MN" eventType="touchUpInside" id="vhe-aB-d8Q"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ldj-S5-tI8">
+                                                            <rect key="frame" x="0.0" y="25" width="25" height="25"/>
+                                                            <state key="normal" image="downvote-black-50"/>
+                                                            <connections>
+                                                                <action selector="tapDownvote:" destination="1br-WE-5MN" eventType="touchUpInside" id="Svm-cM-Vre"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                </stackView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3vh-FP-Qte">
+                                                    <rect key="frame" x="40" y="0.0" width="10.5" height="50"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cat-prof-100" translatesAutoresizingMaskIntoConstraints="NO" id="DhA-kk-bIW">
+                                            <rect key="frame" x="297" y="281.5" width="70" height="70"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="70" id="CKh-qu-2wz"/>
+                                                <constraint firstAttribute="width" constant="70" id="gVT-dz-PqO"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time ago" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hbo-qE-WuG">
+                                            <rect key="frame" x="160" y="331" width="135" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="topMargin" secondItem="5fa-bP-f7l" secondAttribute="top" id="Bfr-XT-zYp"/>
+                                        <constraint firstItem="DhA-kk-bIW" firstAttribute="leading" secondItem="hbo-qE-WuG" secondAttribute="trailing" constant="2" id="FPY-YJ-FE4"/>
+                                        <constraint firstAttribute="leadingMargin" secondItem="5fa-bP-f7l" secondAttribute="leading" id="NPn-ia-PlT"/>
+                                        <constraint firstAttribute="leadingMargin" secondItem="1nG-Px-izM" secondAttribute="leading" id="SZN-xm-WWj"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="1nG-Px-izM" secondAttribute="bottom" id="TKT-dm-FFK"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="5fa-bP-f7l" secondAttribute="trailing" id="YQ4-Sa-9zo"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="DhA-kk-bIW" secondAttribute="trailing" id="ZGV-PH-pML"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="5fa-bP-f7l" secondAttribute="bottom" constant="57" id="dmK-88-6yQ"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="DhA-kk-bIW" secondAttribute="bottom" id="mbd-yG-1en"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="hbo-qE-WuG" secondAttribute="bottom" id="v2R-HJ-cNG"/>
+                                        <constraint firstItem="hbo-qE-WuG" firstAttribute="leading" secondItem="fUL-PT-hn9" secondAttribute="leadingMargin" constant="152" id="yXy-qF-tce"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="dateLabel" destination="hbo-qE-WuG" id="Epv-pU-q3T"/>
+                                    <outlet property="downvoteButton" destination="ldj-S5-tI8" id="vVc-Pb-ANg"/>
+                                    <outlet property="feedImageView" destination="5fa-bP-f7l" id="fv6-dJ-ubN"/>
+                                    <outlet property="upvoteButton" destination="akB-9X-7Vr" id="2wV-CC-8ao"/>
+                                    <outlet property="votesLabel" destination="3vh-FP-Qte" id="Od1-0k-vD4"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="vt4-Ow-rT6" id="IlS-Ob-Oxa"/>
@@ -154,6 +230,7 @@
     <resources>
         <image name="cat-prof-100" width="48" height="48"/>
         <image name="downvote-black-50" width="25" height="25"/>
+        <image name="image-post-example" width="360" height="360"/>
         <image name="upvote-black-50" width="25" height="25"/>
     </resources>
 </document>
