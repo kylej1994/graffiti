@@ -116,17 +116,36 @@ class FeedTableViewController: UITableViewController {
     
     // TODO refactor this
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellIdentifier = "FeedCell"
+        let textCellIdentifier = "FeedCell"
+        let imageCellIdentifier = "ImageCell"
 
-        // downcast cell to the custom cell class
-        // guard safely unwraps the optional
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? FeedTextCell else {
-            fatalError("The dequeue cell is not an instance of FeedTableViewTextCell.")
-        }
-        
         // get the Post from the array of Posts and fill the cell accordingly
         let post = posts[indexPath.row]
-        cell.textView.text = post.getText()
+        let type = post.getPostType()
+        
+        // downcast cell to the custom cell class
+        // guard safely unwraps the optional
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath) as? FeedTableViewCell else {
+            fatalError("The dequeue cell is not an instance of FeedTableViewTextCell.")
+        }
+
+        if type == .TextPost {
+            print("it's a text post")
+            guard let textCell = cell as? FeedTextCell else {
+                fatalError("The dequeue cell is not an instance of FeedTextCell.")
+            }
+            print(post.getText())
+            textCell.textView.text = post.getText()
+        }
+        
+        if type == .ImagePost {
+            guard let imageCell = cell as? FeedImageCell else {
+                fatalError("The dequeue cell is not an instance of FeedTextCell.")
+            }
+            imageCell.feedImageView.image = post.getImage()
+        }
+        
+        //cell.textView.text = post.getText()
         setDisplay(cell: cell, post: post)
         
         // handle upvote button tap
