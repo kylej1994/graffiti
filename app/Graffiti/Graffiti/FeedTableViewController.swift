@@ -40,6 +40,11 @@ class FeedTableViewController: UITableViewController {
         
         // add refresh control for pull to refresh
         self.refreshControl?.addTarget(self, action: #selector(refreshFeed), for: .valueChanged)
+        
+        // the table view is told to use the Auto Layout constraints
+        //  and the contents of its cells to determine each cell’s height
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 150
     }
     
     
