@@ -64,6 +64,12 @@ class Post(db.Model):
     def get_text(self):
         return self.text
 
+    def get_longitude(self):
+        return self.longitude
+
+    def get_latitude(self):
+        return self.latitude
+
     # saves the post into the db
     def save_post(self):
         db.session.add(self)
