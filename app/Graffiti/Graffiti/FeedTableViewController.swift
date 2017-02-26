@@ -125,20 +125,19 @@ class FeedTableViewController: UITableViewController {
         
         // downcast cell to the custom cell class
         // guard safely unwraps the optional
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath) as? FeedTableViewCell else {
+        guard var cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath) as? FeedTableViewCell else {
             fatalError("The dequeue cell is not an instance of FeedTableViewTextCell.")
         }
 
         if type == .TextPost {
-            print("it's a text post")
             guard let textCell = cell as? FeedTextCell else {
                 fatalError("The dequeue cell is not an instance of FeedTextCell.")
             }
-            print(post.getText())
             textCell.textView.text = post.getText()
         }
         
         if type == .ImagePost {
+            cell = tableView.dequeueReusableCell(withIdentifier: imageCellIdentifier, for: indexPath) as! FeedImageCell //this could be terribly wrong
             guard let imageCell = cell as? FeedImageCell else {
                 fatalError("The dequeue cell is not an instance of FeedTextCell.")
             }
