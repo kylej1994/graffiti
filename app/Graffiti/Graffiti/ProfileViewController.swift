@@ -51,7 +51,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         headerLabel.text = user?.getUsername()
         bioLabel.text = user?.getBio()
-
+        
+        // self sizing table view cells
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 150
     }
     
     func getPostsByUser() {
@@ -148,7 +151,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     // create a cell for each table view row
     // would be nice to be able to reuse FeedViewController code...
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        tableView.rowHeight = 160
+        //tableView.rowHeight = 130 //uncomment if we want a static row height
         
         let cellIdentifier = "FeedCell"
         // downcast cell to the custom cell class

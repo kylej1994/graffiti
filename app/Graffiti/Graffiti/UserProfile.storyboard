@@ -96,8 +96,8 @@
                                                     <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="42" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kYd-ch-Tyy">
-                                                    <rect key="frame" x="8" y="128" width="21" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="420" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kYd-ch-Tyy">
+                                                    <rect key="frame" x="8" y="128" width="31" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -106,13 +106,14 @@
                                             <constraints>
                                                 <constraint firstAttribute="leadingMargin" secondItem="lUW-2p-jIr" secondAttribute="leading" id="7ay-pQ-iKk"/>
                                                 <constraint firstItem="oNQ-kx-WWa" firstAttribute="leading" secondItem="VyF-wB-ggM" secondAttribute="leadingMargin" constant="171" id="CKd-vp-ZUO"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="kYd-ch-Tyy" secondAttribute="trailing" constant="296" id="ChK-eD-GzF"/>
+                                                <constraint firstItem="kYd-ch-Tyy" firstAttribute="top" secondItem="VyF-wB-ggM" secondAttribute="topMargin" constant="120" id="ELq-zW-WnY"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="kYd-ch-Tyy" secondAttribute="bottom" constant="1" id="Nyq-Pf-EI0"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="oNQ-kx-WWa" secondAttribute="trailing" constant="6" id="OlP-89-aRb"/>
                                                 <constraint firstAttribute="leadingMargin" secondItem="kYd-ch-Tyy" secondAttribute="leading" id="PGN-Dq-HLy"/>
                                                 <constraint firstAttribute="topMargin" secondItem="lUW-2p-jIr" secondAttribute="top" id="U2K-HX-z0h"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="lUW-2p-jIr" secondAttribute="trailing" constant="6" id="XBm-og-lfs"/>
-                                                <constraint firstItem="kYd-ch-Tyy" firstAttribute="top" secondItem="lUW-2p-jIr" secondAttribute="bottom" constant="32" id="fjT-8K-DMI"/>
-                                                <constraint firstItem="oNQ-kx-WWa" firstAttribute="top" secondItem="lUW-2p-jIr" secondAttribute="bottom" constant="33" id="ttL-Rt-JPx"/>
+                                                <constraint firstItem="oNQ-kx-WWa" firstAttribute="top" secondItem="VyF-wB-ggM" secondAttribute="topMargin" constant="121" id="dER-Tr-qPL"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <constraints>
