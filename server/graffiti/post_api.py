@@ -141,6 +141,41 @@ def get_post_by_location():
 	to_ret['posts'] = jsonified_posts
 	return json.dumps(to_ret), 200
 
+@post_api.route('/post/location', methods=['GET'])
+def get_posts_coordinates():
+	# no checking of authentication is happening yet...
+
+	# query db for all posts in this area
+	lat = (float)(request.args.get('latitude'))
+	lon = (float)(request.args.get('longitude'))
+	radius = (float)(request.args.get('radius'))
+	posts = Post.find_posts_within_loc(lon, lat, radius)
+
+
+	# This is commented out for now, because it from the wiki that there is no
+	# authentication necessary. This can be changed easily by commenting out
+	# these lines.
+
+	# info = request.environ['META_INFO']
+	# no_id = request.environ['NOID']
+	# bad_token = request.environ['BADTOKEN']
+	# if (info is None or no_id or bad_token):
+	# 	return generate_error_response(ERR_403, 403)
+	# user = User.get_user_by_google_aud(info['audCode'])
+
+	# if (user is None):
+	# 	return generate_error_response(ERR_403, 403)
+
+	to_ret = {}
+	coords = []
+	for post in posts:
+		coord = {}
+		coord['longitude'] = post.get_longitude()
+		coord['latitude'] = post.get_latitude()
+		coords.append(coord)
+	to_ret['coordinates'] = coords
+	return json.dumps(to_ret), 200
+
 @post_api.route('/post/<int:postid>/vote', methods=['PUT'])
 def vote_post(postid):
 	data = request.get_json()
