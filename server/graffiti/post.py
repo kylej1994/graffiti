@@ -44,11 +44,11 @@ class Post(db.Model):
     num_votes = db.Column(db.Integer)
     s3_client = None
 
-    # defaults for text and image because one of them will be empty
+    # defaults for mage because I don't want to break things everywhere else
     def __init__(self,\
-            text='', post_type, longitude, latitude, poster_id, img_data=[]):
+            text, longitude, latitude, poster_id, post_type = 0):
         self.text = text
-        self.post_type = PostType(int(post_type))
+        self.post_type = Post.PostType(int(post_type))
         self.longitude = longitude
         self.latitude = latitude
         self.created_at = time.time()
@@ -63,10 +63,6 @@ class Post(db.Model):
         self.s3_client = boto3.client('s3', config=cfg,\
             aws_access_key_id=ACCESS_KEY,\
             aws_secret_access_key=SECRET_KEY)
-        # if its an image, upload it to s3
-        if self.post_type.describe() == 1:
-            s3_client.put_object(Body=img_data, Bucket='graffiti-post-images',\
-                Key='postid:{0}'.format(self.post_id))
 
 
     def __repr__(self):
@@ -81,7 +77,8 @@ class Post(db.Model):
         # retrieve image data from s3 if its an image
         if self.post_type.describe() == 1:
             try:
-                img_data = s3_client.get_object(Bucket='graffiti-post-images',\
+                img_data = self.s3_client.get_object(\
+                    Bucket='graffiti-post-images',\
                     Key='postid:{0}'.format(self.post_id))['Body'].read()
             except:
                 print('Couldnt find key')
@@ -110,6 +107,16 @@ class Post(db.Model):
 
     def get_latitude(self):
         return self.latitude
+
+    def upload_img_to_s3(self, img_data):
+        # if its an image, upload it to s3
+        print 'postid{0}'.format(self.post_id)
+        if self.post_type.describe() == 1:
+            self.s3_client.put_object(Body=img_data,\
+                Bucket='graffiti-post-images',\
+                Key='postid:{0}'.format(self.post_id))
+        # if not, do nothing
+        # doing this for compatability reasons...wow this code is smelly
 
     # saves the post into the db
     def save_post(self):

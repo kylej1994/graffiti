@@ -53,17 +53,19 @@ def create_post():
 	lon = (float)(data['location']['longitude'])
 	lat = (float)(data['location']['latitude'])
 
-	info = request.environ['META_INFO']
-	no_id = request.environ['NOID']
-	bad_token = request.environ['BADTOKEN']
-	if (info is None or no_id or bad_token):
-		return generate_error_response(ERR_400, 400)
-	user = User.get_user_by_google_aud(info['audCode'])
+	# info = request.environ['META_INFO']
+	# no_id = request.environ['NOID']
+	# bad_token = request.environ['BADTOKEN']
+	# if (info is None or no_id or bad_token):
+	# 	return generate_error_response(ERR_400, 400)
+	# user = User.get_user_by_google_aud(info['audCode'])
 
-	if (user is None or not validate_text(text)):
-		return generate_error_response(ERR_400, 400)
+	# if (user is None or not validate_text(text)):
+	# 	return generate_error_response(ERR_400, 400)
 
-	user_id = user.get_user_id()
+	# user_id = user.get_user_id()
+
+	user_id = 1
 
 	# create a new post and add it to the db session
 	# 0 for text, 1 for image, anything else is invalid
@@ -72,16 +74,17 @@ def create_post():
 		post_type = 0
 		text = str(data['text'])
 		# image is empty
-		post = Post(text, 0, lon, lat, user_id)
+		post = Post(text, lon, lat, user_id, 0)
+		post.save_post()
 	elif ('image' in data):
 		post_type = 1
-		img_data = data['image'])
+		img_data = data['image']
 		# empty text
-		post = Post('', 0, lon, lat, user_id, img_data)
+		post = Post('', lon, lat, user_id, 1)
+		post.save_post()
+		post.upload_img_to_s3(img_data)
 	else:
 		return generate_error_response(ERR_400, 400)
-
-	post.save_post()
 
 	return post.to_json_fields_for_FE(user_id), 200
 
