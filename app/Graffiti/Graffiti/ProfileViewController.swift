@@ -95,7 +95,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         // Table View -----------
         
         if(offset < 150.0){
-            print(tableView.frame.height.description)
+            //print(tableView.frame.height.description)
             tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -offset, 0)
             if(offset > 0.0){
             tableView.frame.size = CGSize(tableView.contentSize.width, tableView.frame.height + offset) //and vice versa when keyboard is dismissed
@@ -108,7 +108,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             
         } else {
-            print("oh hey")
+            //print("oh hey")
             tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -150, 0)
             
         }
