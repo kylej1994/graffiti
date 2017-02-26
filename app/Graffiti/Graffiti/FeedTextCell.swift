@@ -10,6 +10,8 @@ import UIKit
 
 class FeedTextCell: FeedTableViewCell {
 
+    @IBOutlet weak var textView: UITextView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

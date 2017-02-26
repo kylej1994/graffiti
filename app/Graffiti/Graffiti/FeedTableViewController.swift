@@ -115,7 +115,7 @@ class FeedTableViewController: UITableViewController {
 
         // downcast cell to the custom cell class
         // guard safely unwraps the optional
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? FeedTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? FeedTextCell else {
             fatalError("The dequeue cell is not an instance of FeedTableViewTextCell.")
         }
         
