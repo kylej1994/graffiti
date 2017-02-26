@@ -44,9 +44,8 @@ class Post(db.Model):
     num_votes = db.Column(db.Integer)
     s3_client = None
 
-    # defaults for mage because I don't want to break things everywhere else
-    def __init__(self,\
-            text, longitude, latitude, poster_id, post_type = 0):
+    # defaults for type because I don't want to break things everywhere else
+    def __init__(self, text, longitude, latitude, poster_id, post_type = 0):
         self.text = text
         self.post_type = Post.PostType(int(post_type))
         self.longitude = longitude

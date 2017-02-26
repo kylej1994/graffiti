@@ -53,19 +53,17 @@ def create_post():
 	lon = (float)(data['location']['longitude'])
 	lat = (float)(data['location']['latitude'])
 
-	# info = request.environ['META_INFO']
-	# no_id = request.environ['NOID']
-	# bad_token = request.environ['BADTOKEN']
-	# if (info is None or no_id or bad_token):
-	# 	return generate_error_response(ERR_400, 400)
-	# user = User.get_user_by_google_aud(info['audCode'])
+	info = request.environ['META_INFO']
+	no_id = request.environ['NOID']
+	bad_token = request.environ['BADTOKEN']
+	if (info is None or no_id or bad_token):
+		return generate_error_response(ERR_400, 400)
+	user = User.get_user_by_google_aud(info['audCode'])
 
-	# if (user is None or not validate_text(text)):
-	# 	return generate_error_response(ERR_400, 400)
+	if (user is None or not validate_text(text)):
+		return generate_error_response(ERR_400, 400)
 
-	# user_id = user.get_user_id()
-
-	user_id = 1
+	user_id = user.get_user_id()
 
 	# create a new post and add it to the db session
 	# 0 for text, 1 for image, anything else is invalid
