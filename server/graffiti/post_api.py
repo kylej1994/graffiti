@@ -45,13 +45,11 @@ def create_post():
 	data = request.get_json()
 
 	# checks for necessary data params
-	if ('text' not in data or 'location' not in data
+	if ('location' not in data
 			or 'latitude' not in data['location']
 			or 'longitude' not in data['location']):
 		return generate_error_response(ERR_400, 400)
 
-	# create a new post and add it to the db session
-	text = str(data['text'])
 	lon = (float)(data['location']['longitude'])
 	lat = (float)(data['location']['latitude'])
 
@@ -66,7 +64,23 @@ def create_post():
 		return generate_error_response(ERR_400, 400)
 
 	user_id = user.get_user_id()
-	post = Post(text, lon, lat, user_id)
+
+	# create a new post and add it to the db session
+	# 0 for text, 1 for image, anything else is invalid
+	post_type = -1
+	if ('text' in data):
+		post_type = 0
+		text = str(data['text'])
+		# image is empty
+		post = Post(text, 0, lon, lat, user_id)
+	elif ('image' in data):
+		post_type = 1
+		img_data = data['image'])
+		# empty text
+		post = Post('', 0, lon, lat, user_id, img_data)
+	else:
+		return generate_error_response(ERR_400, 400)
+
 	post.save_post()
 
 	return post.to_json_fields_for_FE(user_id), 200
