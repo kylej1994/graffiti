@@ -19,11 +19,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedCell" id="Pud-ZO-sRW" customClass="FeedTableViewTextCell" customModule="Graffiti" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedCell" id="Pud-ZO-sRW" customClass="FeedTableViewCell" customModule="Graffiti" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="150"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pud-ZO-sRW" id="Eik-o5-MaK">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="149"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Text post body goes here. Hardest part of finals: finding an open reg cubicle." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ifq-Jr-j4V">
@@ -136,7 +136,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ejl-bh-ipv" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Feed" id="UfD-gP-5Ci"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="yk6-Wq-tcj">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="yk6-Wq-tcj">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

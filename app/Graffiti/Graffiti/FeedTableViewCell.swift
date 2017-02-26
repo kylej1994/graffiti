@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FeedTableViewTextCell: UITableViewCell {
+class FeedTableViewCell: UITableViewCell {
 
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var votesLabel: UILabel!
@@ -17,8 +17,8 @@ class FeedTableViewTextCell: UITableViewCell {
     @IBOutlet weak var downvoteButton: UIButton!
     
     // http://candycode.io/how-to-properly-do-buttons-in-table-view-cells-using-swift-closures/
-    var upvoteTapAction: ((FeedTableViewTextCell) -> Void)?
-    var downvoteTapAction: ((FeedTableViewTextCell) -> Void)?
+    var upvoteTapAction: ((FeedTableViewCell) -> Void)?
+    var downvoteTapAction: ((FeedTableViewCell) -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()

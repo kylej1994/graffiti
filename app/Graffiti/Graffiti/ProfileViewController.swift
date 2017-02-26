@@ -153,7 +153,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         let cellIdentifier = "FeedCell"
         // downcast cell to the custom cell class
         // guard safely unwraps the optional
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? FeedTableViewTextCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? FeedTableViewCell else {
             fatalError("The dequeue cell is not an instance of FeedTableViewTextCell.")
         }
             
@@ -167,7 +167,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         return cell
     }
     
-    func setRatingDisplay(cell: FeedTableViewTextCell, post: Post) {
+    func setRatingDisplay(cell: FeedTableViewCell, post: Post) {
         let rating = post.getRating()
         cell.votesLabel.text = String(rating)
         if rating < 0 {
@@ -177,7 +177,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
-    func setDateDisplay(cell: FeedTableViewTextCell, post: Post) {
+    func setDateDisplay(cell: FeedTableViewCell, post: Post) {
         if let dateAdded = post.getTimeAdded() {
             cell.dateLabel.text = getFormattedDate(date: dateAdded)
         } else {

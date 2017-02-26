@@ -115,7 +115,7 @@ class FeedTableViewController: UITableViewController {
 
         // downcast cell to the custom cell class
         // guard safely unwraps the optional
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? FeedTableViewTextCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? FeedTableViewCell else {
             fatalError("The dequeue cell is not an instance of FeedTableViewTextCell.")
         }
         
@@ -191,13 +191,13 @@ class FeedTableViewController: UITableViewController {
         return cell
     }
     
-    func setDisplay(cell: FeedTableViewTextCell, post: Post) {
+    func setDisplay(cell: FeedTableViewCell, post: Post) {
         setRatingDisplay(cell: cell, post: post)
         setDateDisplay(cell: cell, post: post)
         setVoteButtonDisplay(cell: cell, post: post)
     }
     
-    func setRatingDisplay(cell: FeedTableViewTextCell, post: Post) {
+    func setRatingDisplay(cell: FeedTableViewCell, post: Post) {
         let rating = post.getRating()
         cell.votesLabel.text = String(rating)
         if rating < 0 {
@@ -207,7 +207,7 @@ class FeedTableViewController: UITableViewController {
         }
     }
     
-    func setVoteButtonDisplay(cell: FeedTableViewTextCell, post: Post) {
+    func setVoteButtonDisplay(cell: FeedTableViewCell, post: Post) {
         let vote = post.getVote()
         switch vote {
         case .upVote:
@@ -222,7 +222,7 @@ class FeedTableViewController: UITableViewController {
         }
     }
     
-    func setDateDisplay(cell: FeedTableViewTextCell, post: Post) {
+    func setDateDisplay(cell: FeedTableViewCell, post: Post) {
         if let dateAdded = post.getTimeAdded() {
             cell.dateLabel.text = getFormattedDate(date: dateAdded)
         } else {
