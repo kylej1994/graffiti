@@ -102,6 +102,7 @@ class User(db.Model):
     def get_has_been_suspended(self):
         return self.has_been_suspended
 
+    # uploads img_data to s3 as this user's img tag
     def set_image_tag(self, img_data):
         try:
             key = 'userid:{0}, joined:{1}'.format(self.user_id,\
