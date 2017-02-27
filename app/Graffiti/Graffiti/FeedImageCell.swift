@@ -11,6 +11,7 @@ import UIKit
 class FeedImageCell: FeedTableViewCell {
 
     @IBOutlet weak var feedImageView: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

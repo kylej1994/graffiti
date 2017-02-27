@@ -156,8 +156,8 @@ class FeedTableViewController: UITableViewController {
             imageCell.feedImageView.image = post.getImage()
             imageCell.feedImageView.tag = indexPath.row
 
-//            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapImage(sender:)))
-//            imageCell.addGestureRecognizer(tapGestureRecognizer)
+            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapImage(sender:)))
+            imageCell.feedImageView.addGestureRecognizer(tapGestureRecognizer)
         }
         
         //cell.textView.text = post.getText()
@@ -319,8 +319,16 @@ class FeedTableViewController: UITableViewController {
         showAlert(messageTitle: "Can't load latest posts", message: "")
     }
     
-//    func didTapImage(sender: UITapGestureRecognizer) {
-//        print(sender.view?.tag)
-//    }
-
+    func didTapImage(sender: UITapGestureRecognizer) {
+        let cellImageView = sender.view as! UIImageView
+        let img = cellImageView.image
+//        let newImageView = UIImageView(image: imageView.image)
+//        newImageView.frame = self.view.frame
+//        newImageView.backgroundColor = .black
+//        newImageView.contentMode = .scaleAspectFit
+//        newImageView.isUserInteractionEnabled = true
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissFullscreenImage))
+//        newImageView.addGestureRecognizer(tap)
+//        self.view.addSubview(newImageView)
+    }
 }

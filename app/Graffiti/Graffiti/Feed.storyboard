@@ -214,7 +214,7 @@
         <!--Image Detail View Controller-->
         <scene sceneID="1MK-Wr-siR">
             <objects>
-                <viewController id="ELs-gv-yy7" customClass="ImageDetailViewController" customModule="Graffiti" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ImageDetailViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ELs-gv-yy7" customClass="ImageDetailViewController" customModule="Graffiti" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="FFu-xO-0tt"/>
                         <viewControllerLayoutGuide type="bottom" id="jHc-Hn-yWb"/>
@@ -236,12 +236,12 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="imageDetailView" destination="v7n-zP-BnP" id="8Tf-26-fj2"/>
+                        <outlet property="imageDetailView" destination="v7n-zP-BnP" id="Yf7-8L-pt1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IBw-gQ-A9B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1703" y="-433"/>
+            <point key="canvasLocation" x="1678" y="-433"/>
         </scene>
         <!--Feed-->
         <scene sceneID="mjW-Qv-VE0">
