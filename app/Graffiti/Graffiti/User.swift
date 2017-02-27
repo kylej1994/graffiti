@@ -70,6 +70,7 @@ class User : Mappable {
         email       <- map["email"]
         phoneNumber <- map["phone_number"]
         bio         <- map["bio"]
+        imageTag    <- (map["img_tag"], ImageTransform())
     }
     
     //MARK: Getters

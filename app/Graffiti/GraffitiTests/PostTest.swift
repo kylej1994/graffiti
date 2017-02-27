@@ -152,6 +152,7 @@ class PostTests: XCTestCase {
         
         let json: [String: Any] = (post?.toJSON())!
         XCTAssertEqual(json["postid"] as? Int, 1234)
+        XCTAssertEqual(json["type"] as? Int, 0)
         XCTAssertEqual(json["text"] as? String, "This is a post")
         XCTAssertEqual(json["created_at"] as? Double, 1487975373)
         XCTAssertEqual(json["num_votes"] as? Int, 10)
@@ -173,6 +174,7 @@ class PostTests: XCTestCase {
     func testFromJSON() {
         var json: [String: Any] = [
             "postid": 1234,
+            "type": 1,
             "text": "this is a post",
             "created_at": "1487975373",
             "num_votes": 10,
@@ -199,6 +201,7 @@ class PostTests: XCTestCase {
         let post = Post(JSON: json)
         XCTAssertNotNil(post)
         XCTAssertEqual(post?.getID()!, 1234)
+        XCTAssertEqual(post?.getPostType(), .ImagePost)
         XCTAssertEqual(post?.getText(), "this is a post")
         XCTAssertEqual(post?.getTimeAdded(), Date(timeIntervalSince1970: 1487975373))
         XCTAssertEqual(post?.getRating(), 10)
