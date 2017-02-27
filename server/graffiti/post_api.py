@@ -60,7 +60,7 @@ def create_post():
 		return generate_error_response(ERR_400, 400)
 	user = User.get_user_by_google_aud(info['audCode'])
 
-	if (user is None or not validate_text(text)):
+	if (user is None):
 		return generate_error_response(ERR_400, 400)
 
 	user_id = user.get_user_id()
@@ -71,6 +71,8 @@ def create_post():
 	if ('text' in data):
 		post_type = 0
 		text = str(data['text'])
+		if (not validate_text(text)):
+			return generate_error_response(ERR_400, 400)
 		# image is empty
 		post = Post(text, lon, lat, user_id, 0)
 		post.save_post()
@@ -156,7 +158,7 @@ def get_post_by_location():
 	to_ret['posts'] = jsonified_posts
 	return json.dumps(to_ret), 200
 
-@post_api.route('/post/location', methods=['GET'])
+@post_api.route('/post/coordinates', methods=['GET'])
 def get_posts_coordinates():
 	# no checking of authentication is happening yet...
 
