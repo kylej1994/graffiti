@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedCell" id="Pud-ZO-sRW" customClass="FeedTextCell" customModule="Graffiti" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="150" id="Pud-ZO-sRW" customClass="FeedTextCell" customModule="Graffiti" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="150"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pud-ZO-sRW" id="Eik-o5-MaK">
@@ -106,10 +106,11 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="249"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="image-post-example" translatesAutoresizingMaskIntoConstraints="NO" id="5fa-bP-f7l">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="image-post-example" translatesAutoresizingMaskIntoConstraints="NO" id="5fa-bP-f7l">
                                             <rect key="frame" x="8" y="8" width="359" height="193.5"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="193.5" id="Jm3-ha-4rY"/>
+                                                <constraint firstAttribute="width" constant="359" id="k7E-Bm-vfd"/>
+                                                <constraint firstAttribute="height" constant="193.5" id="les-O0-eKc"/>
                                             </constraints>
                                         </imageView>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="1nG-Px-izM">
@@ -157,7 +158,6 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="bottomMargin" secondItem="5fa-bP-f7l" secondAttribute="bottom" constant="40" id="2i3-lx-igy"/>
                                         <constraint firstAttribute="topMargin" secondItem="5fa-bP-f7l" secondAttribute="top" id="Adj-NN-fDr"/>
                                         <constraint firstItem="DhA-kk-bIW" firstAttribute="leading" secondItem="hbo-qE-WuG" secondAttribute="trailing" constant="2" id="FPY-YJ-FE4"/>
                                         <constraint firstAttribute="leadingMargin" secondItem="5fa-bP-f7l" secondAttribute="leading" id="SYZ-gb-e2d"/>
@@ -168,6 +168,7 @@
                                         <constraint firstAttribute="trailingMargin" secondItem="5fa-bP-f7l" secondAttribute="trailing" id="o4U-c2-w94"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="hbo-qE-WuG" secondAttribute="bottom" id="v2R-HJ-cNG"/>
                                         <constraint firstItem="hbo-qE-WuG" firstAttribute="leading" secondItem="fUL-PT-hn9" secondAttribute="leadingMargin" constant="152" id="yXy-qF-tce"/>
+                                        <constraint firstItem="hbo-qE-WuG" firstAttribute="top" secondItem="5fa-bP-f7l" secondAttribute="bottom" constant="19.5" id="zTf-vG-cTi"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
