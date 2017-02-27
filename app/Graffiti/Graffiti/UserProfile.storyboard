@@ -125,35 +125,38 @@
                                             <outlet property="votesLabel" destination="kYd-ch-Tyy" id="Lmc-yH-HL2"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImageCell" rowHeight="300" id="Cgf-az-q9b" customClass="FeedImageCell" customModule="Graffiti" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="187" width="343" height="300"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImageCell" rowHeight="250" id="Cgf-az-q9b" customClass="FeedImageCell" customModule="Graffiti" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="187" width="343" height="250"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" tableViewCell="Cgf-az-q9b" id="Qu3-vs-xr4">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="299"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="249"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time ago" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CZk-jZ-Ctm">
-                                                    <rect key="frame" x="179" y="270.5" width="150" height="20.5"/>
+                                                    <rect key="frame" x="179" y="220.5" width="150" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="420" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bv6-KS-1w4">
-                                                    <rect key="frame" x="8" y="270" width="31" height="20.5"/>
+                                                    <rect key="frame" x="8" y="220" width="31" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6UP-UC-rd9">
-                                                    <rect key="frame" x="8" y="8" width="327" height="246"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6UP-UC-rd9">
+                                                    <rect key="frame" x="38" y="8" width="267" height="204"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="204" id="ydm-ik-aTo"/>
+                                                    </constraints>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottomMargin" secondItem="6UP-UC-rd9" secondAttribute="bottom" constant="37" id="CD6-Fn-RdQ"/>
-                                                <constraint firstAttribute="topMargin" secondItem="6UP-UC-rd9" secondAttribute="top" id="CMk-q5-SW9"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="6UP-UC-rd9" secondAttribute="trailing" id="Qxf-mf-ePY"/>
+                                                <constraint firstAttribute="topMargin" secondItem="6UP-UC-rd9" secondAttribute="top" id="7fb-Ov-yHC"/>
+                                                <constraint firstItem="6UP-UC-rd9" firstAttribute="leading" secondItem="Qu3-vs-xr4" secondAttribute="leadingMargin" constant="30" id="Ac8-3C-H2W"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="6UP-UC-rd9" secondAttribute="trailing" constant="30" id="fJ2-Wk-CEp"/>
+                                                <constraint firstItem="CZk-jZ-Ctm" firstAttribute="top" secondItem="6UP-UC-rd9" secondAttribute="bottom" constant="8.5" id="gqK-9u-guQ"/>
                                                 <constraint firstItem="CZk-jZ-Ctm" firstAttribute="leading" secondItem="Qu3-vs-xr4" secondAttribute="leadingMargin" constant="171" id="n1T-ze-QXq"/>
-                                                <constraint firstAttribute="leadingMargin" secondItem="6UP-UC-rd9" secondAttribute="leading" id="o3e-26-Q08"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="bv6-KS-1w4" secondAttribute="bottom" constant="1" id="pxg-nQ-9Gx"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="CZk-jZ-Ctm" secondAttribute="trailing" constant="6" id="rif-gl-UpQ"/>
                                                 <constraint firstAttribute="leadingMargin" secondItem="bv6-KS-1w4" secondAttribute="leading" id="s4t-rt-gV3"/>

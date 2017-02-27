@@ -114,6 +114,18 @@ class FeedTableViewController: UITableViewController {
         return numRows
     }
     
+//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        if let selectedCell = tableView.cellForRow(at: indexPath) as? FeedImageCell {
+//            if let image = selectedCell.feedImageView.image {
+//                print("we will show an image modally here")
+//            } else {
+//                print("image is nil")
+//            }
+//        } else {
+//            print("not image cell")
+//        }
+//    }
+    
     // TODO refactor this
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let textCellIdentifier = "FeedCell"
@@ -142,6 +154,10 @@ class FeedTableViewController: UITableViewController {
                 fatalError("The dequeue cell is not an instance of FeedTextCell.")
             }
             imageCell.feedImageView.image = post.getImage()
+            imageCell.feedImageView.tag = indexPath.row
+
+//            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapImage(sender:)))
+//            imageCell.addGestureRecognizer(tapGestureRecognizer)
         }
         
         //cell.textView.text = post.getText()
@@ -302,5 +318,9 @@ class FeedTableViewController: UITableViewController {
     func showFeedFailureAlert() {
         showAlert(messageTitle: "Can't load latest posts", message: "")
     }
+    
+//    func didTapImage(sender: UITapGestureRecognizer) {
+//        print(sender.view?.tag)
+//    }
 
 }

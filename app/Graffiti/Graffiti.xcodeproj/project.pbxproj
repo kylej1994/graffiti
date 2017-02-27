@@ -19,6 +19,7 @@
 		AD03CF7C1E4E6430003D3682 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD03CF711E4D5AB2003D3682 /* LocationService.swift */; };
 		AD3E23451E5123A80022C882 /* FeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3E23441E5123A80022C882 /* FeedTableViewCell.swift */; };
 		AD6935C21E552BFD00DE236C /* TimeAgo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6935C11E552BFD00DE236C /* TimeAgo.swift */; };
+		AD79E6E91E64968C005AD9EA /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD79E6E81E64968C005AD9EA /* ImageDetailViewController.swift */; };
 		AD84BD311E4947330020505D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD301E4947330020505D /* AppDelegate.swift */; };
 		AD84BD361E4947330020505D /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD84BD341E4947330020505D /* Login.storyboard */; };
 		AD84BD381E4947330020505D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD84BD371E4947330020505D /* Assets.xcassets */; };
@@ -102,6 +103,7 @@
 		AD03CF7A1E4E4F92003D3682 /* LocationServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationServiceTests.swift; sourceTree = "<group>"; };
 		AD3E23441E5123A80022C882 /* FeedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedTableViewCell.swift; sourceTree = "<group>"; };
 		AD6935C11E552BFD00DE236C /* TimeAgo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeAgo.swift; sourceTree = "<group>"; };
+		AD79E6E81E64968C005AD9EA /* ImageDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
 		AD84BD2D1E4947330020505D /* Graffiti.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Graffiti.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD84BD301E4947330020505D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD84BD351E4947330020505D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
@@ -286,6 +288,7 @@
 				AD3E23441E5123A80022C882 /* FeedTableViewCell.swift */,
 				ADF54FCB1E63536F00D0B0E0 /* FeedTextCell.swift */,
 				ADF54FCD1E63538100D0B0E0 /* FeedImageCell.swift */,
+				AD79E6E81E64968C005AD9EA /* ImageDetailViewController.swift */,
 			);
 			name = Feed;
 			sourceTree = "<group>";
@@ -664,6 +667,7 @@
 				ADD7F76F1E551F8B009BADC1 /* EmptyFeedBackgroundView.swift in Sources */,
 				D9DD58DF1E57A32600D9CB1D /* Vote.swift in Sources */,
 				AD84BD731E494C320020505D /* LoginViewController.swift in Sources */,
+				AD79E6E91E64968C005AD9EA /* ImageDetailViewController.swift in Sources */,
 				ADF54FCE1E63538100D0B0E0 /* FeedImageCell.swift in Sources */,
 				D9DD58E11E57AE3900D9CB1D /* UserTransform.swift in Sources */,
 				B33B07CC1E4AB6D2007025FB /* Post.swift in Sources */,

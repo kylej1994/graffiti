@@ -151,19 +151,34 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     // create a cell for each table view row
     // would be nice to be able to reuse FeedViewController code...
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //tableView.rowHeight = 130 //uncomment if we want a static row height
+        let textCellIdentifier = "FeedCell"
+        let imageCellIdentifier = "ImageCell"
         
-        let cellIdentifier = "FeedCell"
+        let post = posts[indexPath.row]
+        let type = post.getPostType()
+
         // downcast cell to the custom cell class
         // guard safely unwraps the optional
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? FeedTextCell else {
-            fatalError("The dequeue cell is not an instance of FeedTableViewTextCell.")
+        guard var cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath) as? FeedTableViewCell else {
+            fatalError("The dequeue cell is not an instance of FeedTableViewCell.")
         }
-            
-        // this is where we get the post from the post model
-        let post = posts[indexPath.row]
-            
-        cell.textView.text = post.getText()
+        
+        if type == .TextPost {
+            guard let textCell = cell as? FeedTextCell else {
+                fatalError("The dequeue cell is not an instance of FeedTextCell.")
+            }
+            textCell.textView.text = post.getText()
+        }
+        
+        if type == .ImagePost {
+            cell = tableView.dequeueReusableCell(withIdentifier: imageCellIdentifier, for: indexPath) as! FeedImageCell // necessary or else the dequeue cell is the wrong class
+            guard let imageCell = cell as? FeedImageCell else {
+                fatalError("The dequeue cell is not an instance of FeedTextCell.")
+            }
+            imageCell.feedImageView.image = post.getImage()
+            imageCell.feedImageView.tag = indexPath.row
+        }
+        
         setRatingDisplay(cell: cell, post: post)
         setDateDisplay(cell: cell, post: post)
             

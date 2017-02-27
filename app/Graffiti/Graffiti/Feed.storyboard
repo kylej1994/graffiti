@@ -14,7 +14,7 @@
         <scene sceneID="acF-Bt-ASm">
             <objects>
                 <tableViewController id="vt4-Ow-rT6" customClass="FeedTableViewController" customModule="Graffiti" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="150" sectionHeaderHeight="28" sectionFooterHeight="28" id="4W6-5X-oLW">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="150" sectionHeaderHeight="28" sectionFooterHeight="28" id="4W6-5X-oLW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -106,8 +106,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="249"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="image-post-example" translatesAutoresizingMaskIntoConstraints="NO" id="5fa-bP-f7l">
+                                        <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="image-post-example" translatesAutoresizingMaskIntoConstraints="NO" id="5fa-bP-f7l">
                                             <rect key="frame" x="38" y="8" width="299" height="186"/>
+                                            <gestureRecognizers/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="186" id="DGL-VQ-8iH"/>
                                             </constraints>
@@ -209,6 +210,38 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PK2-9x-Xoe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1244" y="-587"/>
+        </scene>
+        <!--Image Detail View Controller-->
+        <scene sceneID="1MK-Wr-siR">
+            <objects>
+                <viewController id="ELs-gv-yy7" customClass="ImageDetailViewController" customModule="Graffiti" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="FFu-xO-0tt"/>
+                        <viewControllerLayoutGuide type="bottom" id="jHc-Hn-yWb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dqC-DX-CgJ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="v7n-zP-BnP">
+                                <rect key="frame" x="16" y="28" width="343" height="619"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="v7n-zP-BnP" firstAttribute="top" secondItem="FFu-xO-0tt" secondAttribute="bottom" constant="8" id="2VL-Mf-oVB"/>
+                            <constraint firstItem="jHc-Hn-yWb" firstAttribute="top" secondItem="v7n-zP-BnP" secondAttribute="bottom" constant="20" id="PTk-ot-Grj"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="v7n-zP-BnP" secondAttribute="trailing" id="lTE-Dt-m2K"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="v7n-zP-BnP" secondAttribute="leading" id="wzI-De-61K"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imageDetailView" destination="v7n-zP-BnP" id="8Tf-26-fj2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IBw-gQ-A9B" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1703" y="-433"/>
         </scene>
         <!--Feed-->
         <scene sceneID="mjW-Qv-VE0">
