@@ -8,7 +8,9 @@ from flask.ext.sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 app.config.from_pyfile('graffiti.cfg')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+print 'just before db'
 db = SQLAlchemy(app)
+print 'just after db'
 app.wsgi_app = auth_Middleware.Auth_MiddleWare(app.wsgi_app)
 
 
