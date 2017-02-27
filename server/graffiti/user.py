@@ -5,7 +5,7 @@ import sys
 import re
 import types
 sys.path.append('..')
-from graffiti import db, app
+from graffiti import db
 from sqlalchemy import Column, Float, Integer, String
 
 from datetime import datetime
@@ -163,13 +163,25 @@ class User(db.Model):
             return False
 
     def to_json_fields_for_FE(self):
+        img_data = []
+        # retrieve image data from s3 if its an image
+        try:
+            key = 'userid:{0}, joined:{1}'.format(self.user_id,\
+                self.join_timestamp)
+            img_data = self.s3_client.get_object(\
+                Bucket='graffiti-user-images',\
+                Key=key)['Body'].read()
+        except:
+            print('Couldnt find key')
+            print('Should probably do something about that')
         return json.dumps(dict(
             userid=self.user_id,
             username=self.username,
             name=self.name,
             email=self.email,
             bio=self.bio,
-            phone_number=self.phone_number))
+            phone_number=self.phone_number,
+            img_tag=img_data))
 
     # saves the user into the db
     def save_user(self):

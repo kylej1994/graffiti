@@ -78,7 +78,8 @@ class Post(db.Model):
             try:
                 img_data = self.s3_client.get_object(\
                     Bucket='graffiti-post-images',\
-                    Key='postid:{0}'.format(self.post_id))['Body'].read()
+                    Key='postid:{0}, created_at{1}'.format(self.post_id,\
+                        self.created_at))['Body'].read()
             except:
                 print('Couldnt find key')
                 print('Should probably do something about that')

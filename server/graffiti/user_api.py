@@ -119,9 +119,7 @@ def update_user(userid):
 	user.save_user()
 
 	if ('image' in data):
-		print good_inputs
 		good_inputs = good_inputs and user.set_image_tag(data['image'])
-		print good_inputs
 
 	if ('email' in data and data['email'] != user.get_email()):
 		return generate_error_response(ERR_403_email, 403)
