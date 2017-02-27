@@ -50,6 +50,8 @@
 		D9141CA91E58E71C00FA04D0 /* AuthProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9141CA81E58E71C00FA04D0 /* AuthProtocol.swift */; };
 		D9141CAA1E58E72200FA04D0 /* AuthProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9141CA81E58E71C00FA04D0 /* AuthProtocol.swift */; };
 		D9141CAC1E58E7F800FA04D0 /* MockAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9141CAB1E58E7F800FA04D0 /* MockAuth.swift */; };
+		D9940E7F1E63D61500CF00E6 /* ImageTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9940E7E1E63D61500CF00E6 /* ImageTransform.swift */; };
+		D9940E801E63E91100CF00E6 /* ImageTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9940E7E1E63D61500CF00E6 /* ImageTransform.swift */; };
 		D99735A11E4E722F00DA5F29 /* ApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD771E4952330020505D /* ApiTests.swift */; };
 		D99735A21E4E722F00DA5F29 /* FeedViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD791E4952B20020505D /* FeedViewControllerTests.swift */; };
 		D9B5FAEB1E54FF9300DF87B2 /* LocationTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B5FAEA1E54FF9300DF87B2 /* LocationTransform.swift */; };
@@ -138,6 +140,7 @@
 		D90D7A8E1E4E6C5400FB5AEE /* MockRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRequest.swift; sourceTree = "<group>"; };
 		D9141CA81E58E71C00FA04D0 /* AuthProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthProtocol.swift; sourceTree = "<group>"; };
 		D9141CAB1E58E7F800FA04D0 /* MockAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAuth.swift; sourceTree = "<group>"; };
+		D9940E7E1E63D61500CF00E6 /* ImageTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageTransform.swift; sourceTree = "<group>"; };
 		D9B5FAEA1E54FF9300DF87B2 /* LocationTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTransform.swift; sourceTree = "<group>"; };
 		D9C7CE431E58D36500B7F3AA /* GraffitiTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GraffitiTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		D9DD58DE1E57A32600D9CB1D /* Vote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vote.swift; sourceTree = "<group>"; };
@@ -227,6 +230,7 @@
 		AD84BD2F1E4947330020505D /* Graffiti */ = {
 			isa = PBXGroup;
 			children = (
+				D9940E7D1E63D5B200CF00E6 /* Utilities */,
 				D9E63B9E1E4D45CD00EE6C4B /* API */,
 				AD03CF701E4D59B1003D3682 /* Location */,
 				AD84BD6C1E494B430020505D /* Feed */,
@@ -316,6 +320,14 @@
 				AD84BD721E494C320020505D /* LoginViewController.swift */,
 			);
 			name = Login;
+			sourceTree = "<group>";
+		};
+		D9940E7D1E63D5B200CF00E6 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				D9940E7E1E63D61500CF00E6 /* ImageTransform.swift */,
+			);
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 		D9E63B9E1E4D45CD00EE6C4B /* API */ = {
@@ -643,6 +655,7 @@
 				D9B5FAEB1E54FF9300DF87B2 /* LocationTransform.swift in Sources */,
 				4CA6EC841E5F6FC800865EC1 /* FXBlurView.m in Sources */,
 				AD84BD631E4949860020505D /* ProfileViewController.swift in Sources */,
+				D9940E7F1E63D61500CF00E6 /* ImageTransform.swift in Sources */,
 				D9141CA91E58E71C00FA04D0 /* AuthProtocol.swift in Sources */,
 				B33B07D01E4ACA8F007025FB /* User.swift in Sources */,
 				AD84BD5F1E4949260020505D /* FeedTableViewController.swift in Sources */,
@@ -683,6 +696,7 @@
 				AD03CF791E4E4C91003D3682 /* LocationManagerProtocol.swift in Sources */,
 				D9141CAC1E58E7F800FA04D0 /* MockAuth.swift in Sources */,
 				D9141CAA1E58E72200FA04D0 /* AuthProtocol.swift in Sources */,
+				D9940E801E63E91100CF00E6 /* ImageTransform.swift in Sources */,
 				F744D4141E4E842600C42677 /* Post.swift in Sources */,
 				AD03CF7C1E4E6430003D3682 /* LocationService.swift in Sources */,
 				AD84BD761E4951D70020505D /* UserTests.swift in Sources */,

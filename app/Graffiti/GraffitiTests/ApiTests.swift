@@ -90,6 +90,7 @@ class ApiTests: XCTestCase {
         XCTAssertEqual(url, "/post")
         XCTAssertEqual(session.lastMethod, .post)
         XCTAssertEqual(session.lastParameters?["text"] as! String, "this is a post")
+        XCTAssertEqual(session.lastParameters?["type"] as! Int, 0)
         XCTAssertEqual(locationParam["latitude"], 10.0)
         XCTAssertEqual(locationParam["longitude"], 10.0)
         
