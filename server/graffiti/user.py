@@ -104,12 +104,14 @@ class User(db.Model):
 
     def set_image_tag(self, img_data):
         try:
+            key = 'userid:{0}, joined:{1}'.format(self.user_id,\
+                self.join_timestamp)
             self.s3_client.put_object(Body=img_data,\
                 Bucket='graffiti-user-images',\
-                Key='postid:{0}, joined:{1}'.format(\
-                    self.post_id, self.join_timestamp))
+                Key=key)
             return True
-        except:
+        except Exception, e:
+            print e
             return False
 
     # No validations implemented

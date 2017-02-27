@@ -114,12 +114,14 @@ def update_user(userid):
 	if ('bio' in data and data['bio'] != user.get_bio()):
 		good_inputs = good_inputs and user.set_bio(data['bio'])
 
-	if ('image' in data):
-		good_inputs = good_inputs and user.set_image_tag(data['image'])
-
 	# save user before check email because even if user wants to change email,
 	# the other fields should still be modified.
 	user.save_user()
+
+	if ('image' in data):
+		print good_inputs
+		good_inputs = good_inputs and user.set_image_tag(data['image'])
+		print good_inputs
 
 	if ('email' in data and data['email'] != user.get_email()):
 		return generate_error_response(ERR_403_email, 403)

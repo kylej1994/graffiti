@@ -112,8 +112,8 @@ class Post(db.Model):
         if self.post_type.describe() == 1:
             self.s3_client.put_object(Body=img_data,\
                 Bucket='graffiti-post-images',\
-                Key='postid:{0}, created_at{1}'.format(\
-                    self.post_id, self.created_at))
+                Key='postid:{0}, created_at{1}'.format(self.post_id,\
+                    self.created_at))
         # if not, do nothing
         # doing this for compatability reasons...wow this code is smelly
 
