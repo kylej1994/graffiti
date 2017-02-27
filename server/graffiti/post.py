@@ -78,7 +78,8 @@ class Post(db.Model):
             try:
                 img_data = self.s3_client.get_object(\
                     Bucket='graffiti-post-images',\
-                    Key='postid:{0}'.format(self.post_id))['Body'].read()
+                    Key='postid:{0}, created_at{1}'.format(self.post_id,\
+                        self.created_at))['Body'].read()
             except:
                 print('Couldnt find key')
                 print('Should probably do something about that')
@@ -109,11 +110,11 @@ class Post(db.Model):
 
     def upload_img_to_s3(self, img_data):
         # if its an image, upload it to s3
-        print 'postid{0}'.format(self.post_id)
         if self.post_type.describe() == 1:
             self.s3_client.put_object(Body=img_data,\
                 Bucket='graffiti-post-images',\
-                Key='postid:{0}'.format(self.post_id))
+                Key='postid:{0}, created_at{1}'.format(self.post_id,\
+                    self.created_at))
         # if not, do nothing
         # doing this for compatability reasons...wow this code is smelly
 

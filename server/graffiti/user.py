@@ -1,3 +1,5 @@
+import boto3
+import botocore
 import json
 import sys
 import re
@@ -13,6 +15,10 @@ import geoalchemy2
 import re
 EMAIL_REGEX = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
+# obviously will put this somewhere else eventually
+ACCESS_KEY = 'AKIAIDBIJ3JOX3LDGVNQ'
+SECRET_KEY = '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'
+
 class User(db.Model):
     __tablename__ = 'users'
 
@@ -27,10 +33,9 @@ class User(db.Model):
     bio = db.Column(db.String(160))
     join_timestamp = db.Column(db.DateTime)
     has_been_suspended = db.Column(db.Boolean)
-    img_tag_file_loc = db.Column(db.String(100))
+    s3_client = None
 
-    def __init__(self, username, google_aud, phone_number, name, email, bio,\
-        img_tag=''):
+    def __init__(self, username, google_aud, phone_number, name, email, bio):
         self.set_username(username)
         self.set_google_aud(google_aud)
         self.set_phone_number(phone_number)
@@ -39,7 +44,12 @@ class User(db.Model):
         self.join_timestamp = datetime.fromtimestamp(time()).isoformat()
         self.set_bio(bio)
         self.has_been_suspended = False
-        self.img_tag_file_loc = img_tag
+
+        # setup s3 client
+        cfg = botocore.config.Config(signature_version='s3v4')
+        self.s3_client = boto3.client('s3', config=cfg,\
+            aws_access_key_id=ACCESS_KEY,\
+            aws_secret_access_key=SECRET_KEY)
 
     def __repr__(self):
         return '<username {}>'.format(self.username)
@@ -92,6 +102,19 @@ class User(db.Model):
     def get_has_been_suspended(self):
         return self.has_been_suspended
 
+    # uploads img_data to s3 as this user's img tag
+    def set_image_tag(self, img_data):
+        try:
+            key = 'userid:{0}, joined:{1}'.format(self.user_id,\
+                self.join_timestamp)
+            self.s3_client.put_object(Body=img_data,\
+                Bucket='graffiti-user-images',\
+                Key=key)
+            return True
+        except Exception, e:
+            print e
+            return False
+
     # No validations implemented
     def set_google_aud(self, google_aud):
         self.google_aud = google_aud
@@ -141,13 +164,25 @@ class User(db.Model):
             return False
 
     def to_json_fields_for_FE(self):
+        img_data = []
+        # retrieve image data from s3 if its an image
+        try:
+            key = 'userid:{0}, joined:{1}'.format(self.user_id,\
+                self.join_timestamp)
+            img_data = self.s3_client.get_object(\
+                Bucket='graffiti-user-images',\
+                Key=key)['Body'].read()
+        except:
+            print('Couldnt find key')
+            print('Should probably do something about that')
         return json.dumps(dict(
             userid=self.user_id,
             username=self.username,
             name=self.name,
             email=self.email,
             bio=self.bio,
-            phone_number=self.phone_number))
+            phone_number=self.phone_number,
+            img_tag=img_data))
 
     # saves the user into the db
     def save_user(self):
