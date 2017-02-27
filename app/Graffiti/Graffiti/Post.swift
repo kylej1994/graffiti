@@ -80,6 +80,7 @@ class Post : Mappable {
         
         // Initialize all the things!
         self.ID = ID
+        self.postType = postType
         self.location = location
         self.poster = poster
         
@@ -121,6 +122,15 @@ class Post : Mappable {
     
     func mapping(map: Map) {
         ID        <- map["postid"]
+        postType  <- (map["type"], TransformOf<PostType, Int>(fromJSON: { (value: Int?) -> PostType? in
+            if let int = value {
+                return PostType(rawValue: int)
+            } else {
+                return nil
+            }
+        }, toJSON: { (value: PostType?) -> Int? in
+            return value?.rawValue
+        }))
         text      <- map["text"]
         location  <- (map["location"], LocationTransform())
         timeAdded <- (map["created_at"], DateTransform())

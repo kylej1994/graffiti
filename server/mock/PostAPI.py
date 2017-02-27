@@ -17,6 +17,7 @@ fake_user = dict(
 
 fake_dict = dict(
 		postid=1,
+		type=0,
 		text='This one is for you, Henry ;)',
 		location=dict(
 			longitude=41.792279,
