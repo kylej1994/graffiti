@@ -15,7 +15,6 @@ class FeedImageCell: FeedTableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        self.layoutIfNeeded()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

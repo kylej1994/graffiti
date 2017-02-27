@@ -114,18 +114,6 @@ class FeedTableViewController: UITableViewController {
         return numRows
     }
     
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        if let selectedCell = tableView.cellForRow(at: indexPath) as? FeedImageCell {
-//            if let image = selectedCell.feedImageView.image {
-//                print("we will show an image modally here")
-//            } else {
-//                print("image is nil")
-//            }
-//        } else {
-//            print("not image cell")
-//        }
-//    }
-    
     // TODO refactor this
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let textCellIdentifier = "FeedCell"
@@ -160,7 +148,7 @@ class FeedTableViewController: UITableViewController {
             imageCell.feedImageView.addGestureRecognizer(tapGestureRecognizer)
         }
         
-        //cell.textView.text = post.getText()
+
         setDisplay(cell: cell, post: post)
         
         // handle upvote button tap
@@ -321,14 +309,18 @@ class FeedTableViewController: UITableViewController {
     
     func didTapImage(sender: UITapGestureRecognizer) {
         let cellImageView = sender.view as! UIImageView
-        let img = cellImageView.image
-//        let newImageView = UIImageView(image: imageView.image)
-//        newImageView.frame = self.view.frame
-//        newImageView.backgroundColor = .black
-//        newImageView.contentMode = .scaleAspectFit
-//        newImageView.isUserInteractionEnabled = true
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissFullscreenImage))
-//        newImageView.addGestureRecognizer(tap)
-//        self.view.addSubview(newImageView)
+        let newImageView = UIImageView(image: cellImageView.image)
+        newImageView.frame = self.view.frame
+        newImageView.backgroundColor = .black
+        newImageView.contentMode = .scaleAspectFit
+        newImageView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissFullscreenImage))
+        newImageView.addGestureRecognizer(tap)
+        self.view.addSubview(newImageView)
+        
+    }
+    
+    func dismissFullscreenImage(_ sender: UITapGestureRecognizer) {
+        sender.view?.removeFromSuperview()
     }
 }
