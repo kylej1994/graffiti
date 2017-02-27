@@ -132,6 +132,7 @@ class Post : Mappable {
             return value?.rawValue
         }))
         text      <- map["text"]
+        image     <- (map["image"], ImageTransform())
         location  <- (map["location"], LocationTransform())
         timeAdded <- (map["created_at"], DateTransform())
         rating    <- map["num_votes"]
