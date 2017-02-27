@@ -49,6 +49,7 @@
 		D9141CAA1E58E72200FA04D0 /* AuthProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9141CA81E58E71C00FA04D0 /* AuthProtocol.swift */; };
 		D9141CAC1E58E7F800FA04D0 /* MockAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9141CAB1E58E7F800FA04D0 /* MockAuth.swift */; };
 		D9940E7F1E63D61500CF00E6 /* ImageTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9940E7E1E63D61500CF00E6 /* ImageTransform.swift */; };
+		D9940E801E63E91100CF00E6 /* ImageTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9940E7E1E63D61500CF00E6 /* ImageTransform.swift */; };
 		D99735A11E4E722F00DA5F29 /* ApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD771E4952330020505D /* ApiTests.swift */; };
 		D99735A21E4E722F00DA5F29 /* FeedViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD791E4952B20020505D /* FeedViewControllerTests.swift */; };
 		D9B5FAEB1E54FF9300DF87B2 /* LocationTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B5FAEA1E54FF9300DF87B2 /* LocationTransform.swift */; };
@@ -687,6 +688,7 @@
 				AD03CF791E4E4C91003D3682 /* LocationManagerProtocol.swift in Sources */,
 				D9141CAC1E58E7F800FA04D0 /* MockAuth.swift in Sources */,
 				D9141CAA1E58E72200FA04D0 /* AuthProtocol.swift in Sources */,
+				D9940E801E63E91100CF00E6 /* ImageTransform.swift in Sources */,
 				F744D4141E4E842600C42677 /* Post.swift in Sources */,
 				AD03CF7C1E4E6430003D3682 /* LocationService.swift in Sources */,
 				AD84BD761E4951D70020505D /* UserTests.swift in Sources */,
