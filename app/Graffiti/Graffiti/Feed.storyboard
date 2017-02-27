@@ -107,7 +107,10 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="image-post-example" translatesAutoresizingMaskIntoConstraints="NO" id="5fa-bP-f7l">
-                                            <rect key="frame" x="8" y="8" width="359" height="233.5"/>
+                                            <rect key="frame" x="8" y="8" width="359" height="193.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="193.5" id="Jm3-ha-4rY"/>
+                                            </constraints>
                                         </imageView>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="1nG-Px-izM">
                                             <rect key="frame" x="8" y="191.5" width="50.5" height="50"/>
@@ -154,7 +157,7 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="bottomMargin" secondItem="5fa-bP-f7l" secondAttribute="bottom" id="2i3-lx-igy"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="5fa-bP-f7l" secondAttribute="bottom" constant="40" id="2i3-lx-igy"/>
                                         <constraint firstAttribute="topMargin" secondItem="5fa-bP-f7l" secondAttribute="top" id="Adj-NN-fDr"/>
                                         <constraint firstItem="DhA-kk-bIW" firstAttribute="leading" secondItem="hbo-qE-WuG" secondAttribute="trailing" constant="2" id="FPY-YJ-FE4"/>
                                         <constraint firstAttribute="leadingMargin" secondItem="5fa-bP-f7l" secondAttribute="leading" id="SYZ-gb-e2d"/>
