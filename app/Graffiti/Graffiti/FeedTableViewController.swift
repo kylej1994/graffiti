@@ -137,7 +137,7 @@ class FeedTableViewController: UITableViewController {
         }
         
         if type == .ImagePost {
-            cell = tableView.dequeueReusableCell(withIdentifier: imageCellIdentifier, for: indexPath) as! FeedImageCell //this could be terribly wrong
+            cell = tableView.dequeueReusableCell(withIdentifier: imageCellIdentifier, for: indexPath) as! FeedImageCell // necessary or else the dequeue cell is the wrong class
             guard let imageCell = cell as? FeedImageCell else {
                 fatalError("The dequeue cell is not an instance of FeedTextCell.")
             }
