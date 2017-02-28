@@ -33,6 +33,10 @@ class Auth_MiddleWare(object):
 
         #Skip Auth if debugging, since tokens will always be invalid
         if DEBUG:
+            # testing purposes only - matches with sample values in fill_db()
+            return_info = dict([('email', 'kat@lu.com'),\
+                ('audCode', '1008719970978')])
+            environ['META_INFO'] = return_info
             return self.app(environ, start_response)
 
 

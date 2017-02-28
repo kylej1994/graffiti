@@ -1,6 +1,7 @@
 import json
 import sys
 import unittest
+import Image
 
 from flask_api_test import APITestCase
 sys.path.append('..')
@@ -42,21 +43,19 @@ class UserTestCase(APITestCase):
     #     assert data['new_user'] == True
     #     self.check_user_fields(data['user'], 2, '', '', '', '', '')
 
-    # def test_invalid_create_user(self):
-    #     rv = self.app.get('/user/login',
-    #             follow_redirects=True)
+    def test_login_existent_user(self):
+        # logging in with debug idToekns from auth_middleware.py
+        rv = self.app.get('/user/login',
+                follow_redirects=True)
 
-    #     # no idToken header, so is an unauthorized request
-    #     assert rv.status_code == 401
+        assert rv.status_code == 200
 
-    #     data = json.loads(rv.data)
-    #     assert data['error'] == "User idToken is missing."
+        data = json.loads(rv.data)
+        assert data['new_user'] == False
 
     def test_get_existent_user(self):
         # Uses the sample user made in graffiti.py
         rv = self.app.get('/user/1',
-                headers=dict(
-                    idToken=9402234123712),
                 follow_redirects=True)
 
         assert rv.status_code == 200
@@ -67,9 +66,8 @@ class UserTestCase(APITestCase):
             'My name is jablonk' , '9172825753')
 
     def test_get_nonexistent_user_by_user_id(self):
-        rv = self.app.get('/user/2',
-                headers=dict(
-                    idToken=9402234123712),
+        # two users made in graffiti.py
+        rv = self.app.get('/user/17',
                 follow_redirects=True)
 
         assert rv.status_code == 404
@@ -80,8 +78,6 @@ class UserTestCase(APITestCase):
     def test_update_nonexistent_user(self):
         rv = self.app.put('/user/2',
                 data=dict(),
-                headers=dict(
-                    idToken=9402234123712),
                 follow_redirects=True)
 
         assert rv.status_code == 400
@@ -91,39 +87,58 @@ class UserTestCase(APITestCase):
 
     def test_update_existent_user(self):
         # Uses the sample user made in graffiti.py
-
+        # note that userid and emails are immutable
         rv = self.app.put('/user/1',
                 data=json.dumps(dict(
                     userid=1,
                     username='l33t',
                     name='Team Graffiti',
-                    email='team@graffiti.com',
+                    email='kat@lu.com',
                     bio='This is my tag.',
-                    phone_number='1234567890'
+                    phone_number='1234567890',
+                    img_tag=[]
                     )),
                 content_type='application/json',
-                headers=dict(
-                    idToken=9402234123712),
                 follow_redirects=True)
 
         assert rv.status_code == 200
 
         data = json.loads(rv.data)
         self.check_user_fields(data, 1, 'l33t', 'Team Graffiti',
-            'team@graffiti.com', 'This is my tag.', '1234567890')
+            'kat@lu.com', 'This is my tag.', '1234567890')
+
+    def test_update_existent_user_with_image(self):
+        img = Image.open('cat-pic.png')
+        # Uses the sample user made in graffiti.py
+        # note that userid and emails are immutable
+        rv = self.app.put('/user/1',
+                data=json.dumps(dict(
+                    userid=1,
+                    username='l33t',
+                    name='Team Graffiti',
+                    email='kat@lu.com',
+                    bio='This is my tag.',
+                    phone_number='1234567890',
+                    img_tag=img.getdata()
+                    )),
+                content_type='application/json',
+                follow_redirects=True)
+
+        assert rv.status_code == 200
+
+        data = json.loads(rv.data)
+        self.check_user_fields(data, 1, 'l33t', 'Team Graffiti',
+            'kat@lu.com', 'This is my tag.', '1234567890')
 
     def test_get_user_posts(self):
         rv = self.app.get('/user/1/posts',
-                headers=dict(
-                    idToken=9402234123712),
                 follow_redirects=True)
 
         assert rv.status_code == 200
 
     def test_get_nonexistent_user_posts(self):
-        rv = self.app.get('/user/2/posts',
-                headers=dict(
-                    idToken=9402234123712),
+        # 2 users made in graffiti.py
+        rv = self.app.get('/user/17/posts',
                 follow_redirects=True)
 
         assert rv.status_code == 404

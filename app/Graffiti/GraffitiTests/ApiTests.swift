@@ -64,6 +64,18 @@ class ApiTests: XCTestCase {
         XCTAssertNotNil(token)
     }
     
+    func testGetUserPosts() {
+        api.getUserPosts(userid: 1234) { (_) in }
+        
+        let url = session.lastURL as? String
+        XCTAssertEqual(url, "/user/1234/posts")
+        
+        XCTAssertEqual(session.lastMethod, .get)
+        
+        let token = session.lastHeaders?["Authorization"]
+        XCTAssertNotNil(token)
+    }
+    
     //MARK: Post Call Tests
     
     func testCreatePost() {
@@ -78,6 +90,7 @@ class ApiTests: XCTestCase {
         XCTAssertEqual(url, "/post")
         XCTAssertEqual(session.lastMethod, .post)
         XCTAssertEqual(session.lastParameters?["text"] as! String, "this is a post")
+        XCTAssertEqual(session.lastParameters?["type"] as! Int, 0)
         XCTAssertEqual(locationParam["latitude"], 10.0)
         XCTAssertEqual(locationParam["longitude"], 10.0)
         
