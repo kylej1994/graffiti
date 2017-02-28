@@ -20,12 +20,12 @@ class FeedTableViewController: UITableViewController {
     var currentLatitude: CLLocationDegrees? = CLLocationDegrees()
     var currentLongitude: CLLocationDegrees? = CLLocationDegrees()
     
-    // we load the data in view did appear so the feed gets filled asap
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         locationManager.startUpdatingLocation()
 
-        //self.getPostsByLocation()
+        // refresh feed every time we show the tab
+        // self.getPostsByLocation()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
