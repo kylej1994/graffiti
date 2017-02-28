@@ -13,7 +13,6 @@ import GoogleSignIn
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     var window: UIWindow?
     var loginViewController: LoginViewController!
-    var tabsViewController: UITabBarController!
     var onboardingViewController: UIViewController!
     
     // MARK: App Properties
@@ -25,7 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Init View Controller
         loginViewController = UIStoryboard(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
-        tabsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Main") as! UITabBarController
         onboardingViewController = UIStoryboard(name: "Onboarding", bundle: nil).instantiateViewController(withIdentifier: "OnboardingViewController")
         
         // Initialize sign-in
@@ -112,12 +110,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     }
     
     func navigateToTabs() {
-        self.window?.rootViewController = tabsViewController
+        self.window?.rootViewController = getNewTabsInstance()
         self.window?.makeKeyAndVisible()
     }
     
     func navigateToOnboarding() {
         self.window?.rootViewController = onboardingViewController
         self.window?.makeKeyAndVisible()
+    }
+    
+    private func getNewTabsInstance () -> UITabBarController {
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Main") as! UITabBarController
     }
 }
