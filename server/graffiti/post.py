@@ -7,6 +7,9 @@ from sqlalchemy.dialects.postgresql import JSON
 from user import User
 from userpost import UserPost
 
+import boto3
+import botocore
+import enum
 import time
 
 from geoalchemy2.elements import WKTElement
@@ -15,10 +18,23 @@ from geoalchemy2.shape import from_shape
 from geoalchemy2 import Geometry
 from shapely.geometry import Point
 
+# obviously will put this somewhere else eventually
+ACCESS_KEY = 'AKIAIDBIJ3JOX3LDGVNQ'
+SECRET_KEY = '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'
+
 class Post(db.Model):
     __tablename__ = 'post'
 
+
+    class PostType(enum.Enum):
+        TEXT = 0
+        IMAGE = 1
+
+        def describe(self):
+            return self.value
+
     post_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    post_type = db.Column(db.Enum(PostType))
     text = db.Column(db.String(100))
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
@@ -26,10 +42,12 @@ class Post(db.Model):
     created_at = db.Column(db.Float)
     poster_id = db.Column(db.Integer)
     num_votes = db.Column(db.Integer)
-    img_file_loc = db.Column(db.String(100))
+    s3_client = None
 
-    def __init__(self, text, longitude, latitude, poster_id, img_loc=''):
+    # defaults for type because I don't want to break things everywhere else
+    def __init__(self, text, longitude, latitude, poster_id, post_type = 0):
         self.text = text
+        self.post_type = Post.PostType(int(post_type))
         self.longitude = longitude
         self.latitude = latitude
         self.created_at = time.time()
@@ -38,7 +56,13 @@ class Post(db.Model):
         # latitude comes first
         loc = 'POINT(' + str(latitude) + ' ' + str(longitude) + ')'
         self.loc = WKTElement(loc, srid=4326)
-        self.img_file_loc = img_loc
+
+        # setup s3 client
+        cfg = botocore.config.Config(signature_version='s3v4')
+        self.s3_client = boto3.client('s3', config=cfg,\
+            aws_access_key_id=ACCESS_KEY,\
+            aws_secret_access_key=SECRET_KEY)
+
 
     def __repr__(self):
         return '<post_id {}>'.format(self.post_id)
@@ -47,8 +71,20 @@ class Post(db.Model):
         user = User.find_user_by_id(self.poster_id)
         cur_user_vote = UserPost.get_vote_by_ids(current_user_id, self.post_id)
         cur_user_vote = cur_user_vote if cur_user_vote else 0
+
+        img_data = []
+        # retrieve image data from s3 if its an image
+        if self.post_type.describe() == 1:
+            try:
+                img_data = self.s3_client.get_object(\
+                    Bucket='graffiti-post-images',\
+                    Key='postid:{0}'.format(self.post_id))['Body'].read()
+            except:
+                print('Couldnt find key')
+                print('Should probably do something about that')
         return json.dumps(dict(
             postid=self.post_id,
+            type=self.post_type.describe(),
             text=self.text,
             location=dict(
                 longitude=self.longitude,
@@ -56,13 +92,30 @@ class Post(db.Model):
             created_at=self.created_at,
             poster=user.to_json_fields_for_FE(),
             num_votes=self.num_votes,
-            current_user_vote=cur_user_vote))
+            current_user_vote=cur_user_vote,
+            image=img_data))
 
     def get_poster_id(self):
         return self.poster_id
 
     def get_text(self):
         return self.text
+
+    def get_longitude(self):
+        return self.longitude
+
+    def get_latitude(self):
+        return self.latitude
+
+    def upload_img_to_s3(self, img_data):
+        # if its an image, upload it to s3
+        print 'postid{0}'.format(self.post_id)
+        if self.post_type.describe() == 1:
+            self.s3_client.put_object(Body=img_data,\
+                Bucket='graffiti-post-images',\
+                Key='postid:{0}'.format(self.post_id))
+        # if not, do nothing
+        # doing this for compatability reasons...wow this code is smelly
 
     # saves the post into the db
     def save_post(self):
