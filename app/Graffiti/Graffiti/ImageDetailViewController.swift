@@ -24,10 +24,10 @@ class ImageDetailViewController: UIViewController {
     }
     
     @IBAction func handleDismissGesture(_ sender: UIPanGestureRecognizer) {
-        let percentThreshold:CGFloat = 0.3
+        let percentThreshold:CGFloat = 0.4
         
         // convert y position to downward pull progress (percentage)
-        let translation = sender.translation(in: view)
+        let translation = sender.translation(in: view) // converts the pan gesture coordinate to the Modal View Controller’s coordinate space.
         let verticalMovement = translation.y / view.bounds.height
         let downwardMovement = fmaxf(Float(verticalMovement), 0.0)
         let downwardMovementPercent = fminf(downwardMovement, 1.0)

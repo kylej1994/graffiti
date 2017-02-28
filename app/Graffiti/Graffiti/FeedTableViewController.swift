@@ -312,20 +312,17 @@ class FeedTableViewController: UITableViewController {
         
         let storyboard = UIStoryboard(name: "Feed", bundle: nil)
         if let detailVC = storyboard.instantiateViewController(withIdentifier: "ImageDetailViewController") as? ImageDetailViewController {
+            detailVC.modalTransitionStyle = .crossDissolve
             detailVC.transitioningDelegate = self
             detailVC.interactor = interactor
+            detailVC.view.backgroundColor = UIColor.black
+
             present(detailVC, animated: true, completion: nil)
             if let theImage = cellImageView.image {
                 detailVC.imageDetailView.image = theImage
             }
-            //let tap = UITapGestureRecognizer(target: self, action: #selector(dismissImageDetailView))
-            //detailVC.view.addGestureRecognizer(tap)
         }
     }
-    
-//    func dismissImageDetailView(_sender: UITapGestureRecognizer) {
-//        dismiss(animated: true, completion: nil)
-//    }
 }
 
 extension FeedTableViewController: UIViewControllerTransitioningDelegate {
