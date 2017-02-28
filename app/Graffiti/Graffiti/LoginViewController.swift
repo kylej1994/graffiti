@@ -11,8 +11,9 @@ import UIKit
 class LoginViewController: UIViewController, GIDSignInUIDelegate {
     
     let appDelegate : AppDelegate = UIApplication.shared.delegate as! AppDelegate
-    var btnSignIn : GIDSignInButton!
-    var label : UILabel!
+    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var btnSignIn: GIDSignInButton!
+    
     let labelText = "Please Sign in to Graffiti Using Google"
     
     override func viewDidLoad() {
@@ -20,25 +21,12 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
         
         GIDSignIn.sharedInstance().uiDelegate = self
         
-        showGoogleSignIn()
+        setupGoogleSignIn()
     }
     
-    func showGoogleSignIn() {
-        // Sign In Label
-        // TODO: move this to the storyboard
-        label = UILabel(frame: CGRect(0,0,200,100))
-        label.center = CGPoint(view.center.x, 300)
-        label.numberOfLines = 0 //Multi-lines
-        label.text = labelText
-        label.textColor = UIColor.white
-        label.textAlignment = NSTextAlignment.center
-        view.addSubview(label)
-        
-        
-        btnSignIn = GIDSignInButton(frame: CGRect(0,0,230,48))
+    func setupGoogleSignIn() {
         btnSignIn.center = view.center
         btnSignIn.style = GIDSignInButtonStyle.wide
-        view.addSubview(btnSignIn)
     }
     
     func startLoading() {
