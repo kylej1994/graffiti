@@ -9,8 +9,8 @@
 import UIKit
 
 class ImageDetailViewController: UIViewController {
-
-    @IBOutlet weak var imageDetailView: UIImageView!
+    
+    @IBOutlet var imageDetailView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()

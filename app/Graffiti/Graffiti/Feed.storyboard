@@ -144,14 +144,14 @@
                                             </subviews>
                                         </stackView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cat-prof-100" translatesAutoresizingMaskIntoConstraints="NO" id="DhA-kk-bIW">
-                                            <rect key="frame" x="297" y="172" width="70" height="70"/>
+                                            <rect key="frame" x="297" y="171" width="70" height="70"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="70" id="CKh-qu-2wz"/>
                                                 <constraint firstAttribute="width" constant="70" id="gVT-dz-PqO"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time ago" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hbo-qE-WuG">
-                                            <rect key="frame" x="160" y="221" width="135" height="21"/>
+                                            <rect key="frame" x="160" y="221" width="135" height="20"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                             <nil key="highlightedColor"/>
@@ -223,7 +223,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="v7n-zP-BnP">
+                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="v7n-zP-BnP">
                                 <rect key="frame" x="16" y="28" width="343" height="619"/>
                             </imageView>
                         </subviews>
@@ -236,12 +236,12 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="imageDetailView" destination="v7n-zP-BnP" id="Yf7-8L-pt1"/>
+                        <outlet property="imageDetailView" destination="v7n-zP-BnP" id="t1I-p9-f7l"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IBw-gQ-A9B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1678" y="-433"/>
+            <point key="canvasLocation" x="1702" y="-472"/>
         </scene>
         <!--Feed-->
         <scene sceneID="mjW-Qv-VE0">

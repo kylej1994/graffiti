@@ -25,7 +25,7 @@ class FeedTableViewController: UITableViewController {
         super.viewDidAppear(animated)
         locationManager.startUpdatingLocation()
 
-        self.getPostsByLocation()
+        //self.getPostsByLocation()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -309,18 +309,20 @@ class FeedTableViewController: UITableViewController {
     
     func didTapImage(sender: UITapGestureRecognizer) {
         let cellImageView = sender.view as! UIImageView
-        let newImageView = UIImageView(image: cellImageView.image)
-        newImageView.frame = self.view.frame
-        newImageView.backgroundColor = .black
-        newImageView.contentMode = .scaleAspectFit
-        newImageView.isUserInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissFullscreenImage))
-        newImageView.addGestureRecognizer(tap)
-        self.view.addSubview(newImageView)
+        
+        let storyboard = UIStoryboard(name: "Feed", bundle: nil)
+        if let detailVC = storyboard.instantiateViewController(withIdentifier: "ImageDetailViewController") as? ImageDetailViewController {
+            present(detailVC, animated: true, completion: nil)
+            if let theImage = cellImageView.image {
+                detailVC.imageDetailView.image = theImage
+            }
+            let tap = UITapGestureRecognizer(target: self, action: #selector(dismissImageDetailView))
+            detailVC.view.addGestureRecognizer(tap)
+        }
         
     }
     
-    func dismissFullscreenImage(_ sender: UITapGestureRecognizer) {
-        sender.view?.removeFromSuperview()
+    func dismissImageDetailView(_sender: UITapGestureRecognizer) {
+        dismiss(animated: true, completion: nil)
     }
 }
