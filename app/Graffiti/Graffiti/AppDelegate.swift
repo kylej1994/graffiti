@@ -77,7 +77,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
     // This function is called after a successful Google login
     func login(googleUser: GIDGoogleUser) {
+        loginViewController.startLoading()
         API.sharedInstance.login() { res in
+            self.loginViewController.stopLoading()
             switch res.result {
             case .success:
                 if

@@ -13,6 +13,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
     let appDelegate : AppDelegate = UIApplication.shared.delegate as! AppDelegate
     var btnSignIn : GIDSignInButton!
     var label : UILabel!
+    let labelText = "Please Sign in to Graffiti Using Google"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +29,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
         label = UILabel(frame: CGRect(0,0,200,100))
         label.center = CGPoint(view.center.x, 300)
         label.numberOfLines = 0 //Multi-lines
-        label.text = "Please Sign in to Graffiti Using Google"
+        label.text = labelText
         label.textColor = UIColor.white
         label.textAlignment = NSTextAlignment.center
         view.addSubview(label)
@@ -38,6 +39,14 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
         btnSignIn.center = view.center
         btnSignIn.style = GIDSignInButtonStyle.wide
         view.addSubview(btnSignIn)
+    }
+    
+    func startLoading() {
+        label?.text = "Loading..."
+    }
+    
+    func stopLoading() {
+        label?.text = labelText
     }
     
     // MARK: Alerts
