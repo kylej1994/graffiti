@@ -22,7 +22,7 @@ extension DismissAnimator : UIViewControllerAnimatedTransitioning {
         
         let containerView = transitionContext.containerView
         guard
-            let fromVC = transitionContext.viewController(forKey: .from), // modal vc
+            let fromVC = transitionContext.viewController(forKey: .from) as? ImageDetailViewController, // modal vc
             let toVC = transitionContext.viewController(forKey: .to)
         else {
             return
@@ -33,7 +33,8 @@ extension DismissAnimator : UIViewControllerAnimatedTransitioning {
         let bottomLeftCorner = CGPoint(x: 0, y: screenBounds.height)
         let finalFrame = CGRect(origin: bottomLeftCorner, size: screenBounds.size)
         UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
-            fromVC.view.frame = finalFrame
+            fromVC.imageDetailView.frame = finalFrame
+            //fromVC.view.frame = finalFrame // for entire view to animate
         }, completion: {_ in
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         })
