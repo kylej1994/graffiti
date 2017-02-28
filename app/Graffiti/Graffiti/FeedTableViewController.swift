@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 
 class FeedTableViewController: UITableViewController {
-
+    let interactor = Interactor() // for custom view controller transition
     let api = API.sharedInstance
     let locationManager = LocationService.sharedInstance
     var posts: [Post] = []
@@ -312,17 +312,28 @@ class FeedTableViewController: UITableViewController {
         
         let storyboard = UIStoryboard(name: "Feed", bundle: nil)
         if let detailVC = storyboard.instantiateViewController(withIdentifier: "ImageDetailViewController") as? ImageDetailViewController {
+            detailVC.transitioningDelegate = self
+            detailVC.interactor = interactor
             present(detailVC, animated: true, completion: nil)
             if let theImage = cellImageView.image {
                 detailVC.imageDetailView.image = theImage
             }
-            let tap = UITapGestureRecognizer(target: self, action: #selector(dismissImageDetailView))
-            detailVC.view.addGestureRecognizer(tap)
+            //let tap = UITapGestureRecognizer(target: self, action: #selector(dismissImageDetailView))
+            //detailVC.view.addGestureRecognizer(tap)
         }
-        
     }
     
-    func dismissImageDetailView(_sender: UITapGestureRecognizer) {
-        dismiss(animated: true, completion: nil)
+//    func dismissImageDetailView(_sender: UITapGestureRecognizer) {
+//        dismiss(animated: true, completion: nil)
+//    }
+}
+
+extension FeedTableViewController: UIViewControllerTransitioningDelegate {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return DismissAnimator()
+    }
+    
+    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return interactor.hasStarted ? interactor : nil
     }
 }

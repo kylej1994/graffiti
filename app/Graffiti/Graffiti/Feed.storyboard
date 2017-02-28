@@ -23,7 +23,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="150"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pud-ZO-sRW" id="Eik-o5-MaK">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="149"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Text post body goes here. Hardest part of finals: finding an open reg cubicle." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ifq-Jr-j4V">
@@ -103,7 +103,7 @@
                                 <rect key="frame" x="0.0" y="178" width="375" height="250"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1br-WE-5MN" id="fUL-PT-hn9">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="249"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="250"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="image-post-example" translatesAutoresizingMaskIntoConstraints="NO" id="5fa-bP-f7l">
@@ -228,18 +228,27 @@
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="v7n-zP-BnP" firstAttribute="top" secondItem="FFu-xO-0tt" secondAttribute="bottom" constant="8" id="2VL-Mf-oVB"/>
                             <constraint firstItem="jHc-Hn-yWb" firstAttribute="top" secondItem="v7n-zP-BnP" secondAttribute="bottom" constant="20" id="PTk-ot-Grj"/>
                             <constraint firstAttribute="trailingMargin" secondItem="v7n-zP-BnP" secondAttribute="trailing" id="lTE-Dt-m2K"/>
                             <constraint firstAttribute="leadingMargin" secondItem="v7n-zP-BnP" secondAttribute="leading" id="wzI-De-61K"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="WjE-dE-UyE" appends="YES" id="LKY-Su-JU9"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="imageDetailView" destination="v7n-zP-BnP" id="t1I-p9-f7l"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IBw-gQ-A9B" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="WjE-dE-UyE">
+                    <connections>
+                        <action selector="handleDismissGesture:" destination="ELs-gv-yy7" id="rBy-ic-XIv"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1702" y="-472"/>
         </scene>
