@@ -54,6 +54,8 @@
 		D99735A21E4E722F00DA5F29 /* FeedViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD791E4952B20020505D /* FeedViewControllerTests.swift */; };
 		D9B5FAEB1E54FF9300DF87B2 /* LocationTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B5FAEA1E54FF9300DF87B2 /* LocationTransform.swift */; };
 		D9B5FAEC1E552E2800DF87B2 /* LocationTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B5FAEA1E54FF9300DF87B2 /* LocationTransform.swift */; };
+		D9DAACD61E5CC98300A4AF57 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9DAACD51E5CC98300A4AF57 /* Onboarding.storyboard */; };
+		D9DAACD81E5CCA2C00A4AF57 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DAACD71E5CCA2C00A4AF57 /* OnboardingViewController.swift */; };
 		D9DD58DF1E57A32600D9CB1D /* Vote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DD58DE1E57A32600D9CB1D /* Vote.swift */; };
 		D9DD58E11E57AE3900D9CB1D /* UserTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DD58E01E57AE3900D9CB1D /* UserTransform.swift */; };
 		D9E63BA01E4D460900EE6C4B /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E63B9F1E4D460900EE6C4B /* API.swift */; };
@@ -139,6 +141,8 @@
 		D9940E7E1E63D61500CF00E6 /* ImageTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageTransform.swift; sourceTree = "<group>"; };
 		D9B5FAEA1E54FF9300DF87B2 /* LocationTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTransform.swift; sourceTree = "<group>"; };
 		D9C7CE431E58D36500B7F3AA /* GraffitiTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GraffitiTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		D9DAACD51E5CC98300A4AF57 /* Onboarding.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
+		D9DAACD71E5CCA2C00A4AF57 /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		D9DD58DE1E57A32600D9CB1D /* Vote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vote.swift; sourceTree = "<group>"; };
 		D9DD58E01E57AE3900D9CB1D /* UserTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTransform.swift; sourceTree = "<group>"; };
 		D9E63B9F1E4D460900EE6C4B /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
@@ -312,6 +316,8 @@
 			children = (
 				AD84BD341E4947330020505D /* Login.storyboard */,
 				AD84BD721E494C320020505D /* LoginViewController.swift */,
+				D9DAACD51E5CC98300A4AF57 /* Onboarding.storyboard */,
+				D9DAACD71E5CCA2C00A4AF57 /* OnboardingViewController.swift */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -480,6 +486,7 @@
 				AD84BD6A1E494AB50020505D /* Feed.storyboard in Resources */,
 				AD84BD381E4947330020505D /* Assets.xcassets in Resources */,
 				AD84BD361E4947330020505D /* Login.storyboard in Resources */,
+				D9DAACD61E5CC98300A4AF57 /* Onboarding.storyboard in Resources */,
 				AD84BD711E494BD30020505D /* Main.storyboard in Resources */,
 				AD84BD681E494A170020505D /* UserProfile.storyboard in Resources */,
 			);
@@ -650,6 +657,7 @@
 				AD84BD631E4949860020505D /* ProfileViewController.swift in Sources */,
 				D9940E7F1E63D61500CF00E6 /* ImageTransform.swift in Sources */,
 				D9141CA91E58E71C00FA04D0 /* AuthProtocol.swift in Sources */,
+				D9DAACD81E5CCA2C00A4AF57 /* OnboardingViewController.swift in Sources */,
 				B33B07D01E4ACA8F007025FB /* User.swift in Sources */,
 				AD84BD5F1E4949260020505D /* FeedTableViewController.swift in Sources */,
 				AD3E23451E5123A80022C882 /* FeedTableViewTextCell.swift in Sources */,
