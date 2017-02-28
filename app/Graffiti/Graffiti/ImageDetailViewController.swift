@@ -52,6 +52,11 @@ class ImageDetailViewController: UIViewController {
         }
         
     }
+    
+    @IBAction func tapClose(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+    
 
     /*
     // MARK: - Navigation
