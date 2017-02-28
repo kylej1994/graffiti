@@ -7,9 +7,14 @@
 //
 
 import UIKit
+import CoreLocation
 
 class PhotoPostViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
     let imagePicker = UIImagePickerController()
+    let locationManager = LocationService.sharedInstance
+    var currentLatitude: CLLocationDegrees? = CLLocationDegrees()
+    var currentLongitude: CLLocationDegrees? = CLLocationDegrees()
     
 
     override func viewDidLoad() {
@@ -29,13 +34,43 @@ class PhotoPostViewController: UIViewController, UIImagePickerControllerDelegate
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
-        dismiss(animated: true, completion: nil)
-        // send post to backend
+        postPhotoGrafitti(image: image)
+        self.dismiss(animated: true, completion: nil);
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    
+    func postPhotoGrafitti(image: UIImage!) {
+        
+        currentLongitude = locationManager.getLongitude()
+        currentLatitude = locationManager.getLatitude()
+        if currentLongitude == nil {
+            print("long was nil so setting to 0")
+            currentLongitude = 0.0
+        }
+        if currentLatitude == nil {
+            print("lat was nil so setting to 0")
+            currentLatitude = 0.0
+        }
+        
+        let location = CLLocation.init(latitude: currentLatitude!, longitude: currentLongitude!)
+        
+        let newPost:Post = Post(location: location, image: image!)!
+        
+        API.sharedInstance.createPost(post: newPost){ response in
+            switch response.result {
+            case.success:
+                print("we sent a post with location \(location)")
+            case .failure(let error):
+                print(error)
+            }
+        }
+        
     }
     
 
