@@ -43,7 +43,7 @@ ADD graffiti /graffiti
 ENV HOME /graffiti/
 WORKDIR /graffiti/
 
-EXPOSE 8080
+#EXPOSE 5000
 
 ENTRYPOINT ["python"]
 CMD ["__init__.py"]
