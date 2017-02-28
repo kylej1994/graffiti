@@ -14,7 +14,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var btnSignIn: GIDSignInButton!
     
-    let labelText = "Please Sign in to Graffiti Using Google"
+    let labelText = "Please Sign in to Graffiti"
     
     override func viewDidLoad() {
         super.viewDidLoad()

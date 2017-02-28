@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -21,28 +22,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please Sign in to Graffiti Using Google" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JNk-44-cJZ">
-                                <rect key="frame" x="0.0" y="287" width="375" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please Sign in to Graffiti" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JNk-44-cJZ">
+                                <rect key="frame" x="0.0" y="520" width="375" height="23"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QOG-ky-ik4" customClass="GIDSignInButton">
-                                <rect key="frame" x="72" y="316" width="230" height="48"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="white-logo" translatesAutoresizingMaskIntoConstraints="NO" id="YsG-Cu-9l4">
-                                <rect key="frame" x="112" y="83" width="150" height="150"/>
+                                <rect key="frame" x="112" y="120" width="150" height="150"/>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QOG-ky-ik4" customClass="GIDSignInButton">
+                                <rect key="frame" x="102" y="557.5" width="170" height="48"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="170" id="0Bq-R6-vuA"/>
+                                    <constraint firstAttribute="height" constant="48" id="leP-2a-vcv"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.14901960784313725" green="0.77647058823529413" blue="0.85490196078431369" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="JNk-44-cJZ" firstAttribute="leading" secondItem="0Dt-sc-TlD" secondAttribute="leading" id="Cfl-2D-wbW"/>
-                            <constraint firstItem="JNk-44-cJZ" firstAttribute="top" secondItem="YsG-Cu-9l4" secondAttribute="bottom" constant="54" id="Eyq-XB-3kY"/>
+                            <constraint firstItem="JNk-44-cJZ" firstAttribute="top" secondItem="YsG-Cu-9l4" secondAttribute="bottom" constant="250" id="Eyq-XB-3kY"/>
+                            <constraint firstItem="QOG-ky-ik4" firstAttribute="leading" secondItem="0Dt-sc-TlD" secondAttribute="leadingMargin" constant="86" id="WIf-9c-Xhk"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="QOG-ky-ik4" secondAttribute="trailing" constant="87" id="cmJ-lN-0Nc"/>
+                            <constraint firstItem="JNk-44-cJZ" firstAttribute="leading" secondItem="0Dt-sc-TlD" secondAttribute="leading" id="mtu-U9-DnN"/>
+                            <constraint firstItem="YsG-Cu-9l4" firstAttribute="top" secondItem="jy5-8U-jGH" secondAttribute="bottom" constant="100" id="oPW-dC-kmX"/>
+                            <constraint firstItem="QOG-ky-ik4" firstAttribute="top" secondItem="JNk-44-cJZ" secondAttribute="bottom" constant="15" id="oho-3f-MB6"/>
                             <constraint firstItem="YsG-Cu-9l4" firstAttribute="centerX" secondItem="0Dt-sc-TlD" secondAttribute="centerX" id="rhH-QU-kcG"/>
-                            <constraint firstItem="YsG-Cu-9l4" firstAttribute="top" secondItem="jy5-8U-jGH" secondAttribute="bottom" constant="63" id="vkS-0z-Fx3"/>
-                            <constraint firstAttribute="trailing" secondItem="JNk-44-cJZ" secondAttribute="trailing" id="wee-ga-zIB"/>
+                            <constraint firstAttribute="trailing" secondItem="JNk-44-cJZ" secondAttribute="trailing" id="sf3-kA-JTm"/>
                         </constraints>
                     </view>
                     <connections>
