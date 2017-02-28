@@ -34,8 +34,7 @@ class API {
     //MARK Properties
     private let manager: ManagerProtocol
     private let auth: AuthProtocol
-    //private let baseUrl = "http://127.0.0.1:5000"
-    private let baseUrl = "http://docker-graffiti-dev.us-east-2.elasticbeanstalk.com"
+    private let baseUrl = Bundle.main.infoDictionary!["API_BASE_URL"] as! String
     
     init(manager: ManagerProtocol = Alamofire.SessionManager.default, auth: AuthProtocol = GIDSignIn.sharedInstance()) {
         self.manager = manager
