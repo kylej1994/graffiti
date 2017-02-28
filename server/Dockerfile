@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 
 # This is the template for a Dockerfile from 2.5+ years ago, so idk if this is right...
 
@@ -8,6 +8,7 @@ FROM ubuntu:14.04
 
 RUN apt-get update
 
+RUN apt-get install -y python2.7
 RUN apt-get install -yy python-dev
 RUN apt-get install -y python-pip
 RUN apt-get install -y libpq-dev
@@ -21,11 +22,10 @@ RUN apt-get clean
 #--------------------GENERAL FLASK DEPENDENCIES
 RUN pip install boto3
 RUN pip install botocore
+RUN pip install enum34
 RUN pip install flask
 RUN pip install flask-assets
 RUN pip install flask-script
-RUN pip install flask-sqlalchemy #flask-sqlalchemy is technically deprecated, but we're including it anyways
-RUN pip install flask_sqlalchemy
 RUN pip install flask-wtf
 RUN pip install geoalchemy2
 RUN pip install glfw
@@ -36,12 +36,14 @@ RUN pip install werkzeug
 RUN pip install psycopg2
 RUN pip install requests
 
+RUN pip install flask-sqlalchemy==2.1
+
 ADD graffiti /graffiti
 #ADD graffiti/post.py /graffiti/post.py
 ENV HOME /graffiti/
 WORKDIR /graffiti/
 
-
+EXPOSE 8080
 
 ENTRYPOINT ["python"]
 CMD ["__init__.py"]
