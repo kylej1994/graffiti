@@ -51,7 +51,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         headerLabel.text = user?.getUsername()
         bioLabel.text = user?.getBio()
-
+        
+        // self sizing table view cells
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 150
     }
     
     func getPostsByUser() {
@@ -92,7 +95,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         // Table View -----------
         
         if(offset < 150.0){
-            print(tableView.frame.height.description)
+            //print(tableView.frame.height.description)
             tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -offset, 0)
             if(offset > 0.0){
             tableView.frame.size = CGSize(tableView.contentSize.width, tableView.frame.height + offset) //and vice versa when keyboard is dismissed
@@ -105,7 +108,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             
         } else {
-            print("oh hey")
+            //print("oh hey")
             tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -150, 0)
             
         }
@@ -148,26 +151,41 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     // create a cell for each table view row
     // would be nice to be able to reuse FeedViewController code...
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        tableView.rowHeight = 160
+        let textCellIdentifier = "FeedCell"
+        let imageCellIdentifier = "ImageCell"
         
-        let cellIdentifier = "FeedCell"
+        let post = posts[indexPath.row]
+        let type = post.getPostType()
+
         // downcast cell to the custom cell class
         // guard safely unwraps the optional
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? FeedTableViewTextCell else {
-            fatalError("The dequeue cell is not an instance of FeedTableViewTextCell.")
+        guard var cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath) as? FeedTableViewCell else {
+            fatalError("The dequeue cell is not an instance of FeedTableViewCell.")
         }
-            
-        // this is where we get the post from the post model
-        let post = posts[indexPath.row]
-            
-        cell.textView.text = post.getText()
+        
+        if type == .TextPost {
+            guard let textCell = cell as? FeedTextCell else {
+                fatalError("The dequeue cell is not an instance of FeedTextCell.")
+            }
+            textCell.textView.text = post.getText()
+        }
+        
+        if type == .ImagePost {
+            cell = tableView.dequeueReusableCell(withIdentifier: imageCellIdentifier, for: indexPath) as! FeedImageCell // necessary or else the dequeue cell is the wrong class
+            guard let imageCell = cell as? FeedImageCell else {
+                fatalError("The dequeue cell is not an instance of FeedTextCell.")
+            }
+            imageCell.feedImageView.image = post.getImage()
+            imageCell.feedImageView.tag = indexPath.row
+        }
+        
         setRatingDisplay(cell: cell, post: post)
         setDateDisplay(cell: cell, post: post)
             
         return cell
     }
     
-    func setRatingDisplay(cell: FeedTableViewTextCell, post: Post) {
+    func setRatingDisplay(cell: FeedTableViewCell, post: Post) {
         let rating = post.getRating()
         cell.votesLabel.text = String(rating)
         if rating < 0 {
@@ -177,7 +195,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
-    func setDateDisplay(cell: FeedTableViewTextCell, post: Post) {
+    func setDateDisplay(cell: FeedTableViewCell, post: Post) {
         if let dateAdded = post.getTimeAdded() {
             cell.dateLabel.text = getFormattedDate(date: dateAdded)
         } else {
