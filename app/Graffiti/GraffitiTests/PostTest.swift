@@ -144,4 +144,82 @@ class PostTests: XCTestCase {
         XCTAssertEqual(passPost.getRating(), 25)
     }
     
+    func testToJSON() {
+        let location = CLLocation(latitude: 10.0, longitude: 10.0)
+        let poster = User(id: 1, username: "username", name: "First Last", email: "me@email.com", phoneNumber: "123-456-7890", bio: "This is a bio")
+        let post = Post(ID: 1234, location: location, poster: poster, text: "This is a post", timeAdded: Date(timeIntervalSince1970: 1487975373), vote: VoteType.upVote, postType: PostType.TextPost)
+        post?.setRating(10)
+        
+        let json: [String: Any] = (post?.toJSON())!
+        XCTAssertEqual(json["postid"] as? Int, 1234)
+        XCTAssertEqual(json["type"] as? Int, 0)
+        XCTAssertEqual(json["text"] as? String, "This is a post")
+        XCTAssertEqual(json["created_at"] as? Double, 1487975373)
+        XCTAssertEqual(json["num_votes"] as? Int, 10)
+        XCTAssertEqual(json["current_user_vote"] as? Int, 1)
+        
+        let locJson: [String: Any] = json["location"] as! [String: Any]
+        XCTAssertEqual(locJson["longitude"] as? Double, 10.0)
+        XCTAssertEqual(locJson["latitude"] as? Double, 10.0)
+        
+        let userJson: [String: Any] = json["poster"] as! [String: Any]
+        XCTAssertEqual(userJson["userid"] as? Int, 1)
+        XCTAssertEqual(userJson["username"] as? String, "username")
+        XCTAssertEqual(userJson["name"] as? String, "First Last")
+        XCTAssertEqual(userJson["email"] as? String, "me@email.com")
+        XCTAssertEqual(userJson["bio"] as? String, "This is a bio")
+        XCTAssertEqual(userJson["phone_number"] as? String, "123-456-7890")
+    }
+    
+    func testFromJSON() {
+        var json: [String: Any] = [
+            "postid": 1234,
+            "type": 1,
+            "text": "this is a post",
+            "created_at": "1487975373",
+            "num_votes": 10,
+            "current_user_vote": 1
+        ]
+        
+        let locJson: [String: Any] = [
+            "longitude": 10.0,
+            "latitude": 10.0
+        ]
+ 
+        let userJson: [String: Any] = [
+            "userid": 1,
+            "username": "username",
+            "name": "First Last",
+            "email": "me@email.com",
+            "bio": "This is a bio",
+            "phone_number": "123-456-7890"
+        ]
+
+        json["location"] = locJson
+        json["poster"] = userJson
+        
+        let post = Post(JSON: json)
+        XCTAssertNotNil(post)
+        XCTAssertEqual(post?.getID()!, 1234)
+        XCTAssertEqual(post?.getPostType(), .ImagePost)
+        XCTAssertEqual(post?.getText(), "this is a post")
+        XCTAssertEqual(post?.getTimeAdded(), Date(timeIntervalSince1970: 1487975373))
+        XCTAssertEqual(post?.getRating(), 10)
+        XCTAssertEqual(post?.getVote(), .upVote)
+        
+        let location = post?.getLocation()
+        XCTAssertNotNil(location)
+        XCTAssertEqual(location?.coordinate.longitude, 10.0)
+        XCTAssertEqual(location?.coordinate.latitude, 10.0)
+
+        let poster = post?.getPoster()
+        XCTAssertNotNil(poster)
+        XCTAssertEqual(poster?.getId(), 1)
+        XCTAssertEqual(poster?.getUsername(), "username")
+        XCTAssertEqual(poster?.getName(), "First Last")
+        XCTAssertEqual(poster?.getEmail(), "me@email.com")
+        XCTAssertEqual(poster?.getBio(), "This is a bio")
+        XCTAssertEqual(poster?.getPhoneNumber(), "123-456-7890")
+    }
+    
 }

@@ -1,3 +1,4 @@
+import random
 import time
 import json
 
@@ -6,17 +7,20 @@ from flask import Blueprint, request
 
 post_api = Blueprint('post_api', __name__)
 
+user_img = open('user_img_base64.txt').read().strip()
 fake_user = dict(
 	userid=1,
-	username='hothjylewis',
+	username='hjylewis',
 	name="Hot and Bothered",
 	email="comeNfind@me.com",
 	bio="Yum yum yum!",
-	phone_number="1234567890"
+	phone_number="1234567890",
+	img_tag=user_img
 )
 
-fake_dict = dict(
+fake_post = dict(
 		postid=1,
+		type=0,
 		text='This one is for you, Henry ;)',
 		location=dict(
 			longitude=41.792279,
@@ -25,7 +29,22 @@ fake_dict = dict(
 		poster=fake_user,
 		current_user_vote=1,
 		num_votes=102)
-fake_response = json.dumps(fake_dict)
+
+
+post_img = open('post_img_base64.txt').read().strip()
+fake_img_post = dict(
+		postid=1,
+		type=1,
+		image=post_img,
+		location=dict(
+			longitude=41.792279,
+			latitude=-87.599954),
+		created_at=time.time(),
+		poster=fake_user,
+		current_user_vote=1,
+		num_votes=102)
+
+fake_response = json.dumps(fake_post)
 
 @post_api.route('/post', methods=['POST'])
 def create_post():
@@ -82,10 +101,15 @@ def get_post_by_location():
 	# query db for all posts in this area
 	lat = request.args.get('latitude')
 	lon = request.args.get('longitude')
+	posts = []
+	for _ in range(10):
+		if random.choice([True, False]):
+			posts.append(fake_img_post)
+		else:
+			posts.append(fake_post)
 
 	return json.dumps(dict(
-		posts=[fake_dict, fake_dict, fake_dict, fake_dict, fake_dict,
-				fake_dict, fake_dict, fake_dict, fake_dict, fake_dict]
+		posts=posts
 	))
 
 @post_api.route('/post/<int:postid>/vote', methods=['PUT'])

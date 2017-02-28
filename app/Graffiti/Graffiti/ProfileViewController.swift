@@ -73,6 +73,69 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
+    //~~~//
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        let offset = scrollView.contentOffset.y
+        var avatarTransform = CATransform3DIdentity
+        var headerTransform = CATransform3DIdentity
+        var tableViewTransform = CATransform3DIdentity
+        
+        //var tableViewScale = CATransform3DIdentity
+        
+        // PULL DOWN -----------------
+        
+        // Header -----------
+        
+        headerTransform = CATransform3DTranslate(headerTransform, 0, -offset, 0)
+        
+        // Table View -----------
+        
+        if(offset < 150.0){
+            print(tableView.frame.height.description)
+            tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -offset, 0)
+            if(offset > 0.0){
+            tableView.frame.size = CGSize(tableView.contentSize.width, tableView.frame.height + offset) //and vice versa when keyboard is dismissed
+            }
+            let bounds = UIScreen.main.bounds
+            let height = bounds.size.height
+            if(tableView.frame.height > height){
+                tableView.frame.size = CGSize(tableView.contentSize.width, height - 80) //and vice versa when keyboard is dismissed
+            }
+            
+            
+        } else {
+            print("oh hey")
+            tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -150, 0)
+            
+        }
+        // Avatar -----------
+            
+        let avatarScaleFactor = (min(offset_HeaderStop, offset)) / profilePicture.bounds.height / 0.8 // Slow down the animation
+        let avatarSizeVariation = ((profilePicture.bounds.height * (1.0 + avatarScaleFactor)) - profilePicture.bounds.height) / 1.4
+        avatarTransform = CATransform3DTranslate(avatarTransform, 0, avatarSizeVariation, 0)
+        avatarTransform = CATransform3DScale(avatarTransform, 1.0 - avatarScaleFactor, 1.0 - avatarScaleFactor, 0)
+            
+        if offset <= offset_HeaderStop {
+            if profilePicture.layer.zPosition < header.layer.zPosition{
+                header.layer.zPosition = 0
+            }
+                
+        }else {
+            if profilePicture.layer.zPosition >= header.layer.zPosition{
+                header.layer.zPosition = 2
+            }
+        }
+        
+        tableView.layer.transform = tableViewTransform
+        //tableView.layer.transform = tableViewScale
+        header.layer.transform = headerTransform
+        profilePicture.layer.transform = avatarTransform
+    }
+    
+
+    //~~~//
+    
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.posts.count
