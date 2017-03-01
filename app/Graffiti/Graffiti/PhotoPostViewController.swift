@@ -19,6 +19,7 @@ class PhotoPostViewController: UIViewController, UIImagePickerControllerDelegate
 
     override func viewDidLoad() {
         super.viewDidLoad()
+       
 
         // Do any additional setup after loading the view.
     }
@@ -28,14 +29,27 @@ class PhotoPostViewController: UIViewController, UIImagePickerControllerDelegate
         if UIImagePickerController.isCameraDeviceAvailable( UIImagePickerControllerCameraDevice.front) {
             imagePicker.delegate = self
             imagePicker.sourceType = UIImagePickerControllerSourceType.camera
+            imagePicker.modalPresentationStyle = .overCurrentContext
             present(imagePicker, animated: true, completion: nil)
+            
         }
         
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
-        postPhotoGrafitti(image: image)
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage?
+        postPhotoGrafitti(image: chosenImage)
+        dismiss(animated: true, completion: nil);
+        if (self.presentedViewController? .isBeingDismissed)! {
+            self.dismiss(animated: true, completion: nil);
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+        if (self.presentedViewController? .isBeingDismissed)! {
         self.dismiss(animated: true, completion: nil);
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -46,7 +60,8 @@ class PhotoPostViewController: UIViewController, UIImagePickerControllerDelegate
     
     
     func postPhotoGrafitti(image: UIImage!) {
-        
+
+        print("inpostphotograffiti")
         currentLongitude = locationManager.getLongitude()
         currentLatitude = locationManager.getLatitude()
         if currentLongitude == nil {
