@@ -148,8 +148,9 @@ class FeedTableViewController: UITableViewController {
             imageCell.feedImageView.addGestureRecognizer(tapGestureRecognizer)
         }
         
+        setVoteDisplay(cell: cell, post: post)
         setDisplay(cell: cell, post: post)
-        setProfPicDisplay(cell: cell, post: post)
+
         // handle upvote button tap
         cell.upvoteTapAction = { (cell) in
             let chosenPath = tableView.indexPath(for: cell)!
@@ -179,7 +180,7 @@ class FeedTableViewController: UITableViewController {
             }
             
             // update display
-            self.setDisplay(cell: cell, post: chosenPost)
+            self.setVoteDisplay(cell: cell, post: chosenPost)
         }
         
         // handle downvote button tap
@@ -211,22 +212,30 @@ class FeedTableViewController: UITableViewController {
             }
             
             // update display
-            self.setDisplay(cell: cell, post: chosenPost)
+            self.setVoteDisplay(cell: cell, post: chosenPost)
         }
 
         return cell
     }
     
     func setDisplay(cell: FeedTableViewCell, post: Post) {
-        setRatingDisplay(cell: cell, post: post)
         setDateDisplay(cell: cell, post: post)
+        setProfPicDisplay(cell: cell, post: post)
+    }
+    
+    func setVoteDisplay(cell: FeedTableViewCell, post: Post) {
+        setRatingDisplay(cell: cell, post: post)
         setVoteButtonDisplay(cell: cell, post: post)
+        
     }
     
     func setProfPicDisplay(cell: FeedTableViewCell, post: Post) {
-        let poster = post.getPoster()
-        guard let photo = poster?.getImageTag() else {
-            print("photo is nil")
+        guard let poster = post.getPoster() else {
+            print("poster is nil oy vey")
+            return
+        }
+        guard let photo = poster.getImageTag() else {
+            print("photo for \(poster) is nil")
             return
         }
         guard cell.profPicImageView != nil else {
