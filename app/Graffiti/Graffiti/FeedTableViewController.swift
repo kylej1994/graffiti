@@ -148,7 +148,6 @@ class FeedTableViewController: UITableViewController {
             imageCell.feedImageView.addGestureRecognizer(tapGestureRecognizer)
         }
         
-        setVoteDisplay(cell: cell, post: post)
         setDisplay(cell: cell, post: post)
 
         // handle upvote button tap
@@ -221,12 +220,15 @@ class FeedTableViewController: UITableViewController {
     func setDisplay(cell: FeedTableViewCell, post: Post) {
         setDateDisplay(cell: cell, post: post)
         setProfPicDisplay(cell: cell, post: post)
+        setVoteDisplay(cell: cell, post: post)
     }
     
-    func setVoteDisplay(cell: FeedTableViewCell, post: Post) {
-        setRatingDisplay(cell: cell, post: post)
-        setVoteButtonDisplay(cell: cell, post: post)
-        
+    func setDateDisplay(cell: FeedTableViewCell, post: Post) {
+        if let dateAdded = post.getTimeAdded() {
+            cell.dateLabel.text = getFormattedDate(date: dateAdded)
+        } else {
+            cell.dateLabel.text = "Just Now"
+        }
     }
     
     func setProfPicDisplay(cell: FeedTableViewCell, post: Post) {
@@ -240,6 +242,11 @@ class FeedTableViewController: UITableViewController {
             return
         }
         cell.profPicImageView.image = photo
+    }
+    
+    func setVoteDisplay(cell: FeedTableViewCell, post: Post) {
+        setRatingDisplay(cell: cell, post: post)
+        setVoteButtonDisplay(cell: cell, post: post)
     }
     
     func setRatingDisplay(cell: FeedTableViewCell, post: Post) {
@@ -266,15 +273,6 @@ class FeedTableViewController: UITableViewController {
             cell.upvoteButton.setImage(UIImage(named: "upvote-black-50"), for: .normal)
         }
     }
-    
-    func setDateDisplay(cell: FeedTableViewCell, post: Post) {
-        if let dateAdded = post.getTimeAdded() {
-            cell.dateLabel.text = getFormattedDate(date: dateAdded)
-        } else {
-            cell.dateLabel.text = "Just Now"
-        }
-    }
-    
     
     func sendVoteFor(indexPath: IndexPath, vote: VoteType, resetVote: @escaping () -> ()) {
         let post = posts[indexPath.row]
