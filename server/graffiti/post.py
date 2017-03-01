@@ -91,7 +91,7 @@ class Post(db.Model):
                 longitude=self.longitude,
                 latitude=self.latitude),
             created_at=self.created_at,
-            poster=user.to_json_fields_for_FE(),
+            poster=json.loads(user.to_json_fields_for_FE()),
             num_votes=self.num_votes,
             current_user_vote=cur_user_vote,
             image=img_data))
