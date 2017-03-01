@@ -231,19 +231,15 @@ class FeedTableViewController: UITableViewController {
     
     func setProfPicDisplay(cell: FeedTableViewCell, post: Post) {
         guard let poster = post.getPoster() else {
-            print("poster is nil oy vey")
             return
         }
         guard let photo = poster.getImageTag() else {
-            print("photo for \(poster) is nil")
             return
         }
         guard cell.profPicImageView != nil else {
-            print("prof pic image view is nil oy")
             return
         }
         cell.profPicImageView.image = photo
-        print("setting photo")
     }
     
     func setRatingDisplay(cell: FeedTableViewCell, post: Post) {
@@ -286,7 +282,6 @@ class FeedTableViewController: UITableViewController {
             api.voteOnPost(postid: postid, vote: vote) { response in
                 switch response.result {
                 case .success:
-                    print("sending vote")
                     if let postFromServer = response.result.value {
                         // set post rating and vote based on the server's response
                         post.setRating(postFromServer.getRating())
