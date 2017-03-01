@@ -70,7 +70,7 @@ def create_post():
 	post_type = -1
 	if ('text' in data):
 		post_type = 0
-		text = str(data['text'])
+		text = data['text']
 		if (not validate_text(text)):
 			return generate_error_response(ERR_400, 400)
 		# image is empty
