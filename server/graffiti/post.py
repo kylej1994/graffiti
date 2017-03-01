@@ -148,8 +148,8 @@ class Post(db.Model):
         if post is None:
             return False
 
-        userpost = db.session.query(UserPost).filter(UserPost.post_id==post_id)\
-            .filter(UserPost.user_id==user_id).first()
+        userpost = db.session.query(UserPost).filter(UserPost.post_id==post_id,\
+            UserPost.user_id==user_id).first()
         # if the post has not been voted on by this user, we create an entry
         # and add it to the db
 
