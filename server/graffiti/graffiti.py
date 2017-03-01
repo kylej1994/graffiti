@@ -8,6 +8,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 app.config.from_pyfile('graffiti.cfg')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['MAX_CONTENT_LENGTH'] = 200 * 1024 * 1024
 db = SQLAlchemy(app)
 app.wsgi_app = auth_Middleware.Auth_MiddleWare(app.wsgi_app)
 
