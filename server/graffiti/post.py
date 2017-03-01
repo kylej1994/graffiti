@@ -91,7 +91,7 @@ class Post(db.Model):
                 longitude=self.longitude,
                 latitude=self.latitude),
             created_at=self.created_at,
-            poster=user.to_json_fields_for_FE(),
+            poster=json.loads(user.to_json_fields_for_FE()),
             num_votes=self.num_votes,
             current_user_vote=cur_user_vote,
             image=img_data))
@@ -148,8 +148,8 @@ class Post(db.Model):
         if post is None:
             return False
 
-        userpost = db.session.query(UserPost).filter(UserPost.post_id==post_id)\
-            .filter(UserPost.user_id==user_id).first()
+        userpost = db.session.query(UserPost).filter(UserPost.post_id==post_id,\
+            UserPost.user_id==user_id).first()
         # if the post has not been voted on by this user, we create an entry
         # and add it to the db
 
