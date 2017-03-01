@@ -148,9 +148,8 @@ class FeedTableViewController: UITableViewController {
             imageCell.feedImageView.addGestureRecognizer(tapGestureRecognizer)
         }
         
-
         setDisplay(cell: cell, post: post)
-        
+        setProfPicDisplay(cell: cell, post: post)
         // handle upvote button tap
         cell.upvoteTapAction = { (cell) in
             let chosenPath = tableView.indexPath(for: cell)!
@@ -222,6 +221,20 @@ class FeedTableViewController: UITableViewController {
         setRatingDisplay(cell: cell, post: post)
         setDateDisplay(cell: cell, post: post)
         setVoteButtonDisplay(cell: cell, post: post)
+    }
+    
+    func setProfPicDisplay(cell: FeedTableViewCell, post: Post) {
+        let poster = post.getPoster()
+        guard let photo = poster?.getImageTag() else {
+            print("photo is nil")
+            return
+        }
+        guard cell.profPicImageView != nil else {
+            print("prof pic image view is nil oy")
+            return
+        }
+        cell.profPicImageView.image = photo
+        print("setting photo")
     }
     
     func setRatingDisplay(cell: FeedTableViewCell, post: Post) {
