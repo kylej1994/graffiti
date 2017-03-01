@@ -155,7 +155,10 @@ def get_post_by_location():
 	for post in posts:
 		jsonified_posts.append(json.loads(post.to_json_fields_for_FE(\
 			user.get_user_id())))
-	to_ret['posts'] = jsonified_posts
+	# postid is incremental, i.e. the more recent the post is the greater the
+	# postid. this is why reverse is set to True
+	to_ret['posts'] = sorted(jsonified_posts,
+		key=lambda k: k['postid'], reverse=True)
 	return json.dumps(to_ret), 200
 
 @post_api.route('/post/coordinates', methods=['GET'])

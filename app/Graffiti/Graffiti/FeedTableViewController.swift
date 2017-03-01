@@ -148,9 +148,8 @@ class FeedTableViewController: UITableViewController {
             imageCell.feedImageView.addGestureRecognizer(tapGestureRecognizer)
         }
         
-
         setDisplay(cell: cell, post: post)
-        
+
         // handle upvote button tap
         cell.upvoteTapAction = { (cell) in
             let chosenPath = tableView.indexPath(for: cell)!
@@ -180,7 +179,7 @@ class FeedTableViewController: UITableViewController {
             }
             
             // update display
-            self.setDisplay(cell: cell, post: chosenPost)
+            self.setVoteDisplay(cell: cell, post: chosenPost)
         }
         
         // handle downvote button tap
@@ -212,15 +211,41 @@ class FeedTableViewController: UITableViewController {
             }
             
             // update display
-            self.setDisplay(cell: cell, post: chosenPost)
+            self.setVoteDisplay(cell: cell, post: chosenPost)
         }
 
         return cell
     }
     
     func setDisplay(cell: FeedTableViewCell, post: Post) {
-        setRatingDisplay(cell: cell, post: post)
         setDateDisplay(cell: cell, post: post)
+        setProfPicDisplay(cell: cell, post: post)
+        setVoteDisplay(cell: cell, post: post)
+    }
+    
+    func setDateDisplay(cell: FeedTableViewCell, post: Post) {
+        if let dateAdded = post.getTimeAdded() {
+            cell.dateLabel.text = getFormattedDate(date: dateAdded)
+        } else {
+            cell.dateLabel.text = "Just Now"
+        }
+    }
+    
+    func setProfPicDisplay(cell: FeedTableViewCell, post: Post) {
+        guard let poster = post.getPoster() else {
+            return
+        }
+        guard let photo = poster.getImageTag() else {
+            return
+        }
+        guard cell.profPicImageView != nil else {
+            return
+        }
+        cell.profPicImageView.image = photo
+    }
+    
+    func setVoteDisplay(cell: FeedTableViewCell, post: Post) {
+        setRatingDisplay(cell: cell, post: post)
         setVoteButtonDisplay(cell: cell, post: post)
     }
     
@@ -249,22 +274,12 @@ class FeedTableViewController: UITableViewController {
         }
     }
     
-    func setDateDisplay(cell: FeedTableViewCell, post: Post) {
-        if let dateAdded = post.getTimeAdded() {
-            cell.dateLabel.text = getFormattedDate(date: dateAdded)
-        } else {
-            cell.dateLabel.text = "Just Now"
-        }
-    }
-    
-    
     func sendVoteFor(indexPath: IndexPath, vote: VoteType, resetVote: @escaping () -> ()) {
         let post = posts[indexPath.row]
         if let postid = post.getID() {
             api.voteOnPost(postid: postid, vote: vote) { response in
                 switch response.result {
                 case .success:
-                    print("sending vote")
                     if let postFromServer = response.result.value {
                         // set post rating and vote based on the server's response
                         post.setRating(postFromServer.getRating())

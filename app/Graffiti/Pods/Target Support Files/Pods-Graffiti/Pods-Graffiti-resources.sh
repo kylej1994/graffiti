@@ -79,6 +79,12 @@ EOM
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "GoogleSignIn/Resources/GoogleSignIn.bundle"
 fi
+if [[ "$CONFIGURATION" == "Dev" ]]; then
+  install_resource "GoogleSignIn/Resources/GoogleSignIn.bundle"
+fi
+if [[ "$CONFIGURATION" == "Staging" ]]; then
+  install_resource "GoogleSignIn/Resources/GoogleSignIn.bundle"
+fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "GoogleSignIn/Resources/GoogleSignIn.bundle"
 fi

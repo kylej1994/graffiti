@@ -77,7 +77,7 @@ def generate_error_response(message, code):
 
 @app.route('/')
 def hello():
-	meta_info = request.environ['META_INFO']
-	if (meta_info is None):
-		return generate_error_response('Missing idToken.', 401)
-	return 'Success.'
+	#meta_info = request.environ['META_INFO']
+	#if (meta_info is None):
+#		return generate_error_response('Missing idToken.', 401)
+	return 'Success.\n'
