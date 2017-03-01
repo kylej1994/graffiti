@@ -94,6 +94,7 @@
                                 <connections>
                                     <outlet property="dateLabel" destination="ZNV-pv-8KQ" id="Px1-5e-0s8"/>
                                     <outlet property="downvoteButton" destination="AQi-hy-mG8" id="wxw-Ig-Wyh"/>
+                                    <outlet property="profPicImageView" destination="jbE-n0-jhT" id="Rbk-sq-ra5"/>
                                     <outlet property="textView" destination="ifq-Jr-j4V" id="TXd-zG-uGK"/>
                                     <outlet property="upvoteButton" destination="7AH-iB-j81" id="fyW-4m-XEl"/>
                                     <outlet property="votesLabel" destination="JU0-SS-ZyY" id="a6s-Gr-CnY"/>
@@ -175,6 +176,7 @@
                                     <outlet property="dateLabel" destination="hbo-qE-WuG" id="Epv-pU-q3T"/>
                                     <outlet property="downvoteButton" destination="ldj-S5-tI8" id="vVc-Pb-ANg"/>
                                     <outlet property="feedImageView" destination="5fa-bP-f7l" id="fv6-dJ-ubN"/>
+                                    <outlet property="profPicImageView" destination="DhA-kk-bIW" id="62S-fN-myp"/>
                                     <outlet property="upvoteButton" destination="akB-9X-7Vr" id="2wV-CC-8ao"/>
                                     <outlet property="votesLabel" destination="3vh-FP-Qte" id="Od1-0k-vD4"/>
                                 </connections>
