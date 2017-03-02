@@ -228,10 +228,9 @@
                             <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="v7n-zP-BnP">
                                 <rect key="frame" x="16" y="28" width="343" height="619"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NVe-0h-90D">
-                                <rect key="frame" x="319" y="30" width="30" height="58"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="38"/>
-                                <state key="normal" title="X">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NVe-0h-90D">
+                                <rect key="frame" x="299" y="30" width="50" height="50"/>
+                                <state key="normal" image="close-white-100">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -288,6 +287,7 @@
     </scenes>
     <resources>
         <image name="cat-prof-100" width="48" height="48"/>
+        <image name="close-white-100" width="50" height="50"/>
         <image name="downvote-black-50" width="25" height="25"/>
         <image name="image-post-example" width="360" height="360"/>
         <image name="upvote-black-50" width="25" height="25"/>
