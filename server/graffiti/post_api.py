@@ -45,7 +45,7 @@ def create_post():
 	data = request.get_json()
 
 	# checks for necessary data params
-	if ('location' not in data
+	if ('location' not in data or 'type' not in data
 			or 'latitude' not in data['location']
 			or 'longitude' not in data['location']):
 		return generate_error_response(ERR_400, 400)
