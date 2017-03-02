@@ -115,6 +115,11 @@ class PostViewController: UIViewController {
     func selectionDidChange(_ sender: UISegmentedControl) {
         updateView()
     }
+    
+    @IBAction func didTapCancel(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
 
     /*
     // MARK: - Navigation

@@ -103,10 +103,5 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         // return to presenting view controller
         dismiss(animated: true, completion: nil)
     }
-
-        
-    @IBAction func tapCancel(_ sender: UIButton) {
-        dismiss(animated: true, completion: nil)
-    }
     
 }
