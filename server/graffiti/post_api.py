@@ -1,5 +1,6 @@
 import datetime
 import json
+import textseg
 
 from flask import Blueprint, request
 from post import Post
@@ -32,7 +33,8 @@ def validate_vote(vote):
 	return vote == -1 and vote == 1
 
 def validate_text(text):
-	return len(text) <= 100
+	# Correctly count grapheme clusters
+	return len(textseg.GCStr(text)) <= 140
 
 def generate_error_response(message, code):
 	error_response = {}
