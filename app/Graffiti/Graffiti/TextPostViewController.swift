@@ -17,10 +17,9 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
     var currentLatitude: CLLocationDegrees? = CLLocationDegrees()
     var currentLongitude: CLLocationDegrees? = CLLocationDegrees()
     
-    @IBOutlet weak var postButton: UIButton!
     @IBOutlet weak var postTextView: UITextView!
-    @IBOutlet weak var charCountLabel: UILabel!
     var barCharCountLabel: UILabel!
+    var postButton: UIBarButtonItem!
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -39,7 +38,7 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         
         // handle text field's user input through delegate callbacks
         postTextView.delegate = self
-        postButton.isEnabled = false // this becomes disabled until user enters text
+
         createCharCounterLabel()
         setupTextViewDisplay()
         addToolBarToKeyboard()
@@ -54,10 +53,11 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
     func addToolBarToKeyboard() {
         let postToolbar = UIToolbar(frame: CGRect(x: 0,y: 0, width: self.view.frame.size.width, height: 50))
         postToolbar.barStyle = .default
-        let postBarButtonItem = UIBarButtonItem(title: "Post", style: .plain, target: self, action: #selector(postTextGraffiti(_:)))
+        postButton = UIBarButtonItem(title: "Post", style: .plain, target: self, action: #selector(postTextGraffiti(_:)))
+        postButton.isEnabled = false // until user types
         let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil) //for right aligned post button
         let charCountItem = UIBarButtonItem(customView: barCharCountLabel)
-        postToolbar.items = [flexible, charCountItem, postBarButtonItem]
+        postToolbar.items = [flexible, charCountItem, postButton]
         postToolbar.sizeToFit()
         postTextView.inputAccessoryView = postToolbar
     }
@@ -76,16 +76,13 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         let numberOfChars = newText.characters.count
 
         if(numberOfChars > charLimit){
-            charCountLabel.textColor = UIColor.red
             barCharCountLabel.textColor = UIColor.red
-            charCountLabel.text = String(charLimit - numberOfChars)
             barCharCountLabel.text = String(charLimit - numberOfChars)
             postButton.isEnabled = false
         } else if (numberOfChars == 0) {
             postButton.isEnabled = false
         } else {
-            charCountLabel.textColor = UIColor.darkGray
-            charCountLabel.text = String(charLimit - numberOfChars)
+            barCharCountLabel.textColor = UIColor.darkGray
             barCharCountLabel.text = String(charLimit - numberOfChars)
             postButton.isEnabled = true
         }
@@ -99,7 +96,7 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
     }
     
     
-    @IBAction func postTextGraffiti(_ sender: UIButton) {
+    func postTextGraffiti(_ sender: UIButton) {
         currentLongitude = locationManager.getLongitude()
         currentLatitude = locationManager.getLatitude()
         if currentLongitude == nil {

@@ -65,20 +65,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="140" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Icc-Mv-BBU">
-                                <rect key="frame" x="278" y="340" width="29" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CWN-s3-0OE">
-                                <rect key="frame" x="319" y="332" width="40" height="36"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Post"/>
-                                <connections>
-                                    <action selector="postTextGraffiti:" destination="4G5-6D-FEh" eventType="touchUpInside" id="TO2-tv-AVF"/>
-                                </connections>
-                            </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="8aG-3Q-96z">
                                 <rect key="frame" x="16" y="74" width="343" height="250"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -89,19 +75,13 @@
                         <color key="backgroundColor" red="0.68668406700815099" green="0.89417180483862002" blue="0.93492227157360408" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstAttribute="leadingMargin" secondItem="8aG-3Q-96z" secondAttribute="leading" id="2pG-cR-Ea5"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="CWN-s3-0OE" secondAttribute="trailing" id="3D1-QO-dl5"/>
-                            <constraint firstItem="Icc-Mv-BBU" firstAttribute="top" secondItem="8aG-3Q-96z" secondAttribute="bottom" constant="16" id="4Kg-zA-1UE"/>
                             <constraint firstItem="hWb-mN-HOS" firstAttribute="top" secondItem="8aG-3Q-96z" secondAttribute="bottom" constant="343" id="IhQ-59-1ld"/>
                             <constraint firstItem="8aG-3Q-96z" firstAttribute="top" secondItem="j9x-Hr-KXW" secondAttribute="bottom" constant="54" id="MfZ-sS-HqZ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="8aG-3Q-96z" secondAttribute="trailing" id="WbU-d4-WwH"/>
-                            <constraint firstItem="CWN-s3-0OE" firstAttribute="top" secondItem="8aG-3Q-96z" secondAttribute="bottom" constant="8" id="iXj-J2-sHG"/>
-                            <constraint firstItem="CWN-s3-0OE" firstAttribute="leading" secondItem="Icc-Mv-BBU" secondAttribute="trailing" constant="12" id="m0f-tf-naJ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="New Graffiti" id="eUf-Fr-1zR"/>
                     <connections>
-                        <outlet property="charCountLabel" destination="Icc-Mv-BBU" id="IMR-SW-cGF"/>
-                        <outlet property="postButton" destination="CWN-s3-0OE" id="65n-gq-6Vk"/>
                         <outlet property="postTextView" destination="8aG-3Q-96z" id="jlQ-Az-0dg"/>
                     </connections>
                 </viewController>
