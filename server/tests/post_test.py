@@ -9,6 +9,7 @@ sys.path.append('..')
 from graffiti import graffiti, user, post
 from graffiti.user import User
 from graffiti.post import Post
+from graffiti.userpost import UserPost
 from graffiti.graffiti import db
 
 from datetime import datetime, date
@@ -89,22 +90,22 @@ class PostTestCase(unittest.TestCase):
         self.assertTrue(Post.apply_vote(poster_id, post_id, 1))
         self.assertTrue(db.session.query(Post).filter(Post.post_id==post_id).first().num_votes == 1)
         self.assertTrue(db.session.query(UserPost).filter(UserPost.user_id==poster_id)\
-            .filter(UserPost.post_id==post_id).first().num_votes == 1)
+            .filter(UserPost.post_id==post_id).first().vote == 1)
         # Downvote
         self.assertTrue(Post.apply_vote(poster_id, post_id, -1))
         self.assertTrue(db.session.query(Post).filter(Post.post_id==post_id).first().num_votes == -1)
         self.assertTrue(db.session.query(UserPost).filter(UserPost.user_id==poster_id)\
-            .filter(UserPost.post_id==post_id).first().num_votes == -1)
+            .filter(UserPost.post_id==post_id).first().vote == -1)
         # New user, vote positive value
         self.assertTrue(Post.apply_vote(poster_id2, post_id, 3))
         self.assertTrue(db.session.query(Post).filter(Post.post_id==post_id).first().num_votes == 0)
         self.assertTrue(db.session.query(UserPost).filter(UserPost.user_id==poster_id2)\
-            .filter(UserPost.post_id==post_id).first().num_votes == 1)
+            .filter(UserPost.post_id==post_id).first().vote == 1)
         # First user change vote, neutral
         self.assertTrue(Post.apply_vote(poster_id, post_id, 0))
         self.assertTrue(db.session.query(Post).filter(Post.post_id==post_id).first().num_votes == 1)
         self.assertTrue(db.session.query(UserPost).filter(UserPost.user_id==poster_id)\
-            .filter(UserPost.post_id==post_id).first().num_votes == 0)
+            .filter(UserPost.post_id==post_id).first().vote == 0)
 
     def test_get_text(self):
         post = db.session.query(Post).filter(Post.poster_id==poster_id).first()
@@ -178,6 +179,7 @@ class PostTestCase(unittest.TestCase):
 
     # iteration 2 tests
     # tests that the stored image location matches the image associated w post
+    # Can't test since images are not yet implemented
     def test_get_img_file_loc(self):
         img_url = 'some_url_tbd'
         post_id = 1
