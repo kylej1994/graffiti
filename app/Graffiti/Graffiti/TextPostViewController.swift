@@ -17,8 +17,6 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
     var currentLatitude: CLLocationDegrees? = CLLocationDegrees()
     var currentLongitude: CLLocationDegrees? = CLLocationDegrees()
     
-    
-    @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var postButton: UIButton!
     @IBOutlet weak var postTextView: UITextView!
     @IBOutlet weak var charCountLabel: UILabel!
@@ -40,6 +38,7 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         
         // handle text field's user input through delegate callbacks
         postTextView.delegate = self
+        postButton.isEnabled = false // this becomes disabled until user enters text
         setupTextViewDisplay()
     }
     
