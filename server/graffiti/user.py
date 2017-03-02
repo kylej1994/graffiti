@@ -1,5 +1,4 @@
 import boto3
-import botocore
 import json
 import sys
 import re
@@ -7,7 +6,7 @@ import types
 import time as Time
 
 sys.path.append('..')
-from graffiti import db
+from graffiti import db, s3_client
 from sqlalchemy import Column, Float, Integer, String
 
 from datetime import datetime
@@ -16,10 +15,6 @@ from time import time
 import geoalchemy2
 import re
 EMAIL_REGEX = re.compile(r"[^@]+@[^@]+\.[^@]+")
-
-# obviously will put this somewhere else eventually
-ACCESS_KEY = 'AKIAIDBIJ3JOX3LDGVNQ'
-SECRET_KEY = '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'
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -35,7 +30,6 @@ class User(db.Model):
     bio = db.Column(db.String(160))
     join_timestamp = db.Column(db.DateTime)
     has_been_suspended = db.Column(db.Boolean)
-    s3_client = None
 
     def __init__(self, username, google_aud, phone_number, name, email, bio):
         self.set_username(username)
@@ -46,12 +40,6 @@ class User(db.Model):
         self.join_timestamp = datetime.fromtimestamp(time()).isoformat()
         self.set_bio(bio)
         self.has_been_suspended = False
-
-        # setup s3 client
-        cfg = botocore.config.Config(signature_version='s3v4')
-        self.s3_client = boto3.client('s3', config=cfg,\
-            aws_access_key_id=ACCESS_KEY,\
-            aws_secret_access_key=SECRET_KEY)
 
     def __repr__(self):
         return '<username {}>'.format(self.username)
@@ -113,7 +101,7 @@ class User(db.Model):
     def set_image_tag(self, img_data):
         try:
             key = self.get_s3_key()
-            self.s3_client.put_object(Body=img_data,\
+            s3_client.put_object(Body=img_data,\
                 Bucket='graffiti-user-images',\
                 Key=key)
             return True
@@ -123,12 +111,12 @@ class User(db.Model):
 
     def get_img_file_loc(self):
         key = self.get_s3_key()
-        url = '{}/{}/{}'.format(self.s3_client.meta.endpoint_url, 'graffiti-user-images', key)
+        url = '{}/{}/{}'.format(s3_client.meta.endpoint_url, 'graffiti-user-images', key)
         return url
 
     def get_img_file(self):
         key = self.get_s3_key()
-        s3_obj = self.s3_client.get_object(Bucket='graffiti-post-images',\
+        s3_obj = s3_client.get_object(Bucket='graffiti-post-images',\
                 Key=key)
         return s3_obj['Body'].read().decode('ascii')
 
@@ -182,16 +170,14 @@ class User(db.Model):
 
     def to_json_fields_for_FE(self):
         img_data = []
-        # retrieve image data from s3 if its an image
+        # retrieve image data from s3 if there is an image tag
+        key = self.get_s3_key()
         try:
-            key = 'userid:{0}, joined:{1}'.format(self.user_id,\
-                self.join_timestamp)
-            img_data = self.s3_client.get_object(\
+            img_data = s3_client.get_object(\
                 Bucket='graffiti-user-images',\
                 Key=key)['Body'].read().decode('ascii')
         except:
-            print('Couldnt find key')
-            print('Should probably do something about that')
+            print('Error retrieving image tag: ' + key)
         return json.dumps(dict(
             userid=self.user_id,
             username=self.username,

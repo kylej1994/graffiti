@@ -196,14 +196,14 @@ class PostTestCase(unittest.TestCase):
         self.assertTrue(post.get_img_file_loc().split('&')[0] == img_url_concat)
 
     def test_get_img_file(self):
-        print 'this is the get_img_file test'
         with open('cat-pic.png', 'rb') as imageFile:
             img_str = base64.b64encode(imageFile.read())
 
-        post = Post('to_save', 123, 123, poster_id)
+        post = Post('to_save', 123, 123, poster_id, post_type=1)
         post.save_post()
         post.upload_img_to_s3(img_str)
-        self.assertTrue(post.get_img_file() == img_str)
+        front_end_json = post.to_json_fields_for_FE(poster_id)
+        self.assertTrue(json.loads(front_end_json)['image'] == img_str)
 
 
 if __name__ == '__main__':

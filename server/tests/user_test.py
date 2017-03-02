@@ -151,7 +151,7 @@ class UserTestCase(unittest.TestCase):
 
     # iteration 2 tests
     # tests that the stored image location matches the picture associated w user
-    def test_get_img_file(self):
+    def test_get_img_file_loc(self):
         #Be sure to concat out the join time, since that's impossible to measure
         img_url = 'https://s3.amazonaws.com/graffiti-user-images/userid:3&joined:1488448033'
         img_url_concat = img_url.split('&')[0]
@@ -166,7 +166,16 @@ class UserTestCase(unittest.TestCase):
         self.assertTrue(user.get_img_file_loc().split('&')[0] == img_url_concat)
 
 
-        
+    def test_get_img_file(self):
+        with open('cat-pic.png', 'rb') as imageFile:
+            img_str = base64.b64encode(imageFile.read())
+        user = User("easmith2", 
+            "A1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com",
+            "9172825753", "name", "email@email.com", "text_tag")
+        user.save_user()
+        user.set_image_tag(img_str)
+        user_fe_json = user.to_json_fields_for_FE()
+        self.assertTrue(json.loads(user_fe_json)['img_tag'] == img_str)
 
 
 if __name__ == '__main__':
