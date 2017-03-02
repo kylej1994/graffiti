@@ -9,7 +9,7 @@
 import UIKit
 
 class ImageDetailViewController: UIViewController {
-    var interactor: Interactor?  = nil
+
     @IBOutlet var imageDetailView: UIImageView!
     var originalImageViewCenter: CGPoint!
     var imageMoveOffset: CGFloat!
@@ -30,36 +30,6 @@ class ImageDetailViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    @IBAction func handleDismissGesture(_ sender: UIPanGestureRecognizer) {
-        let percentThreshold:CGFloat = 0.4
-        
-        // convert y position to downward pull progress (percentage)
-        let translation = sender.translation(in: view) // converts the pan gesture coordinate to the Modal View Controller’s coordinate space.
-        let verticalMovement = translation.y / view.bounds.height
-        let downwardMovement = fmaxf(Float(verticalMovement), 0.0)
-        let downwardMovementPercent = fminf(downwardMovement, 1.0)
-        let progress = CGFloat(downwardMovementPercent)
-        
-        guard let interactor = interactor else { return }
-        switch sender.state {
-        case .began:
-            interactor.hasStarted = true
-            dismiss(animated: true, completion: nil)
-        case .changed:
-            interactor.shouldFinish = progress > percentThreshold
-            interactor.update(progress)
-        case .cancelled:
-            interactor.hasStarted = false
-            interactor.cancel()
-        case .ended:
-            interactor.hasStarted = false
-            interactor.shouldFinish ? interactor.finish() : interactor.cancel()
-        default:
-            break
-        }
-        
     }
     
     @IBAction func tapClose(_ sender: UIButton) {
