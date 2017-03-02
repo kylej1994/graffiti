@@ -56,6 +56,9 @@ class Post(db.Model):
     def __repr__(self):
         return '<post_id {}>'.format(self.post_id)
 
+    def get_s3_key(self):
+        return 'postid:{0}, created_at:{1}'.format(self.post_id, self.created_at)
+
     def to_json_fields_for_FE(self, current_user_id):
         user = User.find_user_by_id(self.poster_id)
         cur_user_vote = UserPost.get_vote_by_ids(current_user_id, self.post_id)
@@ -64,8 +67,7 @@ class Post(db.Model):
         img_data = []
         # retrieve image data from s3 if its an image
         if self.post_type.describe() == 1:
-            key = 'postid:{0}, created_at{1}'.format(self.post_id,\
-                        self.created_at)
+            key = self.get_s3_key()
             try:
                 img_data = s3_client.get_object(\
                     Bucket='graffiti-post-images',\
@@ -100,8 +102,7 @@ class Post(db.Model):
     def upload_img_to_s3(self, img_data):
         # if its an image, upload it to s3
         if self.post_type.describe() == 1:
-            key = 'postid:{0}, created_at{1}'.format(self.post_id,\
-                self.created_at)
+            key = self.get_s3_key()
             try:
                 s3_client.put_object(Body=img_data,\
                     Bucket='graffiti-post-images',\

@@ -90,11 +90,14 @@ class User(db.Model):
     def get_has_been_suspended(self):
         return self.has_been_suspended
 
+    def get_s3_key(self):
+        return 'userid:{0}, joined:{1}'.format(self.user_id,\
+                self.join_timestamp)
+
     # uploads img_data to s3 as this user's img tag
     def set_image_tag(self, img_data):
         try:
-            key = 'userid:{0}, joined:{1}'.format(self.user_id,\
-                self.join_timestamp)
+            key = self.get_s3_key()
             s3_client.put_object(Body=img_data,\
                 Bucket='graffiti-user-images',\
                 Key=key)
@@ -154,8 +157,7 @@ class User(db.Model):
     def to_json_fields_for_FE(self):
         img_data = []
         # retrieve image data from s3 if there is an image tag
-        key = 'userid:{0}, joined:{1}'.format(self.user_id,\
-            self.join_timestamp)
+        key = self.get_s3_key()
         try:
             img_data = s3_client.get_object(\
                 Bucket='graffiti-user-images',\
