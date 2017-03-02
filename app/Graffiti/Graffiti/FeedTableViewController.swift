@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 
 class FeedTableViewController: UITableViewController {
-
+    let interactor = Interactor() // for custom view controller transition
     let api = API.sharedInstance
     let locationManager = LocationService.sharedInstance
     var posts: [Post] = []
@@ -20,12 +20,12 @@ class FeedTableViewController: UITableViewController {
     var currentLatitude: CLLocationDegrees? = CLLocationDegrees()
     var currentLongitude: CLLocationDegrees? = CLLocationDegrees()
     
-    // we load the data in view did appear so the feed gets filled asap
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         locationManager.startUpdatingLocation()
 
-        self.getPostsByLocation()
+        // refresh feed every time we show the tab
+        // self.getPostsByLocation()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -40,6 +40,11 @@ class FeedTableViewController: UITableViewController {
         
         // add refresh control for pull to refresh
         self.refreshControl?.addTarget(self, action: #selector(refreshFeed), for: .valueChanged)
+        
+        // the table view is told to use the Auto Layout constraints
+        //  and the contents of its cells to determine each cell’s height
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 150
     }
     
     
@@ -111,19 +116,40 @@ class FeedTableViewController: UITableViewController {
     
     // TODO refactor this
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellIdentifier = "FeedCell"
+        let textCellIdentifier = "FeedCell"
+        let imageCellIdentifier = "ImageCell"
 
-        // downcast cell to the custom cell class
-        // guard safely unwraps the optional
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? FeedTableViewTextCell else {
-            fatalError("The dequeue cell is not an instance of FeedTableViewTextCell.")
-        }
-        
         // get the Post from the array of Posts and fill the cell accordingly
         let post = posts[indexPath.row]
-        cell.textView.text = post.getText()
-        setDisplay(cell: cell, post: post)
+        let type = post.getPostType()
         
+        // downcast cell to the custom cell class
+        // guard safely unwraps the optional
+        guard var cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath) as? FeedTableViewCell else {
+            fatalError("The dequeue cell is not an instance of FeedTableViewTextCell.")
+        }
+
+        if type == .TextPost {
+            guard let textCell = cell as? FeedTextCell else {
+                fatalError("The dequeue cell is not an instance of FeedTextCell.")
+            }
+            textCell.textView.text = post.getText()
+        }
+        
+        if type == .ImagePost {
+            cell = tableView.dequeueReusableCell(withIdentifier: imageCellIdentifier, for: indexPath) as! FeedImageCell // necessary or else the dequeue cell is the wrong class
+            guard let imageCell = cell as? FeedImageCell else {
+                fatalError("The dequeue cell is not an instance of FeedTextCell.")
+            }
+            imageCell.feedImageView.image = post.getImage()
+            imageCell.feedImageView.tag = indexPath.row
+
+            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapImage(sender:)))
+            imageCell.feedImageView.addGestureRecognizer(tapGestureRecognizer)
+        }
+        
+        setDisplay(cell: cell, post: post)
+
         // handle upvote button tap
         cell.upvoteTapAction = { (cell) in
             let chosenPath = tableView.indexPath(for: cell)!
@@ -153,7 +179,7 @@ class FeedTableViewController: UITableViewController {
             }
             
             // update display
-            self.setDisplay(cell: cell, post: chosenPost)
+            self.setVoteDisplay(cell: cell, post: chosenPost)
         }
         
         // handle downvote button tap
@@ -185,19 +211,45 @@ class FeedTableViewController: UITableViewController {
             }
             
             // update display
-            self.setDisplay(cell: cell, post: chosenPost)
+            self.setVoteDisplay(cell: cell, post: chosenPost)
         }
 
         return cell
     }
     
-    func setDisplay(cell: FeedTableViewTextCell, post: Post) {
-        setRatingDisplay(cell: cell, post: post)
+    func setDisplay(cell: FeedTableViewCell, post: Post) {
         setDateDisplay(cell: cell, post: post)
+        setProfPicDisplay(cell: cell, post: post)
+        setVoteDisplay(cell: cell, post: post)
+    }
+    
+    func setDateDisplay(cell: FeedTableViewCell, post: Post) {
+        if let dateAdded = post.getTimeAdded() {
+            cell.dateLabel.text = getFormattedDate(date: dateAdded)
+        } else {
+            cell.dateLabel.text = "Just Now"
+        }
+    }
+    
+    func setProfPicDisplay(cell: FeedTableViewCell, post: Post) {
+        guard let poster = post.getPoster() else {
+            return
+        }
+        guard let photo = poster.getImageTag() else {
+            return
+        }
+        guard cell.profPicImageView != nil else {
+            return
+        }
+        cell.profPicImageView.image = photo
+    }
+    
+    func setVoteDisplay(cell: FeedTableViewCell, post: Post) {
+        setRatingDisplay(cell: cell, post: post)
         setVoteButtonDisplay(cell: cell, post: post)
     }
     
-    func setRatingDisplay(cell: FeedTableViewTextCell, post: Post) {
+    func setRatingDisplay(cell: FeedTableViewCell, post: Post) {
         let rating = post.getRating()
         cell.votesLabel.text = String(rating)
         if rating < 0 {
@@ -207,7 +259,7 @@ class FeedTableViewController: UITableViewController {
         }
     }
     
-    func setVoteButtonDisplay(cell: FeedTableViewTextCell, post: Post) {
+    func setVoteButtonDisplay(cell: FeedTableViewCell, post: Post) {
         let vote = post.getVote()
         switch vote {
         case .upVote:
@@ -222,22 +274,12 @@ class FeedTableViewController: UITableViewController {
         }
     }
     
-    func setDateDisplay(cell: FeedTableViewTextCell, post: Post) {
-        if let dateAdded = post.getTimeAdded() {
-            cell.dateLabel.text = getFormattedDate(date: dateAdded)
-        } else {
-            cell.dateLabel.text = "Just Now"
-        }
-    }
-    
-    
     func sendVoteFor(indexPath: IndexPath, vote: VoteType, resetVote: @escaping () -> ()) {
         let post = posts[indexPath.row]
         if let postid = post.getID() {
             api.voteOnPost(postid: postid, vote: vote) { response in
                 switch response.result {
                 case .success:
-                    print("sending vote")
                     if let postFromServer = response.result.value {
                         // set post rating and vote based on the server's response
                         post.setRating(postFromServer.getRating())
@@ -279,5 +321,31 @@ class FeedTableViewController: UITableViewController {
     func showFeedFailureAlert() {
         showAlert(messageTitle: "Can't load latest posts", message: "")
     }
+    
+    func didTapImage(sender: UITapGestureRecognizer) {
+        let cellImageView = sender.view as! UIImageView
+        
+        let storyboard = UIStoryboard(name: "Feed", bundle: nil)
+        if let detailVC = storyboard.instantiateViewController(withIdentifier: "ImageDetailViewController") as? ImageDetailViewController {
+            detailVC.modalTransitionStyle = .crossDissolve
+            detailVC.transitioningDelegate = self
+            detailVC.interactor = interactor
+            detailVC.view.backgroundColor = UIColor.black
 
+            present(detailVC, animated: true, completion: nil)
+            if let theImage = cellImageView.image {
+                detailVC.imageDetailView.image = theImage
+            }
+        }
+    }
+}
+
+extension FeedTableViewController: UIViewControllerTransitioningDelegate {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return DismissAnimator()
+    }
+    
+    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return interactor.hasStarted ? interactor : nil
+    }
 }

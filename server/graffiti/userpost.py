@@ -41,8 +41,8 @@ class UserPost(db.Model):
     @staticmethod
     def get_vote_by_ids(user_id, post_id):
         try:
-            return db.session.query(UserPost).filter(UserPost.post_id==post_id\
-                and UserPost.user_id==user_id).first().get_vote()
+            return db.session.query(UserPost).filter(UserPost.post_id==post_id,\
+                UserPost.user_id==user_id).first().get_vote()
         except:
             return None
     

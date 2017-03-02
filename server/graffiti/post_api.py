@@ -45,7 +45,7 @@ def create_post():
 	data = request.get_json()
 
 	# checks for necessary data params
-	if ('location' not in data
+	if ('location' not in data or 'type' not in data
 			or 'latitude' not in data['location']
 			or 'longitude' not in data['location']):
 		return generate_error_response(ERR_400, 400)
@@ -67,16 +67,15 @@ def create_post():
 
 	# create a new post and add it to the db session
 	# 0 for text, 1 for image, anything else is invalid
-	post_type = -1
-	if ('text' in data):
-		post_type = 0
+	post_type = data['type']
+	if (post_type == 0):
 		text = str(data['text'])
 		if (not validate_text(text)):
 			return generate_error_response(ERR_400, 400)
 		# image is empty
 		post = Post(text, lon, lat, user_id, 0)
 		post.save_post()
-	elif ('image' in data):
+	elif (post_type == 1):
 		post_type = 1
 		img_data = data['image']
 		# empty text
@@ -114,7 +113,7 @@ def delete_post(postid):
 @post_api.route('/post/<int:postid>', methods=['GET'])
 def get_post(postid):
 	post = Post.find_post(postid)
-	
+
 	if (post is None):
 		return generate_error_response(ERR_404, 404)
 
@@ -155,7 +154,10 @@ def get_post_by_location():
 	for post in posts:
 		jsonified_posts.append(json.loads(post.to_json_fields_for_FE(\
 			user.get_user_id())))
-	to_ret['posts'] = jsonified_posts
+	# postid is incremental, i.e. the more recent the post is the greater the
+	# postid. this is why reverse is set to True
+	to_ret['posts'] = sorted(jsonified_posts,
+		key=lambda k: k['postid'], reverse=True)
 	return json.dumps(to_ret), 200
 
 @post_api.route('/post/coordinates', methods=['GET'])

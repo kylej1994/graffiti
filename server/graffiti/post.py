@@ -35,7 +35,7 @@ class Post(db.Model):
 
     post_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     post_type = db.Column(db.Enum(PostType))
-    text = db.Column(db.String(100))
+    text = db.Column(db.String(140))
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
     loc = db.Column(Geometry(geometry_type='POINT', srid=4326))
@@ -78,7 +78,8 @@ class Post(db.Model):
             try:
                 img_data = self.s3_client.get_object(\
                     Bucket='graffiti-post-images',\
-                    Key='postid:{0}'.format(self.post_id))['Body'].read()
+                    Key='postid:{0}, created_at{1}'.format(self.post_id,\
+                        self.created_at))['Body'].read()
             except:
                 print('Couldnt find key')
                 print('Should probably do something about that')
@@ -90,7 +91,7 @@ class Post(db.Model):
                 longitude=self.longitude,
                 latitude=self.latitude),
             created_at=self.created_at,
-            poster=user.to_json_fields_for_FE(),
+            poster=json.loads(user.to_json_fields_for_FE()),
             num_votes=self.num_votes,
             current_user_vote=cur_user_vote,
             image=img_data))
@@ -109,11 +110,11 @@ class Post(db.Model):
 
     def upload_img_to_s3(self, img_data):
         # if its an image, upload it to s3
-        print 'postid{0}'.format(self.post_id)
         if self.post_type.describe() == 1:
             self.s3_client.put_object(Body=img_data,\
                 Bucket='graffiti-post-images',\
-                Key='postid:{0}'.format(self.post_id))
+                Key='postid:{0}, created_at{1}'.format(self.post_id,\
+                    self.created_at))
         # if not, do nothing
         # doing this for compatability reasons...wow this code is smelly
 
@@ -147,8 +148,8 @@ class Post(db.Model):
         if post is None:
             return False
 
-        userpost = db.session.query(UserPost).filter(UserPost.post_id==post_id)\
-            .filter(UserPost.user_id==user_id).first()
+        userpost = db.session.query(UserPost).filter(UserPost.post_id==post_id,\
+            UserPost.user_id==user_id).first()
         # if the post has not been voted on by this user, we create an entry
         # and add it to the db
 

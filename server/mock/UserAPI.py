@@ -7,13 +7,15 @@ from flask import Blueprint, request
 
 user_api = Blueprint('user_api', __name__)
 
+user_img = open('user_img_base64.txt').read().strip()
 fake_dict = dict(
 	userid=1,
-	username='hylewis',
+	username='hjylewis',
 	name="Hot and Bothered",
 	email="comeNfind@me.com",
 	bio="Yum yum yum!",
-	phone_number="1234567890"
+	phone_number="1234567890",
+	img_tag=user_img
 )
 fake_response = json.dumps(fake_dict)
 
