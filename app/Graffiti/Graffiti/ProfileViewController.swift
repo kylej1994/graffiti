@@ -57,7 +57,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             print("app delegate current user can be unwrapped")
             self.user = user
         } else {
-            print("sadness")
+            //print("sadness")
         }
         
         getPostsByUser()
@@ -120,19 +120,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                 tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -offset, 0)
                 if(offset > 0.0){
                     tableView.frame.size = CGSize(tableView.contentSize.width, height - offset + 80) //and vice versa when keyboard is dismissed
-                    print("ran through here")
                 }
-                print("bounds: " + String(describing: bounds))
-                print("height: " + String(describing: height))
-                print("height+offset: " + String(describing: (height-offset)))
-            
-                if(tableView.frame.height > height){
-                    print("when am I here?")
-                }
-            
-            
             } else {
-                //print("oh hey")
                 tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -150, 0)
             
             }
