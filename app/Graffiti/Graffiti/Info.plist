@@ -73,5 +73,7 @@
 	</array>
 	<key>cam</key>
 	<string></string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Allows you to choose a profile picture.</string>
 </dict>
 </plist>
