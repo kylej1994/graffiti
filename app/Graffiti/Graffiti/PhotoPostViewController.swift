@@ -75,7 +75,7 @@ class PhotoPostViewController: UIViewController, UIImagePickerControllerDelegate
         
         let location = CLLocation.init(latitude: currentLatitude!, longitude: currentLongitude!)
         
-        let newPost:Post = Post(location: location, image: image!)!
+        let newPost:Post = Post(location: location, image: image!, postType: .ImagePost)!
         
         API.sharedInstance.createPost(post: newPost){ response in
             switch response.result {

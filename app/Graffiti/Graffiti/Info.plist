@@ -4,10 +4,6 @@
 <dict>
 	<key>API_BASE_URL</key>
 	<string>$(API_BASE_URL)</string>
-	<key>cam</key>
-	<string></string>
-	<key>NSCameraUsageDescription</key>
-	<string>used to post photo images </string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -59,6 +55,8 @@
 			<string></string>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>used to post photo images </string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Allow Graffiti to use your location so you can post and view graffiti!</string>
 	<key>UILaunchStoryboardName</key>
@@ -73,5 +71,7 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>cam</key>
+	<string></string>
 </dict>
 </plist>
