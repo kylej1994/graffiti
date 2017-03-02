@@ -20,6 +20,7 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var postButton: UIButton!
     @IBOutlet weak var postTextView: UITextView!
     @IBOutlet weak var charCountLabel: UILabel!
+    var barCharCountLabel: UILabel!
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -39,15 +40,15 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         // handle text field's user input through delegate callbacks
         postTextView.delegate = self
         postButton.isEnabled = false // this becomes disabled until user enters text
+        createCharCounterLabel()
         setupTextViewDisplay()
         addToolBarToKeyboard()
     }
     
-    func createCharCounterLabel() -> UILabel {
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 30, height: 22))
-        label.textColor = UIColor.darkGray
-        label.text = "140"
-        return label
+    func createCharCounterLabel() {
+        barCharCountLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 30, height: 22))
+        barCharCountLabel.textColor = UIColor.darkGray
+        barCharCountLabel.text = "140"
     }
     
     func addToolBarToKeyboard() {
@@ -55,7 +56,7 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         postToolbar.barStyle = .default
         let postBarButtonItem = UIBarButtonItem(title: "Post", style: .plain, target: self, action: #selector(postTextGraffiti(_:)))
         let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil) //for right aligned post button
-        let charCountItem = UIBarButtonItem(customView: createCharCounterLabel())
+        let charCountItem = UIBarButtonItem(customView: barCharCountLabel)
         postToolbar.items = [flexible, charCountItem, postBarButtonItem]
         postToolbar.sizeToFit()
         postTextView.inputAccessoryView = postToolbar
@@ -76,13 +77,16 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
 
         if(numberOfChars > charLimit){
             charCountLabel.textColor = UIColor.red
+            barCharCountLabel.textColor = UIColor.red
             charCountLabel.text = String(charLimit - numberOfChars)
+            barCharCountLabel.text = String(charLimit - numberOfChars)
             postButton.isEnabled = false
         } else if (numberOfChars == 0) {
             postButton.isEnabled = false
         } else {
             charCountLabel.textColor = UIColor.darkGray
             charCountLabel.text = String(charLimit - numberOfChars)
+            barCharCountLabel.text = String(charLimit - numberOfChars)
             postButton.isEnabled = true
         }
         return true
