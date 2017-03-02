@@ -117,6 +117,7 @@ class PostViewController: UIViewController {
     }
     
     @IBAction func didTapCancel(_ sender: UIBarButtonItem) {
+        textPostViewController.postTextView.resignFirstResponder() // hide keyboard
         dismiss(animated: true, completion: nil)
     }
     

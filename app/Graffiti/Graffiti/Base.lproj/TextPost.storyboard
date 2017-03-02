@@ -86,7 +86,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
                             </textView>
                         </subviews>
-                        <color key="backgroundColor" red="0.18985164179814285" green="1" blue="0.21220092199269525" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.68668406700815099" green="0.89417180483862002" blue="0.93492227157360408" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstAttribute="leadingMargin" secondItem="8aG-3Q-96z" secondAttribute="leading" id="2pG-cR-Ea5"/>
                             <constraint firstAttribute="trailingMargin" secondItem="CWN-s3-0OE" secondAttribute="trailing" id="3D1-QO-dl5"/>
@@ -120,7 +120,7 @@
                     <view key="view" contentMode="scaleToFill" id="0Np-Si-hqi">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="0.19331941975267153" blue="0.13942612166907598" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.53661116070000003" green="0.54909232180000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z9S-ei-nCT" userLabel="First Responder" sceneMemberID="firstResponder"/>

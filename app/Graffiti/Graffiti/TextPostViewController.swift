@@ -26,11 +26,13 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         locationManager.startUpdatingLocation()
+        postTextView.becomeFirstResponder() // show keyboard
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(true)
         locationManager.stopUpdatingLocation()
+        postTextView.resignFirstResponder() // hide keyboard
     }
     
     override func viewDidLoad() {
@@ -101,6 +103,7 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         }
         
         // return to presenting view controller
+        postTextView.resignFirstResponder()
         dismiss(animated: true, completion: nil)
     }
     
