@@ -103,33 +103,39 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         // PULL DOWN -----------------
         
         // Header -----------
-        
-        headerTransform = CATransform3DTranslate(headerTransform, 0, -offset, 0)
-        
+        if(offset > 0){
+            headerTransform = CATransform3DTranslate(headerTransform, 0, -offset, 0)
+        }
+            
         // Table View -----------
+        let tHeight = tableView.contentSize.height
         
-        if(offset < 150.0){
-            let bounds = UIScreen.main.bounds
-            let height = bounds.size.height
+        let bounds = UIScreen.main.bounds
+        let height = bounds.size.height
+        
+        if(tHeight > height){
+            if(offset < 150.0){
             
-            tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -offset, 0)
-            if(offset > 0.0){
-                tableView.frame.size = CGSize(tableView.contentSize.width, height - offset + 80) //and vice versa when keyboard is dismissed
+            
+                tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -offset, 0)
+                if(offset > 0.0){
+                    tableView.frame.size = CGSize(tableView.contentSize.width, height - offset + 80) //and vice versa when keyboard is dismissed
+                    print("ran through here")
+                }
+                print("bounds: " + String(describing: bounds))
+                print("height: " + String(describing: height))
+                print("height+offset: " + String(describing: (height-offset)))
+            
+                if(tableView.frame.height > height){
+                    print("when am I here?")
+                }
+            
+            
+            } else {
+                //print("oh hey")
+                tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -150, 0)
+            
             }
-            print("bounds: " + String(describing: bounds))
-            print("height: " + String(describing: height))
-            print("height+offset: " + String(describing: (height-offset)))
-            
-            if(tableView.frame.height > height){
-                //tableView.frame.size = CGSize(tableView.contentSize.width, height + offset)
-                print("when am I here?")
-            }
-            
-            
-        } else {
-            //print("oh hey")
-            tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -150, 0)
-            
         }
         // Avatar -----------
             
