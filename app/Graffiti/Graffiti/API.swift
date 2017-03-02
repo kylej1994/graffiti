@@ -194,7 +194,6 @@ class API {
     //MARK: Post Calls
     func createPost(post: Post, handler: @escaping PostHandler) {
         let postParams : Parameters = post.toJSON()
-        print(postParams["type"])
         makeRequest("/post", method: .post, parameters: postParams, encoding: JSONEncoding.default) { requestResult in
             switch requestResult {
             case .success:
