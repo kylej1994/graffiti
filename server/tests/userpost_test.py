@@ -51,7 +51,7 @@ class UserPostTestCase(unittest.TestCase):
 
     def test_get_votes_by_ids(self):
         Post.apply_vote(user_id, post_id, vote)
-        fetched_vote = UserPost.get_votes_by_ids(user_id, post_id)
+        fetched_vote = UserPost.get_vote_by_ids(user_id, post_id)
         self.assertTrue(fetched_vote == vote)
 
     
