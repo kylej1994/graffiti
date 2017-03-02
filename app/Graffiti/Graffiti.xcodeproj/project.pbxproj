@@ -66,6 +66,8 @@
 		D9E63BA51E4D555E00EE6C4B /* MockSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E63BA41E4D555E00EE6C4B /* MockSessionManager.swift */; };
 		D9E63BA61E4D633A00EE6C4B /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E63B9F1E4D460900EE6C4B /* API.swift */; };
 		D9E63BA71E4D639100EE6C4B /* ManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E63BA11E4D496E00EE6C4B /* ManagerProtocol.swift */; };
+		F71622BA1E5F9578009A4662 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71622B91E5F9578009A4662 /* PostViewController.swift */; };
+		F71622BC1E5F958E009A4662 /* PhotoPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71622BB1E5F958E009A4662 /* PhotoPostViewController.swift */; };
 		F744D4131E4E77C300C42677 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F744D4121E4E77C300C42677 /* GoogleService-Info.plist */; };
 		F744D4141E4E842600C42677 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33B07CB1E4AB6D2007025FB /* Post.swift */; };
 		F744D4151E4E860400C42677 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33B07CF1E4ACA8F007025FB /* User.swift */; };
@@ -160,6 +162,8 @@
 		D9E63B9F1E4D460900EE6C4B /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		D9E63BA11E4D496E00EE6C4B /* ManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerProtocol.swift; sourceTree = "<group>"; };
 		D9E63BA41E4D555E00EE6C4B /* MockSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSessionManager.swift; sourceTree = "<group>"; };
+		F71622B91E5F9578009A4662 /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
+		F71622BB1E5F958E009A4662 /* PhotoPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoPostViewController.swift; sourceTree = "<group>"; };
 		F744D4121E4E77C300C42677 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F7B0C1121E4AD29E00ED031B /* Graffiti-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Graffiti-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -316,6 +320,8 @@
 				AD84BD601E49496D0020505D /* TextPostViewController.swift */,
 				B33B07CB1E4AB6D2007025FB /* Post.swift */,
 				D9DD58DE1E57A32600D9CB1D /* Vote.swift */,
+				F71622B91E5F9578009A4662 /* PostViewController.swift */,
+				F71622BB1E5F958E009A4662 /* PhotoPostViewController.swift */,
 			);
 			name = Post;
 			sourceTree = "<group>";
@@ -460,6 +466,7 @@
 				TargetAttributes = {
 					AD84BD2C1E4947330020505D = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 5WYWR4MS7H;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
@@ -674,6 +681,7 @@
 			files = (
 				ADF54FCC1E63536F00D0B0E0 /* FeedTextCell.swift in Sources */,
 				AD84BD611E49496D0020505D /* TextPostViewController.swift in Sources */,
+				F71622BC1E5F958E009A4662 /* PhotoPostViewController.swift in Sources */,
 				D9B5FAEB1E54FF9300DF87B2 /* LocationTransform.swift in Sources */,
 				4CA6EC841E5F6FC800865EC1 /* FXBlurView.m in Sources */,
 				AD84BD631E4949860020505D /* ProfileViewController.swift in Sources */,
@@ -685,6 +693,7 @@
 				AD3E23451E5123A80022C882 /* FeedTableViewCell.swift in Sources */,
 				D90D7A8C1E4E686700FB5AEE /* RequestProtocol.swift in Sources */,
 				ADD7F76F1E551F8B009BADC1 /* EmptyFeedBackgroundView.swift in Sources */,
+				F71622BA1E5F9578009A4662 /* PostViewController.swift in Sources */,
 				D9DD58DF1E57A32600D9CB1D /* Vote.swift in Sources */,
 				AD84BD731E494C320020505D /* LoginViewController.swift in Sources */,
 				AD79E6E91E64968C005AD9EA /* ImageDetailViewController.swift in Sources */,
@@ -888,6 +897,7 @@
 				API_BASE_URL = "http://127.0.0.1:5000";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = 5WYWR4MS7H;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -922,6 +932,7 @@
 				API_BASE_URL = "http://docker-graffiti-dev.us-east-2.elasticbeanstalk.com";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = 5WYWR4MS7H;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1065,6 +1076,7 @@
 				API_BASE_URL = "http://127.0.0.1:5000";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = 5WYWR4MS7H;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1179,6 +1191,7 @@
 				API_BASE_URL = "http://127.0.0.1:5000";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = 5WYWR4MS7H;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
