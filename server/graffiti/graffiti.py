@@ -31,7 +31,7 @@ def init_db():
 	db.create_all()
 	return 'initted the db\n'
 
-print init_db()
+# print init_db()
 
 # These imports must happen after the initialization of the db because these
 # objects import db in their respective files.
@@ -79,8 +79,8 @@ def fill_db():
 	db.session.commit()
 	return 'added sample records\n'
 
-print clear_db_of_everything()
-print fill_db()
+# print clear_db_of_everything()
+# print fill_db()
 
 def generate_error_response(message, code):
 	error_response = {}
