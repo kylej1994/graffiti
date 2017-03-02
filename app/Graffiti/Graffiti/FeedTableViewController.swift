@@ -328,8 +328,8 @@ class FeedTableViewController: UITableViewController {
         let storyboard = UIStoryboard(name: "Feed", bundle: nil)
         if let detailVC = storyboard.instantiateViewController(withIdentifier: "ImageDetailViewController") as? ImageDetailViewController {
             detailVC.modalTransitionStyle = .crossDissolve
-            detailVC.transitioningDelegate = self
-            detailVC.interactor = interactor
+//            detailVC.transitioningDelegate = self
+//            detailVC.interactor = interactor
             detailVC.view.backgroundColor = UIColor.black
 
             present(detailVC, animated: true, completion: nil)
@@ -338,14 +338,15 @@ class FeedTableViewController: UITableViewController {
             }
         }
     }
+    
 }
 
-extension FeedTableViewController: UIViewControllerTransitioningDelegate {
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return DismissAnimator()
-    }
-    
-    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        return interactor.hasStarted ? interactor : nil
-    }
-}
+//extension FeedTableViewController: UIViewControllerTransitioningDelegate {
+//    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+//        return DismissAnimator()
+//    }
+//    
+//    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+//        return interactor.hasStarted ? interactor : nil
+//    }
+//}
