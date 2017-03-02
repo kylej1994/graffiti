@@ -1,11 +1,10 @@
 import boto3
-import botocore
 import json
 import sys
 import re
 import types
 sys.path.append('..')
-from graffiti import db
+from graffiti import db, s3_client
 from sqlalchemy import Column, Float, Integer, String
 
 from datetime import datetime
@@ -14,10 +13,6 @@ from time import time
 import geoalchemy2
 import re
 EMAIL_REGEX = re.compile(r"[^@]+@[^@]+\.[^@]+")
-
-# obviously will put this somewhere else eventually
-ACCESS_KEY = 'AKIAIDBIJ3JOX3LDGVNQ'
-SECRET_KEY = '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'
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -33,7 +28,6 @@ class User(db.Model):
     bio = db.Column(db.String(160))
     join_timestamp = db.Column(db.DateTime)
     has_been_suspended = db.Column(db.Boolean)
-    s3_client = None
 
     def __init__(self, username, google_aud, phone_number, name, email, bio):
         self.set_username(username)
@@ -44,12 +38,6 @@ class User(db.Model):
         self.join_timestamp = datetime.fromtimestamp(time()).isoformat()
         self.set_bio(bio)
         self.has_been_suspended = False
-
-        # setup s3 client
-        cfg = botocore.config.Config(signature_version='s3v4')
-        self.s3_client = boto3.client('s3', config=cfg,\
-            aws_access_key_id=ACCESS_KEY,\
-            aws_secret_access_key=SECRET_KEY)
 
     def __repr__(self):
         return '<username {}>'.format(self.username)
@@ -107,7 +95,7 @@ class User(db.Model):
         try:
             key = 'userid:{0}, joined:{1}'.format(self.user_id,\
                 self.join_timestamp)
-            self.s3_client.put_object(Body=img_data,\
+            s3_client.put_object(Body=img_data,\
                 Bucket='graffiti-user-images',\
                 Key=key)
             return True
@@ -169,13 +157,7 @@ class User(db.Model):
         key = 'userid:{0}, joined:{1}'.format(self.user_id,\
             self.join_timestamp)
         try:
-            # setup s3 client if its None
-            if (not self.s3_client):
-                cfg = botocore.config.Config(signature_version='s3v4')
-                self.s3_client = boto3.client('s3', config=cfg,\
-                    aws_access_key_id=ACCESS_KEY,\
-                    aws_secret_access_key=SECRET_KEY)
-            img_data = self.s3_client.get_object(\
+            img_data = s3_client.get_object(\
                 Bucket='graffiti-user-images',\
                 Key=key)['Body'].read().decode('ascii')
         except:

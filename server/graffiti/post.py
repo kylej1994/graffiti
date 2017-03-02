@@ -1,14 +1,13 @@
 import json
 import sys
 sys.path.append('..')
-from graffiti import db
+from graffiti import db, s3_client
 from sqlalchemy import Column, Float, Integer, String
 from sqlalchemy.dialects.postgresql import JSON
 from user import User
 from userpost import UserPost
 
 import boto3
-import botocore
 import enum
 import time
 
@@ -18,9 +17,6 @@ from geoalchemy2.shape import from_shape
 from geoalchemy2 import Geometry
 from shapely.geometry import Point
 
-# obviously will put this somewhere else eventually
-ACCESS_KEY = 'AKIAIDBIJ3JOX3LDGVNQ'
-SECRET_KEY = '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'
 
 class Post(db.Model):
     __tablename__ = 'post'
@@ -42,7 +38,6 @@ class Post(db.Model):
     created_at = db.Column(db.Float)
     poster_id = db.Column(db.Integer)
     num_votes = db.Column(db.Integer)
-    s3_client = None
 
     # defaults for type because I don't want to break things everywhere else
     def __init__(self, text, longitude, latitude, poster_id, post_type = 0):
@@ -56,12 +51,6 @@ class Post(db.Model):
         # latitude comes first
         loc = 'POINT(' + str(latitude) + ' ' + str(longitude) + ')'
         self.loc = WKTElement(loc, srid=4326)
-
-        # setup s3 client
-        cfg = botocore.config.Config(signature_version='s3v4')
-        self.s3_client = boto3.client('s3', config=cfg,\
-            aws_access_key_id=ACCESS_KEY,\
-            aws_secret_access_key=SECRET_KEY)
 
 
     def __repr__(self):
@@ -78,13 +67,7 @@ class Post(db.Model):
             key = 'postid:{0}, created_at{1}'.format(self.post_id,\
                         self.created_at)
             try:
-                # setup s3 client if its None
-                if (not self.s3_client):
-                    cfg = botocore.config.Config(signature_version='s3v4')
-                    self.s3_client = boto3.client('s3', config=cfg,\
-                        aws_access_key_id=ACCESS_KEY,\
-                        aws_secret_access_key=SECRET_KEY)
-                img_data = self.s3_client.get_object(\
+                img_data = s3_client.get_object(\
                     Bucket='graffiti-post-images',\
                     Key=key)['Body'].read().decode('ascii')
             except:
@@ -117,10 +100,14 @@ class Post(db.Model):
     def upload_img_to_s3(self, img_data):
         # if its an image, upload it to s3
         if self.post_type.describe() == 1:
-            self.s3_client.put_object(Body=img_data,\
-                Bucket='graffiti-post-images',\
-                Key='postid:{0}, created_at{1}'.format(self.post_id,\
-                    self.created_at))
+            key = 'postid:{0}, created_at{1}'.format(self.post_id,\
+                self.created_at)
+            try:
+                s3_client.put_object(Body=img_data,\
+                    Bucket='graffiti-post-images',\
+                    Key=key)
+            except:
+                print('Error uploading image post: ' + key)
         # if not, do nothing
         # doing this for compatability reasons...wow this code is smelly
 
