@@ -40,6 +40,25 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         postTextView.delegate = self
         postButton.isEnabled = false // this becomes disabled until user enters text
         setupTextViewDisplay()
+        addToolBarToKeyboard()
+    }
+    
+    func createCharCounterLabel() -> UILabel {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 30, height: 22))
+        label.textColor = UIColor.darkGray
+        label.text = "140"
+        return label
+    }
+    
+    func addToolBarToKeyboard() {
+        let postToolbar = UIToolbar(frame: CGRect(x: 0,y: 0, width: self.view.frame.size.width, height: 50))
+        postToolbar.barStyle = .default
+        let postBarButtonItem = UIBarButtonItem(title: "Post", style: .plain, target: self, action: #selector(postTextGraffiti(_:)))
+        let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil) //for right aligned post button
+        let charCountItem = UIBarButtonItem(customView: createCharCounterLabel())
+        postToolbar.items = [flexible, charCountItem, postBarButtonItem]
+        postToolbar.sizeToFit()
+        postTextView.inputAccessoryView = postToolbar
     }
     
     func setupTextViewDisplay() {
