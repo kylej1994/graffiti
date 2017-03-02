@@ -117,7 +117,7 @@ class Post(db.Model):
         # if its an image, upload it to s3
         if self.post_type.describe() == 1:
             key = self.get_s3_key()
-            self.s3_client.put_object(Body=img_data,\
+            print self.s3_client.put_object(Body=img_data,\
                 Bucket='graffiti-post-images',\
                 Key=key)
         # if not, do nothing
@@ -127,6 +127,7 @@ class Post(db.Model):
         key = self.get_s3_key()
         url = '{}/{}/{}'.format(self.s3_client.meta.endpoint_url, 'graffiti-post-images', key)
         return url
+ 
 
     # saves the post into the db
     def save_post(self):

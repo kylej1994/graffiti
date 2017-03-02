@@ -126,6 +126,12 @@ class User(db.Model):
         url = '{}/{}/{}'.format(self.s3_client.meta.endpoint_url, 'graffiti-user-images', key)
         return url
 
+    def get_img_file(self):
+        key = self.get_s3_key()
+        s3_obj = self.s3_client.get_object(Bucket='graffiti-post-images',\
+                Key=key)
+        return s3_obj['Body'].read().decode('ascii')
+
     # No validations implemented
     def set_google_aud(self, google_aud):
         self.google_aud = google_aud
