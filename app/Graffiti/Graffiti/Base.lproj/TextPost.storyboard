@@ -10,10 +10,53 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Post View Controller-->
+        <scene sceneID="oHo-Q8-cFT">
+            <objects>
+                <viewController storyboardIdentifier="PostViewController" id="o7M-k0-MgX" customClass="PostViewController" customModule="Graffiti" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="42R-v5-8q6"/>
+                        <viewControllerLayoutGuide type="bottom" id="fFb-Vv-CYA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6JS-ZO-vu9">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uoo-An-5MZ">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="wwS-9s-JVb">
+                        <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="hIC-N4-Jed">
+                            <connections>
+                                <action selector="didTapCancel:" destination="o7M-k0-MgX" id="Biu-BH-zeW"/>
+                            </connections>
+                        </barButtonItem>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="Nc3-wV-7Oz">
+                            <rect key="frame" x="113" y="7" width="150" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="First"/>
+                                <segment title="Second"/>
+                            </segments>
+                        </segmentedControl>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="SegmentedControl" destination="Nc3-wV-7Oz" id="ur1-Xb-1zO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3PE-Q3-om1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="623" y="901"/>
+        </scene>
         <!--New Graffiti-->
         <scene sceneID="bGW-p0-DJc">
             <objects>
-                <viewController storyboardIdentifier="TextPost" id="4G5-6D-FEh" customClass="TextPostViewController" customModule="Graffiti" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TextPostViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="4G5-6D-FEh" customClass="TextPostViewController" customModule="Graffiti" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="j9x-Hr-KXW"/>
                         <viewControllerLayoutGuide type="bottom" id="hWb-mN-HOS"/>
@@ -22,82 +65,74 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="140" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Icc-Mv-BBU">
-                                <rect key="frame" x="278" y="340" width="29" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="8aG-3Q-96z">
+                                <rect key="frame" x="16" y="40" width="343" height="619"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What's happening?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VrV-ob-PML">
+                                <rect key="frame" x="21" y="50" width="338" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CWN-s3-0OE">
-                                <rect key="frame" x="319" y="332" width="40" height="36"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Post"/>
-                                <connections>
-                                    <action selector="postTextGraffiti:" destination="4G5-6D-FEh" eventType="touchUpInside" id="TO2-tv-AVF"/>
-                                </connections>
-                            </button>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="elp-7Q-qoR">
-                                <rect key="frame" x="137" y="72" width="101" height="29"/>
-                                <segments>
-                                    <segment title="Text"/>
-                                    <segment title="Photo"/>
-                                </segments>
-                            </segmentedControl>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="8aG-3Q-96z">
-                                <rect key="frame" x="16" y="118" width="343" height="206"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
-                            </textView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="leadingMargin" secondItem="8aG-3Q-96z" secondAttribute="leading" id="2pG-cR-Ea5"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="CWN-s3-0OE" secondAttribute="trailing" id="3D1-QO-dl5"/>
-                            <constraint firstItem="Icc-Mv-BBU" firstAttribute="top" secondItem="8aG-3Q-96z" secondAttribute="bottom" constant="16" id="4Kg-zA-1UE"/>
-                            <constraint firstItem="hWb-mN-HOS" firstAttribute="top" secondItem="8aG-3Q-96z" secondAttribute="bottom" constant="343" id="IhQ-59-1ld"/>
-                            <constraint firstItem="8aG-3Q-96z" firstAttribute="top" secondItem="j9x-Hr-KXW" secondAttribute="bottom" constant="54" id="MfZ-sS-HqZ"/>
-                            <constraint firstItem="elp-7Q-qoR" firstAttribute="centerX" secondItem="lfs-Kr-udQ" secondAttribute="centerX" id="Snt-yW-hEg"/>
-                            <constraint firstItem="elp-7Q-qoR" firstAttribute="top" secondItem="j9x-Hr-KXW" secondAttribute="bottom" constant="8" id="V5d-4N-Ie5"/>
+                            <constraint firstItem="VrV-ob-PML" firstAttribute="top" secondItem="j9x-Hr-KXW" secondAttribute="bottom" constant="30" id="Ppq-ky-lUa"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="VrV-ob-PML" secondAttribute="trailing" id="Rg5-g1-s6o"/>
                             <constraint firstAttribute="trailingMargin" secondItem="8aG-3Q-96z" secondAttribute="trailing" id="WbU-d4-WwH"/>
-                            <constraint firstItem="CWN-s3-0OE" firstAttribute="top" secondItem="8aG-3Q-96z" secondAttribute="bottom" constant="8" id="iXj-J2-sHG"/>
-                            <constraint firstItem="CWN-s3-0OE" firstAttribute="leading" secondItem="Icc-Mv-BBU" secondAttribute="trailing" constant="12" id="m0f-tf-naJ"/>
+                            <constraint firstItem="8aG-3Q-96z" firstAttribute="top" secondItem="j9x-Hr-KXW" secondAttribute="bottom" constant="20" id="cHl-v3-tdz"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="VrV-ob-PML" secondAttribute="leading" constant="-5" id="m3I-9N-2nz"/>
+                            <constraint firstItem="hWb-mN-HOS" firstAttribute="top" secondItem="8aG-3Q-96z" secondAttribute="bottom" constant="8" id="oJ7-sx-7Tz"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="New Graffiti" id="eUf-Fr-1zR">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="X9X-BJ-LqE">
-                            <connections>
-                                <action selector="tapCancel:" destination="4G5-6D-FEh" id="2Fz-Pt-l3Z"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="New Graffiti" id="eUf-Fr-1zR"/>
                     <connections>
-                        <outlet property="charCountLabel" destination="Icc-Mv-BBU" id="IMR-SW-cGF"/>
-                        <outlet property="postButton" destination="CWN-s3-0OE" id="65n-gq-6Vk"/>
+                        <outlet property="placeholderLabel" destination="VrV-ob-PML" id="GGc-G2-b1e"/>
                         <outlet property="postTextView" destination="8aG-3Q-96z" id="jlQ-Az-0dg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h39-Py-3va" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="815.20000000000005" y="842.42878560719646"/>
+            <point key="canvasLocation" x="1389.5999999999999" y="728.18590704647681"/>
+        </scene>
+        <!--Photo Post View Controller-->
+        <scene sceneID="Zsi-0q-CAv">
+            <objects>
+                <viewController storyboardIdentifier="PhotoPostViewController" id="UTj-fH-Uda" customClass="PhotoPostViewController" customModule="Graffiti" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sX5-XT-bOh"/>
+                        <viewControllerLayoutGuide type="bottom" id="Hiw-hh-jSA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0Np-Si-hqi">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.53661116070000003" green="0.54909232180000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="z9S-ei-nCT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1390" y="1396"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="tys-BJ-5HA">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="RVC-fD-mP6" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="7dE-YI-aW6">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="7dE-YI-aW6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="4G5-6D-FEh" kind="relationship" relationship="rootViewController" id="cIc-HN-Fs4"/>
+                        <segue destination="o7M-k0-MgX" kind="relationship" relationship="rootViewController" id="60M-Ub-tC8"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aoE-XC-TKQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-124" y="842.42878560719646"/>
+            <point key="canvasLocation" x="-126" y="901"/>
         </scene>
     </scenes>
 </document>

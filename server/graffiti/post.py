@@ -56,9 +56,6 @@ class Post(db.Model):
     def __repr__(self):
         return '<post_id {}>'.format(self.post_id)
 
-    def get_s3_key(self):
-        return 'postid:{0}, created_at:{1}'.format(self.post_id, self.created_at)
-
     def to_json_fields_for_FE(self, current_user_id):
         user = User.find_user_by_id(self.poster_id)
         cur_user_vote = UserPost.get_vote_by_ids(current_user_id, self.post_id)
@@ -99,6 +96,11 @@ class Post(db.Model):
     def get_latitude(self):
         return self.latitude
 
+    def get_s3_key(self):
+        created_at = int(self.created_at)
+        return 'postid:{0}&created_at:{1}'.format(self.post_id,\
+                    created_at)
+
     def upload_img_to_s3(self, img_data):
         # if its an image, upload it to s3
         if self.post_type.describe() == 1:
@@ -111,6 +113,12 @@ class Post(db.Model):
                 print('Error uploading image post: ' + key)
         # if not, do nothing
         # doing this for compatability reasons...wow this code is smelly
+
+    def get_img_file_loc(self):
+        key = self.get_s3_key()
+        url = '{}/{}/{}'.format(s3_client.meta.endpoint_url, 'graffiti-post-images', key)
+        return url
+ 
 
     # saves the post into the db
     def save_post(self):

@@ -3,12 +3,14 @@ import json
 import sys
 import unittest
 import tempfile
+import base64
 
 from flask_api_test import APITestCase
 sys.path.append('..')
 from graffiti import graffiti, user, post
 from graffiti.user import User
 from graffiti.post import Post
+from graffiti.userpost import UserPost
 from graffiti.graffiti import db
 
 from datetime import datetime, date
@@ -89,22 +91,22 @@ class PostTestCase(unittest.TestCase):
         self.assertTrue(Post.apply_vote(poster_id, post_id, 1))
         self.assertTrue(db.session.query(Post).filter(Post.post_id==post_id).first().num_votes == 1)
         self.assertTrue(db.session.query(UserPost).filter(UserPost.user_id==poster_id)\
-            .filter(UserPost.post_id==post_id).first().num_votes == 1)
+            .filter(UserPost.post_id==post_id).first().vote == 1)
         # Downvote
         self.assertTrue(Post.apply_vote(poster_id, post_id, -1))
         self.assertTrue(db.session.query(Post).filter(Post.post_id==post_id).first().num_votes == -1)
         self.assertTrue(db.session.query(UserPost).filter(UserPost.user_id==poster_id)\
-            .filter(UserPost.post_id==post_id).first().num_votes == -1)
+            .filter(UserPost.post_id==post_id).first().vote == -1)
         # New user, vote positive value
         self.assertTrue(Post.apply_vote(poster_id2, post_id, 3))
         self.assertTrue(db.session.query(Post).filter(Post.post_id==post_id).first().num_votes == 0)
         self.assertTrue(db.session.query(UserPost).filter(UserPost.user_id==poster_id2)\
-            .filter(UserPost.post_id==post_id).first().num_votes == 1)
+            .filter(UserPost.post_id==post_id).first().vote == 1)
         # First user change vote, neutral
         self.assertTrue(Post.apply_vote(poster_id, post_id, 0))
         self.assertTrue(db.session.query(Post).filter(Post.post_id==post_id).first().num_votes == 1)
         self.assertTrue(db.session.query(UserPost).filter(UserPost.user_id==poster_id)\
-            .filter(UserPost.post_id==post_id).first().num_votes == 0)
+            .filter(UserPost.post_id==post_id).first().vote == 0)
 
     def test_get_text(self):
         post = db.session.query(Post).filter(Post.poster_id==poster_id).first()
@@ -179,10 +181,29 @@ class PostTestCase(unittest.TestCase):
     # iteration 2 tests
     # tests that the stored image location matches the image associated w post
     def test_get_img_file_loc(self):
-        img_url = 'some_url_tbd'
-        post_id = 1
-        post = db.session.query(Post).filter(Post.post_id==post_id).first()
-        self.assertTrue(post.get_img_file_loc() == img_url)
+        #Be sure to concat out the join time, since that's impossible to measure
+        img_url = 'https://s3.amazonaws.com/graffiti-post-images/postid:6&created_at:1488448033'
+        img_url_concat = img_url.split('&')[0]
+
+        with open('cat-pic.png', 'rb') as imageFile:
+            img_str = base64.b64encode(imageFile.read())
+
+
+        post = Post('to_save', 123, 123, poster_id)
+        post.save_post()
+        post.upload_img_to_s3(img_str)
+        print post.get_img_file_loc()#.split('&')[0]
+        self.assertTrue(post.get_img_file_loc().split('&')[0] == img_url_concat)
+
+    def test_get_img_file(self):
+        with open('cat-pic.png', 'rb') as imageFile:
+            img_str = base64.b64encode(imageFile.read())
+
+        post = Post('to_save', 123, 123, poster_id, post_type=1)
+        post.save_post()
+        post.upload_img_to_s3(img_str)
+        front_end_json = post.to_json_fields_for_FE(poster_id)
+        self.assertTrue(json.loads(front_end_json)['image'] == img_str)
 
 
 if __name__ == '__main__':

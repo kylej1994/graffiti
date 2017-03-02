@@ -17,18 +17,22 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
     var currentLatitude: CLLocationDegrees? = CLLocationDegrees()
     var currentLongitude: CLLocationDegrees? = CLLocationDegrees()
     
-    @IBOutlet weak var postButton: UIButton!
     @IBOutlet weak var postTextView: UITextView!
-    @IBOutlet weak var charCountLabel: UILabel!
+    var barCharCountLabel: UILabel!
+    var postButton: UIBarButtonItem!
+    @IBOutlet weak var placeholderLabel: UILabel!
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         locationManager.startUpdatingLocation()
+
+        postTextView.becomeFirstResponder() // show keyboard
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(true)
         locationManager.stopUpdatingLocation()
+        //postTextView.resignFirstResponder() // hide keyboard
     }
     
     override func viewDidLoad() {
@@ -36,31 +40,47 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         
         // handle text field's user input through delegate callbacks
         postTextView.delegate = self
-        setupTextViewDisplay()
+
+        createCharCounterLabel()
+        addToolBarToKeyboard()
+        postTextView.becomeFirstResponder() // show keyboard
     }
     
-    func setupTextViewDisplay() {
-        postTextView.text = "What's happening?"
-        postTextView.textColor = UIColor .lightGray
-        postTextView.layer.borderColor = UIColor.black.cgColor
-        postTextView.layer.borderWidth = 1.0
-        postTextView.layer.cornerRadius = 5.0
+    func createCharCounterLabel() {
+        barCharCountLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 30, height: 22))
+        barCharCountLabel.textColor = UIColor.darkGray
+        barCharCountLabel.text = "140"
+    }
+    
+    func addToolBarToKeyboard() {
+        let postToolbar = UIToolbar(frame: CGRect(x: 0,y: 0, width: self.view.frame.size.width, height: 50))
+        postToolbar.barStyle = .default
+        postButton = UIBarButtonItem(title: "Post", style: .plain, target: self, action: #selector(postTextGraffiti(_:)))
+        postButton.isEnabled = false // until user types
+        // flexible space necessary for right aligned post button
+        let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        let charCountItem = UIBarButtonItem(customView: barCharCountLabel)
+        postToolbar.items = [flexible, charCountItem, postButton]
+        postToolbar.sizeToFit()
+        postTextView.inputAccessoryView = postToolbar
     }
     
     // MARK: UITextViewDelegate
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        placeholderLabel.isHidden = true
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
         let numberOfChars = newText.characters.count
 
         if(numberOfChars > charLimit){
-            charCountLabel.textColor = UIColor.red
-            charCountLabel.text = String(charLimit - numberOfChars)
+            barCharCountLabel.textColor = UIColor.red
+            barCharCountLabel.text = String(charLimit - numberOfChars)
             postButton.isEnabled = false
         } else if (numberOfChars == 0) {
             postButton.isEnabled = false
+            placeholderLabel.isHidden = false
         } else {
-            charCountLabel.textColor = UIColor.darkGray
-            charCountLabel.text = String(charLimit - numberOfChars)
+            barCharCountLabel.textColor = UIColor.darkGray
+            barCharCountLabel.text = String(charLimit - numberOfChars)
             postButton.isEnabled = true
         }
         return true
@@ -73,7 +93,7 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
     }
     
     
-    @IBAction func postTextGraffiti(_ sender: UIButton) {
+    func postTextGraffiti(_ sender: UIButton) {
         currentLongitude = locationManager.getLongitude()
         currentLatitude = locationManager.getLatitude()
         if currentLongitude == nil {
@@ -99,10 +119,8 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         }
         
         // return to presenting view controller
+        postTextView.resignFirstResponder()
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func tapCancel(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
 }
