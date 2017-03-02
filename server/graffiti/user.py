@@ -171,7 +171,7 @@ class User(db.Model):
                 self.join_timestamp)
             img_data = self.s3_client.get_object(\
                 Bucket='graffiti-user-images',\
-                Key=key)['Body'].read()
+                Key=key)['Body'].read().decode('ascii')
         except:
             print('Couldnt find key')
             print('Should probably do something about that')
