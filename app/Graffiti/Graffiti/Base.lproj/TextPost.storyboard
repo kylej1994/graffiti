@@ -66,18 +66,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="8aG-3Q-96z">
-                                <rect key="frame" x="16" y="74" width="343" height="250"/>
+                                <rect key="frame" x="16" y="40" width="343" height="619"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
                             </textView>
                         </subviews>
-                        <color key="backgroundColor" red="0.68668406700815099" green="0.89417180483862002" blue="0.93492227157360408" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstAttribute="leadingMargin" secondItem="8aG-3Q-96z" secondAttribute="leading" id="2pG-cR-Ea5"/>
-                            <constraint firstItem="hWb-mN-HOS" firstAttribute="top" secondItem="8aG-3Q-96z" secondAttribute="bottom" constant="343" id="IhQ-59-1ld"/>
-                            <constraint firstItem="8aG-3Q-96z" firstAttribute="top" secondItem="j9x-Hr-KXW" secondAttribute="bottom" constant="54" id="MfZ-sS-HqZ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="8aG-3Q-96z" secondAttribute="trailing" id="WbU-d4-WwH"/>
+                            <constraint firstItem="8aG-3Q-96z" firstAttribute="top" secondItem="j9x-Hr-KXW" secondAttribute="bottom" constant="20" id="cHl-v3-tdz"/>
+                            <constraint firstItem="hWb-mN-HOS" firstAttribute="top" secondItem="8aG-3Q-96z" secondAttribute="bottom" constant="8" id="oJ7-sx-7Tz"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="New Graffiti" id="eUf-Fr-1zR"/>
@@ -87,7 +86,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h39-Py-3va" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1390" y="729"/>
+            <point key="canvasLocation" x="1389.5999999999999" y="728.18590704647681"/>
         </scene>
         <!--Photo Post View Controller-->
         <scene sceneID="Zsi-0q-CAv">

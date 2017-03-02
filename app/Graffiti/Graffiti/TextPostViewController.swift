@@ -24,13 +24,14 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         locationManager.startUpdatingLocation()
+
         postTextView.becomeFirstResponder() // show keyboard
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(true)
         locationManager.stopUpdatingLocation()
-        postTextView.resignFirstResponder() // hide keyboard
+        //postTextView.resignFirstResponder() // hide keyboard
     }
     
     override func viewDidLoad() {
@@ -42,6 +43,7 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         createCharCounterLabel()
         setupTextViewDisplay()
         addToolBarToKeyboard()
+        postTextView.becomeFirstResponder() // show keyboard
     }
     
     func createCharCounterLabel() {
@@ -55,7 +57,8 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         postToolbar.barStyle = .default
         postButton = UIBarButtonItem(title: "Post", style: .plain, target: self, action: #selector(postTextGraffiti(_:)))
         postButton.isEnabled = false // until user types
-        let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil) //for right aligned post button
+        // flexible space necessary for right aligned post button
+        let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let charCountItem = UIBarButtonItem(customView: barCharCountLabel)
         postToolbar.items = [flexible, charCountItem, postButton]
         postToolbar.sizeToFit()
@@ -65,9 +68,6 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
     func setupTextViewDisplay() {
         postTextView.text = "What's happening?"
         postTextView.textColor = UIColor .lightGray
-        postTextView.layer.borderColor = UIColor.black.cgColor
-        postTextView.layer.borderWidth = 1.0
-        postTextView.layer.cornerRadius = 5.0
     }
     
     // MARK: UITextViewDelegate
