@@ -30,7 +30,7 @@ class ImageTransform : TransformType {
     func transformToJSON(_ value: Object?) -> JSON? {
         if
             let image = value,
-            let imageData = UIImageJPEGRepresentation(image, 0.5)
+            let imageData = UIImageJPEGRepresentation(image, 0.1)
         {
             let strBase64 = imageData.base64EncodedString()
             print("image string size: \(strBase64.characters.count)")
