@@ -322,6 +322,7 @@ class FeedTableViewController: UITableViewController {
         showAlert(messageTitle: "Can't load latest posts", message: "")
     }
     
+    
     func didTapImage(sender: UITapGestureRecognizer) {
         let cellImageView = sender.view as! UIImageView
         
@@ -338,6 +339,7 @@ class FeedTableViewController: UITableViewController {
             }
         }
     }
+    
     
 }
 
