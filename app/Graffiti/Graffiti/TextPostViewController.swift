@@ -20,6 +20,7 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var postTextView: UITextView!
     var barCharCountLabel: UILabel!
     var postButton: UIBarButtonItem!
+    @IBOutlet weak var placeholderLabel: UILabel!
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -41,7 +42,6 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         postTextView.delegate = self
 
         createCharCounterLabel()
-        setupTextViewDisplay()
         addToolBarToKeyboard()
         postTextView.becomeFirstResponder() // show keyboard
     }
@@ -65,13 +65,9 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
         postTextView.inputAccessoryView = postToolbar
     }
     
-    func setupTextViewDisplay() {
-        postTextView.text = "What's happening?"
-        postTextView.textColor = UIColor .lightGray
-    }
-    
     // MARK: UITextViewDelegate
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        placeholderLabel.isHidden = true
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
         let numberOfChars = newText.characters.count
 
@@ -81,6 +77,7 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
             postButton.isEnabled = false
         } else if (numberOfChars == 0) {
             postButton.isEnabled = false
+            placeholderLabel.isHidden = false
         } else {
             barCharCountLabel.textColor = UIColor.darkGray
             barCharCountLabel.text = String(charLimit - numberOfChars)

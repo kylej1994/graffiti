@@ -37,7 +37,7 @@
                             </connections>
                         </barButtonItem>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="Nc3-wV-7Oz">
-                            <rect key="frame" x="112.5" y="7" width="150" height="30"/>
+                            <rect key="frame" x="113" y="7" width="150" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="First"/>
@@ -69,18 +69,28 @@
                                 <rect key="frame" x="16" y="40" width="343" height="619"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
                             </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What's happening?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VrV-ob-PML">
+                                <rect key="frame" x="21" y="50" width="338" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="leadingMargin" secondItem="8aG-3Q-96z" secondAttribute="leading" id="2pG-cR-Ea5"/>
+                            <constraint firstItem="VrV-ob-PML" firstAttribute="top" secondItem="j9x-Hr-KXW" secondAttribute="bottom" constant="30" id="Ppq-ky-lUa"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="VrV-ob-PML" secondAttribute="trailing" id="Rg5-g1-s6o"/>
                             <constraint firstAttribute="trailingMargin" secondItem="8aG-3Q-96z" secondAttribute="trailing" id="WbU-d4-WwH"/>
                             <constraint firstItem="8aG-3Q-96z" firstAttribute="top" secondItem="j9x-Hr-KXW" secondAttribute="bottom" constant="20" id="cHl-v3-tdz"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="VrV-ob-PML" secondAttribute="leading" constant="-5" id="m3I-9N-2nz"/>
                             <constraint firstItem="hWb-mN-HOS" firstAttribute="top" secondItem="8aG-3Q-96z" secondAttribute="bottom" constant="8" id="oJ7-sx-7Tz"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="New Graffiti" id="eUf-Fr-1zR"/>
                     <connections>
+                        <outlet property="placeholderLabel" destination="VrV-ob-PML" id="GGc-G2-b1e"/>
                         <outlet property="postTextView" destination="8aG-3Q-96z" id="jlQ-Az-0dg"/>
                     </connections>
                 </viewController>
