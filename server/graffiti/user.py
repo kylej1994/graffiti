@@ -165,16 +165,21 @@ class User(db.Model):
 
     def to_json_fields_for_FE(self):
         img_data = []
-        # retrieve image data from s3 if its an image
+        # retrieve image data from s3 if there is an image tag
+        key = 'userid:{0}, joined:{1}'.format(self.user_id,\
+            self.join_timestamp)
         try:
-            key = 'userid:{0}, joined:{1}'.format(self.user_id,\
-                self.join_timestamp)
+            # setup s3 client if its None
+            if (not self.s3_client):
+                cfg = botocore.config.Config(signature_version='s3v4')
+                self.s3_client = boto3.client('s3', config=cfg,\
+                    aws_access_key_id=ACCESS_KEY,\
+                    aws_secret_access_key=SECRET_KEY)
             img_data = self.s3_client.get_object(\
                 Bucket='graffiti-user-images',\
                 Key=key)['Body'].read().decode('ascii')
         except:
-            print('Couldnt find key')
-            print('Should probably do something about that')
+            print('Error retrieving image tag: ' + key)
         return json.dumps(dict(
             userid=self.user_id,
             username=self.username,

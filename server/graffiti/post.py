@@ -75,14 +75,20 @@ class Post(db.Model):
         img_data = []
         # retrieve image data from s3 if its an image
         if self.post_type.describe() == 1:
+            key = 'postid:{0}, created_at{1}'.format(self.post_id,\
+                        self.created_at)
             try:
+                # setup s3 client if its None
+                if (not self.s3_client):
+                    cfg = botocore.config.Config(signature_version='s3v4')
+                    self.s3_client = boto3.client('s3', config=cfg,\
+                        aws_access_key_id=ACCESS_KEY,\
+                        aws_secret_access_key=SECRET_KEY)
                 img_data = self.s3_client.get_object(\
                     Bucket='graffiti-post-images',\
-                    Key='postid:{0}, created_at{1}'.format(self.post_id,\
-                        self.created_at))['Body'].read().decode('ascii')
+                    Key=key)['Body'].read().decode('ascii')
             except:
-                print('Couldnt find key')
-                print('Should probably do something about that')
+                print('Error retrieving image post: ' + key)
         return json.dumps(dict(
             postid=self.post_id,
             type=self.post_type.describe(),
