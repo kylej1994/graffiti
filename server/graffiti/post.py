@@ -110,12 +110,11 @@ class Post(db.Model):
 
     def get_s3_key(self):
         created_at = int(self.created_at)
-        return 'postid:{0}&created_at{1}'.format(self.post_id,\
+        return 'postid:{0}&created_at:{1}'.format(self.post_id,\
                     created_at)
 
     def upload_img_to_s3(self, img_data):
         # if its an image, upload it to s3
-        key = self.get_s3_key()
         if self.post_type.describe() == 1:
             key = self.get_s3_key()
             self.s3_client.put_object(Body=img_data,\
