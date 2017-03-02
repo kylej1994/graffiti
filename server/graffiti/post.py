@@ -76,10 +76,10 @@ class Post(db.Model):
         # retrieve image data from s3 if its an image
         if self.post_type.describe() == 1:
             try:
+                key = self.get_s3_key()
                 img_data = self.s3_client.get_object(\
                     Bucket='graffiti-post-images',\
-                    Key='postid:{0}, created_at{1}'.format(self.post_id,\
-                        self.created_at))['Body'].read().decode('ascii')
+                    Key=key)['Body'].read().decode('ascii')
             except:
                 print('Couldnt find key')
                 print('Should probably do something about that')
@@ -108,15 +108,26 @@ class Post(db.Model):
     def get_latitude(self):
         return self.latitude
 
+    def get_s3_key(self):
+        created_at = int(self.created_at)
+        return 'postid:{0}&created_at{1}'.format(self.post_id,\
+                    created_at)
+
     def upload_img_to_s3(self, img_data):
         # if its an image, upload it to s3
+        key = self.get_s3_key()
         if self.post_type.describe() == 1:
+            key = self.get_s3_key()
             self.s3_client.put_object(Body=img_data,\
                 Bucket='graffiti-post-images',\
-                Key='postid:{0}, created_at{1}'.format(self.post_id,\
-                    self.created_at))
+                Key=key)
         # if not, do nothing
         # doing this for compatability reasons...wow this code is smelly
+
+    def get_img_file_loc(self):
+        key = self.get_s3_key()
+        url = '{}/{}/{}'.format(self.s3_client.meta.endpoint_url, 'graffiti-post-images', key)
+        return url
 
     # saves the post into the db
     def save_post(self):

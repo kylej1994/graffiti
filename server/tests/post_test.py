@@ -3,6 +3,7 @@ import json
 import sys
 import unittest
 import tempfile
+import base64
 
 from flask_api_test import APITestCase
 sys.path.append('..')
@@ -179,12 +180,20 @@ class PostTestCase(unittest.TestCase):
 
     # iteration 2 tests
     # tests that the stored image location matches the image associated w post
-    # Can't test since images are not yet implemented
     def test_get_img_file_loc(self):
-        img_url = 'some_url_tbd'
-        post_id = 1
-        post = db.session.query(Post).filter(Post.post_id==post_id).first()
-        self.assertTrue(post.get_img_file_loc() == img_url)
+        #Be sure to concat out the join time, since that's impossible to measure
+        img_url = 'https://s3.amazonaws.com/graffiti-post-images/postid:6&created_at:1488448033'
+        img_url_concat = img_url.split('&')[0]
+
+        with open('cat-pic.png', 'rb') as imageFile:
+            img_str = base64.b64encode(imageFile.read())
+
+
+        post = Post('to_save', 123, 123, poster_id)
+        post.save_post()
+        post.upload_img_to_s3(img_str)
+        print post.get_img_file_loc()#.split('&')[0]
+        self.assertTrue(post.get_img_file_loc().split('&')[0] == img_url_concat)
 
 
 if __name__ == '__main__':

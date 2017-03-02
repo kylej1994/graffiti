@@ -4,6 +4,8 @@ import json
 import sys
 import re
 import types
+import time as Time
+
 sys.path.append('..')
 from graffiti import db
 from sqlalchemy import Column, Float, Integer, String
@@ -102,11 +104,15 @@ class User(db.Model):
     def get_has_been_suspended(self):
         return self.has_been_suspended
 
+    def get_s3_key(self):
+        jointime_int = Time.mktime(self.join_timestamp.timetuple())
+        return 'userid:{0}&joined:{1}'.format(self.user_id,\
+                int(jointime_int))
+
     # uploads img_data to s3 as this user's img tag
     def set_image_tag(self, img_data):
         try:
-            key = 'userid:{0}, joined:{1}'.format(self.user_id,\
-                self.join_timestamp)
+            key = self.get_s3_key()
             self.s3_client.put_object(Body=img_data,\
                 Bucket='graffiti-user-images',\
                 Key=key)
@@ -114,6 +120,11 @@ class User(db.Model):
         except Exception, e:
             print e
             return False
+
+    def get_img_file_loc(self):
+        key = self.get_s3_key()
+        url = '{}/{}/{}'.format(self.s3_client.meta.endpoint_url, 'graffiti-user-images', key)
+        return url
 
     # No validations implemented
     def set_google_aud(self, google_aud):

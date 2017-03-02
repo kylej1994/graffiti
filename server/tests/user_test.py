@@ -3,6 +3,8 @@ import os
 import sys
 import tempfile
 import unittest
+import base64
+from PIL import Image
 
 from flask_api_test import APITestCase
 sys.path.append('..')
@@ -149,11 +151,22 @@ class UserTestCase(unittest.TestCase):
 
     # iteration 2 tests
     # tests that the stored image location matches the picture associated w user
-    # Can't test since back-end isn't currently storing images
-    def test_get_img_file_loc(self):
-        img_url = 'some_url_tbd'
-        user = db.session.query(User).filter(User.user_id==user_id).first()
-        self.assertTrue(user.get_img_file_loc() == img_url)
+    def test_get_img_file(self):
+        #Be sure to concat out the join time, since that's impossible to measure
+        img_url = 'https://s3.amazonaws.com/graffiti-user-images/userid:3&joined:1488448033'
+        img_url_concat = img_url.split('&')[0]
+
+        with open('cat-pic.png', 'rb') as imageFile:
+            img_str = base64.b64encode(imageFile.read())
+        user = User("easmith2", 
+            "A1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com",
+            "9172825753", "name", "email@email.com", "text_tag")
+        user.save_user()
+        user.set_image_tag(img_str)
+        self.assertTrue(user.get_img_file_loc().split('&')[0] == img_url_concat)
+
+
+        
 
 
 if __name__ == '__main__':
