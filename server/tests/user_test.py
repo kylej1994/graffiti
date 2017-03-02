@@ -3,6 +3,8 @@ import os
 import sys
 import tempfile
 import unittest
+import base64
+from PIL import Image
 
 from flask_api_test import APITestCase
 sys.path.append('..')
@@ -51,14 +53,17 @@ class UserTestCase(unittest.TestCase):
         self.assertTrue(test_user.get_bio() == 'My name is jablonk')
 
     def test_get_user(self):
-        test_user = User.find_user(user_id)
+        test_user = User.find_user_by_id(user_id)
+        print test_user.google_aud
+
         self.assertTrue(test_user.username == "easmith")
-        self.assertTrue(test_user.google_aud == "1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com")
+        #Normally our aud is longer than just a number, but our default database nubmers are more complicated
+        self.assertTrue(test_user.google_aud == "1008719970978")
         self.assertTrue(test_user.has_been_suspended == False)
         self.assertTrue(test_user.name == 'Emma Smith')
         self.assertTrue(test_user.email == 'kat@lu.com')
         self.assertTrue(test_user.bio == 'My name is jablonk')
-        no_user = User.find_user(1000)
+        no_user = User.find_user_by_id(1000)
         self.assertIsNone(no_user)
 
     def test_change_suspension(self):
@@ -147,9 +152,30 @@ class UserTestCase(unittest.TestCase):
     # iteration 2 tests
     # tests that the stored image location matches the picture associated w user
     def test_get_img_file_loc(self):
-        img_url = 'some_url_tbd'
-        user = db.session.query(User).filter(User.user_id==user_id).first()
-        self.assertTrue(user.get_img_file_loc() == img_url)
+        #Be sure to concat out the join time, since that's impossible to measure
+        img_url = 'https://s3.amazonaws.com/graffiti-user-images/userid:3&joined:1488448033'
+        img_url_concat = img_url.split('&')[0]
+
+        with open('cat-pic.png', 'rb') as imageFile:
+            img_str = base64.b64encode(imageFile.read())
+        user = User("easmith2", 
+            "A1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com",
+            "9172825753", "name", "email@email.com", "text_tag")
+        user.save_user()
+        user.set_image_tag(img_str)
+        self.assertTrue(user.get_img_file_loc().split('&')[0] == img_url_concat)
+
+
+    def test_get_img_file(self):
+        with open('cat-pic.png', 'rb') as imageFile:
+            img_str = base64.b64encode(imageFile.read())
+        user = User("easmith2", 
+            "A1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com",
+            "9172825753", "name", "email@email.com", "text_tag")
+        user.save_user()
+        user.set_image_tag(img_str)
+        user_fe_json = user.to_json_fields_for_FE()
+        self.assertTrue(json.loads(user_fe_json)['img_tag'] == img_str)
 
 
 if __name__ == '__main__':
