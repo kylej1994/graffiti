@@ -138,7 +138,7 @@ def get_post_by_location():
 	# query db for all posts in this area
 	lat = (float)(request.args.get('latitude'))
 	lon = (float)(request.args.get('longitude'))
-	radius = 5 # TODO find out what number this should be
+	radius = 1 # TODO find out what number this should be
 	posts = Post.find_posts_within_loc(lon, lat, radius)
 
 	info = request.environ['META_INFO']
