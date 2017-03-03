@@ -1,11 +1,14 @@
 import json
 import sys
 import unittest
-import Image
+import base64
+
 
 from flask_api_test import APITestCase
 sys.path.append('..')
-from graffiti import graffiti
+from graffiti import graffiti, user
+from graffiti.user import User
+
 
 class UserTestCase(APITestCase):
 
@@ -33,15 +36,15 @@ class UserTestCase(APITestCase):
         assert data['phone_number'] == ph_num
 
     """ User related API calls. """
-    # def test_create_user(self):
-    #     rv = self.create_user()
-    #     print rv.status_code
-    #     assert rv.status_code == 200
+    def test_create_user(self):
+        rv = self.create_user()
+        assert rv.status_code == 200
 
-    #     data = json.loads(rv.data)
-    #     # first user made, id is assigned but not other values
-    #     assert data['new_user'] == True
-    #     self.check_user_fields(data['user'], 2, '', '', '', '', '')
+        data = json.loads(rv.data)
+        # first user made, id is assigned but not other values
+        print data
+        assert data['new_user'] == True
+        self.check_user_fields(data['user'], 2, '', '', '', '', '')
 
     def test_login_existent_user(self):
         # logging in with debug idToekns from auth_middleware.py
@@ -108,7 +111,8 @@ class UserTestCase(APITestCase):
             'kat@lu.com', 'This is my tag.', '1234567890')
 
     def test_update_existent_user_with_image(self):
-        img = Image.open('cat-pic.png')
+        with open('cat-pic.png', 'rb') as imageFile:
+            img_data = base64.b64encode(imageFile.read())
         # Uses the sample user made in graffiti.py
         # note that userid and emails are immutable
         rv = self.app.put('/user/1',
@@ -119,7 +123,7 @@ class UserTestCase(APITestCase):
                     email='kat@lu.com',
                     bio='This is my tag.',
                     phone_number='1234567890',
-                    img_tag=img.getdata()
+                    img_tag=img_data
                     )),
                 content_type='application/json',
                 follow_redirects=True)

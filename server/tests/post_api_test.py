@@ -1,6 +1,7 @@
 import json
 import sys
 import unittest
+import base64
 
 from flask_api_test import APITestCase
 sys.path.append('..')
@@ -53,8 +54,8 @@ class PostTestCase(APITestCase):
         self.check_post_fields(data, 6, post_text, location, 0)
 
     def test_create_img_post(self):
-        post_img = Image.open('cat-pic.png')
-        img_data = img_tag=img.getdata()
+        with open('cat-pic.png', 'rb') as imageFile:
+            img_data = base64.b64encode(imageFile.read())
         lat = 29.12123
         lon = 32.12943
         location = dict(
@@ -107,9 +108,6 @@ class PostTestCase(APITestCase):
             follow_redirects=True)
 
         assert rv.status_code == 404
-
-        data = json.loads(rv.data)
-        assert data['error'] == "Post not found."
 
     def test_delete_post_invalid_owner(self):
         # The debugging auth has the hardcoded values for user with id 1, and
@@ -214,16 +212,13 @@ class PostTestCase(APITestCase):
         assert data['current_user_vote'] == -1
 
     def test_vote_on_nonexistent_post(self):
-        rv = self.app.put('/post/postid=1',
+        rv = self.app.put('/post/postid=-1',
                 data=dict(vote=1),
                 headers=dict(
                     idToken=9402234123712),
             follow_redirects=True)
 
         assert rv.status_code == 404
-
-        data = json.loads(rv.data)
-        assert data['error'] == "Post not found."
 
 
 if __name__ == '__main__':

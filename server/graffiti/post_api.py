@@ -45,7 +45,7 @@ def create_post():
 	data = request.get_json()
 
 	# checks for necessary data params
-	if ('location' not in data or 'type' not in data
+	if ('location' not in data 
 			or 'latitude' not in data['location']
 			or 'longitude' not in data['location']):
 		return generate_error_response(ERR_400, 400)
@@ -57,6 +57,9 @@ def create_post():
 	no_id = request.environ['NOID']
 	bad_token = request.environ['BADTOKEN']
 	if (info is None or no_id or bad_token):
+		print 'info is none or no_id or bad_token'
+		print 'infi is None', info is None
+		print 'no_id', no_id
 		return generate_error_response(ERR_400, 400)
 	user = User.get_user_by_google_aud(info['audCode'])
 

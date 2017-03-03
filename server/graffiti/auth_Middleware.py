@@ -4,8 +4,8 @@ import re
 
 #'export DEBUG=True' to set to true
 #DEBUG: Flag to skip authorization
-DEBUG = os.getenv('DEBUG', False)
-if DEBUG == 'True':
+DEBUG = os.getenv('DEBUG', False) #<--- Kyle's note to self, don't forget to change this back to false
+if DEBUG == 'True' or True:
     DEBUG = True
 else:
     DEBUG = False
