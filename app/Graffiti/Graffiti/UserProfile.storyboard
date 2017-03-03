@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C68" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="URQ-RM-cvq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="URQ-RM-cvq">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -156,17 +156,25 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image-post-example" translatesAutoresizingMaskIntoConstraints="NO" id="6UP-UC-rd9">
-                                                    <rect key="frame" x="38" y="8" width="267" height="204"/>
+                                                    <rect key="frame" x="8" y="8" width="327" height="204"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="204" id="ydm-ik-aTo"/>
                                                     </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="5"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="6UP-UC-rd9" secondAttribute="trailing" id="4ZP-Xg-qKK"/>
                                                 <constraint firstAttribute="topMargin" secondItem="6UP-UC-rd9" secondAttribute="top" id="7fb-Ov-yHC"/>
-                                                <constraint firstItem="6UP-UC-rd9" firstAttribute="leading" secondItem="Qu3-vs-xr4" secondAttribute="leadingMargin" constant="30" id="Ac8-3C-H2W"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="6UP-UC-rd9" secondAttribute="trailing" constant="30" id="fJ2-Wk-CEp"/>
+                                                <constraint firstItem="6UP-UC-rd9" firstAttribute="centerX" secondItem="Qu3-vs-xr4" secondAttribute="centerX" id="dMI-E3-MGU"/>
                                                 <constraint firstItem="CZk-jZ-Ctm" firstAttribute="top" secondItem="6UP-UC-rd9" secondAttribute="bottom" constant="8.5" id="gqK-9u-guQ"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="6UP-UC-rd9" secondAttribute="leading" id="h4L-d7-oOk"/>
+                                                <constraint firstItem="bv6-KS-1w4" firstAttribute="top" secondItem="Qu3-vs-xr4" secondAttribute="topMargin" constant="211" id="jcO-qZ-fnv"/>
                                                 <constraint firstItem="CZk-jZ-Ctm" firstAttribute="leading" secondItem="Qu3-vs-xr4" secondAttribute="leadingMargin" constant="171" id="n1T-ze-QXq"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="bv6-KS-1w4" secondAttribute="bottom" constant="1" id="pxg-nQ-9Gx"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="CZk-jZ-Ctm" secondAttribute="trailing" constant="6" id="rif-gl-UpQ"/>
