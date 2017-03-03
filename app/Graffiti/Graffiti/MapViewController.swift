@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class MapViewController: UIViewController {
     @IBOutlet weak var map: MKMapView!
@@ -17,7 +18,7 @@ class MapViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
     }
+    
 
 }
