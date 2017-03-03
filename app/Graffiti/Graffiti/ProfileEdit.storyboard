@@ -91,7 +91,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <state key="normal" title="Done!"/>
                                 <connections>
-                                    <segue destination="aRb-8o-I3b" kind="show" id="SeK-bR-cia"/>
+                                    <action selector="exitEditController:" destination="4J0-sp-xOd" eventType="touchUpInside" id="utf-4B-9jt"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -140,16 +140,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Erc-Qu-U2F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="112.8" y="105.69715142428787"/>
-        </scene>
-        <!--UserProfile-->
-        <scene sceneID="Urk-nc-SIc">
-            <objects>
-                <viewControllerPlaceholder storyboardName="UserProfile" id="aRb-8o-I3b" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="gyN-Ps-SO9"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="GUR-LP-egl" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="702" y="329"/>
         </scene>
     </scenes>
 </document>

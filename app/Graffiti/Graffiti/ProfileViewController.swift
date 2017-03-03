@@ -40,7 +40,38 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        
+        //self.contentInset.top = 20
+        self.edgesForExtendedLayout = [];
+        self.extendedLayoutIncludesOpaqueBars = false;
+        self.automaticallyAdjustsScrollViewInsets = false;
+        
+        addStatusBarBackgroundView(viewController: self)
+        
+        if let user = appDelegate.currentUser {
+            print("app delegate current user can be unwrapped")
+            self.user = user
+        } else {
+            //print("sadness")
+        }
+        
         getPostsByUser()
+        
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        
+        headerLabel.text = user?.getUsername()
+        bioLabel.text = user?.getBio()
+        profilePicture.image = user?.getImageTag()
+        if(profilePicture.image == nil){
+            print("Profpic was nil")
+            profilePicture.image = #imageLiteral(resourceName: "cat-prof-100")
+        }
+        
+        // self sizing table view cells
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 150
     }
     
     override func viewDidLoad() {
@@ -67,6 +98,11 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         headerLabel.text = user?.getUsername()
         bioLabel.text = user?.getBio()
+        profilePicture.image = user?.getImageTag()
+        if(profilePicture.image == nil){
+            print("Profpic was nil")
+            profilePicture.image = #imageLiteral(resourceName: "cat-prof-100")
+        }
         
         // self sizing table view cells
         tableView.rowHeight = UITableViewAutomaticDimension

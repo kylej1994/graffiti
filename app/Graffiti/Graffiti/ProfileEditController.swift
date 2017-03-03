@@ -41,11 +41,16 @@ class EditProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         usernameLabel.text = user?.getUsername()
         bioEditor.text = user?.getBio()
         CharCountLabel.text = String(charLimit - bioEditor.text.characters.count)
-        profilePicture.image = user?.getUserImage()
+        profilePicture.image = user?.getImageTag()
         if(profilePicture.image == nil){
             profilePicture.image = #imageLiteral(resourceName: "cat-prof-100")
         }
     }
+    
+    @IBAction func exitEditController(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
@@ -104,6 +109,9 @@ class EditProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         // Make sure ViewController is notified when the user picks an image.
         imagePickerController.delegate = self
         present(imagePickerController, animated: true, completion: nil)
+        
+        
+
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -121,8 +129,31 @@ class EditProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         // Set photoImageView to display the selected image.
         profilePicture.image = selectedImage
         
+        let profilePic = selectedImage
+        let user = self.user!
+        
+        do {
+            user.setTagImage(profilePic)
+        }
+        
+        API.sharedInstance.updateUser(user: user) { res in
+            switch res.result{
+            case.success:
+                do {
+                    try self.user?.update(res.result.value)
+                    print("updated the profile photo!")
+                } catch {
+                    self.showUpdateUserAlert()
+                    return
+                }
+            case.failure:
+                self.showUpdateUserAlert()
+            }
+        }
+        
         // Dismiss the picker.
         dismiss(animated: true, completion: nil)
+
     }
     
     func showAlert(messageTitle: String, message: String) {
