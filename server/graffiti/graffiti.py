@@ -21,7 +21,7 @@ SECRET_KEY = '2UfLB56FtebByDu6cy4dXwQkpkX4XfPTamN+2BdJ'
 cfg = botocore.config.Config(signature_version='s3v4')
 s3_client = boto3.client('s3', config=cfg,\
     aws_access_key_id=ACCESS_KEY,\
-    aws_secret_access_key=SECRET_KEY)	
+    aws_secret_access_key=SECRET_KEY)
 
 
 @app.route('/initdb')

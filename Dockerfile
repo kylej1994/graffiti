@@ -9,7 +9,7 @@ RUN apt-get install -y python-pip
 RUN apt-get install -y libpq-dev
 RUN apt-get install -y libgeos-dev
 RUN apt-get install -y postgresql postgresql-contrib
-RUN apt-get install -y pgadmin3 
+RUN apt-get install -y pgadmin3
 RUN apt-get clean
 
 #--------------------GENERAL FLASK DEPENDENCIES
@@ -27,6 +27,7 @@ RUN pip install shapely
 RUN pip install sqlalchemy
 RUN pip install werkzeug
 RUN pip install psycopg2
+RUN pip install pytextseg
 RUN pip install requests
 RUN pip install flask-sqlalchemy==2.1
 

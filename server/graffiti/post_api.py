@@ -1,5 +1,6 @@
 import datetime
 import json
+import textseg
 
 from flask import Blueprint, request
 from post import Post
@@ -32,7 +33,8 @@ def validate_vote(vote):
 	return vote == -1 and vote == 1
 
 def validate_text(text):
-	return len(text) <= 100
+	# Correctly count grapheme clusters
+	return len(textseg.GCStr(text)) <= 140
 
 def generate_error_response(message, code):
 	error_response = {}
@@ -69,7 +71,7 @@ def create_post():
 	# 0 for text, 1 for image, anything else is invalid
 	post_type = data['type']
 	if (post_type == 0):
-		text = str(data['text'])
+		text = data['text']
 		if (not validate_text(text)):
 			return generate_error_response(ERR_400, 400)
 		# image is empty
