@@ -187,7 +187,7 @@ class Post(db.Model):
     # finds all post of a given user_id
     @staticmethod
     def find_user_posts(user_id):
-        return db.session.query(Post).filter(Post.poster_id==user_id).order_by(Post.created_at).all()
+        return db.session.query(Post).filter(Post.poster_id==user_id).order_by(Post.created_at.desc()).all()
 
     # finds posts within a certain radius of a coordinate
     @staticmethod
