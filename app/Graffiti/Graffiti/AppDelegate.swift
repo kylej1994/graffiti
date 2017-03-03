@@ -8,6 +8,7 @@
 
 import UIKit
 import GoogleSignIn
+import Alamofire
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
@@ -91,6 +92,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                     if newUser {
                         user.setEmail(googleUser.profile.email)
                         user.setName(googleUser.profile.name)
+                        
+                        // Download Google Profile Picture
+                        Alamofire.request(googleUser.profile.imageURL(withDimension: 200)).responseData { response in
+                            guard let data = response.result.value else { return }
+                            
+                            if
+                                user.getImageTag() == nil,
+                                let image = UIImage(data: data)
+                            {
+                                user.setTagImage(image)
+                            }
+                        }
+                        
                         self.navigateToOnboarding()
                     } else {
                         self.navigateToTabs()

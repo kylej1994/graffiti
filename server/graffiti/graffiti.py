@@ -7,8 +7,15 @@ from flask import Flask, request, abort
 from oauth2client import client, crypt
 from flask.ext.sqlalchemy import SQLAlchemy
 
+import os
+DB = ''
+if 'GRAFFITI_DB' in os.environ:
+	DB = os.environ['GRAFFITI_DB']
+
 app = Flask(__name__)
 app.config.from_pyfile('graffiti.cfg')
+if DB:
+	app.config['SQLALCHEMY_DATABASE_URI'] = DB
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['MAX_CONTENT_LENGTH'] = 200 * 1024 * 1024
 db = SQLAlchemy(app)
@@ -21,7 +28,7 @@ SECRET_KEY = '2UfLB56FtebByDu6cy4dXwQkpkX4XfPTamN+2BdJ'
 cfg = botocore.config.Config(signature_version='s3v4')
 s3_client = boto3.client('s3', config=cfg,\
     aws_access_key_id=ACCESS_KEY,\
-    aws_secret_access_key=SECRET_KEY)	
+    aws_secret_access_key=SECRET_KEY)
 
 
 @app.route('/initdb')
@@ -30,8 +37,6 @@ def init_db():
 	db.drop_all()
 	db.create_all()
 	return 'initted the db\n'
-
-# print init_db()
 
 # These imports must happen after the initialization of the db because these
 # objects import db in their respective files.
@@ -79,8 +84,11 @@ def fill_db():
 	db.session.commit()
 	return 'added sample records\n'
 
-# print clear_db_of_everything()
-# print fill_db()
+# If its the default db, i.e. the local db
+if not DB or DB == 'postgresql://localhost:mydb':
+	print init_db()
+	print clear_db_of_everything()
+	print fill_db()
 
 def generate_error_response(message, code):
 	error_response = {}

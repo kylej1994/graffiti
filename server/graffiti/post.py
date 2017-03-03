@@ -31,7 +31,7 @@ class Post(db.Model):
 
     post_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     post_type = db.Column(db.Enum(PostType))
-    text = db.Column(db.String(140))
+    text = db.Column(db.Unicode(140))
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
     loc = db.Column(Geometry(geometry_type='POINT', srid=4326))
@@ -41,7 +41,7 @@ class Post(db.Model):
 
     # defaults for type because I don't want to break things everywhere else
     def __init__(self, text, longitude, latitude, poster_id, post_type = 0):
-        self.text = text
+        self.text = unicode(text)
         self.post_type = Post.PostType(int(post_type))
         self.longitude = longitude
         self.latitude = latitude
@@ -187,7 +187,8 @@ class Post(db.Model):
     # finds all post of a given user_id
     @staticmethod
     def find_user_posts(user_id):
-        return db.session.query(Post).filter(Post.poster_id==user_id).all()
+        return db.session.query(Post).filter(Post.poster_id==user_id).order_by(\
+            Post.created_at.desc()).all()
 
     # finds posts within a certain radius of a coordinate
     @staticmethod
@@ -195,8 +196,6 @@ class Post(db.Model):
         distance = radius * 0.014472 #convert to degrees
         loc = 'POINT(' + str(lat) + ' ' + str(lon) + ')'
         wkt_element = WKTElement(loc, srid=4326)
-        posts = db.session.query(Post).filter(ST_DFullyWithin(\
-            Post.loc, wkt_element, distance)).all()
+        posts = db.session.query(Post).filter(ST_DFullyWithin(Post.loc,\
+            wkt_element, distance)).order_by(Post.created_at.desc()).all()
         return posts
-
-

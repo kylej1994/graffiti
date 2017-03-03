@@ -1,5 +1,6 @@
 import datetime
 import json
+import textseg
 
 from flask import Blueprint, request
 from post import Post
@@ -32,7 +33,8 @@ def validate_vote(vote):
 	return vote == -1 and vote == 1
 
 def validate_text(text):
-	return len(text) <= 100
+	# Correctly count grapheme clusters
+	return len(textseg.GCStr(text)) <= 140
 
 def generate_error_response(message, code):
 	error_response = {}
@@ -69,7 +71,7 @@ def create_post():
 	# 0 for text, 1 for image, anything else is invalid
 	post_type = data['type']
 	if (post_type == 0):
-		text = str(data['text'])
+		text = data['text']
 		if (not validate_text(text)):
 			return generate_error_response(ERR_400, 400)
 		# image is empty
@@ -136,7 +138,7 @@ def get_post_by_location():
 	# query db for all posts in this area
 	lat = (float)(request.args.get('latitude'))
 	lon = (float)(request.args.get('longitude'))
-	radius = 5 # TODO find out what number this should be
+	radius = 1 # TODO find out what number this should be
 	posts = Post.find_posts_within_loc(lon, lat, radius)
 
 	info = request.environ['META_INFO']
@@ -154,10 +156,7 @@ def get_post_by_location():
 	for post in posts:
 		jsonified_posts.append(json.loads(post.to_json_fields_for_FE(\
 			user.get_user_id())))
-	# postid is incremental, i.e. the more recent the post is the greater the
-	# postid. this is why reverse is set to True
-	to_ret['posts'] = sorted(jsonified_posts,
-		key=lambda k: k['postid'], reverse=True)
+	to_ret['posts'] = jsonified_posts
 	return json.dumps(to_ret), 200
 
 @post_api.route('/post/coordinates', methods=['GET'])

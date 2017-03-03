@@ -32,7 +32,6 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(true)
         locationManager.stopUpdatingLocation()
-        //postTextView.resignFirstResponder() // hide keyboard
     }
     
     override func viewDidLoad() {

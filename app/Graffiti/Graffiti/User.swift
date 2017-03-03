@@ -40,19 +40,17 @@ class User : Mappable {
     private var name: String?
     private var email: String?
     private var phoneNumber: String?
-    private var userImage: UIImage?
     private var bio: String?
     private var imageTag: UIImage?
     
     //MARK: Initialization
     
-    init(id: Int, username: String? = nil, name: String? = nil, email: String? = nil, phoneNumber: String? = nil, userImage: UIImage? = nil, bio: String? = nil, imageTag: UIImage? = nil){
+    init(id: Int, username: String? = nil, name: String? = nil, email: String? = nil, phoneNumber: String? = nil, bio: String? = nil, imageTag: UIImage? = nil){
         self.id = id
         self.username = username
         self.name = name
         self.email = email
         self.phoneNumber = phoneNumber
-        self.userImage = userImage
         self.bio = bio
         self.imageTag = imageTag
     }
@@ -98,16 +96,12 @@ class User : Mappable {
         return phoneNumber
     }
     
-    public func getUserImage() -> UIImage?{
-        return userImage
+    public func getImageTag() -> UIImage?{
+        return imageTag
     }
     
     public func getBio() -> String?{
         return bio
-    }
-    
-    public func getImageTag() -> UIImage?{
-        return imageTag
     }
     
     //MARK: Setters
@@ -132,10 +126,6 @@ class User : Mappable {
     
     public func setPhoneNumber(_ phoneNumber: String) {
         self.phoneNumber = phoneNumber
-    }
-    
-    public func setUserImage(_ UImage: UIImage){
-        self.userImage = UImage
     }
     
     public func setTagImage(_ TImage: UIImage){

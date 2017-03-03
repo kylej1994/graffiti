@@ -53,6 +53,7 @@
 		D9141CA91E58E71C00FA04D0 /* AuthProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9141CA81E58E71C00FA04D0 /* AuthProtocol.swift */; };
 		D9141CAA1E58E72200FA04D0 /* AuthProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9141CA81E58E71C00FA04D0 /* AuthProtocol.swift */; };
 		D9141CAC1E58E7F800FA04D0 /* MockAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9141CAB1E58E7F800FA04D0 /* MockAuth.swift */; };
+		D985D8DF1E6A173E0014CDA1 /* RoundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D985D8DE1E6A173E0014CDA1 /* RoundImageView.swift */; };
 		D9940E7F1E63D61500CF00E6 /* ImageTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9940E7E1E63D61500CF00E6 /* ImageTransform.swift */; };
 		D9940E801E63E91100CF00E6 /* ImageTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9940E7E1E63D61500CF00E6 /* ImageTransform.swift */; };
 		D99735A11E4E722F00DA5F29 /* ApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD771E4952330020505D /* ApiTests.swift */; };
@@ -156,6 +157,7 @@
 		D90D7A8E1E4E6C5400FB5AEE /* MockRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRequest.swift; sourceTree = "<group>"; };
 		D9141CA81E58E71C00FA04D0 /* AuthProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthProtocol.swift; sourceTree = "<group>"; };
 		D9141CAB1E58E7F800FA04D0 /* MockAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAuth.swift; sourceTree = "<group>"; };
+		D985D8DE1E6A173E0014CDA1 /* RoundImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundImageView.swift; sourceTree = "<group>"; };
 		D9940E7E1E63D61500CF00E6 /* ImageTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageTransform.swift; sourceTree = "<group>"; };
 		D9B5FAEA1E54FF9300DF87B2 /* LocationTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTransform.swift; sourceTree = "<group>"; };
 		D9C7CE431E58D36500B7F3AA /* GraffitiTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GraffitiTests-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -359,6 +361,7 @@
 			isa = PBXGroup;
 			children = (
 				D9940E7E1E63D61500CF00E6 /* ImageTransform.swift */,
+				D985D8DE1E6A173E0014CDA1 /* RoundImageView.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -709,6 +712,7 @@
 				AD79E6E91E64968C005AD9EA /* ImageDetailViewController.swift in Sources */,
 				ADF54FCE1E63538100D0B0E0 /* FeedImageCell.swift in Sources */,
 				D9DD58E11E57AE3900D9CB1D /* UserTransform.swift in Sources */,
+				D985D8DF1E6A173E0014CDA1 /* RoundImageView.swift in Sources */,
 				B33B07CC1E4AB6D2007025FB /* Post.swift in Sources */,
 				D9E63BA01E4D460900EE6C4B /* API.swift in Sources */,
 				AD03CF781E4E4C91003D3682 /* LocationManagerProtocol.swift in Sources */,
