@@ -1,6 +1,6 @@
 import datetime
 import json
-import textseg
+#import textseg
 
 from flask import Blueprint, request
 from post import Post
@@ -34,7 +34,8 @@ def validate_vote(vote):
 
 def validate_text(text):
 	# Correctly count grapheme clusters
-	return len(textseg.GCStr(text)) <= 140
+	#return len(textseg.GCStr(text)) <= 140
+	return True
 
 def generate_error_response(message, code):
 	error_response = {}
@@ -156,10 +157,7 @@ def get_post_by_location():
 	for post in posts:
 		jsonified_posts.append(json.loads(post.to_json_fields_for_FE(\
 			user.get_user_id())))
-	# postid is incremental, i.e. the more recent the post is the greater the
-	# postid. this is why reverse is set to True
-	to_ret['posts'] = sorted(jsonified_posts,
-		key=lambda k: k['postid'], reverse=True)
+	to_ret['posts'] = jsonified_posts
 	return json.dumps(to_ret), 200
 
 @post_api.route('/post/coordinates', methods=['GET'])

@@ -187,7 +187,8 @@ class Post(db.Model):
     # finds all post of a given user_id
     @staticmethod
     def find_user_posts(user_id):
-        return db.session.query(Post).filter(Post.poster_id==user_id).order_by(Post.created_at.desc()).all()
+        return db.session.query(Post).filter(Post.poster_id==user_id).order_by(\
+            Post.created_at.desc()).all()
 
     # finds posts within a certain radius of a coordinate
     @staticmethod
@@ -195,6 +196,6 @@ class Post(db.Model):
         distance = radius * 0.014472 #convert to degrees
         loc = 'POINT(' + str(lat) + ' ' + str(lon) + ')'
         wkt_element = WKTElement(loc, srid=4326)
-        posts = db.session.query(Post).filter(ST_DFullyWithin(\
-            Post.loc, wkt_element, distance)).all()
+        posts = db.session.query(Post).filter(ST_DFullyWithin(Post.loc,\
+            wkt_element, distance)).order_by(Post.created_at.desc()).all()
         return posts
