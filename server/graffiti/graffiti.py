@@ -7,8 +7,15 @@ from flask import Flask, request, abort
 from oauth2client import client, crypt
 from flask.ext.sqlalchemy import SQLAlchemy
 
+import os
+LOCAL_DB = False
+if 'LOCAL' in os.environ and os.environ['LOCAL'] == 'True':
+	LOCAL_DB = True
+
 app = Flask(__name__)
 app.config.from_pyfile('graffiti.cfg')
+if LOCAL_DB:
+	app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/mydb'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['MAX_CONTENT_LENGTH'] = 200 * 1024 * 1024
 db = SQLAlchemy(app)
@@ -30,8 +37,6 @@ def init_db():
 	db.drop_all()
 	db.create_all()
 	return 'initted the db\n'
-
-# print init_db()
 
 # These imports must happen after the initialization of the db because these
 # objects import db in their respective files.
@@ -79,8 +84,10 @@ def fill_db():
 	db.session.commit()
 	return 'added sample records\n'
 
-# print clear_db_of_everything()
-# print fill_db()
+if LOCAL_DB:
+	print init_db()
+	print clear_db_of_everything()
+	print fill_db()
 
 def generate_error_response(message, code):
 	error_response = {}
