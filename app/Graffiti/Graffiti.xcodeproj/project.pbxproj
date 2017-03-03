@@ -52,6 +52,7 @@
 		D9141CAA1E58E72200FA04D0 /* AuthProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9141CA81E58E71C00FA04D0 /* AuthProtocol.swift */; };
 		D9141CAC1E58E7F800FA04D0 /* MockAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9141CAB1E58E7F800FA04D0 /* MockAuth.swift */; };
 		D985D8E71E6A2BFE0014CDA1 /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D985D8E51E6A2BFE0014CDA1 /* Map.storyboard */; };
+		D985D8EC1E6A36690014CDA1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D985D8EB1E6A36690014CDA1 /* MapViewController.swift */; };
 		D9940E7F1E63D61500CF00E6 /* ImageTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9940E7E1E63D61500CF00E6 /* ImageTransform.swift */; };
 		D9940E801E63E91100CF00E6 /* ImageTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9940E7E1E63D61500CF00E6 /* ImageTransform.swift */; };
 		D99735A11E4E722F00DA5F29 /* ApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD771E4952330020505D /* ApiTests.swift */; };
@@ -154,6 +155,7 @@
 		D9141CA81E58E71C00FA04D0 /* AuthProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthProtocol.swift; sourceTree = "<group>"; };
 		D9141CAB1E58E7F800FA04D0 /* MockAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAuth.swift; sourceTree = "<group>"; };
 		D985D8E61E6A2BFE0014CDA1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Map.storyboard; sourceTree = "<group>"; };
+		D985D8EB1E6A36690014CDA1 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		D9940E7E1E63D61500CF00E6 /* ImageTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageTransform.swift; sourceTree = "<group>"; };
 		D9B5FAEA1E54FF9300DF87B2 /* LocationTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTransform.swift; sourceTree = "<group>"; };
 		D9C7CE431E58D36500B7F3AA /* GraffitiTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GraffitiTests-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -356,6 +358,7 @@
 			isa = PBXGroup;
 			children = (
 				D985D8E51E6A2BFE0014CDA1 /* Map.storyboard */,
+				D985D8EB1E6A36690014CDA1 /* MapViewController.swift */,
 			);
 			name = Map;
 			sourceTree = "<group>";
@@ -718,6 +721,7 @@
 				AD87E4541E5BB152007B6E12 /* ProfileHeaderCell.swift in Sources */,
 				AD03CF721E4D5AB2003D3682 /* LocationService.swift in Sources */,
 				AD84BD311E4947330020505D /* AppDelegate.swift in Sources */,
+				D985D8EC1E6A36690014CDA1 /* MapViewController.swift in Sources */,
 				D9E63BA21E4D496E00EE6C4B /* ManagerProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
