@@ -8,14 +8,14 @@ from oauth2client import client, crypt
 from flask.ext.sqlalchemy import SQLAlchemy
 
 import os
-LOCAL_DB = False
-if 'LOCAL' in os.environ and os.environ['LOCAL'] == 'True':
-	LOCAL_DB = True
+DB = ''
+if 'GRAFFITI_DB' in os.environ:
+	DB = os.environ['GRAFFITI_DB']
 
 app = Flask(__name__)
 app.config.from_pyfile('graffiti.cfg')
-if LOCAL_DB:
-	app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/mydb'
+if DB:
+	app.config['SQLALCHEMY_DATABASE_URI'] = DB
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['MAX_CONTENT_LENGTH'] = 200 * 1024 * 1024
 db = SQLAlchemy(app)
@@ -84,7 +84,8 @@ def fill_db():
 	db.session.commit()
 	return 'added sample records\n'
 
-if LOCAL_DB:
+# If its the default db, i.e. the local db
+if not DB or DB == 'postgresql://localhost:mydb':
 	print init_db()
 	print clear_db_of_everything()
 	print fill_db()
