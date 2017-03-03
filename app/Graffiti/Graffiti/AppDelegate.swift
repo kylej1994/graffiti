@@ -93,14 +93,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                         user.setEmail(googleUser.profile.email)
                         user.setName(googleUser.profile.name)
                         
-                        Alamofire.download(googleUser.profile.imageURL(withDimension: 200)).responseData { response in
-                            if let data = response.result.value {
-                                if
-                                    user.getImageTag() == nil,
-                                    let image = UIImage(data: data)
-                                {
-                                    user.setTagImage(image)
-                                }
+                        // Download Google Profile Picture
+                        Alamofire.request(googleUser.profile.imageURL(withDimension: 200)).responseData { response in
+                            guard let data = response.result.value else { return }
+                            
+                            if
+                                user.getImageTag() == nil,
+                                let image = UIImage(data: data)
+                            {
+                                user.setTagImage(image)
                             }
                         }
                         
