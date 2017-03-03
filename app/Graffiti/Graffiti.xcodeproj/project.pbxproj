@@ -51,6 +51,7 @@
 		D9141CA91E58E71C00FA04D0 /* AuthProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9141CA81E58E71C00FA04D0 /* AuthProtocol.swift */; };
 		D9141CAA1E58E72200FA04D0 /* AuthProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9141CA81E58E71C00FA04D0 /* AuthProtocol.swift */; };
 		D9141CAC1E58E7F800FA04D0 /* MockAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9141CAB1E58E7F800FA04D0 /* MockAuth.swift */; };
+		D985D8E71E6A2BFE0014CDA1 /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D985D8E51E6A2BFE0014CDA1 /* Map.storyboard */; };
 		D9940E7F1E63D61500CF00E6 /* ImageTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9940E7E1E63D61500CF00E6 /* ImageTransform.swift */; };
 		D9940E801E63E91100CF00E6 /* ImageTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9940E7E1E63D61500CF00E6 /* ImageTransform.swift */; };
 		D99735A11E4E722F00DA5F29 /* ApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84BD771E4952330020505D /* ApiTests.swift */; };
@@ -152,6 +153,7 @@
 		D90D7A8E1E4E6C5400FB5AEE /* MockRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRequest.swift; sourceTree = "<group>"; };
 		D9141CA81E58E71C00FA04D0 /* AuthProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthProtocol.swift; sourceTree = "<group>"; };
 		D9141CAB1E58E7F800FA04D0 /* MockAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAuth.swift; sourceTree = "<group>"; };
+		D985D8E61E6A2BFE0014CDA1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Map.storyboard; sourceTree = "<group>"; };
 		D9940E7E1E63D61500CF00E6 /* ImageTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageTransform.swift; sourceTree = "<group>"; };
 		D9B5FAEA1E54FF9300DF87B2 /* LocationTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTransform.swift; sourceTree = "<group>"; };
 		D9C7CE431E58D36500B7F3AA /* GraffitiTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GraffitiTests-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 		AD84BD2F1E4947330020505D /* Graffiti */ = {
 			isa = PBXGroup;
 			children = (
+				D985D8E81E6A2C0D0014CDA1 /* Map */,
 				D9940E7D1E63D5B200CF00E6 /* Utilities */,
 				D9E63B9E1E4D45CD00EE6C4B /* API */,
 				AD03CF701E4D59B1003D3682 /* Location */,
@@ -347,6 +350,14 @@
 				D9DAACD71E5CCA2C00A4AF57 /* OnboardingViewController.swift */,
 			);
 			name = Login;
+			sourceTree = "<group>";
+		};
+		D985D8E81E6A2C0D0014CDA1 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				D985D8E51E6A2BFE0014CDA1 /* Map.storyboard */,
+			);
+			name = Map;
 			sourceTree = "<group>";
 		};
 		D9940E7D1E63D5B200CF00E6 /* Utilities */ = {
@@ -515,6 +526,7 @@
 				AD84BD381E4947330020505D /* Assets.xcassets in Resources */,
 				AD84BD361E4947330020505D /* Login.storyboard in Resources */,
 				D9DAACD61E5CC98300A4AF57 /* Onboarding.storyboard in Resources */,
+				D985D8E71E6A2BFE0014CDA1 /* Map.storyboard in Resources */,
 				AD84BD711E494BD30020505D /* Main.storyboard in Resources */,
 				AD84BD681E494A170020505D /* UserProfile.storyboard in Resources */,
 			);
@@ -794,6 +806,14 @@
 				AD84BD701E494BD30020505D /* Base */,
 			);
 			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		D985D8E51E6A2BFE0014CDA1 /* Map.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D985D8E61E6A2BFE0014CDA1 /* Base */,
+			);
+			name = Map.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

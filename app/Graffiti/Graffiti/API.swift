@@ -10,6 +10,7 @@ import Foundation
 import Alamofire
 import AlamofireObjectMapper
 import GoogleSignIn
+import CoreLocation
 
 // A completion closure invoked when requests complete
 typealias Handler = (DataResponse<Any>) -> Void
@@ -97,6 +98,49 @@ class API {
                 // Form result value
                 let value : Any = [
                     "posts": postObjects
+                ]
+                result = Result.success(value)
+            } catch(let error) {
+                // Failure
+                result = Result.failure(error)
+            }
+            
+            let newResponse = DataResponse(request: response.request, response: response.response, data: response.data, result: result)
+            handler(newResponse)
+        case .failure:
+            handler(response)
+        }
+    }
+    
+    // Unwraps and converts JSON to Array of coordinates to pass to handler
+    private func coordinatesHandler(response: DataResponse<Any>, handler: Handler) {
+        switch response.result {
+        case .success:
+            var result : Result<Any>
+            do {
+                // Unwrap JSON
+                guard
+                    let json = response.result.value as? [String: Any],
+                    let coordinates = json["coordinates"] as? [Any]
+                    else{
+                        throw APIError.misformedAPIResponse
+                }
+                
+                // Map to Post Objects
+                let locObjects = try coordinates.map() { (coordinate) -> CLLocation in
+                    if
+                        let coordJSON = coordinate as? [String : Any],
+                        let coordObject = LocationTransform().transformFromJSON(coordJSON)
+                    {
+                        return coordObject
+                    } else {
+                        throw APIError.misformedAPIResponse
+                    }
+                }
+                
+                // Form result value
+                let value : Any = [
+                    "coordinates": locObjects
                 ]
                 result = Result.success(value)
             } catch(let error) {
@@ -236,6 +280,24 @@ class API {
             case .success:
                 requestResult.value?.responseJSON() { response in
                     self.postsHandler(response: response, handler: handler)
+                }
+            case .failure(let error):
+                handler(DataResponse(request: nil, response: nil, data: nil, result: Result.failure(error)))
+            }
+        }
+    }
+    
+    func getCoordinates(longitude: Double, latitude: Double, radius: Double, handler: @escaping Handler) {
+        let parameters = [
+            "longitude": longitude,
+            "latitude": latitude,
+            "radius": radius
+        ]
+        makeRequest("/post/coordinates", method: .get, parameters: parameters){ requestResult in
+            switch requestResult {
+            case .success:
+                requestResult.value?.responseJSON() { response in
+                    self.coordinatesHandler(response: response, handler: handler)
                 }
             case .failure(let error):
                 handler(DataResponse(request: nil, response: nil, data: nil, result: Result.failure(error)))
