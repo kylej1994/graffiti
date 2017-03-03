@@ -311,7 +311,6 @@
 				ADF54FCB1E63536F00D0B0E0 /* FeedTextCell.swift */,
 				ADF54FCD1E63538100D0B0E0 /* FeedImageCell.swift */,
 				AD79E6E81E64968C005AD9EA /* ImageDetailViewController.swift */,
-				D985D8DE1E6A173E0014CDA1 /* RoundImageView.swift */,
 			);
 			name = Feed;
 			sourceTree = "<group>";
@@ -356,6 +355,7 @@
 			isa = PBXGroup;
 			children = (
 				D9940E7E1E63D61500CF00E6 /* ImageTransform.swift */,
+				D985D8DE1E6A173E0014CDA1 /* RoundImageView.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
