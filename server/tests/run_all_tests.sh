@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# tells the server to use the local database, not the production one
+export LOCAL=True
+
 python auth_api_test.py
 python user_api_test.py
 python post_api_test.py
