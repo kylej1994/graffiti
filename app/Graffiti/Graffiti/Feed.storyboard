@@ -45,8 +45,8 @@
                                             <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <stackView opaque="NO" contentMode="bottom" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="hFH-VP-7Vv">
-                                            <rect key="frame" x="8" y="13" width="25" height="78.5"/>
+                                        <stackView opaque="NO" contentMode="bottom" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="hFH-VP-7Vv">
+                                            <rect key="frame" x="8" y="13" width="25" height="70.5"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7AH-iB-j81">
                                                     <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
@@ -56,13 +56,13 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JU0-SS-ZyY">
-                                                    <rect key="frame" x="7.5" y="29" width="10.5" height="20.5"/>
+                                                    <rect key="frame" x="7.5" y="25" width="10.5" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AQi-hy-mG8">
-                                                    <rect key="frame" x="0.0" y="53.5" width="25" height="25"/>
+                                                    <rect key="frame" x="0.0" y="45.5" width="25" height="25"/>
                                                     <state key="normal" image="downvote-black-50"/>
                                                     <connections>
                                                         <action selector="tapDownvote:" destination="Pud-ZO-sRW" eventType="touchUpInside" id="2lV-hQ-PrT"/>
@@ -121,8 +121,8 @@
                                             <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <stackView opaque="NO" contentMode="bottom" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="fhN-aV-Hzw">
-                                            <rect key="frame" x="8" y="13" width="25" height="78.5"/>
+                                        <stackView opaque="NO" contentMode="bottom" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="fhN-aV-Hzw">
+                                            <rect key="frame" x="8" y="13" width="25" height="70.5"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="akB-9X-7Vr">
                                                     <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
@@ -132,13 +132,13 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3vh-FP-Qte">
-                                                    <rect key="frame" x="7.5" y="29" width="10.5" height="20.5"/>
+                                                    <rect key="frame" x="7.5" y="25" width="10.5" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ldj-S5-tI8">
-                                                    <rect key="frame" x="0.0" y="53.5" width="25" height="25"/>
+                                                    <rect key="frame" x="0.0" y="45.5" width="25" height="25"/>
                                                     <state key="normal" image="downvote-black-50"/>
                                                     <connections>
                                                         <action selector="tapDownvote:" destination="1br-WE-5MN" eventType="touchUpInside" id="Svm-cM-Vre"/>
