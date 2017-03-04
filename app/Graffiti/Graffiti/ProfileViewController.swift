@@ -21,16 +21,6 @@ extension UIViewController {
 
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    //~~//
-    let offset_HeaderStop:CGFloat = 60.0 // At this offset the Header stops its transformations
-    let offset_B_LabelHeader:CGFloat = 95.0 // At this offset the Black label reaches the Header
-    let distance_W_LabelHeader:CGFloat = 35.0 // The distance between the bottom of the Header and the top of the White Label
-    
-    var tableViewHeight:Int = 0
-    let bounds = UIScreen.main.bounds
-
-    var fullScreenTableView:Bool = false
-    
     @IBOutlet weak var header: UIView!
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var bioLabel: UILabel!
@@ -48,15 +38,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        
-        if(fullScreenTableView){
-            var tableViewTransform = CATransform3DIdentity
-            let height = bounds.size.height
-            tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -150, 0)
-            tableView.frame.size = CGSize(tableView.contentSize.width, height) //and vice versa when keyboard is dismissed
-            tableView.layer.transform = tableViewTransform
-            print("ran thru here")
-        }
         
         addStatusBarBackgroundView(viewController: self)
         
@@ -90,14 +71,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
-        if(fullScreenTableView){
-            var tableViewTransform = CATransform3DIdentity
-            let height = bounds.size.height
-            tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -150, 0)
-            tableView.frame.size = CGSize(tableView.contentSize.width, height + 80) //and vice versa when keyboard is dismissed
-            tableView.layer.transform = tableViewTransform
-            print("ran thru here!!")
-        }
         addStatusBarBackgroundView(viewController: self)
         
         if let user = appDelegate.currentUser {
@@ -122,7 +95,23 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         tableView.estimatedRowHeight = 150
     }
     
+    func showAlert(messageTitle: String, message: String) {
+        let alertController = UIAlertController(title: messageTitle, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func showLoadUserAlert() {
+        showAlert(messageTitle: "Load User Error", message: "There was a problem loading your profile.  Pleasure try again.")
+    }
+    
     func getPostsByUser() {
+        
+        if(user == nil){
+            self.showLoadUserAlert()
+            return
+        }
         
         let uId: Int = user!.getId()
         
@@ -141,69 +130,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
-    //~~~//
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        let offset = scrollView.contentOffset.y
-        var avatarTransform = CATransform3DIdentity
-        var headerTransform = CATransform3DIdentity
-        var tableViewTransform = CATransform3DIdentity
-        
-        // PULL DOWN -----------------
-        
-        // Header -----------
-        if(offset > 0){
-            headerTransform = CATransform3DTranslate(headerTransform, 0, -offset, 0)
-        }
-            
-        // Table View -----------
-        let tHeight = tableView.contentSize.height
-        
-        let height = bounds.size.height
-        
-        if(tHeight > height){
-            if(offset < 150.0){
-                tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -offset, 0)
-                if(offset > 0.0){
-                    tableView.frame.size = CGSize(tableView.contentSize.width, height - offset + 80) //and vice versa when keyboard is dismissed
-                    
-                    fullScreenTableView = false
-                }
-            } else {
-                tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -150, 0)
-                tableView.frame.size = CGSize(tableView.contentSize.width, height - 80) //and vice versa when keyboard is dismissed
-                
-                fullScreenTableView = true
-            }
-        }
-        // Avatar -----------
-            
-        var avatarScaleFactor = (min(offset_HeaderStop, offset)) / profilePicture.bounds.height / 0.8 // Slow down the animation
-        if(avatarScaleFactor < -0.25){
-            avatarScaleFactor = -0.25
-        }
-        let avatarSizeVariation = ((profilePicture.bounds.height * (1.0 + avatarScaleFactor)) - profilePicture.bounds.height) / 1.4
-        avatarTransform = CATransform3DTranslate(avatarTransform, 0, avatarSizeVariation, 0)
-        avatarTransform = CATransform3DScale(avatarTransform, 1.0 - avatarScaleFactor, 1.0 - avatarScaleFactor, 0)
-            
-        if offset <= offset_HeaderStop {
-            if profilePicture.layer.zPosition < header.layer.zPosition{
-                header.layer.zPosition = 0
-            }
-            
-        }else {
-            if profilePicture.layer.zPosition >= header.layer.zPosition{
-                header.layer.zPosition = 0
-            }
-        }
-        
-        tableView.layer.transform = tableViewTransform
-        header.layer.transform = headerTransform
-        profilePicture.layer.transform = avatarTransform
-    }
-    
-
-    //~~~//
     
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
