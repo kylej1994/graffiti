@@ -32,21 +32,21 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         </textView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cat-prof-100" translatesAutoresizingMaskIntoConstraints="NO" id="jbE-n0-jhT" customClass="RoundImageView" customModule="Graffiti" customModuleProvider="target">
-                                            <rect key="frame" x="297" y="100" width="70" height="70"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cat-prof-100" translatesAutoresizingMaskIntoConstraints="NO" id="jbE-n0-jhT" customClass="RoundImageView" customModule="Graffiti" customModuleProvider="target">
+                                            <rect key="frame" x="317" y="120" width="50" height="50"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="70" id="MOp-Xr-jh1"/>
-                                                <constraint firstAttribute="width" constant="70" id="vTc-NA-aBG"/>
+                                                <constraint firstAttribute="height" constant="50" id="MOp-Xr-jh1"/>
+                                                <constraint firstAttribute="width" constant="50" id="vTc-NA-aBG"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time ago" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZNV-pv-8KQ">
-                                            <rect key="frame" x="160" y="149" width="135" height="21"/>
+                                            <rect key="frame" x="160" y="149.5" width="155" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <stackView opaque="NO" contentMode="bottom" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="hFH-VP-7Vv">
-                                            <rect key="frame" x="8" y="13" width="25" height="71"/>
+                                            <rect key="frame" x="8" y="13" width="25" height="70.5"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7AH-iB-j81">
                                                     <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
@@ -56,13 +56,13 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JU0-SS-ZyY">
-                                                    <rect key="frame" x="7" y="25" width="11" height="21"/>
+                                                    <rect key="frame" x="7.5" y="25" width="10.5" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AQi-hy-mG8">
-                                                    <rect key="frame" x="0.0" y="46" width="25" height="25"/>
+                                                    <rect key="frame" x="0.0" y="45.5" width="25" height="25"/>
                                                     <state key="normal" image="downvote-black-50"/>
                                                     <connections>
                                                         <action selector="tapDownvote:" destination="Pud-ZO-sRW" eventType="touchUpInside" id="2lV-hQ-PrT"/>
@@ -114,15 +114,15 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </imageView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cat-prof-100" translatesAutoresizingMaskIntoConstraints="NO" id="DhA-kk-bIW" customClass="RoundImageView" customModule="Graffiti" customModuleProvider="target">
-                                            <rect key="frame" x="297" y="171" width="70" height="70"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cat-prof-100" translatesAutoresizingMaskIntoConstraints="NO" id="DhA-kk-bIW" customClass="RoundImageView" customModule="Graffiti" customModuleProvider="target">
+                                            <rect key="frame" x="317" y="191" width="50" height="50"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="70" id="CKh-qu-2wz"/>
-                                                <constraint firstAttribute="width" constant="70" id="gVT-dz-PqO"/>
+                                                <constraint firstAttribute="height" constant="50" id="CKh-qu-2wz"/>
+                                                <constraint firstAttribute="width" constant="50" id="gVT-dz-PqO"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time ago" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hbo-qE-WuG">
-                                            <rect key="frame" x="160" y="226" width="135" height="15"/>
+                                            <rect key="frame" x="160" y="226" width="155" height="15"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                             <nil key="highlightedColor"/>
@@ -270,7 +270,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ejl-bh-ipv" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Feed" id="UfD-gP-5Ci"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="yk6-Wq-tcj">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="yk6-Wq-tcj">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

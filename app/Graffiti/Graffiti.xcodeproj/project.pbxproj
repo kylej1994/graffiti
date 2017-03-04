@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C975A9F1E63F11500BBFF80 /* ProfileEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C975A9E1E63F11500BBFF80 /* ProfileEditController.swift */; };
+		4C975AA11E63F14500BBFF80 /* ProfileEdit.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C975AA01E63F14500BBFF80 /* ProfileEdit.storyboard */; };
 		4CA6EC841E5F6FC800865EC1 /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA6EC831E5F6FC800865EC1 /* FXBlurView.m */; };
 		598B435CBAD828D29AE71840 /* Pods_Graffiti.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 713DC8BD02EAC92DE23868C8 /* Pods_Graffiti.framework */; };
 		6FCDE8E4BD77B03A8F9D7EF3 /* Pods_GraffitiUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABFD6572D47051DFF80F7CD /* Pods_GraffitiUITests.framework */; };
@@ -100,6 +102,8 @@
 		30E6F45E0E5E35C918790D74 /* Pods-Graffiti-GraffitiTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Graffiti-GraffitiTests.staging.xcconfig"; path = "Pods/Target Support Files/Pods-Graffiti-GraffitiTests/Pods-Graffiti-GraffitiTests.staging.xcconfig"; sourceTree = "<group>"; };
 		378DFBC3F8EB6008B11DF5AE /* Pods-Graffiti.dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Graffiti.dev.xcconfig"; path = "Pods/Target Support Files/Pods-Graffiti/Pods-Graffiti.dev.xcconfig"; sourceTree = "<group>"; };
 		49AA21F62EF3FDFA9DD4607E /* Pods-GraffitiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraffitiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GraffitiTests/Pods-GraffitiTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4C975A9E1E63F11500BBFF80 /* ProfileEditController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileEditController.swift; sourceTree = "<group>"; };
+		4C975AA01E63F14500BBFF80 /* ProfileEdit.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProfileEdit.storyboard; sourceTree = "<group>"; };
 		4CA6EC821E5F6FC800865EC1 /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
 		4CA6EC831E5F6FC800865EC1 /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
 		51E1E7EF60A6EBF2739BCBA9 /* Pods-Graffiti.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Graffiti.staging.xcconfig"; path = "Pods/Target Support Files/Pods-Graffiti/Pods-Graffiti.staging.xcconfig"; sourceTree = "<group>"; };
@@ -343,6 +347,8 @@
 				B33B07CF1E4ACA8F007025FB /* User.swift */,
 				D9DD58E01E57AE3900D9CB1D /* UserTransform.swift */,
 				AD87E4531E5BB152007B6E12 /* ProfileHeaderCell.swift */,
+				4C975A9E1E63F11500BBFF80 /* ProfileEditController.swift */,
+				4C975AA01E63F14500BBFF80 /* ProfileEdit.storyboard */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -486,18 +492,21 @@
 				TargetAttributes = {
 					AD84BD2C1E4947330020505D = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = ME42ZMKGYY;
 						DevelopmentTeam = 5WYWR4MS7H;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 					AD84BD401E4947330020505D = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = ME42ZMKGYY;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 						TestTargetID = AD84BD2C1E4947330020505D;
 					};
 					AD84BD4B1E4947330020505D = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = ME42ZMKGYY;
 						ProvisioningStyle = Automatic;
 						TestTargetID = AD84BD2C1E4947330020505D;
 					};
@@ -538,6 +547,7 @@
 				D985D8E71E6A2BFE0014CDA1 /* Map.storyboard in Resources */,
 				AD84BD711E494BD30020505D /* Main.storyboard in Resources */,
 				AD84BD681E494A170020505D /* UserProfile.storyboard in Resources */,
+				4C975AA11E63F14500BBFF80 /* ProfileEdit.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -726,6 +736,7 @@
 				D9E63BA01E4D460900EE6C4B /* API.swift in Sources */,
 				AD03CF781E4E4C91003D3682 /* LocationManagerProtocol.swift in Sources */,
 				AD6935C21E552BFD00DE236C /* TimeAgo.swift in Sources */,
+				4C975A9F1E63F11500BBFF80 /* ProfileEditController.swift in Sources */,
 				AD87E4541E5BB152007B6E12 /* ProfileHeaderCell.swift in Sources */,
 				AD03CF721E4D5AB2003D3682 /* LocationService.swift in Sources */,
 				AD84BD311E4947330020505D /* AppDelegate.swift in Sources */,
@@ -929,7 +940,11 @@
 				API_BASE_URL = "http://127.0.0.1:5000";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = ME42ZMKGYY;
 				DEVELOPMENT_TEAM = 5WYWR4MS7H;
+				DEVELOPMENT_TEAM = ME42ZMKGYY;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -949,11 +964,13 @@
 				);
 				INFOPLIST_FILE = Graffiti/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = graffiti.Graffiti;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Graffiti/Graffiti-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -964,7 +981,11 @@
 				API_BASE_URL = "http://docker-graffiti-dev.us-east-2.elasticbeanstalk.com";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = ME42ZMKGYY;
 				DEVELOPMENT_TEAM = 5WYWR4MS7H;
+				DEVELOPMENT_TEAM = ME42ZMKGYY;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -984,10 +1005,12 @@
 				);
 				INFOPLIST_FILE = Graffiti/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = graffiti.Graffiti;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Graffiti/Graffiti-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -998,6 +1021,8 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = ME42ZMKGYY;
 				INFOPLIST_FILE = GraffitiTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = graffiti.GraffitiTests;
@@ -1015,6 +1040,8 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = ME42ZMKGYY;
 				INFOPLIST_FILE = GraffitiTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = graffiti.GraffitiTests;
@@ -1029,6 +1056,8 @@
 			baseConfigurationReference = 8F280E8407B8FD52B58979CD /* Pods-GraffitiUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = ME42ZMKGYY;
 				INFOPLIST_FILE = GraffitiUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = graffiti.GraffitiUITests;
@@ -1043,6 +1072,8 @@
 			baseConfigurationReference = ADA147E95DA84165A40FB7DE /* Pods-GraffitiUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = ME42ZMKGYY;
 				INFOPLIST_FILE = GraffitiUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = graffiti.GraffitiUITests;
@@ -1108,7 +1139,11 @@
 				API_BASE_URL = "http://127.0.0.1:5000";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = ME42ZMKGYY;
 				DEVELOPMENT_TEAM = 5WYWR4MS7H;
+				DEVELOPMENT_TEAM = ME42ZMKGYY;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1128,11 +1163,13 @@
 				);
 				INFOPLIST_FILE = Graffiti/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = graffiti.Graffiti;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Graffiti/Graffiti-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Staging;
 		};
@@ -1143,6 +1180,8 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = ME42ZMKGYY;
 				INFOPLIST_FILE = GraffitiTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = graffiti.GraffitiTests;
@@ -1158,6 +1197,8 @@
 			baseConfigurationReference = 5EB9B0856E7542C9B76AEF51 /* Pods-GraffitiUITests.staging.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = ME42ZMKGYY;
 				INFOPLIST_FILE = GraffitiUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = graffiti.GraffitiUITests;
@@ -1223,7 +1264,11 @@
 				API_BASE_URL = "http://127.0.0.1:5000";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = ME42ZMKGYY;
 				DEVELOPMENT_TEAM = 5WYWR4MS7H;
+				DEVELOPMENT_TEAM = ME42ZMKGYY;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1243,11 +1288,13 @@
 				);
 				INFOPLIST_FILE = Graffiti/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = graffiti.Graffiti;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Graffiti/Graffiti-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Dev;
 		};
@@ -1258,6 +1305,8 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = ME42ZMKGYY;
 				INFOPLIST_FILE = GraffitiTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = graffiti.GraffitiTests;
@@ -1273,6 +1322,8 @@
 			baseConfigurationReference = 72E9AD5AB798A8C8699282AD /* Pods-GraffitiUITests.dev.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = ME42ZMKGYY;
 				INFOPLIST_FILE = GraffitiUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = graffiti.GraffitiUITests;

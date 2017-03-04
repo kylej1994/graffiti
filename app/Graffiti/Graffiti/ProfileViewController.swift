@@ -8,12 +8,28 @@
 
 import UIKit
 
+let SCREEN_WIDTH = UIScreen.main.bounds.size.width
+
+extension UIViewController {
+    func addStatusBarBackgroundView(viewController: UIViewController) -> Void {
+        let rect = CGRect(origin: CGPoint(x: 0, y: 0), size:CGSize(width: SCREEN_WIDTH, height:20))
+        let view : UIView = UIView.init(frame: rect)
+        view.backgroundColor = UIColor.init(red: 255/255, green: 255/255, blue: 255/255, alpha: 1) //Replace value with your required background color
+        viewController.view?.addSubview(view)
+    }
+}
+
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     //~~//
-    let offset_HeaderStop:CGFloat = 40.0 // At this offset the Header stops its transformations
+    let offset_HeaderStop:CGFloat = 60.0 // At this offset the Header stops its transformations
     let offset_B_LabelHeader:CGFloat = 95.0 // At this offset the Black label reaches the Header
     let distance_W_LabelHeader:CGFloat = 35.0 // The distance between the bottom of the Header and the top of the White Label
+    
+    var tableViewHeight:Int = 0
+    let bounds = UIScreen.main.bounds
+
+    var fullScreenTableView:Bool = false
     
     @IBOutlet weak var header: UIView!
     @IBOutlet weak var headerLabel: UILabel!
@@ -29,28 +45,77 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        getPostsByUser()
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
         
-        //tableView.contentInset.top = 20
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        
+        if(fullScreenTableView){
+            var tableViewTransform = CATransform3DIdentity
+            let height = bounds.size.height
+            tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -150, 0)
+            tableView.frame.size = CGSize(tableView.contentSize.width, height) //and vice versa when keyboard is dismissed
+            tableView.layer.transform = tableViewTransform
+            print("ran thru here")
+        }
+        
+        addStatusBarBackgroundView(viewController: self)
         
         if let user = appDelegate.currentUser {
             print("app delegate current user can be unwrapped")
             self.user = user
         } else {
-            print("sadness")
+            //print("sadness")
         }
         
         getPostsByUser()
         
+        headerLabel.text = user?.getUsername()
+        bioLabel.text = user?.getBio()
+        profilePicture.image = user?.getImageTag()
+        if(profilePicture.image == nil){
+            print("Profpic was nil")
+            profilePicture.image = #imageLiteral(resourceName: "cat-prof-100")
+        }
+        
+        // self sizing table view cells
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 150
+        
+        
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
+        if(fullScreenTableView){
+            var tableViewTransform = CATransform3DIdentity
+            let height = bounds.size.height
+            tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -150, 0)
+            tableView.frame.size = CGSize(tableView.contentSize.width, height + 80) //and vice versa when keyboard is dismissed
+            tableView.layer.transform = tableViewTransform
+            print("ran thru here!!")
+        }
+        addStatusBarBackgroundView(viewController: self)
+        
+        if let user = appDelegate.currentUser {
+            print("app delegate current user can be unwrapped")
+            self.user = user
+        } else {
+            //print("sadness")
+        }
+        
+        getPostsByUser()
+        
         headerLabel.text = user?.getUsername()
         bioLabel.text = user?.getBio()
+        profilePicture.image = user?.getImageTag()
+        if(profilePicture.image == nil){
+            print("Profpic was nil")
+            profilePicture.image = #imageLiteral(resourceName: "cat-prof-100")
+        }
         
         // self sizing table view cells
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -84,37 +149,39 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         var headerTransform = CATransform3DIdentity
         var tableViewTransform = CATransform3DIdentity
         
-        //var tableViewScale = CATransform3DIdentity
-        
         // PULL DOWN -----------------
         
         // Header -----------
-        
-        headerTransform = CATransform3DTranslate(headerTransform, 0, -offset, 0)
-        
+        if(offset > 0){
+            headerTransform = CATransform3DTranslate(headerTransform, 0, -offset, 0)
+        }
+            
         // Table View -----------
+        let tHeight = tableView.contentSize.height
         
-        if(offset < 150.0){
-            //print(tableView.frame.height.description)
-            tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -offset, 0)
-            if(offset > 0.0){
-            tableView.frame.size = CGSize(tableView.contentSize.width, tableView.frame.height + offset) //and vice versa when keyboard is dismissed
-            }
-            let bounds = UIScreen.main.bounds
-            let height = bounds.size.height
-            if(tableView.frame.height > height){
+        let height = bounds.size.height
+        
+        if(tHeight > height){
+            if(offset < 150.0){
+                tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -offset, 0)
+                if(offset > 0.0){
+                    tableView.frame.size = CGSize(tableView.contentSize.width, height - offset + 80) //and vice versa when keyboard is dismissed
+                    
+                    fullScreenTableView = false
+                }
+            } else {
+                tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -150, 0)
                 tableView.frame.size = CGSize(tableView.contentSize.width, height - 80) //and vice versa when keyboard is dismissed
+                
+                fullScreenTableView = true
             }
-            
-            
-        } else {
-            //print("oh hey")
-            tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -150, 0)
-            
         }
         // Avatar -----------
             
-        let avatarScaleFactor = (min(offset_HeaderStop, offset)) / profilePicture.bounds.height / 0.8 // Slow down the animation
+        var avatarScaleFactor = (min(offset_HeaderStop, offset)) / profilePicture.bounds.height / 0.8 // Slow down the animation
+        if(avatarScaleFactor < -0.25){
+            avatarScaleFactor = -0.25
+        }
         let avatarSizeVariation = ((profilePicture.bounds.height * (1.0 + avatarScaleFactor)) - profilePicture.bounds.height) / 1.4
         avatarTransform = CATransform3DTranslate(avatarTransform, 0, avatarSizeVariation, 0)
         avatarTransform = CATransform3DScale(avatarTransform, 1.0 - avatarScaleFactor, 1.0 - avatarScaleFactor, 0)
@@ -123,15 +190,14 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             if profilePicture.layer.zPosition < header.layer.zPosition{
                 header.layer.zPosition = 0
             }
-                
+            
         }else {
             if profilePicture.layer.zPosition >= header.layer.zPosition{
-                header.layer.zPosition = 2
+                header.layer.zPosition = 0
             }
         }
         
         tableView.layer.transform = tableViewTransform
-        //tableView.layer.transform = tableViewScale
         header.layer.transform = headerTransform
         profilePicture.layer.transform = avatarTransform
     }
@@ -211,4 +277,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBAction func tapSignOut(_ sender: UIButton) {
         GIDSignIn.sharedInstance().disconnect()
     }
+    
 }
+
+

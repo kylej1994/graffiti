@@ -164,5 +164,10 @@ class User : Mappable {
         if let bio = user?.getBio() {
             try self.setBio(bio)
         }
+        print("GIMME AN IMAGE")
+        if let imageTag = user?.getImageTag() {
+            print("We got an image back!")
+            self.setTagImage(imageTag)
+        }
     }
 }
