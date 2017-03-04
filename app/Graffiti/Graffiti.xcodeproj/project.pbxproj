@@ -43,6 +43,10 @@
 		B33B07CC1E4AB6D2007025FB /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33B07CB1E4AB6D2007025FB /* Post.swift */; };
 		B33B07D01E4ACA8F007025FB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33B07CF1E4ACA8F007025FB /* User.swift */; };
 		B35620C31E4D396400F8CC9E /* PostTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35620C21E4D396400F8CC9E /* PostTest.swift */; };
+		B51A11C71E6A706100247627 /* SF-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B51A11C31E6A706100247627 /* SF-Bold.ttf */; };
+		B51A11C81E6A706100247627 /* SF-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B51A11C41E6A706100247627 /* SF-Regular.ttf */; };
+		B51A11C91E6A706100247627 /* SF-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B51A11C51E6A706100247627 /* SF-Thin.ttf */; };
+		B51A11CA1E6A706100247627 /* SF-Ultralight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B51A11C61E6A706100247627 /* SF-Ultralight.ttf */; };
 		D90D7A8C1E4E686700FB5AEE /* RequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90D7A8B1E4E686700FB5AEE /* RequestProtocol.swift */; };
 		D90D7A8D1E4E6ACE00FB5AEE /* RequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90D7A8B1E4E686700FB5AEE /* RequestProtocol.swift */; };
 		D90D7A8F1E4E6C5400FB5AEE /* MockRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90D7A8E1E4E6C5400FB5AEE /* MockRequest.swift */; };
@@ -147,6 +151,10 @@
 		B33B07CB1E4AB6D2007025FB /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		B33B07CF1E4ACA8F007025FB /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		B35620C21E4D396400F8CC9E /* PostTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTest.swift; sourceTree = "<group>"; };
+		B51A11C31E6A706100247627 /* SF-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Bold.ttf"; sourceTree = "<group>"; };
+		B51A11C41E6A706100247627 /* SF-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Regular.ttf"; sourceTree = "<group>"; };
+		B51A11C51E6A706100247627 /* SF-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Thin.ttf"; sourceTree = "<group>"; };
+		B51A11C61E6A706100247627 /* SF-Ultralight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Ultralight.ttf"; sourceTree = "<group>"; };
 		BBE62083E99F119D724F35F1 /* Pods-Graffiti-GraffitiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Graffiti-GraffitiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Graffiti-GraffitiTests/Pods-Graffiti-GraffitiTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C80D2887D5FB884EC3F7D8C2 /* Pods-Graffiti-GraffitiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Graffiti-GraffitiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Graffiti-GraffitiTests/Pods-Graffiti-GraffitiTests.release.xcconfig"; sourceTree = "<group>"; };
 		D90D7A8B1E4E686700FB5AEE /* RequestProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestProtocol.swift; sourceTree = "<group>"; };
@@ -254,6 +262,7 @@
 		AD84BD2F1E4947330020505D /* Graffiti */ = {
 			isa = PBXGroup;
 			children = (
+				B51A11C21E6A704500247627 /* Resources */,
 				D9940E7D1E63D5B200CF00E6 /* Utilities */,
 				D9E63B9E1E4D45CD00EE6C4B /* API */,
 				AD03CF701E4D59B1003D3682 /* Location */,
@@ -349,6 +358,17 @@
 				D9DAACD71E5CCA2C00A4AF57 /* OnboardingViewController.swift */,
 			);
 			name = Login;
+			sourceTree = "<group>";
+		};
+		B51A11C21E6A704500247627 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B51A11C31E6A706100247627 /* SF-Bold.ttf */,
+				B51A11C41E6A706100247627 /* SF-Regular.ttf */,
+				B51A11C51E6A706100247627 /* SF-Thin.ttf */,
+				B51A11C61E6A706100247627 /* SF-Ultralight.ttf */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		D9940E7D1E63D5B200CF00E6 /* Utilities */ = {
@@ -514,7 +534,11 @@
 				AD84BD3B1E4947330020505D /* LaunchScreen.storyboard in Resources */,
 				F744D4131E4E77C300C42677 /* GoogleService-Info.plist in Resources */,
 				AD84BD661E494A020020505D /* TextPost.storyboard in Resources */,
+				B51A11C71E6A706100247627 /* SF-Bold.ttf in Resources */,
 				AD84BD6A1E494AB50020505D /* Feed.storyboard in Resources */,
+				B51A11C91E6A706100247627 /* SF-Thin.ttf in Resources */,
+				B51A11CA1E6A706100247627 /* SF-Ultralight.ttf in Resources */,
+				B51A11C81E6A706100247627 /* SF-Regular.ttf in Resources */,
 				AD84BD381E4947330020505D /* Assets.xcassets in Resources */,
 				AD84BD361E4947330020505D /* Login.storyboard in Resources */,
 				D9DAACD61E5CC98300A4AF57 /* Onboarding.storyboard in Resources */,
