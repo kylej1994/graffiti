@@ -1,13 +1,23 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Regular.ttf">
+            <string>.HelveticaNeueDeskInterface-Regular</string>
+        </array>
+        <array key="SF-Thin.ttf">
+            <string>.HelveticaNeueDeskInterface-Thin</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Onboarding View Controller-->
         <scene sceneID="Bes-v7-aho">
@@ -21,22 +31,38 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nAV-W7-kCF">
-                                <rect key="frame" x="16" y="198" width="343" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo-icon-color" translatesAutoresizingMaskIntoConstraints="NO" id="Zvt-WY-9UY">
+                                <rect key="frame" x="131" y="41" width="113" height="113"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="113" id="ofb-km-FsD"/>
+                                    <constraint firstAttribute="width" secondItem="Zvt-WY-9UY" secondAttribute="height" multiplier="1:1" id="pfU-sV-wBy"/>
+                                </constraints>
+                            </imageView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nAV-W7-kCF">
+                                <rect key="frame" x="16" y="312" width="343" height="21"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name=".HelveticaNeueDeskInterface-Thin" family="SFNS Display" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Please choose a username:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dkW-RP-WfY">
-                                <rect key="frame" x="16" y="169" width="343" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                <nil key="textColor"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose a username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dkW-RP-WfY">
+                                <rect key="frame" x="16" y="283" width="343" height="21"/>
+                                <fontDescription key="fontDescription" name=".HelveticaNeueDeskInterface-Regular" family="SFNS Display" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.066313244049999998" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="dkW-RP-WfY" firstAttribute="leading" secondItem="y2f-Zu-VM6" secondAttribute="leadingMargin" id="4Wm-Sk-C0c"/>
+                            <constraint firstItem="nAV-W7-kCF" firstAttribute="top" secondItem="dkW-RP-WfY" secondAttribute="bottom" constant="8" symbolic="YES" id="B0j-Xz-Plt"/>
+                            <constraint firstItem="Zvt-WY-9UY" firstAttribute="top" secondItem="nMc-n1-JUS" secondAttribute="bottom" constant="21" id="Jzb-gC-5LZ"/>
+                            <constraint firstItem="Zvt-WY-9UY" firstAttribute="centerX" secondItem="nAV-W7-kCF" secondAttribute="centerX" id="Kib-sc-nOO"/>
+                            <constraint firstItem="Zvt-WY-9UY" firstAttribute="width" secondItem="Zvt-WY-9UY" secondAttribute="height" multiplier="1:1" id="dka-hs-9CN"/>
+                            <constraint firstItem="dkW-RP-WfY" firstAttribute="top" secondItem="y2f-Zu-VM6" secondAttribute="top" constant="283" id="fQ7-g3-Esf"/>
+                            <constraint firstItem="dkW-RP-WfY" firstAttribute="leading" secondItem="nAV-W7-kCF" secondAttribute="leading" id="g8s-dq-zOh"/>
+                            <constraint firstItem="Zvt-WY-9UY" firstAttribute="centerX" secondItem="dkW-RP-WfY" secondAttribute="centerX" id="hpE-3F-Day"/>
+                            <constraint firstItem="Zvt-WY-9UY" firstAttribute="centerX" secondItem="y2f-Zu-VM6" secondAttribute="centerX" id="tZM-QX-bdq"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="usernameTextField" destination="nAV-W7-kCF" id="hye-d4-qgO"/>
@@ -47,4 +73,7 @@
             <point key="canvasLocation" x="80.799999999999997" y="84.107946026986511"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="logo-icon-color" width="396" height="396"/>
+    </resources>
 </document>

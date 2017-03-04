@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="HOq-5u-5t8">
-    <device id="retina5_5" orientation="portrait">
+    <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -20,53 +20,51 @@
                         <viewControllerLayoutGuide type="bottom" id="TeT-os-ctb"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="0Dt-sc-TlD">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QOG-ky-ik4" customClass="GIDSignInButton">
-                                <rect key="frame" x="99.666666666666686" y="490" width="215" height="48"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="48" id="2cG-0T-l5d"/>
-                                    <constraint firstAttribute="width" constant="215" id="O1z-Tj-OX4"/>
-                                </constraints>
-                            </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="white-logo" translatesAutoresizingMaskIntoConstraints="NO" id="YsG-Cu-9l4">
-                                <rect key="frame" x="99" y="78" width="216" height="216"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo-icon-color" translatesAutoresizingMaskIntoConstraints="NO" id="YsG-Cu-9l4">
+                                <rect key="frame" x="95" y="78" width="185" height="185"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="YsG-Cu-9l4" secondAttribute="height" multiplier="1:1" id="BwZ-BN-Bib"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Please Sign in to Graffiti" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JNk-44-cJZ">
-                                <rect key="frame" x="20" y="458" width="374" height="24"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QOG-ky-ik4" customClass="GIDSignInButton">
+                                <rect key="frame" x="58" y="559" width="259" height="48"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo-text-white" translatesAutoresizingMaskIntoConstraints="NO" id="zkX-7O-8pZ">
+                                <rect key="frame" x="119" y="261" width="136" height="136"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="136" id="54T-qP-3KB"/>
+                                    <constraint firstAttribute="height" constant="136" id="Z0F-Fp-lUI"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.14901960784313725" green="0.77647058823529413" blue="0.85490196078431369" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="0.066313244049999998" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="JNk-44-cJZ" secondAttribute="trailing" id="0KI-aw-gjg"/>
-                            <constraint firstItem="QOG-ky-ik4" firstAttribute="top" secondItem="JNk-44-cJZ" secondAttribute="bottom" constant="8" id="NaJ-cB-kAt"/>
+                            <constraint firstItem="zkX-7O-8pZ" firstAttribute="top" secondItem="jy5-8U-jGH" secondAttribute="bottom" constant="241" id="3JG-Mi-6Ve"/>
+                            <constraint firstItem="QOG-ky-ik4" firstAttribute="top" secondItem="0Dt-sc-TlD" secondAttribute="top" constant="559" id="NIP-lh-pxU"/>
                             <constraint firstAttribute="trailingMargin" secondItem="YsG-Cu-9l4" secondAttribute="trailing" constant="79" id="Otn-0H-vUO"/>
-                            <constraint firstItem="QOG-ky-ik4" firstAttribute="centerX" secondItem="0Dt-sc-TlD" secondAttribute="centerX" id="aqB-8f-5X2"/>
+                            <constraint firstItem="QOG-ky-ik4" firstAttribute="centerX" secondItem="zkX-7O-8pZ" secondAttribute="centerX" id="SVw-RM-vfv"/>
+                            <constraint firstItem="QOG-ky-ik4" firstAttribute="centerX" secondItem="YsG-Cu-9l4" secondAttribute="centerX" id="VXG-gx-nKF"/>
+                            <constraint firstItem="TeT-os-ctb" firstAttribute="top" secondItem="QOG-ky-ik4" secondAttribute="bottom" constant="60" id="ggc-rW-mrD"/>
                             <constraint firstItem="YsG-Cu-9l4" firstAttribute="top" secondItem="jy5-8U-jGH" secondAttribute="bottom" constant="58" id="jQ7-er-fEU"/>
                             <constraint firstItem="YsG-Cu-9l4" firstAttribute="leading" secondItem="0Dt-sc-TlD" secondAttribute="leadingMargin" constant="79" id="kdo-CT-lN8"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="JNk-44-cJZ" secondAttribute="leading" id="mOc-b6-h4T"/>
-                            <constraint firstItem="JNk-44-cJZ" firstAttribute="top" secondItem="YsG-Cu-9l4" secondAttribute="bottom" constant="164" id="nfO-FO-rPF"/>
+                            <constraint firstItem="QOG-ky-ik4" firstAttribute="leading" secondItem="0Dt-sc-TlD" secondAttribute="leadingMargin" constant="42" id="rh1-fF-JRy"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="btnSignIn" destination="QOG-ky-ik4" id="hRK-9K-q1F"/>
-                        <outlet property="label" destination="JNk-44-cJZ" id="s5S-cb-8AU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0rr-Ba-WwQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2586.9565217391305" y="-127.17391304347827"/>
+            <point key="canvasLocation" x="-2588" y="-127.28635682158921"/>
         </scene>
     </scenes>
     <resources>
-        <image name="white-logo" width="150" height="150"/>
+        <image name="logo-icon-color" width="396" height="396"/>
+        <image name="logo-text-white" width="296" height="296"/>
     </resources>
 </document>
