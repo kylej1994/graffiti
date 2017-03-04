@@ -73,5 +73,12 @@
 	</array>
 	<key>cam</key>
 	<string></string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>SF-Regular.ttf</string>
+		<string>SF-Bold.ttf</string>
+		<string>SF-Thin.ttf</string>
+		<string>SF-Ultralight.ttf</string>
+	</array>
 </dict>
 </plist>
