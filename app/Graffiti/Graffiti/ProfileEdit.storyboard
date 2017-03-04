@@ -29,54 +29,38 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="c1f-DI-W1f" userLabel="Edit Bio">
-                                <rect key="frame" x="15" y="267" width="344" height="165"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Bio:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="icL-Pe-fGN">
+                                <rect key="frame" x="16" y="323" width="343" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="0e2-Jx-NLp"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="LwR-T7-Baw" userLabel="Bio Stack">
+                                <rect key="frame" x="16" y="271" width="343" height="128"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="3ns-zO-cj6" userLabel="Bio Stack View">
-                                        <rect key="frame" x="1" y="0.0" width="343" height="135"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Bio:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="icL-Pe-fGN">
-                                                <rect key="frame" x="0.0" y="0.0" width="343" height="20.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="interactive" text="My name is Judah, I'm just a casual boy looking to do casual things with circular pieces of plastic." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="G8r-ok-ivK">
-                                                <rect key="frame" x="0.0" y="20.5" width="343" height="114.5"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                            </textView>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="5zG-ew-dKG" userLabel="Counter + BioSave">
-                                        <rect key="frame" x="269" y="135" width="75" height="29.5"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="140" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DNx-3A-BhT">
-                                                <rect key="frame" x="0.0" y="0.0" width="29" height="29.5"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="29" id="SOy-6F-PhM"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iud-g5-0L4">
-                                                <rect key="frame" x="41" y="0.0" width="34" height="29.5"/>
-                                                <state key="normal" title="Save"/>
-                                                <connections>
-                                                    <action selector="saveNewBio:" destination="4J0-sp-xOd" eventType="touchUpInside" id="OsZ-8k-OLT"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="interactive" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="G8r-ok-ivK">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="108"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <string key="text">My name is Judah, I'm just a casual boy looking to do casual things with circular pieces of plastic. My bio is exactly 140 characters long !</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                    </textView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="140" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DNx-3A-BhT">
+                                        <rect key="frame" x="314.5" y="108" width="28.5" height="20"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="5zG-ew-dKG" firstAttribute="leading" secondItem="c1f-DI-W1f" secondAttribute="leading" constant="269" id="Y5g-NX-gti"/>
+                                    <constraint firstItem="G8r-ok-ivK" firstAttribute="leading" secondItem="LwR-T7-Baw" secondAttribute="leading" id="G38-zF-M1q"/>
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Zlf-qh-MIc" userLabel="Username Stack View">
-                                <rect key="frame" x="16" y="238" width="209" height="21"/>
+                                <rect key="frame" x="16" y="238.5" width="209" height="20.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Your Username:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yj3-sj-1yc">
                                         <rect key="frame" x="0.0" y="0.0" width="123" height="20.5"/>
@@ -102,7 +86,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yW6-gJ-Fti">
-                                <rect key="frame" x="16" y="87" width="135" height="135"/>
+                                <rect key="frame" x="16" y="87.5" width="135" height="135"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="yW6-gJ-Fti" secondAttribute="height" multiplier="1:1" id="rC5-K2-fj2"/>
                                 </constraints>
@@ -114,17 +98,20 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="3ns-zO-cj6" firstAttribute="top" secondItem="Zlf-qh-MIc" secondAttribute="bottom" constant="8.5" id="3dB-yW-z5W"/>
+                            <constraint firstAttribute="bottom" secondItem="LwR-T7-Baw" secondAttribute="bottom" constant="268" id="3TD-zH-zyc"/>
                             <constraint firstAttribute="leadingMargin" secondItem="yW6-gJ-Fti" secondAttribute="leading" id="8pj-MP-suv"/>
+                            <constraint firstItem="LwR-T7-Baw" firstAttribute="top" secondItem="yj3-sj-1yc" secondAttribute="bottom" constant="12" id="AP2-bQ-cOY"/>
                             <constraint firstAttribute="leadingMargin" secondItem="Zlf-qh-MIc" secondAttribute="leading" id="Al5-1G-KZy"/>
-                            <constraint firstAttribute="bottom" secondItem="c1f-DI-W1f" secondAttribute="bottom" constant="236" id="AoT-52-H1B"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="3ns-zO-cj6" secondAttribute="trailing" id="Fna-Ex-gOl"/>
+                            <constraint firstItem="icL-Pe-fGN" firstAttribute="centerY" secondItem="rUn-UJ-pKN" secondAttribute="centerY" id="Cbb-WW-efw"/>
+                            <constraint firstItem="LwR-T7-Baw" firstAttribute="trailing" secondItem="s5h-gV-NGL" secondAttribute="trailing" id="EKG-wY-ssh"/>
                             <constraint firstAttribute="leadingMargin" secondItem="s5h-gV-NGL" secondAttribute="leading" id="R3b-Yw-kCM"/>
                             <constraint firstItem="Zlf-qh-MIc" firstAttribute="top" secondItem="yW6-gJ-Fti" secondAttribute="bottom" constant="16" id="UW3-7d-hCh"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="3ns-zO-cj6" secondAttribute="leading" id="aQl-L4-0Wo"/>
+                            <constraint firstItem="LwR-T7-Baw" firstAttribute="leading" secondItem="icL-Pe-fGN" secondAttribute="leading" id="Zpv-VB-fDw"/>
                             <constraint firstItem="s5h-gV-NGL" firstAttribute="top" secondItem="2zr-EK-trI" secondAttribute="bottom" constant="21" id="d5Q-BP-iaD"/>
                             <constraint firstItem="yW6-gJ-Fti" firstAttribute="top" secondItem="s5h-gV-NGL" secondAttribute="bottom" constant="20.5" id="dZP-XF-GdU"/>
+                            <constraint firstItem="LwR-T7-Baw" firstAttribute="trailing" secondItem="icL-Pe-fGN" secondAttribute="trailing" id="hp5-Xp-2sW"/>
                             <constraint firstAttribute="trailingMargin" secondItem="yW6-gJ-Fti" secondAttribute="trailing" constant="208" id="pQn-hX-V8H"/>
+                            <constraint firstItem="LwR-T7-Baw" firstAttribute="leading" secondItem="Zlf-qh-MIc" secondAttribute="leading" id="v9Z-eC-mST"/>
                             <constraint firstAttribute="trailingMargin" secondItem="s5h-gV-NGL" secondAttribute="trailing" id="xYa-aT-Ovw"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Zlf-qh-MIc" secondAttribute="trailing" constant="134" id="zET-cr-k2j"/>
                         </constraints>
@@ -132,7 +119,6 @@
                     <connections>
                         <outlet property="CharCountLabel" destination="DNx-3A-BhT" id="XSR-Wo-8k8"/>
                         <outlet property="bioEditor" destination="G8r-ok-ivK" id="lGt-Cl-suS"/>
-                        <outlet property="bioSaveButton" destination="Iud-g5-0L4" id="yde-6a-7Ql"/>
                         <outlet property="profPicButton" destination="yW6-gJ-Fti" id="YtU-H3-E79"/>
                         <outlet property="usernameLabel" destination="z2V-gB-gdK" id="pn7-31-Si2"/>
                     </connections>
