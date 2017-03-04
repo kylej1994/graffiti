@@ -14,8 +14,8 @@ class EditProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var bioEditor: UITextView!
     @IBOutlet weak var bioSaveButton: UIButton!
-    @IBOutlet weak var profilePicture: UIImageView!
-    @IBOutlet weak var profilePictureEditButton: UIButton!
+    //@IBOutlet weak var profilePicture: UIImageView!
+    @IBOutlet weak var profPicButton: UIButton!
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
@@ -41,9 +41,10 @@ class EditProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         usernameLabel.text = user?.getUsername()
         bioEditor.text = user?.getBio()
         CharCountLabel.text = String(charLimit - bioEditor.text.characters.count)
-        profilePicture.image = user?.getImageTag()
-        if(profilePicture.image == nil){
-            profilePicture.image = #imageLiteral(resourceName: "cat-prof-100")
+        if let userPhoto = user?.getImageTag() {
+            profPicButton.setImage(userPhoto, for: .normal)
+        } else {
+            profPicButton.setImage(#imageLiteral(resourceName: "cat-prof-100"), for: .normal)
         }
     }
     
@@ -99,7 +100,8 @@ class EditProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         }
         return
     }
-    @IBAction func editProfilePicture(_ sender: UIButton) {
+    
+    @IBAction func tapProfilePhotoButton(_ sender: UIButton) {
         // UIImagePickerController is a view controller that lets a user pick media from their photo library.
         let imagePickerController = UIImagePickerController()
         
@@ -109,10 +111,8 @@ class EditProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         // Make sure ViewController is notified when the user picks an image.
         imagePickerController.delegate = self
         present(imagePickerController, animated: true, completion: nil)
-        
-        
-
     }
+    
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         // Dismiss the picker if the user canceled.
@@ -126,8 +126,8 @@ class EditProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
             fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
         }
         
-        // Set photoImageView to display the selected image.
-        profilePicture.image = selectedImage
+        // Set photo button to display the selected image.
+        profPicButton.setImage(selectedImage, for: .normal)
         
         let profilePic = selectedImage
         let user = self.user!
