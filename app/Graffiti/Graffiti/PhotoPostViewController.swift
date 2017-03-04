@@ -81,6 +81,9 @@ class PhotoPostViewController: UIViewController, UIImagePickerControllerDelegate
             switch response.result {
             case.success:
                 print("we sent a post with location \(location)")
+                let parentVC = self.presentingViewController
+                let childOfTab = parentVC?.childViewControllers[0].childViewControllers[0] as! FeedTableViewController
+                childOfTab.addPosttoTop(newpost: response.result.value! as Post)
             case .failure(let error):
                 print(error)
             }
