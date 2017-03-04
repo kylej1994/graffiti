@@ -16,6 +16,7 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
     let locationManager = LocationService.sharedInstance
     var currentLatitude: CLLocationDegrees? = CLLocationDegrees()
     var currentLongitude: CLLocationDegrees? = CLLocationDegrees()
+    var cameFrom: FeedTableViewController? = nil
     
     @IBOutlet weak var postTextView: UITextView!
     var barCharCountLabel: UILabel!
@@ -25,6 +26,8 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         locationManager.startUpdatingLocation()
+        cameFrom = self.presentingViewController?.childViewControllers[0].childViewControllers[0] as? FeedTableViewController
+        
 
         postTextView.becomeFirstResponder() // show keyboard
     }
@@ -112,9 +115,7 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
             switch response.result {
             case.success:
                 print("we sent a post with location \(location)")
-                let parentVC = self.presentingViewController
-                let childOfTab = parentVC?.childViewControllers[0].childViewControllers[0] as? FeedTableViewController
-                    childOfTab?.addPostToTop(newpost: response.result.value! as Post)
+                self.cameFrom?.addPostToTop(newpost: response.result.value! as Post)
             case .failure(let error):
                 print(error)
             }
