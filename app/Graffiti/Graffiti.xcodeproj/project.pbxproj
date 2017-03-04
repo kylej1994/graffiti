@@ -45,6 +45,10 @@
 		B33B07CC1E4AB6D2007025FB /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33B07CB1E4AB6D2007025FB /* Post.swift */; };
 		B33B07D01E4ACA8F007025FB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33B07CF1E4ACA8F007025FB /* User.swift */; };
 		B35620C31E4D396400F8CC9E /* PostTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35620C21E4D396400F8CC9E /* PostTest.swift */; };
+		B50C8E631E6A85FB00798D8B /* SF-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B50C8E5F1E6A85FB00798D8B /* SF-Bold.ttf */; };
+		B50C8E641E6A85FB00798D8B /* SF-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B50C8E601E6A85FB00798D8B /* SF-Regular.ttf */; };
+		B50C8E651E6A85FB00798D8B /* SF-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B50C8E611E6A85FB00798D8B /* SF-Thin.ttf */; };
+		B50C8E661E6A85FB00798D8B /* SF-Ultralight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B50C8E621E6A85FB00798D8B /* SF-Ultralight.ttf */; };
 		D90D7A8C1E4E686700FB5AEE /* RequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90D7A8B1E4E686700FB5AEE /* RequestProtocol.swift */; };
 		D90D7A8D1E4E6ACE00FB5AEE /* RequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90D7A8B1E4E686700FB5AEE /* RequestProtocol.swift */; };
 		D90D7A8F1E4E6C5400FB5AEE /* MockRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90D7A8E1E4E6C5400FB5AEE /* MockRequest.swift */; };
@@ -154,6 +158,10 @@
 		B33B07CB1E4AB6D2007025FB /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		B33B07CF1E4ACA8F007025FB /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		B35620C21E4D396400F8CC9E /* PostTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTest.swift; sourceTree = "<group>"; };
+		B50C8E5F1E6A85FB00798D8B /* SF-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Bold.ttf"; sourceTree = "<group>"; };
+		B50C8E601E6A85FB00798D8B /* SF-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Regular.ttf"; sourceTree = "<group>"; };
+		B50C8E611E6A85FB00798D8B /* SF-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Thin.ttf"; sourceTree = "<group>"; };
+		B50C8E621E6A85FB00798D8B /* SF-Ultralight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Ultralight.ttf"; sourceTree = "<group>"; };
 		BBE62083E99F119D724F35F1 /* Pods-Graffiti-GraffitiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Graffiti-GraffitiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Graffiti-GraffitiTests/Pods-Graffiti-GraffitiTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C80D2887D5FB884EC3F7D8C2 /* Pods-Graffiti-GraffitiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Graffiti-GraffitiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Graffiti-GraffitiTests/Pods-Graffiti-GraffitiTests.release.xcconfig"; sourceTree = "<group>"; };
 		D90D7A8B1E4E686700FB5AEE /* RequestProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestProtocol.swift; sourceTree = "<group>"; };
@@ -264,6 +272,7 @@
 		AD84BD2F1E4947330020505D /* Graffiti */ = {
 			isa = PBXGroup;
 			children = (
+				B50C8E5E1E6A85E200798D8B /* Resources */,
 				D985D8E81E6A2C0D0014CDA1 /* Map */,
 				D9940E7D1E63D5B200CF00E6 /* Utilities */,
 				D9E63B9E1E4D45CD00EE6C4B /* API */,
@@ -362,6 +371,17 @@
 				D9DAACD71E5CCA2C00A4AF57 /* OnboardingViewController.swift */,
 			);
 			name = Login;
+			sourceTree = "<group>";
+		};
+		B50C8E5E1E6A85E200798D8B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B50C8E5F1E6A85FB00798D8B /* SF-Bold.ttf */,
+				B50C8E601E6A85FB00798D8B /* SF-Regular.ttf */,
+				B50C8E611E6A85FB00798D8B /* SF-Thin.ttf */,
+				B50C8E621E6A85FB00798D8B /* SF-Ultralight.ttf */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		D985D8E81E6A2C0D0014CDA1 /* Map */ = {
@@ -492,8 +512,6 @@
 				TargetAttributes = {
 					AD84BD2C1E4947330020505D = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = ME42ZMKGYY;
-						DevelopmentTeam = 5WYWR4MS7H;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
@@ -540,9 +558,13 @@
 				AD84BD3B1E4947330020505D /* LaunchScreen.storyboard in Resources */,
 				F744D4131E4E77C300C42677 /* GoogleService-Info.plist in Resources */,
 				AD84BD661E494A020020505D /* TextPost.storyboard in Resources */,
+				B50C8E641E6A85FB00798D8B /* SF-Regular.ttf in Resources */,
 				AD84BD6A1E494AB50020505D /* Feed.storyboard in Resources */,
 				AD84BD381E4947330020505D /* Assets.xcassets in Resources */,
 				AD84BD361E4947330020505D /* Login.storyboard in Resources */,
+				B50C8E661E6A85FB00798D8B /* SF-Ultralight.ttf in Resources */,
+				B50C8E631E6A85FB00798D8B /* SF-Bold.ttf in Resources */,
+				B50C8E651E6A85FB00798D8B /* SF-Thin.ttf in Resources */,
 				D9DAACD61E5CC98300A4AF57 /* Onboarding.storyboard in Resources */,
 				D985D8E71E6A2BFE0014CDA1 /* Map.storyboard in Resources */,
 				AD84BD711E494BD30020505D /* Main.storyboard in Resources */,
@@ -942,9 +964,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = ME42ZMKGYY;
-				DEVELOPMENT_TEAM = 5WYWR4MS7H;
-				DEVELOPMENT_TEAM = ME42ZMKGYY;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -965,7 +985,7 @@
 				INFOPLIST_FILE = Graffiti/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = graffiti.Graffiti;
+				PRODUCT_BUNDLE_IDENTIFIER = graffiti.Graffiti3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Graffiti/Graffiti-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -983,9 +1003,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = ME42ZMKGYY;
-				DEVELOPMENT_TEAM = 5WYWR4MS7H;
-				DEVELOPMENT_TEAM = ME42ZMKGYY;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1006,7 +1024,7 @@
 				INFOPLIST_FILE = Graffiti/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = graffiti.Graffiti;
+				PRODUCT_BUNDLE_IDENTIFIER = graffiti.Graffiti3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Graffiti/Graffiti-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
@@ -1141,9 +1159,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = ME42ZMKGYY;
-				DEVELOPMENT_TEAM = 5WYWR4MS7H;
-				DEVELOPMENT_TEAM = ME42ZMKGYY;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1164,7 +1180,7 @@
 				INFOPLIST_FILE = Graffiti/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = graffiti.Graffiti;
+				PRODUCT_BUNDLE_IDENTIFIER = graffiti.Graffiti3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Graffiti/Graffiti-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1266,9 +1282,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = ME42ZMKGYY;
-				DEVELOPMENT_TEAM = 5WYWR4MS7H;
-				DEVELOPMENT_TEAM = ME42ZMKGYY;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1289,7 +1303,7 @@
 				INFOPLIST_FILE = Graffiti/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = graffiti.Graffiti;
+				PRODUCT_BUNDLE_IDENTIFIER = graffiti.Graffiti3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Graffiti/Graffiti-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
