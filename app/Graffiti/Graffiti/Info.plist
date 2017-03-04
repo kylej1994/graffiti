@@ -59,6 +59,13 @@
 	<string>used to post photo images </string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Allow Graffiti to use your location so you can post and view graffiti!</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>SF-Regular.ttf</string>
+		<string>SF-Bold.ttf</string>
+		<string>SF-Thin.ttf</string>
+		<string>SF-Ultralight.ttf</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -73,12 +80,5 @@
 	</array>
 	<key>cam</key>
 	<string></string>
-	<key>UIAppFonts</key>
-	<array>
-		<string>SF-Regular.ttf</string>
-		<string>SF-Bold.ttf</string>
-		<string>SF-Thin.ttf</string>
-		<string>SF-Ultralight.ttf</string>
-	</array>
 </dict>
 </plist>

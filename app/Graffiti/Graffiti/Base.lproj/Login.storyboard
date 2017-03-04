@@ -40,24 +40,11 @@
                                 <rect key="frame" x="35" y="551" width="304" height="48"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" misplaced="YES" text="Username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JNk-44-cJZ">
-                                <rect key="frame" x="35" y="523" width="144" height="25"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="25" id="uOx-AH-007"/>
-                                    <constraint firstAttribute="width" constant="144" id="x2e-Oi-cxQ"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.066313244047619027" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="JNk-44-cJZ" firstAttribute="leading" secondItem="0Dt-sc-TlD" secondAttribute="leadingMargin" constant="29" id="0Xy-9U-wdd"/>
                             <constraint firstItem="i4U-A5-ZOa" firstAttribute="top" secondItem="YsG-Cu-9l4" secondAttribute="bottom" constant="29" id="CKz-4K-ymS"/>
-                            <constraint firstItem="QOG-ky-ik4" firstAttribute="top" secondItem="JNk-44-cJZ" secondAttribute="bottom" constant="3" id="ISd-Km-Ezt"/>
                             <constraint firstAttribute="trailingMargin" secondItem="YsG-Cu-9l4" secondAttribute="trailing" constant="79" id="Otn-0H-vUO"/>
-                            <constraint firstItem="JNk-44-cJZ" firstAttribute="leading" secondItem="QOG-ky-ik4" secondAttribute="leading" id="Rxa-yf-F9R"/>
                             <constraint firstItem="QOG-ky-ik4" firstAttribute="centerX" secondItem="YsG-Cu-9l4" secondAttribute="centerX" id="Yd5-dv-mbb"/>
                             <constraint firstItem="QOG-ky-ik4" firstAttribute="leading" secondItem="0Dt-sc-TlD" secondAttribute="leadingMargin" constant="35" id="gUv-ec-EiS"/>
                             <constraint firstItem="YsG-Cu-9l4" firstAttribute="top" secondItem="jy5-8U-jGH" secondAttribute="bottom" constant="58" id="jQ7-er-fEU"/>
@@ -70,7 +57,6 @@
                     </view>
                     <connections>
                         <outlet property="btnSignIn" destination="QOG-ky-ik4" id="hRK-9K-q1F"/>
-                        <outlet property="label" destination="JNk-44-cJZ" id="s5S-cb-8AU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0rr-Ba-WwQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
