@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="HOq-5u-5t8">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -20,21 +20,25 @@
                         <viewControllerLayoutGuide type="bottom" id="TeT-os-ctb"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="0Dt-sc-TlD">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo-icon-color" translatesAutoresizingMaskIntoConstraints="NO" id="YsG-Cu-9l4">
-                                <rect key="frame" x="95" y="78" width="185" height="185"/>
+                                <rect key="frame" x="99" y="78" width="216" height="216"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="YsG-Cu-9l4" secondAttribute="height" multiplier="1:1" id="BwZ-BN-Bib"/>
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QOG-ky-ik4" customClass="GIDSignInButton">
-                                <rect key="frame" x="58" y="559" width="259" height="48"/>
+                                <rect key="frame" x="117" y="636" width="180" height="40"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="1oo-b9-nef"/>
+                                    <constraint firstAttribute="width" constant="180" id="qGf-dP-ZfK"/>
+                                </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo-text-white" translatesAutoresizingMaskIntoConstraints="NO" id="zkX-7O-8pZ">
-                                <rect key="frame" x="119" y="261" width="136" height="136"/>
+                                <rect key="frame" x="139" y="261" width="136" height="136"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="136" id="54T-qP-3KB"/>
                                     <constraint firstAttribute="height" constant="136" id="Z0F-Fp-lUI"/>
@@ -44,14 +48,12 @@
                         <color key="backgroundColor" red="0.12837818242269117" green="0.12837818242269117" blue="0.12837818242269117" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="zkX-7O-8pZ" firstAttribute="top" secondItem="jy5-8U-jGH" secondAttribute="bottom" constant="241" id="3JG-Mi-6Ve"/>
-                            <constraint firstItem="QOG-ky-ik4" firstAttribute="top" secondItem="0Dt-sc-TlD" secondAttribute="top" constant="559" id="NIP-lh-pxU"/>
+                            <constraint firstItem="TeT-os-ctb" firstAttribute="top" secondItem="QOG-ky-ik4" secondAttribute="bottom" constant="60" id="K5R-qr-7pL"/>
                             <constraint firstAttribute="trailingMargin" secondItem="YsG-Cu-9l4" secondAttribute="trailing" constant="79" id="Otn-0H-vUO"/>
-                            <constraint firstItem="QOG-ky-ik4" firstAttribute="centerX" secondItem="zkX-7O-8pZ" secondAttribute="centerX" id="SVw-RM-vfv"/>
-                            <constraint firstItem="QOG-ky-ik4" firstAttribute="centerX" secondItem="YsG-Cu-9l4" secondAttribute="centerX" id="VXG-gx-nKF"/>
-                            <constraint firstItem="TeT-os-ctb" firstAttribute="top" secondItem="QOG-ky-ik4" secondAttribute="bottom" constant="60" id="ggc-rW-mrD"/>
+                            <constraint firstItem="zkX-7O-8pZ" firstAttribute="centerX" secondItem="0Dt-sc-TlD" secondAttribute="centerX" id="dOh-Xj-Xev"/>
+                            <constraint firstItem="QOG-ky-ik4" firstAttribute="centerX" secondItem="0Dt-sc-TlD" secondAttribute="centerX" id="hiY-98-I3P"/>
                             <constraint firstItem="YsG-Cu-9l4" firstAttribute="top" secondItem="jy5-8U-jGH" secondAttribute="bottom" constant="58" id="jQ7-er-fEU"/>
                             <constraint firstItem="YsG-Cu-9l4" firstAttribute="leading" secondItem="0Dt-sc-TlD" secondAttribute="leadingMargin" constant="79" id="kdo-CT-lN8"/>
-                            <constraint firstItem="QOG-ky-ik4" firstAttribute="leading" secondItem="0Dt-sc-TlD" secondAttribute="leadingMargin" constant="42" id="rh1-fF-JRy"/>
                         </constraints>
                     </view>
                     <connections>
