@@ -337,6 +337,18 @@ class FeedTableViewController: UITableViewController {
         }
     }
     
+        func addPosttoTop(newpost: Post){
+            posts.append(newpost)
+            self.tableView.beginUpdates()
+            self.tableView.insertRows(at: [IndexPath(row: posts.count-1, section: 0)], with: .automatic)
+            self.tableView.endUpdates()
+            self.tableView.reloadData()
+            
+        }
+        
+    }
     
-}
+    
+    
+
 

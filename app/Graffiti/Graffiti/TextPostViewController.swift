@@ -112,6 +112,7 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
             switch response.result {
             case.success:
                 print("we sent a post with location \(location)")
+                FeedTableViewController().addPosttoTop(newpost: newPost)
             case .failure(let error):
                 print(error)
             }
