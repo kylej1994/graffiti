@@ -337,7 +337,7 @@ class FeedTableViewController: UITableViewController {
         }
     }
     
-        func addPosttoTop(newpost: Post){
+        func addPostToTop(newpost: Post){
             self.posts.insert(newpost, at: 0)
             self.tableView.beginUpdates()
             self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)

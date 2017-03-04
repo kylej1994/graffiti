@@ -15,7 +15,7 @@ class PhotoPostViewController: UIViewController, UIImagePickerControllerDelegate
     let locationManager = LocationService.sharedInstance
     var currentLatitude: CLLocationDegrees? = CLLocationDegrees()
     var currentLongitude: CLLocationDegrees? = CLLocationDegrees()
-    var camefrom: FeedTableViewController? = nil
+    var cameFrom: FeedTableViewController? = nil
     
 
     override func viewDidLoad() {
@@ -26,7 +26,7 @@ class PhotoPostViewController: UIViewController, UIImagePickerControllerDelegate
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        camefrom = (self.presentingViewController?.childViewControllers[0].childViewControllers[0] as! FeedTableViewController?)!
+        cameFrom = self.presentingViewController?.childViewControllers[0].childViewControllers[0] as? FeedTableViewController
         
         
         
@@ -86,7 +86,7 @@ class PhotoPostViewController: UIViewController, UIImagePickerControllerDelegate
             switch response.result {
             case.success:
                 print("we sent a post with location \(location)")
-                self.camefrom?.addPosttoTop(newpost: response.result.value! as Post)
+                self.cameFrom?.addPostToTop(newpost: response.result.value! as Post)
             case .failure(let error):
                 print(error)
             }
