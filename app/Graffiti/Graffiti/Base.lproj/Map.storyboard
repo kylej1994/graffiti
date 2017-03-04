@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Va8-DG-YXM">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Va8-DG-YXM">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -43,7 +43,7 @@
                             <constraint firstItem="CXT-7e-T0k" firstAttribute="top" secondItem="TRw-j2-PWa" secondAttribute="bottom" id="qgy-GQ-7gj"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Map" id="a3d-qL-Q5Z" userLabel="Map"/>
+                    <tabBarItem key="tabBarItem" title="Map" image="icon-map" id="a3d-qL-Q5Z" userLabel="Map"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="map" destination="TRw-j2-PWa" id="dmG-Vw-2dF"/>
@@ -54,4 +54,7 @@
             <point key="canvasLocation" x="629.60000000000002" y="-170.46476761619192"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="icon-map" width="35" height="35"/>
+    </resources>
 </document>

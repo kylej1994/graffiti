@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="gOu-UN-Bxg">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="gOu-UN-Bxg">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -32,7 +32,7 @@
         <scene sceneID="ovX-lp-JBA">
             <objects>
                 <viewControllerPlaceholder storyboardName="UserProfile" id="4zO-DJ-obg" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="xUY-kL-veh"/>
+                    <tabBarItem key="tabBarItem" title="Item" image="icon-profile" selectedImage="icon-profile" id="xUY-kL-veh"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4eB-WL-Bbr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -42,7 +42,7 @@
         <scene sceneID="dSl-sf-4FZ">
             <objects>
                 <viewControllerPlaceholder storyboardName="Feed" id="ltR-nt-Xlc" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="0v7-XJ-M7H"/>
+                    <tabBarItem key="tabBarItem" title="Item" image="icon-feed" selectedImage="icon-feed" id="0v7-XJ-M7H"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5XL-cr-zeR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -52,11 +52,16 @@
         <scene sceneID="tQU-Xh-iZa">
             <objects>
                 <viewControllerPlaceholder storyboardName="Map" id="zAg-rd-ZIa" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="uum-EQ-3ba" userLabel="Map"/>
+                    <tabBarItem key="tabBarItem" title="Item" image="icon-map" selectedImage="icon-map" id="uum-EQ-3ba" userLabel="Map"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AU8-nW-2WQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="631" y="-170"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="icon-feed" width="32" height="32"/>
+        <image name="icon-map" width="35" height="35"/>
+        <image name="icon-profile" width="35" height="35"/>
+    </resources>
 </document>
