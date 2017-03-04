@@ -9,6 +9,7 @@
 import UIKit
 import GoogleSignIn
 import Alamofire
+import CoreLocation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
