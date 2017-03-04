@@ -26,9 +26,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     let offset_B_LabelHeader:CGFloat = 95.0 // At this offset the Black label reaches the Header
     let distance_W_LabelHeader:CGFloat = 35.0 // The distance between the bottom of the Header and the top of the White Label
     
-    var distScrolled:CGFloat = 0.0
+    var tableViewHeight:Int = 0
     let bounds = UIScreen.main.bounds
-    
+
+    var fullScreenTableView:Bool = false
     
     @IBOutlet weak var header: UIView!
     @IBOutlet weak var headerLabel: UILabel!
@@ -45,11 +46,17 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         
-        //self.contentInset.top = 20
-        self.edgesForExtendedLayout = [];
-        self.extendedLayoutIncludesOpaqueBars = false;
-        self.automaticallyAdjustsScrollViewInsets = false;
+        if(fullScreenTableView){
+            var tableViewTransform = CATransform3DIdentity
+            let height = bounds.size.height
+            tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -150, 0)
+            tableView.frame.size = CGSize(tableView.contentSize.width, height) //and vice versa when keyboard is dismissed
+            tableView.layer.transform = tableViewTransform
+            print("ran thru here")
+        }
         
         addStatusBarBackgroundView(viewController: self)
         
@@ -61,9 +68,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         
         getPostsByUser()
-        
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
         
         headerLabel.text = user?.getUsername()
         bioLabel.text = user?.getBio()
@@ -76,16 +80,24 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         // self sizing table view cells
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 150
+        
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //self.contentInset.top = 20
-        self.edgesForExtendedLayout = [];
-        self.extendedLayoutIncludesOpaqueBars = false;
-        self.automaticallyAdjustsScrollViewInsets = false;
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         
+        if(fullScreenTableView){
+            var tableViewTransform = CATransform3DIdentity
+            let height = bounds.size.height
+            tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -150, 0)
+            tableView.frame.size = CGSize(tableView.contentSize.width, height + 80) //and vice versa when keyboard is dismissed
+            tableView.layer.transform = tableViewTransform
+            print("ran thru here!!")
+        }
         addStatusBarBackgroundView(viewController: self)
         
         if let user = appDelegate.currentUser {
@@ -96,9 +108,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         
         getPostsByUser()
-        
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
         
         headerLabel.text = user?.getUsername()
         bioLabel.text = user?.getBio()
@@ -136,7 +145,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         let offset = scrollView.contentOffset.y
-        distScrolled = offset
         var avatarTransform = CATransform3DIdentity
         var headerTransform = CATransform3DIdentity
         var tableViewTransform = CATransform3DIdentity
@@ -156,14 +164,16 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         if(tHeight > height){
             if(offset < 150.0){
                 tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -offset, 0)
-                print("RAN HERE!")
                 if(offset > 0.0){
-                    print("ran here!")
                     tableView.frame.size = CGSize(tableView.contentSize.width, height - offset + 80) //and vice versa when keyboard is dismissed
+                    
+                    fullScreenTableView = false
                 }
             } else {
-                print("ran thru here")
                 tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -150, 0)
+                tableView.frame.size = CGSize(tableView.contentSize.width, height - 80) //and vice versa when keyboard is dismissed
+                
+                fullScreenTableView = true
             }
         }
         // Avatar -----------
