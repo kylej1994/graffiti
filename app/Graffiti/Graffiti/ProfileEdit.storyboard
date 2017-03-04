@@ -27,7 +27,7 @@
                                 <rect key="frame" x="16" y="265" width="343" height="157"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="LwR-T7-Baw" userLabel="Bio Stack">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="137"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="157"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Bio:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="icL-Pe-fGN">
                                                 <rect key="frame" x="0.0" y="0.0" width="68" height="20"/>
@@ -39,7 +39,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="interactive" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="G8r-ok-ivK">
-                                                <rect key="frame" x="0.0" y="20" width="343" height="117"/>
+                                                <rect key="frame" x="0.0" y="20" width="343" height="137"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <string key="text">My name is Judah, I'm just a casual boy looking to do casual things with circular pieces of plastic. My bio is exactly 140 characters long !</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -51,12 +51,6 @@
                                             <constraint firstAttribute="trailing" secondItem="G8r-ok-ivK" secondAttribute="trailing" id="KXK-AY-fY4"/>
                                         </constraints>
                                     </stackView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="140" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DNx-3A-BhT">
-                                        <rect key="frame" x="314.5" y="137" width="28.5" height="20"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="LwR-T7-Baw" firstAttribute="leading" secondItem="Zhx-AZ-aIe" secondAttribute="leading" id="5Pd-Ut-FFF"/>
@@ -118,7 +112,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="CharCountLabel" destination="DNx-3A-BhT" id="XSR-Wo-8k8"/>
                         <outlet property="bioEditor" destination="G8r-ok-ivK" id="lGt-Cl-suS"/>
                         <outlet property="profPicButton" destination="yW6-gJ-Fti" id="YtU-H3-E79"/>
                         <outlet property="saveButton" destination="bNX-ya-kNf" id="Hu2-gj-27P"/>

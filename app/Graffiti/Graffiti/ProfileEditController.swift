@@ -19,7 +19,8 @@ class EditProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
-    @IBOutlet weak var CharCountLabel: UILabel!
+    var barCharCountLabel: UILabel!
+    
     
     let charLimit = 140
     
@@ -28,8 +29,10 @@ class EditProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //Do any additional setup arter loading the view, typically from a nib
-        CharCountLabel.isHidden = true
+        
+        createCharCounterLabel()
+        addToolBarToKeyboard()
+        
         if let user = appDelegate.currentUser {
             print("app delegate current user can be unwrapped")
             self.user = user
@@ -42,7 +45,7 @@ class EditProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         usernameLabel.text = user?.getUsername()
         bio = user?.getBio()
         bioEditor.text = bio
-        CharCountLabel.text = String(charLimit - bioEditor.text.characters.count)
+        barCharCountLabel.text = String(charLimit - bioEditor.text.characters.count)
         if let userPhoto = user?.getImageTag() {
             profPicButton.setImage(userPhoto, for: .normal)
         } else {
@@ -72,13 +75,13 @@ class EditProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         }
         
         if(numberOfChars > charLimit){
-            CharCountLabel.textColor = UIColor.red
-            CharCountLabel.text = String(charLimit - numberOfChars)
+            barCharCountLabel.textColor = UIColor.red
+            barCharCountLabel.text = String(charLimit - numberOfChars)
             saveButton.isEnabled = false
         } else {
             bio = bioEditor.text
-            CharCountLabel.textColor = UIColor.darkGray
-            CharCountLabel.text = String(charLimit - numberOfChars)
+            barCharCountLabel.textColor = UIColor.darkGray
+            barCharCountLabel.text = String(charLimit - numberOfChars)
             saveButton.isEnabled = true
         }
         return true
@@ -179,9 +182,25 @@ class EditProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        CharCountLabel.isHidden = false
         bioEditor.text = user?.getBio()
         bioEditor.textColor = UIColor.black
         
+    }
+    
+    func createCharCounterLabel() {
+        barCharCountLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 30, height: 22))
+        barCharCountLabel.textColor = UIColor.darkGray
+        barCharCountLabel.text = "140"
+    }
+    
+    func addToolBarToKeyboard() {
+        let postToolbar = UIToolbar(frame: CGRect(x: 0,y: 0, width: self.view.frame.size.width, height: 50))
+        postToolbar.barStyle = .default
+        // flexible space necessary for right alignment
+        let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        let charCountItem = UIBarButtonItem(customView: barCharCountLabel)
+        postToolbar.items = [flexible, charCountItem]
+        postToolbar.sizeToFit()
+        bioEditor.inputAccessoryView = postToolbar
     }
 }
