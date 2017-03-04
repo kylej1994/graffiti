@@ -26,6 +26,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     let offset_B_LabelHeader:CGFloat = 95.0 // At this offset the Black label reaches the Header
     let distance_W_LabelHeader:CGFloat = 35.0 // The distance between the bottom of the Header and the top of the White Label
     
+    var distScrolled:CGFloat = 0.0
+    let bounds = UIScreen.main.bounds
+    
+    
     @IBOutlet weak var header: UIView!
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var bioLabel: UILabel!
@@ -132,6 +136,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         let offset = scrollView.contentOffset.y
+        distScrolled = offset
         var avatarTransform = CATransform3DIdentity
         var headerTransform = CATransform3DIdentity
         var tableViewTransform = CATransform3DIdentity
@@ -146,20 +151,19 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         // Table View -----------
         let tHeight = tableView.contentSize.height
         
-        let bounds = UIScreen.main.bounds
         let height = bounds.size.height
         
         if(tHeight > height){
             if(offset < 150.0){
-            
-            
                 tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -offset, 0)
+                print("RAN HERE!")
                 if(offset > 0.0){
+                    print("ran here!")
                     tableView.frame.size = CGSize(tableView.contentSize.width, height - offset + 80) //and vice versa when keyboard is dismissed
                 }
             } else {
+                print("ran thru here")
                 tableViewTransform = CATransform3DTranslate(tableViewTransform, 0, -150, 0)
-            
             }
         }
         // Avatar -----------
@@ -263,6 +267,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBAction func tapSignOut(_ sender: UIButton) {
         GIDSignIn.sharedInstance().disconnect()
     }
+    
 }
 
 

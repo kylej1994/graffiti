@@ -143,11 +143,11 @@ class EditProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         // Set photo button to display the selected image.
         profPicButton.setImage(selectedImage, for: .normal)
         
-        let profilePic = selectedImage
         let user = self.user!
+        user.setTagImage(selectedImage)
         
-        do {
-            user.setTagImage(profilePic)
+        if(user.getImageTag() != nil){
+            print("the image was updated")
         }
         
         API.sharedInstance.updateUser(user: user) { res in
