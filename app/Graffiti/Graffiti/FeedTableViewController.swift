@@ -22,6 +22,12 @@ class FeedTableViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         locationManager.startUpdatingLocation()
+        
+        let logo = UIImage(named: "logo-text-black.pdf")
+        let imageView = UIImageView(image:logo)
+        // let screenSize: CGRect = UIScreen.main.bounds
+        // imageView.frame = CGRect(x: 0, y: 0, width: screenSize.width * 0.15, height: screenSize.height * 0.15)
+        self.navigationItem.titleView = imageView
 
         // refresh feed every time we show the tab
         // self.getPostsByLocation()
