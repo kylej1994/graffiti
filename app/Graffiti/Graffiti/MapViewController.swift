@@ -13,6 +13,8 @@ class MapViewController: UIViewController {
     let locationManager = LocationService.sharedInstance
     @IBOutlet weak var map: MKMapView!
     var initialDelta: Double!
+    var annotations: [Annotation] = []
+    var circle: MKCircle!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +26,10 @@ class MapViewController: UIViewController {
         centerAroundUser()
         addCircle()
         addAnnoations()
+        
+        locationManager.addListener() { _ in
+            self.updateCircle()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -73,20 +79,24 @@ class MapViewController: UIViewController {
     
 
     
-    private func addAnnoations() {
+    func addAnnoations() {
         getCoordinates() { coordinates in
             let annotations = coordinates.map() { (coordinate) -> Annotation in
                 return Annotation(coordinate: coordinate.coordinate)
             }
+            
+            self.annotations = self.annotations + annotations
             self.map.addAnnotations(annotations)
         }
     }
+    
+    func clearAnnotations() {
+        map.removeAnnotations(self.annotations)
+        self.annotations.removeAll()
+    }
 
     private func getCoordinates(handler: @escaping ([CLLocation]) -> Void) {
-        guard let currentLoc = getCurrentLocation() else {
-            return
-        }
-        
+        let currentLoc = map.centerCoordinate
         let span = map.region.span
         let radius = degreesToMiles(span.latitudeDelta)
         
@@ -110,12 +120,23 @@ class MapViewController: UIViewController {
             return
         }
         
-        let circle = MKCircle(center: currentLoc, radius: milesToMeter(1))
+        circle = MKCircle(center: currentLoc, radius: milesToMeter(1))
         self.map.add(circle)
+    }
+    
+    private func updateCircle() {
+        map.remove(circle)
+        addCircle()
+    }
+    
+    //MARK: Action
+    @IBAction func goToCurrentLocation(_ sender: Any) {
+        centerAroundUser(animated: true)
     }
 }
 
 extension MapViewController: MKMapViewDelegate {
+    // Render Overlays
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if let circleOverlay = overlay as? MKCircle {
             let circleRenderer = MKCircleRenderer(overlay: circleOverlay)
@@ -127,5 +148,12 @@ extension MapViewController: MKMapViewDelegate {
         }
         
         return MKOverlayRenderer()
+    }
+    
+    // Map view changed
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        // TODO more efficient way of doing this
+        clearAnnotations()
+        addAnnoations()
     }
 }

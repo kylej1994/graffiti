@@ -19,6 +19,8 @@ import CoreLocation
  * getLatitude() and getLongitude() to get the latest location
  */
 
+typealias LocationServiceHandler = (CLLocation) -> Void
+
 class LocationService: NSObject, CLLocationManagerDelegate {
     
     // classes share LocationService and do not create separate instances (singleton)
@@ -26,6 +28,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     static let sharedInstance = LocationService()
     var locationManager : LocationManagerProtocol
     var currentLocation: CLLocation?
+    var listeners: [LocationServiceHandler] = []
     // min distance (meters) device must move horizontally for update event to be generated
     let distanceFilter: CLLocationDistance = 100
     
@@ -63,6 +66,10 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         locationManager.stopUpdatingLocation()
     }
     
+    func addListener(listener: @escaping LocationServiceHandler) {
+        listeners.append(listener)
+    }
+    
     // MARK: LocationManagerDelegate functions
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -77,6 +84,10 @@ class LocationService: NSObject, CLLocationManagerDelegate {
             return
         }
         self.currentLocation = location
+        
+        for listener in listeners {
+            listener(location)
+        }
     }
 
 }
