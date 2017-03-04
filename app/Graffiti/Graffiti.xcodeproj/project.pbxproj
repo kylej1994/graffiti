@@ -469,7 +469,7 @@
 				TargetAttributes = {
 					AD84BD2C1E4947330020505D = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 5WYWR4MS7H;
+						DevelopmentTeam = ME42ZMKGYY;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
@@ -901,7 +901,7 @@
 				API_BASE_URL = "http://127.0.0.1:5000";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = 5WYWR4MS7H;
+				DEVELOPMENT_TEAM = ME42ZMKGYY;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -921,11 +921,13 @@
 				);
 				INFOPLIST_FILE = Graffiti/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = graffiti.Graffiti;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Graffiti/Graffiti-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -936,7 +938,7 @@
 				API_BASE_URL = "http://docker-graffiti-dev.us-east-2.elasticbeanstalk.com";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = 5WYWR4MS7H;
+				DEVELOPMENT_TEAM = ME42ZMKGYY;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -956,10 +958,12 @@
 				);
 				INFOPLIST_FILE = Graffiti/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = graffiti.Graffiti;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Graffiti/Graffiti-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -1080,7 +1084,7 @@
 				API_BASE_URL = "http://127.0.0.1:5000";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = 5WYWR4MS7H;
+				DEVELOPMENT_TEAM = ME42ZMKGYY;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1100,11 +1104,13 @@
 				);
 				INFOPLIST_FILE = Graffiti/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = graffiti.Graffiti;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Graffiti/Graffiti-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Staging;
 		};
@@ -1195,7 +1201,7 @@
 				API_BASE_URL = "http://127.0.0.1:5000";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = 5WYWR4MS7H;
+				DEVELOPMENT_TEAM = ME42ZMKGYY;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1215,11 +1221,13 @@
 				);
 				INFOPLIST_FILE = Graffiti/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = graffiti.Graffiti;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Graffiti/Graffiti-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Dev;
 		};
