@@ -15,6 +15,8 @@ class EditProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     @IBOutlet weak var bioEditor: UITextView!
     @IBOutlet weak var profPicButton: UIButton!
     
+    @IBOutlet weak var saveButton: UIBarButtonItem!
+    
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     @IBOutlet weak var CharCountLabel: UILabel!
@@ -27,7 +29,7 @@ class EditProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     override func viewDidLoad() {
         super.viewDidLoad()
         //Do any additional setup arter loading the view, typically from a nib
-        
+        CharCountLabel.isHidden = true
         if let user = appDelegate.currentUser {
             print("app delegate current user can be unwrapped")
             self.user = user
@@ -48,11 +50,14 @@ class EditProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         }
     }
     
-    @IBAction func exitEditController(_ sender: UIButton) {
-        saveNewBio(text: bio)
+    @IBAction func didTapCancel(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func didTapSave(_ sender: UIBarButtonItem) {
+        saveNewBio(text: bio)
+        dismiss(animated: true, completion: nil)
+    }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
@@ -62,23 +67,26 @@ class EditProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         if(text == "\n") {
             textView.resignFirstResponder()
             bio = bioEditor.text
+            print("dismissing keyboard: \(bio)")
             return false
         }
         
         if(numberOfChars > charLimit){
             CharCountLabel.textColor = UIColor.red
             CharCountLabel.text = String(charLimit - numberOfChars)
+            saveButton.isEnabled = false
         } else {
+            bio = bioEditor.text
             CharCountLabel.textColor = UIColor.darkGray
             CharCountLabel.text = String(charLimit - numberOfChars)
+            saveButton.isEnabled = true
         }
         return true
     }
     
-    
     func saveNewBio(text: String) {
         let user = self.user!
-        
+        print("saving: \(bio)")
         do {
             try user.setBio(bio)
         } catch {
@@ -171,13 +179,9 @@ class EditProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
+        CharCountLabel.isHidden = false
         bioEditor.text = user?.getBio()
         bioEditor.textColor = UIColor.black
         
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        //Dispose of any resources that can be recreated
     }
 }
