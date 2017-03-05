@@ -9,7 +9,7 @@ from userpost import UserPost
 
 post_api = Blueprint('post_api', __name__)
 
-from graffiti import retrieve_user_from_request
+from graffiti import retrieve_user_from_request, generate_error_response
 from oauth2client import client
 
 fake_dict = dict(
@@ -36,11 +36,6 @@ def validate_text(text):
 	# Correctly count grapheme clusters
 	#return len(textseg.GCStr(text)) <= 140
 	return True
-
-def generate_error_response(message, code):
-	error_response = {}
-	error_response['error'] = message
-	return json.dumps(error_response), code
 
 @post_api.route('/post', methods=['POST'])
 def create_post():

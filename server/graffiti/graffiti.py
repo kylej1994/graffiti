@@ -30,6 +30,11 @@ s3_client = boto3.client('s3', config=cfg,\
     aws_access_key_id=ACCESS_KEY,\
     aws_secret_access_key=SECRET_KEY)
 
+def generate_error_response(message, code):
+	error_response = {}
+	error_response['error'] = message
+	return json.dumps(error_response), code
+
 # common to both post_api and user_api, so definiting it here
 def retrieve_user_from_request(request):
 	info = request.environ['META_INFO']

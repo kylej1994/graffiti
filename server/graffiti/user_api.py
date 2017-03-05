@@ -6,7 +6,7 @@ from user import User
 
 user_api = Blueprint('user_api', __name__)
 
-from graffiti import retrieve_user_from_request
+from graffiti import retrieve_user_from_request, generate_error_response
 
 fake_response = json.dumps(dict(
 		userid=1,
@@ -24,11 +24,6 @@ ERR_403_email = "Emails are immutable."
 ERR_403_update = "User can only update their own information."
 ERR_403_posts = "User can only access their own information."
 ERR_404 = "User not found."
-
-def generate_error_response(message, code):
-	error_response = {}
-	error_response['error'] = message
-	return json.dumps(error_response), code
 
 @user_api.route('/user/login', methods=['GET'])
 def user_login():
