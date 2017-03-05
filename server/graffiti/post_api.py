@@ -9,7 +9,7 @@ from userpost import UserPost
 
 post_api = Blueprint('post_api', __name__)
 
-from graffiti import db
+from graffiti import retrieve_user_from_request
 from oauth2client import client
 
 fake_dict = dict(
@@ -42,14 +42,6 @@ def generate_error_response(message, code):
 	error_response['error'] = message
 	return json.dumps(error_response), code
 
-def retrieve_user_from_request(request):
-	info = request.environ['META_INFO']
-	no_id = request.environ['NOID']
-	bad_token = request.environ['BADTOKEN']
-	if (info is None or no_id or bad_token):
-		return None
-	user = User.get_user_by_google_aud(info['audCode'])
-
 @post_api.route('/post', methods=['POST'])
 def create_post():
 	# no checking of authentication is happening yet...
@@ -65,7 +57,6 @@ def create_post():
 	lat = (float)(data['location']['latitude'])
 
 	user = retrieve_user_from_request(request)
-	print user
 	if (user is None):
 		return generate_error_response(ERR_400, 400)
 
@@ -183,7 +174,7 @@ def get_posts_coordinates():
 @post_api.route('/post/<int:postid>/vote', methods=['PUT'])
 def vote_post(postid):
 	data = request.get_json()
-	
+
 	user = retrieve_user_from_request(request)
 	if (user is None):
 		return generate_error_response(ERR_403_vote, 403)

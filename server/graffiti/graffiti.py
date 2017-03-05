@@ -30,6 +30,15 @@ s3_client = boto3.client('s3', config=cfg,\
     aws_access_key_id=ACCESS_KEY,\
     aws_secret_access_key=SECRET_KEY)
 
+# common to both post_api and user_api, so definiting it here
+def retrieve_user_from_request(request):
+	info = request.environ['META_INFO']
+	no_id = request.environ['NOID']
+	bad_token = request.environ['BADTOKEN']
+	if (info is None or no_id or bad_token):
+		return None
+	
+	return User.get_user_by_google_aud(info['audCode'])
 
 @app.route('/initdb')
 def init_db():
@@ -85,7 +94,7 @@ def fill_db():
 	return 'added sample records\n'
 
 # If its the default db, i.e. the local db
-if not DB or DB == 'postgresql://localhost:mydb':
+if not DB or DB == 'postgresql://localhost/mydb':
 	print init_db()
 	print clear_db_of_everything()
 	print fill_db()
