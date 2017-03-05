@@ -1,6 +1,6 @@
 import datetime
 import json
-import textseg
+#import textseg
 
 from flask import Blueprint, request
 from post import Post
@@ -34,12 +34,21 @@ def validate_vote(vote):
 
 def validate_text(text):
 	# Correctly count grapheme clusters
-	return len(textseg.GCStr(text)) <= 140
+	#return len(textseg.GCStr(text)) <= 140
+	return True
 
 def generate_error_response(message, code):
 	error_response = {}
 	error_response['error'] = message
 	return json.dumps(error_response), code
+
+def retrieve_user_from_request(request):
+	info = request.environ['META_INFO']
+	no_id = request.environ['NOID']
+	bad_token = request.environ['BADTOKEN']
+	if (info is None or no_id or bad_token):
+		return None
+	user = User.get_user_by_google_aud(info['audCode'])
 
 @post_api.route('/post', methods=['POST'])
 def create_post():
@@ -55,13 +64,8 @@ def create_post():
 	lon = (float)(data['location']['longitude'])
 	lat = (float)(data['location']['latitude'])
 
-	info = request.environ['META_INFO']
-	no_id = request.environ['NOID']
-	bad_token = request.environ['BADTOKEN']
-	if (info is None or no_id or bad_token):
-		return generate_error_response(ERR_400, 400)
-	user = User.get_user_by_google_aud(info['audCode'])
-
+	user = retrieve_user_from_request(request)
+	print user
 	if (user is None):
 		return generate_error_response(ERR_400, 400)
 
@@ -97,13 +101,7 @@ def delete_post(postid):
 	if (post is None):
 		return generate_error_response(ERR_404, 404)
 
-	info = request.environ['META_INFO']
-	no_id = request.environ['NOID']
-	bad_token = request.environ['BADTOKEN']
-	if (info is None or no_id or bad_token):
-		return generate_error_response(ERR_403, 403)
-	user = User.get_user_by_google_aud(info['audCode'])
-
+	user = retrieve_user_from_request(request)
 	if (user is None or post.get_poster_id() != user.get_user_id()):
 		return generate_error_response(ERR_403, 403)
 
@@ -119,13 +117,7 @@ def get_post(postid):
 	if (post is None):
 		return generate_error_response(ERR_404, 404)
 
-	info = request.environ['META_INFO']
-	no_id = request.environ['NOID']
-	bad_token = request.environ['BADTOKEN']
-	if (info is None or no_id or bad_token):
-		return generate_error_response(ERR_403, 403)
-	user = User.get_user_by_google_aud(info['audCode'])
-
+	user = retrieve_user_from_request(request)
 	if (user is None):
 		return generate_error_response(ERR_403, 403)
 
@@ -141,13 +133,7 @@ def get_post_by_location():
 	radius = 1 # TODO find out what number this should be
 	posts = Post.find_posts_within_loc(lon, lat, radius)
 
-	info = request.environ['META_INFO']
-	no_id = request.environ['NOID']
-	bad_token = request.environ['BADTOKEN']
-	if (info is None or no_id or bad_token):
-		return generate_error_response(ERR_403, 403)
-	user = User.get_user_by_google_aud(info['audCode'])
-
+	user = retrieve_user_from_request(request)
 	if (user is None):
 		return generate_error_response(ERR_403, 403)
 
@@ -197,13 +183,8 @@ def get_posts_coordinates():
 @post_api.route('/post/<int:postid>/vote', methods=['PUT'])
 def vote_post(postid):
 	data = request.get_json()
-	info = request.environ['META_INFO']
-	no_id = request.environ['NOID']
-	bad_token = request.environ['BADTOKEN']
-	if (info is None or no_id or bad_token):
-		return generate_error_response(ERR_403_vote, 403)
-	user = User.get_user_by_google_aud(info['audCode'])
-
+	
+	user = retrieve_user_from_request(request)
 	if (user is None):
 		return generate_error_response(ERR_403_vote, 403)
 
