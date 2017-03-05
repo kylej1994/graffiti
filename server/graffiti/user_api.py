@@ -98,7 +98,8 @@ def update_user(userid):
 		 data['phone_number'] != user.get_phone_number()):
 		good_inputs = good_inputs and user.set_phone_number(data['phone_number'])
 
-	if ('bio' in data and data['bio'] != user.get_bio()):
+	if ('bio' in data and data['bio'] != user.get_bio()
+			and len(data['bio']) < 160):
 		good_inputs = good_inputs and user.set_bio(data['bio'])
 
 	# save user before check email because even if user wants to change email,
