@@ -6,7 +6,7 @@ from user import User
 
 user_api = Blueprint('user_api', __name__)
 
-from graffiti import db
+from graffiti import retrieve_user_from_request, generate_error_response
 
 fake_response = json.dumps(dict(
 		userid=1,
@@ -25,27 +25,20 @@ ERR_403_update = "User can only update their own information."
 ERR_403_posts = "User can only access their own information."
 ERR_404 = "User not found."
 
-def generate_error_response(message, code):
-	error_response = {}
-	error_response['error'] = message
-	return json.dumps(error_response), code
-
-
 @user_api.route('/user/login', methods=['GET'])
 def user_login():
-	info = request.environ['META_INFO']
-	no_id = request.environ['NOID']
-	bad_token = request.environ['BADTOKEN']
-	if (info is None or no_id or bad_token):
-		return generate_error_response(ERR_401, 401)
-	user = User.get_user_by_google_aud(info['audCode'])
-
+	user = retrieve_user_from_request(request)
 	if (user):
 		# login with idToken passed in through header
 		is_new_user = False
 	else:
-		# create new User object with next userId and empty strings for other fields
-		user = User('', info['audCode'], '', '', info['email'], '')
+		# create new User object with next userId and empty strings for other
+		# fields. Also checks for necessary parameters to make a new user
+		info = request.environ['META_INFO']
+		if ('audCode' in info and 'email' in info):
+			user = User('', info['audCode'], '', '', info['email'], '')
+		else:
+			return generate_error_response(ERR_401, 401)
 		user.save_user()
 		is_new_user = True
 
@@ -77,13 +70,7 @@ def update_user(userid):
 	if (not data or 'userid' not in data):
 		return generate_error_response(ERR_400_invalid, 400)
 
-	info = request.environ['META_INFO']
-	no_id = request.environ['NOID']
-	bad_token = request.environ['BADTOKEN']
-	if (info is None or no_id or bad_token):
-		return generate_error_response(ERR_403_update, 403)
-	user = User.get_user_by_google_aud(info['audCode'])
-
+	user = retrieve_user_from_request(request)
 	if (user is None):
 		return generate_error_response(ERR_404, 404)
 
@@ -111,7 +98,8 @@ def update_user(userid):
 		 data['phone_number'] != user.get_phone_number()):
 		good_inputs = good_inputs and user.set_phone_number(data['phone_number'])
 
-	if ('bio' in data and data['bio'] != user.get_bio()):
+	if ('bio' in data and data['bio'] != user.get_bio()
+			and len(data['bio']) < 160):
 		good_inputs = good_inputs and user.set_bio(data['bio'])
 
 	# save user before check email because even if user wants to change email,
@@ -144,10 +132,8 @@ def get_user_posts(userid):
 	info = request.environ['META_INFO']
 	no_id = request.environ['NOID']
 	bad_token = request.environ['BADTOKEN']
-	if (info is None or no_id or bad_token):
-		return generate_error_response(ERR_403_posts, 403)
-
-	if (user.get_google_aud() != info['audCode']):
+	if (info is None or no_id or bad_token
+			or user.get_google_aud() != info['audCode']):
 		return generate_error_response(ERR_403_posts, 403)
 
 	posts = Post.find_user_posts(userid)

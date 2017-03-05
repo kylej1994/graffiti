@@ -1,6 +1,6 @@
 import datetime
 import json
-import textseg
+#import textseg
 
 from flask import Blueprint, request
 from post import Post
@@ -9,7 +9,7 @@ from userpost import UserPost
 
 post_api = Blueprint('post_api', __name__)
 
-from graffiti import db
+from graffiti import retrieve_user_from_request, generate_error_response
 from oauth2client import client
 
 fake_dict = dict(
@@ -34,16 +34,11 @@ def validate_vote(vote):
 
 def validate_text(text):
 	# Correctly count grapheme clusters
-	return len(textseg.GCStr(text)) <= 140
-
-def generate_error_response(message, code):
-	error_response = {}
-	error_response['error'] = message
-	return json.dumps(error_response), code
+	#return len(textseg.GCStr(text)) <= 140
+	return True
 
 @post_api.route('/post', methods=['POST'])
 def create_post():
-	# no checking of authentication is happening yet...
 	data = request.get_json()
 
 	# checks for necessary data params
@@ -52,16 +47,14 @@ def create_post():
 			or 'longitude' not in data['location']):
 		return generate_error_response(ERR_400, 400)
 
-	lon = (float)(data['location']['longitude'])
-	lat = (float)(data['location']['latitude'])
-
-	info = request.environ['META_INFO']
-	no_id = request.environ['NOID']
-	bad_token = request.environ['BADTOKEN']
-	if (info is None or no_id or bad_token):
+	try:
+		lon = (float)(data['location']['longitude'])
+		lat = (float)(data['location']['latitude'])
+	except:
+		# Either the params are not there, or they are not convertable to floats
 		return generate_error_response(ERR_400, 400)
-	user = User.get_user_by_google_aud(info['audCode'])
 
+	user = retrieve_user_from_request(request)
 	if (user is None):
 		return generate_error_response(ERR_400, 400)
 
@@ -97,13 +90,7 @@ def delete_post(postid):
 	if (post is None):
 		return generate_error_response(ERR_404, 404)
 
-	info = request.environ['META_INFO']
-	no_id = request.environ['NOID']
-	bad_token = request.environ['BADTOKEN']
-	if (info is None or no_id or bad_token):
-		return generate_error_response(ERR_403, 403)
-	user = User.get_user_by_google_aud(info['audCode'])
-
+	user = retrieve_user_from_request(request)
 	if (user is None or post.get_poster_id() != user.get_user_id()):
 		return generate_error_response(ERR_403, 403)
 
@@ -119,13 +106,7 @@ def get_post(postid):
 	if (post is None):
 		return generate_error_response(ERR_404, 404)
 
-	info = request.environ['META_INFO']
-	no_id = request.environ['NOID']
-	bad_token = request.environ['BADTOKEN']
-	if (info is None or no_id or bad_token):
-		return generate_error_response(ERR_403, 403)
-	user = User.get_user_by_google_aud(info['audCode'])
-
+	user = retrieve_user_from_request(request)
 	if (user is None):
 		return generate_error_response(ERR_403, 403)
 
@@ -133,21 +114,17 @@ def get_post(postid):
 
 @post_api.route('/post', methods=['GET'])
 def get_post_by_location():
-	# no checking of authentication is happening yet...
-
-	# query db for all posts in this area
-	lat = (float)(request.args.get('latitude'))
-	lon = (float)(request.args.get('longitude'))
+	try:
+		# query db for all posts in this area
+		lat = (float)(request.args.get('latitude'))
+		lon = (float)(request.args.get('longitude'))
+	except:
+		# Either the params are not there, or they are not convertable to floats
+		return generate_error_response(ERR_400, 400)
+	
 	radius = 1 # TODO find out what number this should be
 	posts = Post.find_posts_within_loc(lon, lat, radius)
-
-	info = request.environ['META_INFO']
-	no_id = request.environ['NOID']
-	bad_token = request.environ['BADTOKEN']
-	if (info is None or no_id or bad_token):
-		return generate_error_response(ERR_403, 403)
-	user = User.get_user_by_google_aud(info['audCode'])
-
+	user = retrieve_user_from_request(request)
 	if (user is None):
 		return generate_error_response(ERR_403, 403)
 
@@ -161,14 +138,16 @@ def get_post_by_location():
 
 @post_api.route('/post/coordinates', methods=['GET'])
 def get_posts_coordinates():
-	# no checking of authentication is happening yet...
+	try:
+		# query db for all posts in this area
+		lat = (float)(request.args.get('latitude'))
+		lon = (float)(request.args.get('longitude'))
+		radius = (float)(request.args.get('radius'))
+	except:
+		# Either the params are not there, or they are not convertable to floats
+		return generate_error_response(ERR_400, 400)
 
-	# query db for all posts in this area
-	lat = (float)(request.args.get('latitude'))
-	lon = (float)(request.args.get('longitude'))
-	radius = (float)(request.args.get('radius'))
 	posts = Post.find_posts_within_loc(lon, lat, radius)
-
 
 	# This is commented out for now, because it from the wiki that there is no
 	# authentication necessary. This can be changed easily by commenting out
@@ -197,13 +176,8 @@ def get_posts_coordinates():
 @post_api.route('/post/<int:postid>/vote', methods=['PUT'])
 def vote_post(postid):
 	data = request.get_json()
-	info = request.environ['META_INFO']
-	no_id = request.environ['NOID']
-	bad_token = request.environ['BADTOKEN']
-	if (info is None or no_id or bad_token):
-		return generate_error_response(ERR_403_vote, 403)
-	user = User.get_user_by_google_aud(info['audCode'])
 
+	user = retrieve_user_from_request(request)
 	if (user is None):
 		return generate_error_response(ERR_403_vote, 403)
 
