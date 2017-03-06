@@ -1,6 +1,5 @@
 import datetime
 import json
-#import textseg
 
 from flask import Blueprint, request
 from post import Post
@@ -9,7 +8,7 @@ from userpost import UserPost
 
 post_api = Blueprint('post_api', __name__)
 
-from graffiti import retrieve_user_from_request, generate_error_response
+from graffiti import retrieve_user_from_request, generate_error_response, validate_text
 from oauth2client import client
 
 fake_dict = dict(
@@ -31,11 +30,6 @@ ERR_404 = "Post not found."
 
 def validate_vote(vote):
 	return vote == -1 and vote == 1
-
-def validate_text(text):
-	# Correctly count grapheme clusters
-	#return len(textseg.GCStr(text)) <= 140
-	return True
 
 @post_api.route('/post', methods=['POST'])
 def create_post():
