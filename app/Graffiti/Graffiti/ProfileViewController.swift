@@ -50,6 +50,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         getPostsByUser()
         
+        setupEmptyBackgroundView(withMessage: "Loading posts...")
+        
         headerLabel.text = user?.getUsername()
         bioLabel.text = user?.getBio()
         profilePicture.image = user?.getImageTag()
@@ -95,6 +97,39 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         tableView.estimatedRowHeight = 150
     }
     
+    func showNoPostsTable() {
+        setupEmptyBackgroundView(withMessage: "You haven't posted anything yet!")
+        tableView.separatorStyle = .none
+        tableView.backgroundView?.isHidden = false
+    }
+    
+    func setupEmptyBackgroundView(withMessage message: String) {
+        let emptyView = UIView(frame: view.bounds)
+        emptyView.addSubview(label(withMessage: message))
+        tableView.backgroundView = emptyView
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
+    }
+    
+    func setupTableViewForNumRows(_ numRows: Int) {
+        if numRows == 0 {
+            showNoPostsTable()
+        } else {
+            tableView.separatorStyle = .singleLine
+            tableView.backgroundView?.isHidden = true
+        }
+    }
+    
+    func label(withMessage text: String) -> UILabel {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 40))
+        label.text = text
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 20)
+        label.textColor = UIColor.darkGray
+        label.center = CGPoint(view.center.x - 30, view.center.y - 200) // I'm sorry I'm just finnicky
+        return label
+    }
+    
     func showAlert(messageTitle: String, message: String) {
         let alertController = UIAlertController(title: messageTitle, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
@@ -103,7 +138,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func showLoadUserAlert() {
-        showAlert(messageTitle: "Load User Error", message: "There was a problem loading your profile.  Pleasure try again.")
+        showAlert(messageTitle: "Load User Error", message: "There was a problem loading your profile. Please try again.")
     }
     
     func getPostsByUser() {
@@ -133,6 +168,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        setupTableViewForNumRows(self.posts.count)
+        
         return self.posts.count
     }
     
