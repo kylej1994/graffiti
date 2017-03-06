@@ -271,7 +271,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1702" y="-472"/>
+            <point key="canvasLocation" x="1436" y="7"/>
         </scene>
         <!--Feed-->
         <scene sceneID="mjW-Qv-VE0">
@@ -279,7 +279,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ejl-bh-ipv" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Feed" image="icon-feed" selectedImage="icon-feed" id="UfD-gP-5Ci"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="yk6-Wq-tcj">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="yk6-Wq-tcj">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
