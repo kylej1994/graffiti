@@ -50,6 +50,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         getPostsByUser()
         
+        setupEmptyBackgroundView(withMessage: "Loading posts...")
+        
         headerLabel.text = user?.getUsername()
         bioLabel.text = user?.getBio()
         profilePicture.image = user?.getImageTag()
@@ -109,6 +111,15 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         view.layoutIfNeeded()
     }
     
+    func setupTableViewForNumRows(_ numRows: Int) {
+        if numRows == 0 {
+            showNoPostsTable()
+        } else {
+            tableView.separatorStyle = .singleLine
+            tableView.backgroundView?.isHidden = true
+        }
+    }
+    
     func label(withMessage text: String) -> UILabel {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 40))
         label.text = text
@@ -127,7 +138,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func showLoadUserAlert() {
-        showAlert(messageTitle: "Load User Error", message: "There was a problem loading your profile.  Pleasure try again.")
+        showAlert(messageTitle: "Load User Error", message: "There was a problem loading your profile. Please try again.")
     }
     
     func getPostsByUser() {
@@ -147,9 +158,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                     let posts = json["posts"] as? [Post] {
                     self.posts = posts
                     self.tableView.reloadData() //essential for table to actually display the data
-                    if posts.count == 0 {
-                        self.showNoPostsTable()
-                    }
                 }
             case .failure(let error):
                 print(error)
@@ -160,6 +168,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        setupTableViewForNumRows(self.posts.count)
+        
         return self.posts.count
     }
     
