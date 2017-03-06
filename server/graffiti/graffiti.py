@@ -21,14 +21,17 @@ app.config['MAX_CONTENT_LENGTH'] = 200 * 1024 * 1024
 db = SQLAlchemy(app)
 app.wsgi_app = auth_Middleware.Auth_MiddleWare(app.wsgi_app)
 
-# obviously will put this somewhere else eventually
-ACCESS_KEY = 'AKIAIDBIJ3JOX3LDGVNQ'
-SECRET_KEY = '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'
+if 'S3_ACCESS_KEY' in os.environ and 'S3_SECRET_KEY' in os.environ:
+	S3_ACCESS_KEY = os.environ['S3_ACCESS_KEY']
+	S3_SECRET_KEY = os.environ['S3_SECRET_KEY']
 
-cfg = botocore.config.Config(signature_version='s3v4')
-s3_client = boto3.client('s3', config=cfg,\
-    aws_access_key_id=ACCESS_KEY,\
-    aws_secret_access_key=SECRET_KEY)
+	cfg = botocore.config.Config(signature_version='s3v4')
+	s3_client = boto3.client('s3', config=cfg,\
+	    aws_access_key_id=S3_ACCESS_KEY,\
+	    aws_secret_access_key=S3_SECRET_KEY)
+else:
+	print('Couldn\'t connect to s3 client')
+
 
 def generate_error_response(message, code):
 	error_response = {}
