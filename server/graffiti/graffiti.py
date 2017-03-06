@@ -2,6 +2,7 @@ import boto3
 import botocore
 import json
 import auth_Middleware
+import textseg
 
 from flask import Flask, request, abort
 from oauth2client import client, crypt
@@ -29,6 +30,10 @@ cfg = botocore.config.Config(signature_version='s3v4')
 s3_client = boto3.client('s3', config=cfg,\
     aws_access_key_id=ACCESS_KEY,\
     aws_secret_access_key=SECRET_KEY)
+
+def validate_text(text):
+	# Correctly count grapheme clusters
+	return len(textseg.GCStr(text)) <= 140
 
 def generate_error_response(message, code):
 	error_response = {}
