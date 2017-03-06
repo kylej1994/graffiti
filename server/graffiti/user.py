@@ -27,7 +27,7 @@ class User(db.Model):
     phone_number = db.Column(db.String(100))
     name = db.Column(db.String(100))
     email = db.Column(db.String(100), unique=True)
-    bio = db.Column(db.String(160))
+    bio = db.Column(db.Unicode(140))
     join_timestamp = db.Column(db.DateTime)
     has_been_suspended = db.Column(db.Boolean)
 
