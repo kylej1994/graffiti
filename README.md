@@ -11,6 +11,13 @@ Team
 * [Ron](https://github.com/Ronovan)
 * [Willem](https://github.com/longendyke)
 
+Documentation
+-------------
+* [API Docs](https://github.com/kylej1994/graffiti/wiki/API-Documentation)
+* [iOS Unit Test Info](iOSTestInfo.md)
+* [Milestone 3B Readme](https://github.com/kylej1994/graffiti/wiki/Milestone-3.b)
+* [Milestone 4B Readme](https://github.com/kylej1994/graffiti/wiki/Milestone-4.b)
+
 Contributing
 ------------
-See our [contribution guide](CONTRIBUTION.md).
+See our [contribution guide](CONTRIBUTING.md).
