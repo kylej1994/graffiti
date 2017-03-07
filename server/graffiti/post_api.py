@@ -45,13 +45,14 @@ def generate_error_response(message, code):
 def create_post():
 	# no checking of authentication is happening yet...
 	data = request.get_json()
+	print 'got here1'
 
 	# checks for necessary data params
 	if ('location' not in data or 'type' not in data
 			or 'latitude' not in data['location']
 			or 'longitude' not in data['location']):
 		return generate_error_response(ERR_400, 400)
-
+	print 'got here2'
 	lon = (float)(data['location']['longitude'])
 	lat = (float)(data['location']['latitude'])
 
@@ -60,11 +61,12 @@ def create_post():
 	bad_token = request.environ['BADTOKEN']
 	if (info is None or no_id or bad_token):
 		return generate_error_response(ERR_400, 400)
+	print 'got here1'
 	user = User.get_user_by_google_aud(info['audCode'])
 
 	if (user is None):
 		return generate_error_response(ERR_400, 400)
-
+	print 'got here2'
 	user_id = user.get_user_id()
 
 	# create a new post and add it to the db session
