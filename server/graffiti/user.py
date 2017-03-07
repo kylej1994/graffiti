@@ -106,7 +106,7 @@ class User(db.Model):
                 Key=key)
             return True
         except Exception, e:
-            print e
+            logger.error(e)
             return False
 
     def get_img_file_loc(self):
