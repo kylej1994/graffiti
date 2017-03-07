@@ -42,10 +42,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         addStatusBarBackgroundView(viewController: self)
         
         if let user = appDelegate.currentUser {
-            print("app delegate current user can be unwrapped")
             self.user = user
-        } else {
-            //print("sadness")
         }
         
         getPostsByUser()
@@ -76,12 +73,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         addStatusBarBackgroundView(viewController: self)
         
         if let user = appDelegate.currentUser {
-            print("app delegate current user can be unwrapped")
             self.user = user
-        } else {
-            //print("sadness")
         }
-        
+
         getPostsByUser()
         
         headerLabel.text = user?.getUsername()
@@ -207,6 +201,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
             imageCell.feedImageView.image = post.getImage()
             imageCell.feedImageView.tag = indexPath.row
+            
+            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapImage(sender:)))
+            imageCell.feedImageView.addGestureRecognizer(tapGestureRecognizer)
         }
         
         setRatingDisplay(cell: cell, post: post)
@@ -240,6 +237,21 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func tapSignOut(_ sender: UIButton) {
         GIDSignIn.sharedInstance().disconnect()
+    }
+    
+    func didTapImage(sender: UITapGestureRecognizer) {
+        let cellImageView = sender.view as! UIImageView
+        
+        let storyboard = UIStoryboard(name: "Feed", bundle: nil)
+        if let detailVC = storyboard.instantiateViewController(withIdentifier: "ImageDetailViewController") as? ImageDetailViewController {
+            detailVC.modalTransitionStyle = .crossDissolve
+            detailVC.view.backgroundColor = UIColor.black
+            
+            present(detailVC, animated: true, completion: nil)
+            if let theImage = cellImageView.image {
+                detailVC.imageDetailView.image = theImage
+            }
+        }
     }
     
 }
