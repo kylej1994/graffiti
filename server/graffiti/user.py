@@ -22,7 +22,7 @@ class User(db.Model):
     # Only alnum or _ in username. Between 3 and 25 chars inclusive
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     google_aud = db.Column(db.String(100), unique=True)
-    username = db.Column(db.String(100), unique=True)
+    username = db.Column(db.String(20), unique=True)
     # Presented as 10 digits in a row. Dashes will be removed in validation.
     phone_number = db.Column(db.String(100))
     name = db.Column(db.String(100))
