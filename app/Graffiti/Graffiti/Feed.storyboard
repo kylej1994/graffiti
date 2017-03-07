@@ -233,10 +233,10 @@
                                 <rect key="frame" x="16" y="28" width="343" height="619"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NVe-0h-90D">
-                                <rect key="frame" x="319" y="36" width="30" height="30"/>
+                                <rect key="frame" x="324" y="36" width="25" height="25"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="dJV-74-WeC"/>
-                                    <constraint firstAttribute="width" constant="30" id="sCy-fc-POC"/>
+                                    <constraint firstAttribute="height" constant="25" id="dJV-74-WeC"/>
+                                    <constraint firstAttribute="width" constant="25" id="sCy-fc-POC"/>
                                 </constraints>
                                 <state key="normal" image="close-white-100">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -279,7 +279,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ejl-bh-ipv" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Feed" image="icon-feed" selectedImage="icon-feed" id="UfD-gP-5Ci"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="yk6-Wq-tcj">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="yk6-Wq-tcj">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
