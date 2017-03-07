@@ -43,7 +43,7 @@
                                 <segment title="First"/>
                                 <segment title="Second"/>
                             </segments>
-                            <color key="tintColor" red="0.039215686274509803" green="0.73725490196078436" blue="0.76470588235294112" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="0.12837818240000001" green="0.12837818240000001" blue="0.12837818240000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         </segmentedControl>
                     </navigationItem>
                     <connections>
@@ -73,8 +73,8 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What's happening around you?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VrV-ob-PML">
-                                <rect key="frame" x="21" y="50" width="338" height="21"/>
-                                <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="19"/>
+                                <rect key="frame" x="21" y="50" width="338" height="23.5"/>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -122,7 +122,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="RVC-fD-mP6" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="7dE-YI-aW6">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="7dE-YI-aW6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="JNe-59-DoU">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="JNe-59-DoU">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -23,58 +23,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="Zhx-AZ-aIe">
-                                <rect key="frame" x="16" y="265" width="343" height="157"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="LwR-T7-Baw" userLabel="Bio Stack">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="157"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Bio:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="icL-Pe-fGN">
-                                                <rect key="frame" x="0.0" y="0.0" width="68" height="20"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="20" id="0e2-Jx-NLp"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="interactive" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="G8r-ok-ivK">
-                                                <rect key="frame" x="0.0" y="20" width="343" height="137"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <string key="text">My name is Judah, I'm just a casual boy looking to do casual things with circular pieces of plastic. My bio is exactly 140 characters long !</string>
-                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
-                                            </textView>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstItem="G8r-ok-ivK" firstAttribute="leading" secondItem="LwR-T7-Baw" secondAttribute="leading" id="G38-zF-M1q"/>
-                                            <constraint firstAttribute="trailing" secondItem="G8r-ok-ivK" secondAttribute="trailing" id="KXK-AY-fY4"/>
-                                        </constraints>
-                                    </stackView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="LwR-T7-Baw" firstAttribute="leading" secondItem="Zhx-AZ-aIe" secondAttribute="leading" id="5Pd-Ut-FFF"/>
-                                </constraints>
-                            </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Zlf-qh-MIc" userLabel="Username Stack View">
-                                <rect key="frame" x="16" y="233" width="209" height="21"/>
+                                <rect key="frame" x="16" y="377" width="173.5" height="31"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Your Username:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yj3-sj-1yc">
-                                        <rect key="frame" x="0.0" y="0.0" width="123" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Username:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yj3-sj-1yc">
+                                        <rect key="frame" x="0.0" y="0.0" width="87.5" height="31"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z2V-gB-gdK">
-                                        <rect key="frame" x="133" y="0.0" width="76" height="21"/>
+                                        <rect key="frame" x="97.5" y="0.0" width="76" height="31"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yW6-gJ-Fti">
-                                <rect key="frame" x="16" y="80" width="135" height="135"/>
+                                <rect key="frame" x="66" y="84" width="243" height="243"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="yW6-gJ-Fti" secondAttribute="height" multiplier="1:1" id="rC5-K2-fj2"/>
                                 </constraints>
@@ -83,29 +50,68 @@
                                     <action selector="tapProfilePhotoButton:" destination="4J0-sp-xOd" eventType="touchUpInside" id="5D9-9j-a74"/>
                                 </connections>
                             </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="Zhx-AZ-aIe">
+                                <rect key="frame" x="16" y="418" width="343" height="199"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bio (editable):" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="icL-Pe-fGN">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="0e2-Jx-NLp"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="interactive" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="G8r-ok-ivK">
+                                        <rect key="frame" x="0.0" y="40" width="343" height="159"/>
+                                        <color key="backgroundColor" red="0.9812580958549223" green="0.9812580958549223" blue="0.9812580958549223" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="159.5" id="Fns-uQ-mwp"/>
+                                        </constraints>
+                                        <string key="text">My name is Judah, I'm just a casual boy looking to do casual things with circular pieces of plastic. My bio is exactly 140 characters long !</string>
+                                        <color key="textColor" red="0.049728788860103679" green="0.049728788860103679" blue="0.049728788860103679" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                    </textView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="icL-Pe-fGN" firstAttribute="leading" secondItem="G8r-ok-ivK" secondAttribute="leading" id="Ahq-st-1W2"/>
+                                    <constraint firstItem="G8r-ok-ivK" firstAttribute="width" secondItem="icL-Pe-fGN" secondAttribute="width" id="AxX-Yg-sO6"/>
+                                    <constraint firstItem="G8r-ok-ivK" firstAttribute="leading" secondItem="Zhx-AZ-aIe" secondAttribute="leading" id="MYa-Mq-r70"/>
+                                </constraints>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iZN-13-Kok">
+                                <rect key="frame" x="107" y="329" width="160" height="30"/>
+                                <state key="normal" title="Edit your profile picture"/>
+                                <connections>
+                                    <action selector="tapProfilePhotoButton:" destination="4J0-sp-xOd" eventType="touchUpInside" id="4ih-C2-mY0"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="leadingMargin" secondItem="yW6-gJ-Fti" secondAttribute="leading" id="8pj-MP-suv"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="Zlf-qh-MIc" secondAttribute="leading" id="Al5-1G-KZy"/>
-                            <constraint firstAttribute="bottom" secondItem="Zhx-AZ-aIe" secondAttribute="bottom" constant="245" id="DYw-Ph-evx"/>
-                            <constraint firstItem="Zlf-qh-MIc" firstAttribute="top" secondItem="yW6-gJ-Fti" secondAttribute="bottom" constant="18" id="Sbd-7h-S5z"/>
-                            <constraint firstItem="Zhx-AZ-aIe" firstAttribute="leading" secondItem="Zlf-qh-MIc" secondAttribute="leading" id="Stv-SQ-OUx"/>
-                            <constraint firstItem="yW6-gJ-Fti" firstAttribute="top" secondItem="2zr-EK-trI" secondAttribute="bottom" constant="16" id="TN5-7V-vQN"/>
-                            <constraint firstItem="Zhx-AZ-aIe" firstAttribute="trailing" secondItem="rUn-UJ-pKN" secondAttribute="trailingMargin" id="YS4-D6-kAX"/>
-                            <constraint firstItem="Zhx-AZ-aIe" firstAttribute="top" secondItem="yj3-sj-1yc" secondAttribute="bottom" constant="11.5" id="gDe-16-N4O"/>
-                            <constraint firstItem="LwR-T7-Baw" firstAttribute="top" secondItem="yj3-sj-1yc" secondAttribute="bottom" constant="11.5" id="iDd-oQ-mPE"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="yW6-gJ-Fti" secondAttribute="trailing" constant="208" id="pQn-hX-V8H"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Zlf-qh-MIc" secondAttribute="trailing" constant="134" id="zET-cr-k2j"/>
+                            <constraint firstItem="Zhx-AZ-aIe" firstAttribute="leading" secondItem="Zlf-qh-MIc" secondAttribute="leading" id="5uS-Yv-v4b"/>
+                            <constraint firstItem="yW6-gJ-Fti" firstAttribute="leading" secondItem="rUn-UJ-pKN" secondAttribute="leadingMargin" constant="50" id="8pj-MP-suv"/>
+                            <constraint firstItem="Zlf-qh-MIc" firstAttribute="leading" secondItem="rUn-UJ-pKN" secondAttribute="leadingMargin" id="Al5-1G-KZy"/>
+                            <constraint firstItem="yj3-sj-1yc" firstAttribute="top" secondItem="iZN-13-Kok" secondAttribute="bottom" constant="18" id="BrY-w1-hqr"/>
+                            <constraint firstItem="iZN-13-Kok" firstAttribute="top" secondItem="yW6-gJ-Fti" secondAttribute="bottom" constant="2" id="CfM-b9-RHa"/>
+                            <constraint firstItem="Zhx-AZ-aIe" firstAttribute="top" secondItem="Zlf-qh-MIc" secondAttribute="bottom" constant="10" id="NWF-cn-2Al"/>
+                            <constraint firstItem="yW6-gJ-Fti" firstAttribute="bottom" secondItem="Zlf-qh-MIc" secondAttribute="top" constant="-50" id="Oqn-IB-qw1"/>
+                            <constraint firstItem="yW6-gJ-Fti" firstAttribute="top" secondItem="2zr-EK-trI" secondAttribute="bottom" constant="20" id="bjp-Tg-AWt"/>
+                            <constraint firstItem="Zhx-AZ-aIe" firstAttribute="bottom" secondItem="rUn-UJ-pKN" secondAttribute="bottom" constant="-50" id="etT-Bc-Jn5"/>
+                            <constraint firstItem="iZN-13-Kok" firstAttribute="centerX" secondItem="yW6-gJ-Fti" secondAttribute="centerX" id="hQg-xF-Kfy"/>
+                            <constraint firstItem="yW6-gJ-Fti" firstAttribute="trailing" secondItem="rUn-UJ-pKN" secondAttribute="trailingMargin" constant="-50" id="pQn-hX-V8H"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="G8r-ok-ivK" secondAttribute="trailing" id="r2e-6J-5uD"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Edit Profile" id="Jqy-e4-F2i">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="Le0-8d-1KK">
+                            <color key="tintColor" red="0.12837818240000001" green="0.12837818240000001" blue="0.12837818240000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <connections>
                                 <action selector="didTapCancel:" destination="4J0-sp-xOd" id="820-pt-yBL"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="bNX-ya-kNf">
+                        <barButtonItem key="rightBarButtonItem" title="Save" style="done" id="bNX-ya-kNf">
                             <connections>
                                 <action selector="didTapSave:" destination="4J0-sp-xOd" id="Ddc-Rg-jtF"/>
                             </connections>

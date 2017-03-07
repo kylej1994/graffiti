@@ -42,9 +42,16 @@ class EditProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         
         bioEditor.delegate = self
         
+        profPicButton.layer.cornerRadius = 0.5 * profPicButton.bounds.size.width
+        profPicButton.clipsToBounds = true
+        
         usernameLabel.text = user?.getUsername()
         bio = user?.getBio()
-        bioEditor.text = bio
+        if(bio != nil){
+            bioEditor.text = bio
+        } else {
+            bioEditor.text = "Enter a bio!"
+        }
         barCharCountLabel.text = String(charLimit - bioEditor.text.characters.count)
         if let userPhoto = user?.getImageTag() {
             profPicButton.setImage(userPhoto, for: .normal)
