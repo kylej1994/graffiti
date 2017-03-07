@@ -190,12 +190,25 @@ class Post(db.Model):
         return db.session.query(Post).filter(Post.poster_id==user_id).order_by(\
             Post.created_at.desc()).all()
 
-    # finds posts within a certain radius of a coordinate
+    # finds image posts within a certain radius of a coordinate
+    # cap of 15 image posts
     @staticmethod
-    def find_posts_within_loc(lon, lat, radius):
+    def find_image_posts_within_loc(lon, lat, radius):
         distance = radius * 0.014472 #convert to degrees
         loc = 'POINT(' + str(lat) + ' ' + str(lon) + ')'
         wkt_element = WKTElement(loc, srid=4326)
-        posts = db.session.query(Post).filter(ST_DFullyWithin(Post.loc,\
-            wkt_element, distance)).order_by(Post.created_at.desc()).all()
+        posts = db.session.query(Post).filter(Post.post_type.describe()==1,\
+            ST_DFullyWithin(Post.loc, wkt_element, distance))\
+            .order_by(Post.created_at.desc()).limit(15)
+        return posts
+
+    # finds posts within a certain radius of a coordinate
+    @staticmethod
+    def find_text_posts_within_loc(lon, lat, radius):
+        distance = radius * 0.014472 #convert to degrees
+        loc = 'POINT(' + str(lat) + ' ' + str(lon) + ')'
+        wkt_element = WKTElement(loc, srid=4326)
+        posts = db.session.query(Post).filter(Post.post_type.describe()==0,\
+            ST_DFullyWithin(Post.loc, wkt_element, distance))\
+            .order_by(Post.created_at.desc()).all()
         return posts

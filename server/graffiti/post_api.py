@@ -123,17 +123,25 @@ def get_post_by_location():
 		return generate_error_response(ERR_400, 400)
 	
 	radius = 1 # TODO find out what number this should be
-	posts = Post.find_posts_within_loc(lon, lat, radius)
+	image_posts = Post.find_image_posts_within_loc(lon, lat, radius)
+	text_posts = Post.find_text_posts_within_loc(lon, lat, radius)
 	user = retrieve_user_from_request(request)
 	if (user is None):
 		return generate_error_response(ERR_403, 403)
 
+	user_id = user.get_user_id()
+
 	to_ret = {}
 	jsonified_posts = []
-	for post in posts:
+	for post in image_posts:
 		jsonified_posts.append(json.loads(post.to_json_fields_for_FE(\
-			user.get_user_id())))
-	to_ret['posts'] = jsonified_posts
+			user_id)))
+	for post in text_posts:
+		jsonified_posts.append(json.loads(post.to_json_fields_for_FE(\
+			user_id)))
+	to_ret['posts'] = sorted(jsonified_posts,
+		key=lambda k: k['postid'], reverse=True)
+	# to_ret['posts'] = jsonified_posts
 	return json.dumps(to_ret), 200
 
 @post_api.route('/post/coordinates', methods=['GET'])
