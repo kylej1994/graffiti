@@ -233,10 +233,10 @@
                                 <rect key="frame" x="16" y="28" width="343" height="619"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NVe-0h-90D">
-                                <rect key="frame" x="319" y="36" width="30" height="30"/>
+                                <rect key="frame" x="324" y="36" width="25" height="25"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="dJV-74-WeC"/>
-                                    <constraint firstAttribute="width" constant="30" id="sCy-fc-POC"/>
+                                    <constraint firstAttribute="height" constant="25" id="dJV-74-WeC"/>
+                                    <constraint firstAttribute="width" constant="25" id="sCy-fc-POC"/>
                                 </constraints>
                                 <state key="normal" image="close-white-100">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -271,7 +271,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1702" y="-472"/>
+            <point key="canvasLocation" x="1436" y="7"/>
         </scene>
         <!--Feed-->
         <scene sceneID="mjW-Qv-VE0">
