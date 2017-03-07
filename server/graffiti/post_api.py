@@ -1,6 +1,6 @@
 import datetime
 import json
-#import textseg
+import textseg
 
 from flask import Blueprint, request
 from post import Post
@@ -34,8 +34,7 @@ def validate_vote(vote):
 
 def validate_text(text):
 	# Correctly count grapheme clusters
-	#return len(textseg.GCStr(text)) <= 140
-	return True
+	return len(textseg.GCStr(text)) <= 140
 
 @post_api.route('/post', methods=['POST'])
 def create_post():
