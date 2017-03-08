@@ -17,8 +17,11 @@ class FeedTableViewController: UITableViewController {
     var requestInflight: Bool = false
 
     let timestamp = "time ago"
+    let pageSize = 15
+    
     let autoLoadRatio: CGFloat = 0.8
     var endOfAutoLoad: Bool = false
+    var autoLoadFooter: AutoLoadFooter!
     
     var currentLatitude: CLLocationDegrees? = CLLocationDegrees()
     var currentLongitude: CLLocationDegrees? = CLLocationDegrees()
@@ -58,6 +61,11 @@ class FeedTableViewController: UITableViewController {
         //  and the contents of its cells to determine each cell’s height
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 150
+        
+        
+        autoLoadFooter = AutoLoadFooter(frame: CGRect(0, 0, tableView.bounds.width, 100))
+        autoLoadFooter.isHidden = true
+        tableView.tableFooterView = autoLoadFooter
     }
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -78,8 +86,16 @@ class FeedTableViewController: UITableViewController {
                 getPostsByLocation(nextPage: true)
             }
         }
-        
-
+    }
+    
+    func resetAutoLoad() {
+        self.endOfAutoLoad = false
+        self.autoLoadFooter.setLoadingText()
+    }
+    
+    func setNoMorePosts() {
+        self.endOfAutoLoad = true
+        self.autoLoadFooter.setNoMoreText()
     }
     
     
@@ -102,12 +118,11 @@ class FeedTableViewController: UITableViewController {
         
         // Reset
         if !nextPage {
-            self.endOfAutoLoad = false
+            self.resetAutoLoad()
         }
         
         // Get Posts
         api.getPosts(longitude: currentLongitude, latitude: currentLatitude, before: before) { response in
-            self.requestInflight = false
             switch response.result {
             case .success:
                 if let json = response.result.value as? [String:Any],
@@ -124,7 +139,7 @@ class FeedTableViewController: UITableViewController {
                             self.posts = self.posts + posts
                             self.tableView.insertRows(at: indexPaths, with: .none)
                         } else {
-                            self.endOfAutoLoad = true
+                            self.setNoMorePosts()
                         }
                     } else {
                         self.posts = posts
@@ -132,7 +147,6 @@ class FeedTableViewController: UITableViewController {
                     }
                     
                     self.earliestPostTime = posts.last?.getTimeAdded() ?? self.earliestPostTime
-                    
                     
                     if self.posts.count == 0 {
                         self.showNoPostsTable()
@@ -142,6 +156,8 @@ class FeedTableViewController: UITableViewController {
                 print(error)
                 self.showFeedFailureAlert()
             }
+            
+            self.requestInflight = false
         }
     }
     
@@ -175,6 +191,12 @@ class FeedTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let numRows = posts.count
+        
+        if numRows >= self.pageSize {
+            self.autoLoadFooter.isHidden = false
+        } else {
+            self.autoLoadFooter.isHidden = true
+        }
         
         setupTableViewForNumRows(numRows)
         

@@ -57,6 +57,7 @@
 		D9141CA91E58E71C00FA04D0 /* AuthProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9141CA81E58E71C00FA04D0 /* AuthProtocol.swift */; };
 		D9141CAA1E58E72200FA04D0 /* AuthProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9141CA81E58E71C00FA04D0 /* AuthProtocol.swift */; };
 		D9141CAC1E58E7F800FA04D0 /* MockAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9141CAB1E58E7F800FA04D0 /* MockAuth.swift */; };
+		D921E04F1E70B1FD00A91E99 /* AutoLoadFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D921E04E1E70B1FD00A91E99 /* AutoLoadFooter.swift */; };
 		D985D8DF1E6A173E0014CDA1 /* RoundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D985D8DE1E6A173E0014CDA1 /* RoundImageView.swift */; };
 		D985D8E71E6A2BFE0014CDA1 /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D985D8E51E6A2BFE0014CDA1 /* Map.storyboard */; };
 		D985D8EC1E6A36690014CDA1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D985D8EB1E6A36690014CDA1 /* MapViewController.swift */; };
@@ -168,6 +169,7 @@
 		D90D7A8E1E4E6C5400FB5AEE /* MockRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRequest.swift; sourceTree = "<group>"; };
 		D9141CA81E58E71C00FA04D0 /* AuthProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthProtocol.swift; sourceTree = "<group>"; };
 		D9141CAB1E58E7F800FA04D0 /* MockAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAuth.swift; sourceTree = "<group>"; };
+		D921E04E1E70B1FD00A91E99 /* AutoLoadFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoLoadFooter.swift; sourceTree = "<group>"; };
 		D985D8DE1E6A173E0014CDA1 /* RoundImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundImageView.swift; sourceTree = "<group>"; };
 		D985D8E61E6A2BFE0014CDA1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Map.storyboard; sourceTree = "<group>"; };
 		D985D8EB1E6A36690014CDA1 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -331,6 +333,7 @@
 				ADF54FCB1E63536F00D0B0E0 /* FeedTextCell.swift */,
 				ADF54FCD1E63538100D0B0E0 /* FeedImageCell.swift */,
 				AD79E6E81E64968C005AD9EA /* ImageDetailViewController.swift */,
+				D921E04E1E70B1FD00A91E99 /* AutoLoadFooter.swift */,
 			);
 			name = Feed;
 			sourceTree = "<group>";
@@ -743,6 +746,7 @@
 				D9DAACD81E5CCA2C00A4AF57 /* OnboardingViewController.swift in Sources */,
 				B33B07D01E4ACA8F007025FB /* User.swift in Sources */,
 				AD84BD5F1E4949260020505D /* FeedTableViewController.swift in Sources */,
+				D921E04F1E70B1FD00A91E99 /* AutoLoadFooter.swift in Sources */,
 				AD3E23451E5123A80022C882 /* FeedTableViewCell.swift in Sources */,
 				D985D8EE1E6A42430014CDA1 /* Annotation.swift in Sources */,
 				D90D7A8C1E4E686700FB5AEE /* RequestProtocol.swift in Sources */,
