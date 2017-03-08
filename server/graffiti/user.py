@@ -170,6 +170,7 @@ class User(db.Model):
                 Key=key)['Body'].read().decode('ascii')
         except:
             print('Error retrieving image tag: ' + key)
+            return []
 
     def to_json_fields_for_FE(self, img_tag=[]):
         img_data = []
