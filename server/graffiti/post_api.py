@@ -139,7 +139,9 @@ def get_post_by_location():
 	img_tags = {}
 	for post in posts:
 		poster_id = post.get_poster_id()
-		img_tags[poster_id] = User.find_user_by_id(poster_id).get_image_tag())
+		if poster_id not in img_tags:
+			img_tags[poster_id] = User.find_user_by_id(poster_id)\
+				.get_image_tag()
 
 	user_id = user.get_user_id()
 	to_ret = {}

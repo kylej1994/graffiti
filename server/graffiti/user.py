@@ -163,6 +163,7 @@ class User(db.Model):
             return False
 
     def get_image_tag(self):
+        print 'retrieving image tag for user with id: ' + str(self.user_id)
         key = self.get_s3_key()
         try:
             return s3_client.get_object(\
