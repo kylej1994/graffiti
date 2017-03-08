@@ -146,7 +146,7 @@ class FeedTableViewController: UITableViewController {
                         self.tableView.reloadData()
                     }
                     
-                    self.earliestPostTime = posts.last?.getTimeAdded() ?? self.earliestPostTime
+                    self.earliestPostTime = posts.last?.getTimeAdded()?.addingTimeInterval(-0.001) ?? self.earliestPostTime
                     
                     if self.posts.count == 0 {
                         self.showNoPostsTable()
