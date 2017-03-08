@@ -137,12 +137,13 @@ def get_user_posts(userid):
 		return generate_error_response(ERR_403_posts, 403)
 
 	posts = Post.find_user_posts(userid)
+	img_tag = user.get_image_tag()
 
 	to_rtn = {}
 	posts_arr = []
 	for post in posts:
 		posts_arr.append(json.loads(post.to_json_fields_for_FE(\
-			user.get_user_id())))
+			user.get_user_id(), img_tag)))
 
 	to_rtn['posts'] = posts_arr
 
