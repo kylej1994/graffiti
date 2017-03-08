@@ -106,8 +106,12 @@ def update_user(userid):
 	# the other fields should still be modified.
 	user.save_user()
 
+	# saving image tag because there is no point of uploading it and then
+	# re-downloading it to pass back to the FE
+	img_tag = []
 	if ('img_tag' in data):
-		good_inputs = good_inputs and user.set_image_tag(data['img_tag'])
+		img_tag = data['img_tag']
+		good_inputs = good_inputs and user.set_image_tag(img_tag)
 
 	if ('email' in data and data['email'] != user.get_email()):
 		return generate_error_response(ERR_403_email, 403)
@@ -118,7 +122,7 @@ def update_user(userid):
 	if (not good_inputs):
 		return generate_error_response(ERR_400_invalid, 400)
 
-	return user.to_json_fields_for_FE(), 200
+	return user.to_json_fields_for_FE(img_tag), 200
 
 @user_api.route('/user/<int:userid>/posts', methods=['GET'])
 def get_user_posts(userid):
