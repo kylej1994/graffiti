@@ -1,7 +1,7 @@
 import json
 import sys
 sys.path.append('..')
-from graffiti import db, s3_client
+from graffiti import db, s3_client, logger
 from sqlalchemy import Column, Float, Integer, String
 from sqlalchemy.dialects.postgresql import JSON
 from user import User
@@ -28,6 +28,8 @@ class Post(db.Model):
 
         def describe(self):
             return self.value
+
+    NUM_POSTS_TO_RETURN = 15
 
     post_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     post_type = db.Column(db.Enum(PostType))
@@ -56,7 +58,7 @@ class Post(db.Model):
     def __repr__(self):
         return '<post_id {}>'.format(self.post_id)
 
-    def to_json_fields_for_FE(self, current_user_id):
+    def to_json_fields_for_FE(self, current_user_id, user_img_tag=[]):
         user = User.find_user_by_id(self.poster_id)
         cur_user_vote = UserPost.get_vote_by_ids(current_user_id, self.post_id)
         cur_user_vote = cur_user_vote if cur_user_vote else 0
@@ -70,7 +72,7 @@ class Post(db.Model):
                     Bucket='graffiti-post-images',\
                     Key=key)['Body'].read().decode('ascii')
             except:
-                print('Error retrieving image post: ' + key)
+                logger.error('Error retrieving image post: ' + key)
         return json.dumps(dict(
             postid=self.post_id,
             type=self.post_type.describe(),
@@ -79,7 +81,7 @@ class Post(db.Model):
                 longitude=self.longitude,
                 latitude=self.latitude),
             created_at=self.created_at,
-            poster=json.loads(user.to_json_fields_for_FE()),
+            poster=json.loads(user.to_json_fields_for_FE(user_img_tag)),
             num_votes=self.num_votes,
             current_user_vote=cur_user_vote,
             image=img_data))
@@ -110,7 +112,8 @@ class Post(db.Model):
                     Bucket='graffiti-post-images',\
                     Key=key)
             except:
-                print('Error uploading image post: ' + key)
+                logger.error('Error uploading image post: ' + key)
+
         # if not, do nothing
         # doing this for compatability reasons...wow this code is smelly
 
@@ -192,10 +195,34 @@ class Post(db.Model):
 
     # finds posts within a certain radius of a coordinate
     @staticmethod
-    def find_posts_within_loc(lon, lat, radius):
+    def find_all_posts_within_loc(lon, lat, radius):
         distance = radius * 0.014472 #convert to degrees
         loc = 'POINT(' + str(lat) + ' ' + str(lon) + ')'
         wkt_element = WKTElement(loc, srid=4326)
         posts = db.session.query(Post).filter(ST_DFullyWithin(Post.loc,\
             wkt_element, distance)).order_by(Post.created_at.desc()).all()
+        return posts
+
+    # finds max NUM_POSTS_TO_RETURN posts within a certain radius of a
+    # coordinate
+    @staticmethod
+    def find_limited_posts_within_loc(lon, lat, radius):
+        distance = radius * 0.014472 #convert to degrees
+        loc = 'POINT(' + str(lat) + ' ' + str(lon) + ')'
+        wkt_element = WKTElement(loc, srid=4326)
+        posts = db.session.query(Post).filter(ST_DFullyWithin(Post.loc,\
+            wkt_element, distance)).order_by(Post.created_at.desc())\
+            .limit(Post.NUM_POSTS_TO_RETURN)
+        return posts
+
+    # finds max NUM_POSTS_TO_RETURN posts within a certain radius of a
+    # coordinate posted before the specified time
+    @staticmethod
+    def find_limited_posts_within_loc_before_time(lon, lat, radius, time_before):
+        distance = radius * 0.014472 #convert to degrees
+        loc = 'POINT(' + str(lat) + ' ' + str(lon) + ')'
+        wkt_element = WKTElement(loc, srid=4326)
+        posts = db.session.query(Post).filter(ST_DFullyWithin(Post.loc,\
+            wkt_element, distance),Post.created_at < time_before)\
+            .order_by(Post.created_at.desc()).limit(Post.NUM_POSTS_TO_RETURN)
         return posts
