@@ -57,7 +57,7 @@ class TextPostViewController: UIViewController, UITextViewDelegate {
     func addToolBarToKeyboard() {
         let postToolbar = UIToolbar(frame: CGRect(x: 0,y: 0, width: self.view.frame.size.width, height: 50))
         postToolbar.barStyle = .default
-        postButton = UIBarButtonItem(title: "Post", style: .plain, target: self, action: #selector(postTextGraffiti(_:)))
+        postButton = UIBarButtonItem(title: "Post", style: .done, target: self, action: #selector(postTextGraffiti(_:)))
         postButton.isEnabled = false // until user types
         // flexible space necessary for right aligned post button
         let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)

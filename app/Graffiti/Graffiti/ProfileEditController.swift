@@ -15,7 +15,9 @@ class EditProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     @IBOutlet weak var bioEditor: UITextView!
     @IBOutlet weak var profPicButton: UIButton!
     
+    
     @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak var scrollContainer: UIScrollView!
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
@@ -29,7 +31,7 @@ class EditProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        bioEditor.delegate = self // amanda added this
         createCharCounterLabel()
         addToolBarToKeyboard()
         
@@ -42,9 +44,16 @@ class EditProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         
         bioEditor.delegate = self
         
+        // profPicButton.layer.cornerRadius = 0.5 * profPicButton.bounds.size.width
+        // profPicButton.clipsToBounds = true
+        
         usernameLabel.text = user?.getUsername()
         bio = user?.getBio()
-        bioEditor.text = bio
+        if(bio != nil){
+            bioEditor.text = bio
+        } else {
+            bioEditor.text = "Enter a bio!"
+        }
         barCharCountLabel.text = String(charLimit - bioEditor.text.characters.count)
         if let userPhoto = user?.getImageTag() {
             profPicButton.setImage(userPhoto, for: .normal)
@@ -184,6 +193,7 @@ class EditProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     func textViewDidBeginEditing(_ textView: UITextView) {
         bioEditor.text = user?.getBio()
         bioEditor.textColor = UIColor.black
+        scrollContainer.setContentOffset(CGPoint(0, 50), animated: true)
         
     }
     
@@ -202,5 +212,9 @@ class EditProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         postToolbar.items = [flexible, charCountItem]
         postToolbar.sizeToFit()
         bioEditor.inputAccessoryView = postToolbar
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        scrollContainer.setContentOffset(CGPoint(0, -50), animated: true)
     }
 }
