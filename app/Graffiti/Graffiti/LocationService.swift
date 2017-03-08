@@ -19,7 +19,8 @@ import CoreLocation
  * getLatitude() and getLongitude() to get the latest location
  */
 
-typealias LocationServiceHandler = (CLLocation) -> Void
+typealias LocationListener = (CLLocation) -> Void
+typealias LocationListenerID = Int
 
 class LocationService: NSObject, CLLocationManagerDelegate {
     
@@ -28,7 +29,11 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     static let sharedInstance = LocationService()
     var locationManager : LocationManagerProtocol
     var currentLocation: CLLocation?
-    var listeners: [LocationServiceHandler] = []
+    
+    var listeners: [LocationListenerID: LocationListener] = [LocationListenerID: LocationListener]()
+    var onceListeners: [LocationListener] = []
+    var currentID: LocationListenerID = 0
+    
     // min distance (meters) device must move horizontally for update event to be generated
     let distanceFilter: CLLocationDistance = 100
     
@@ -66,8 +71,19 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         locationManager.stopUpdatingLocation()
     }
     
-    func addListener(listener: @escaping LocationServiceHandler) {
-        listeners.append(listener)
+    @discardableResult func addListener(listener: @escaping LocationListener) -> LocationListenerID {
+        listeners[currentID] = listener
+        currentID += 1
+        return currentID - 1
+    }
+    
+    // A listener that is only fired once
+    func addOnceListener(listener: @escaping LocationListener) {
+        onceListeners.append(listener)
+    }
+    
+    func removerListener(id: LocationListenerID) {
+        listeners.removeValue(forKey: id)
     }
     
     // MARK: LocationManagerDelegate functions
@@ -85,9 +101,14 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         }
         self.currentLocation = location
         
-        for listener in listeners {
+        for (_, listener) in listeners {
             listener(location)
         }
+        
+        for listener in onceListeners {
+            listener(location)
+        }
+        onceListeners = []
     }
 
 }

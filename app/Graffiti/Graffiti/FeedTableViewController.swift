@@ -13,6 +13,7 @@ class FeedTableViewController: UITableViewController {
     let api = API.sharedInstance
     let locationManager = LocationService.sharedInstance
     var posts: [Post] = []
+    var earliestPostTime: Date?
 
     var timestamp = "time ago"
     
@@ -29,8 +30,10 @@ class FeedTableViewController: UITableViewController {
         // imageView.frame = CGRect(x: 0, y: 0, width: screenSize.width * 0.15, height: screenSize.height * 0.15)
         self.navigationItem.titleView = imageView
 
-        // refresh feed every time we show the tab
-        // self.getPostsByLocation()
+        // refresh feed if no posts
+        if posts.count == 0 {
+            self.getPostsByLocation()
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -40,8 +43,10 @@ class FeedTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.getPostsByLocation()
+        locationManager.startUpdatingLocation()
+        locationManager.addOnceListener() { _ in
+            self.getPostsByLocation()
+        }
         
         // add refresh control for pull to refresh
         self.refreshControl?.addTarget(self, action: #selector(refreshFeed), for: .valueChanged)
@@ -55,26 +60,26 @@ class FeedTableViewController: UITableViewController {
     
     // get the current location and request list of posts
     func getPostsByLocation() {
-        currentLongitude = locationManager.getLongitude()
-        currentLatitude = locationManager.getLatitude()
-        
-        // Bypass Simulator
-        if currentLongitude == nil {
-            print("long was nil so setting to default")
-            currentLongitude = 0.0
+        if self.posts.count == 0 {
+            self.showLoadingPostsTable()
         }
-        if currentLatitude == nil {
-            print("lat was nil so setting to default")
-            currentLatitude = 0.0
+        
+        guard
+            let currentLongitude = locationManager.getLongitude(),
+            let currentLatitude = locationManager.getLatitude()
+        else {
+            return
         }
         
         // Get Posts
-        api.getPosts(longitude: currentLongitude!, latitude: currentLatitude!) { response in
+        api.getPosts(longitude: currentLongitude, latitude: currentLatitude, before: self.earliestPostTime) { response in
             switch response.result {
             case .success:
                 if let json = response.result.value as? [String:Any],
                     let posts = json["posts"] as? [Post] {
                     self.posts = posts
+                    self.earliestPostTime = posts.last?.getTimeAdded()
+                    
                     self.tableView.reloadData()
                     if posts.count == 0 {
                         self.showNoPostsTable()
@@ -94,11 +99,15 @@ class FeedTableViewController: UITableViewController {
         tableView.backgroundView?.isHidden = false
     }
     
+    func showLoadingPostsTable() {
+        setupEmptyBackgroundView(withMessage: "Looking for posts...")
+        tableView.separatorStyle = .none
+        tableView.backgroundView?.isHidden = false
+    }
+    
     func setupTableViewForNumRows(_ numRows: Int) {
         if numRows == 0 {
-            setupEmptyBackgroundView(withMessage: "Looking for posts...")
-            tableView.separatorStyle = .none
-            tableView.backgroundView?.isHidden = false
+            showLoadingPostsTable()
         } else {
             tableView.separatorStyle = .singleLine
             tableView.backgroundView?.isHidden = true
@@ -305,6 +314,7 @@ class FeedTableViewController: UITableViewController {
     
     // Refresh the feed (request posts from API and fill the table) when user pulls down on table
     func refreshFeed(sender: UIRefreshControl) {
+        self.earliestPostTime = nil // Get first page again
         getPostsByLocation()
         self.tableView.reloadData()
         refreshControl?.endRefreshing()
