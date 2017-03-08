@@ -58,7 +58,7 @@ class Post(db.Model):
     def __repr__(self):
         return '<post_id {}>'.format(self.post_id)
 
-    def to_json_fields_for_FE(self, current_user_id):
+    def to_json_fields_for_FE(self, current_user_id, user_img_tag=[]):
         user = User.find_user_by_id(self.poster_id)
         cur_user_vote = UserPost.get_vote_by_ids(current_user_id, self.post_id)
         cur_user_vote = cur_user_vote if cur_user_vote else 0
@@ -81,7 +81,7 @@ class Post(db.Model):
                 longitude=self.longitude,
                 latitude=self.latitude),
             created_at=self.created_at,
-            poster=json.loads(user.to_json_fields_for_FE()),
+            poster=json.loads(user.to_json_fields_for_FE(user_img_tag)),
             num_votes=self.num_votes,
             current_user_vote=cur_user_vote,
             image=img_data))

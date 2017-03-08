@@ -162,16 +162,25 @@ class User(db.Model):
         else:
             return False
 
-    def to_json_fields_for_FE(self):
-        img_data = []
-        # retrieve image data from s3 if there is an image tag
+    def get_image_tag(self):
         key = self.get_s3_key()
         try:
-            img_data = s3_client.get_object(\
+            return s3_client.get_object(\
                 Bucket='graffiti-user-images',\
                 Key=key)['Body'].read().decode('ascii')
         except:
             logger.error('Error retrieving image tag: ' + key)
+            return []
+
+    def to_json_fields_for_FE(self, img_tag=[]):
+        img_data = []
+        # the image tag may have already been loaded 
+        if (not img_tag):
+            # retrieve image data from s3 if there is an image tag
+            img_data = self.get_image_tag()
+        else:
+            img_data = img_tag
+
         return json.dumps(dict(
             userid=self.user_id,
             username=self.username,
