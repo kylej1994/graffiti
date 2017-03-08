@@ -125,7 +125,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             label.font = UIFont.systemFont(ofSize: 20)
         }
         label.textColor = UIColor.darkGray
-        label.center = CGPoint(view.center.x - 30, view.center.y - 200) // I'm sorry I'm just finnicky
+        label.center = CGPoint(view.center.x - g10, view.center.y - 200) // I'm sorry I'm just finnicky
         return label
     }
     
