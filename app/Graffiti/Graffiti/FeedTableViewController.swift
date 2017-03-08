@@ -347,8 +347,7 @@ class FeedTableViewController: UITableViewController {
         self.tableView.endUpdates()
         
     }
-        
-    }
+}
     
     
     
