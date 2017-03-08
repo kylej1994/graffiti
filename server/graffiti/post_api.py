@@ -135,12 +135,21 @@ def get_post_by_location():
 	except:
 		posts = Post.find_limited_posts_within_loc(lon, lat, radius)
 
+	# map from poster_id to img_tags of the poster
+	img_tags = {}
+	for post in posts:
+		poster_id = post.get_poster_id()
+		if poster_id not in img_tags:
+			img_tags[poster_id] = User.find_user_by_id(poster_id)\
+				.get_image_tag()
+
 	user_id = user.get_user_id()
 	to_ret = {}
 	jsonified_posts = []
 	for post in posts:
+		# passes in the already loaded image tag
 		jsonified_posts.append(json.loads(post.to_json_fields_for_FE(\
-			user_id)))
+			user_id, img_tags[post.get_poster_id()])))
 	to_ret['posts'] = jsonified_posts
 	return json.dumps(to_ret), 200
 
