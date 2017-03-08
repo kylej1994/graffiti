@@ -251,20 +251,13 @@
                             <constraint firstAttribute="trailingMargin" secondItem="NVe-0h-90D" secondAttribute="trailing" constant="10" id="wAf-bb-hq6"/>
                             <constraint firstAttribute="leadingMargin" secondItem="v7n-zP-BnP" secondAttribute="leading" id="wzI-De-61K"/>
                         </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="WjE-dE-UyE" appends="YES" id="LKY-Su-JU9"/>
-                        </connections>
                     </view>
                     <connections>
                         <outlet property="imageDetailView" destination="v7n-zP-BnP" id="t1I-p9-f7l"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IBw-gQ-A9B" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="WjE-dE-UyE">
-                    <connections>
-                        <action selector="handleDismissGesture:" destination="ELs-gv-yy7" id="rBy-ic-XIv"/>
-                    </connections>
-                </panGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="WjE-dE-UyE"/>
             </objects>
             <point key="canvasLocation" x="1436" y="7"/>
         </scene>
@@ -274,7 +267,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ejl-bh-ipv" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Feed" image="icon-feed" selectedImage="icon-feed" id="UfD-gP-5Ci"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="yk6-Wq-tcj">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="yk6-Wq-tcj">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
