@@ -118,9 +118,14 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 40))
         label.text = text
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 20)
+        print(view.bounds.width)
+        if(view.bounds.width < 350.0){
+            label.font = UIFont.systemFont(ofSize: 17)
+        } else {
+            label.font = UIFont.systemFont(ofSize: 20)
+        }
         label.textColor = UIColor.darkGray
-        label.center = CGPoint(view.center.x - 30, view.center.y - 200) // I'm sorry I'm just finnicky
+        label.center = CGPoint(view.center.x - 10, view.center.y - 200) // I'm sorry I'm just finnicky
         return label
     }
     
