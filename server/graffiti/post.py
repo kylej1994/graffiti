@@ -192,10 +192,31 @@ class Post(db.Model):
 
     # finds posts within a certain radius of a coordinate
     @staticmethod
-    def find_posts_within_loc(lon, lat, radius):
+    def find_all_posts_within_loc(lon, lat, radius):
         distance = radius * 0.014472 #convert to degrees
         loc = 'POINT(' + str(lat) + ' ' + str(lon) + ')'
         wkt_element = WKTElement(loc, srid=4326)
         posts = db.session.query(Post).filter(ST_DFullyWithin(Post.loc,\
             wkt_element, distance)).order_by(Post.created_at.desc()).all()
+        return posts
+
+    # finds max 15 posts within a certain radius of a coordinate
+    @staticmethod
+    def find_limited_posts_within_loc(lon, lat, radius):
+        distance = radius * 0.014472 #convert to degrees
+        loc = 'POINT(' + str(lat) + ' ' + str(lon) + ')'
+        wkt_element = WKTElement(loc, srid=4326)
+        posts = db.session.query(Post).filter(ST_DFullyWithin(Post.loc,\
+            wkt_element, distance)).order_by(Post.created_at.desc()).limit(15)
+        return posts
+
+    # finds max 15 posts within a certain radius of a coordinate
+    @staticmethod
+    def find_limited_posts_within_loc_before_time(lon, lat, radius, time_before):
+        distance = radius * 0.014472 #convert to degrees
+        loc = 'POINT(' + str(lat) + ' ' + str(lon) + ')'
+        wkt_element = WKTElement(loc, srid=4326)
+        posts = db.session.query(Post).filter(ST_DFullyWithin(Post.loc,\
+            wkt_element, distance),Post.created_at < time_before)\
+            .order_by(Post.created_at.desc()).limit(15)
         return posts
