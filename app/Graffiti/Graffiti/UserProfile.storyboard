@@ -35,20 +35,20 @@
                                             <constraint firstAttribute="width" constant="80" id="om5-Gf-ezD"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" text="username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BTV-cZ-V5m" userLabel="usernameLabel">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" text="username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.10000000000000001" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BTV-cZ-V5m" userLabel="usernameLabel">
                                         <rect key="frame" x="108" y="28" width="116" height="30"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="25"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is a bio! I am not a lizard man. No, really." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8ac-DH-Cn0" userLabel="bioLabel">
-                                        <rect key="frame" x="108" y="60" width="235" height="41"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is a bio! I am not a lizard man. No, really." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.20000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="8ac-DH-Cn0" userLabel="bioLabel">
+                                        <rect key="frame" x="108" y="60" width="235" height="42"/>
                                         <fontDescription key="fontDescription" type="system" weight="thin" pointSize="13"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g67-1r-ih8">
-                                        <rect key="frame" x="-2" y="101" width="80" height="49"/>
+                                        <rect key="frame" x="-2" y="102" width="80" height="48"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <state key="normal" title="Edit Profile">
                                             <color key="titleColor" red="0.0" green="0.47934520244598389" blue="0.99908632040023804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -58,7 +58,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ax1-CL-d1Q">
-                                        <rect key="frame" x="283" y="101" width="60" height="49"/>
+                                        <rect key="frame" x="283" y="102" width="60" height="48"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="60" id="xWe-Id-GtC"/>
                                         </constraints>
@@ -107,7 +107,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Text post body goes here. Hardest part of finals: finding an open reg cubicle." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lUW-2p-jIr">
-                                                    <rect key="frame" x="8" y="8" width="321" height="62.5"/>
+                                                    <rect key="frame" x="8" y="8" width="321" height="63"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="textColor" white="0.25" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
@@ -162,7 +162,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="420" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bv6-KS-1w4">
-                                                    <rect key="frame" x="8" y="219" width="28.5" height="21"/>
+                                                    <rect key="frame" x="8" y="219" width="29" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
