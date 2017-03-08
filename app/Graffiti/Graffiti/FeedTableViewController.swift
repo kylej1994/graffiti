@@ -14,8 +14,11 @@ class FeedTableViewController: UITableViewController {
     let locationManager = LocationService.sharedInstance
     var posts: [Post] = []
     var earliestPostTime: Date?
+    var requestInflight: Bool = false
 
-    var timestamp = "time ago"
+    let timestamp = "time ago"
+    let autoLoadRatio: CGFloat = 0.8
+    var endOfAutoLoad: Bool = false
     
     var currentLatitude: CLLocationDegrees? = CLLocationDegrees()
     var currentLongitude: CLLocationDegrees? = CLLocationDegrees()
@@ -57,9 +60,33 @@ class FeedTableViewController: UITableViewController {
         tableView.estimatedRowHeight = 150
     }
     
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let height = scrollView.frame.size.height
+        let contentHeight = scrollView.contentSize.height
+        let contentYoffset = scrollView.contentOffset.y
+        let distanceFromBottom = contentHeight - contentYoffset
+        
+        // Always at bottom
+        if contentHeight < height {
+            return
+        }
+        
+        let progress = (contentYoffset + height) / contentHeight
+        if (progress > self.autoLoadRatio) ||  (distanceFromBottom < height) {
+            if !self.requestInflight && !self.endOfAutoLoad {
+                print(" you reached end of the table")
+                getPostsByLocation(nextPage: true)
+            }
+        }
+        
+
+    }
+    
     
     // get the current location and request list of posts
-    func getPostsByLocation() {
+    func getPostsByLocation(nextPage: Bool = false) {
+        self.requestInflight = true
+        
         if self.posts.count == 0 {
             self.showLoadingPostsTable()
         }
@@ -67,21 +94,47 @@ class FeedTableViewController: UITableViewController {
         guard
             let currentLongitude = locationManager.getLongitude(),
             let currentLatitude = locationManager.getLatitude()
-        else {
-            return
+            else {
+                return
+        }
+        
+        let before = nextPage ? self.earliestPostTime : nil
+        
+        // Reset
+        if !nextPage {
+            self.endOfAutoLoad = false
         }
         
         // Get Posts
-        api.getPosts(longitude: currentLongitude, latitude: currentLatitude, before: self.earliestPostTime) { response in
+        api.getPosts(longitude: currentLongitude, latitude: currentLatitude, before: before) { response in
+            self.requestInflight = false
             switch response.result {
             case .success:
                 if let json = response.result.value as? [String:Any],
                     let posts = json["posts"] as? [Post] {
-                    self.posts = posts
-                    self.earliestPostTime = posts.last?.getTimeAdded()
                     
-                    self.tableView.reloadData()
-                    if posts.count == 0 {
+                    if nextPage {
+                        if posts.count > 0 {
+                            let start_index = self.posts.count
+                            var indexPaths: [IndexPath] = []
+                            for row in (start_index..<start_index + posts.count) {
+                                indexPaths.append(IndexPath(row: row, section: 0))
+                            }
+                            
+                            self.posts = self.posts + posts
+                            self.tableView.insertRows(at: indexPaths, with: .none)
+                        } else {
+                            self.endOfAutoLoad = true
+                        }
+                    } else {
+                        self.posts = posts
+                        self.tableView.reloadData()
+                    }
+                    
+                    self.earliestPostTime = posts.last?.getTimeAdded() ?? self.earliestPostTime
+                    
+                    
+                    if self.posts.count == 0 {
                         self.showNoPostsTable()
                     }
                 }
@@ -314,7 +367,6 @@ class FeedTableViewController: UITableViewController {
     
     // Refresh the feed (request posts from API and fill the table) when user pulls down on table
     func refreshFeed(sender: UIRefreshControl) {
-        self.earliestPostTime = nil // Get first page again
         getPostsByLocation()
         self.tableView.reloadData()
         refreshControl?.endRefreshing()
