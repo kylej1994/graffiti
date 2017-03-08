@@ -1,6 +1,6 @@
 import datetime
 import json
-#import textseg
+import textseg
 
 from flask import Blueprint, request
 from post import Post
@@ -34,8 +34,7 @@ def validate_vote(vote):
 
 def validate_text(text):
 	# Correctly count grapheme clusters
-	#return len(textseg.GCStr(text)) <= 140
-	return True
+	return len(textseg.GCStr(text)) <= 140
 
 @post_api.route('/post', methods=['POST'])
 def create_post():
@@ -123,16 +122,25 @@ def get_post_by_location():
 		return generate_error_response(ERR_400, 400)
 	
 	radius = 1 # TODO find out what number this should be
-	posts = Post.find_posts_within_loc(lon, lat, radius)
 	user = retrieve_user_from_request(request)
 	if (user is None):
 		return generate_error_response(ERR_403, 403)
 
+	try:
+		# if time_before is given, return 15 posts before specified time
+		# otherwise, return 15 newest posts
+		time_before = (float)(request.args.get('time_before'))
+		posts = Post.find_limited_posts_within_loc_before_time(\
+			lon, lat, radius, time_before)
+	except:
+		posts = Post.find_limited_posts_within_loc(lon, lat, radius)
+
+	user_id = user.get_user_id()
 	to_ret = {}
 	jsonified_posts = []
 	for post in posts:
 		jsonified_posts.append(json.loads(post.to_json_fields_for_FE(\
-			user.get_user_id())))
+			user_id)))
 	to_ret['posts'] = jsonified_posts
 	return json.dumps(to_ret), 200
 
@@ -147,7 +155,7 @@ def get_posts_coordinates():
 		# Either the params are not there, or they are not convertable to floats
 		return generate_error_response(ERR_400, 400)
 
-	posts = Post.find_posts_within_loc(lon, lat, radius)
+	posts = Post.find_all_posts_within_loc(lon, lat, radius)
 
 	# This is commented out for now, because it from the wiki that there is no
 	# authentication necessary. This can be changed easily by commenting out

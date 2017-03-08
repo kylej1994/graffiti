@@ -29,6 +29,8 @@ class Post(db.Model):
         def describe(self):
             return self.value
 
+    NUM_POSTS_TO_RETURN = 15
+
     post_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     post_type = db.Column(db.Enum(PostType))
     text = db.Column(db.Unicode(140))
@@ -192,10 +194,34 @@ class Post(db.Model):
 
     # finds posts within a certain radius of a coordinate
     @staticmethod
-    def find_posts_within_loc(lon, lat, radius):
+    def find_all_posts_within_loc(lon, lat, radius):
         distance = radius * 0.014472 #convert to degrees
         loc = 'POINT(' + str(lat) + ' ' + str(lon) + ')'
         wkt_element = WKTElement(loc, srid=4326)
         posts = db.session.query(Post).filter(ST_DFullyWithin(Post.loc,\
             wkt_element, distance)).order_by(Post.created_at.desc()).all()
+        return posts
+
+    # finds max NUM_POSTS_TO_RETURN posts within a certain radius of a
+    # coordinate
+    @staticmethod
+    def find_limited_posts_within_loc(lon, lat, radius):
+        distance = radius * 0.014472 #convert to degrees
+        loc = 'POINT(' + str(lat) + ' ' + str(lon) + ')'
+        wkt_element = WKTElement(loc, srid=4326)
+        posts = db.session.query(Post).filter(ST_DFullyWithin(Post.loc,\
+            wkt_element, distance)).order_by(Post.created_at.desc())\
+            .limit(Post.NUM_POSTS_TO_RETURN)
+        return posts
+
+    # finds max NUM_POSTS_TO_RETURN posts within a certain radius of a
+    # coordinate posted before the specified time
+    @staticmethod
+    def find_limited_posts_within_loc_before_time(lon, lat, radius, time_before):
+        distance = radius * 0.014472 #convert to degrees
+        loc = 'POINT(' + str(lat) + ' ' + str(lon) + ')'
+        wkt_element = WKTElement(loc, srid=4326)
+        posts = db.session.query(Post).filter(ST_DFullyWithin(Post.loc,\
+            wkt_element, distance),Post.created_at < time_before)\
+            .order_by(Post.created_at.desc()).limit(Post.NUM_POSTS_TO_RETURN)
         return posts
