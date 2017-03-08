@@ -6,7 +6,7 @@ from user import User
 
 user_api = Blueprint('user_api', __name__)
 
-from graffiti import retrieve_user_from_request, generate_error_response
+from graffiti import retrieve_user_from_request, generate_error_response, validate_text
 
 fake_response = json.dumps(dict(
 		userid=1,
@@ -99,7 +99,7 @@ def update_user(userid):
 		good_inputs = good_inputs and user.set_phone_number(data['phone_number'])
 
 	if ('bio' in data and data['bio'] != user.get_bio()
-			and len(data['bio']) < 160):
+			and validate_text(data['bio']) < 160):
 		good_inputs = good_inputs and user.set_bio(data['bio'])
 
 	# save user before check email because even if user wants to change email,
