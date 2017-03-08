@@ -1,6 +1,6 @@
 import datetime
 import json
-#import textseg
+import textseg
 
 from flask import Blueprint, request
 from post import Post
@@ -34,8 +34,7 @@ def validate_vote(vote):
 
 def validate_text(text):
 	# Correctly count grapheme clusters
-	#return len(textseg.GCStr(text)) <= 140
-	return True
+	return len(textseg.GCStr(text)) <= 140
 
 @post_api.route('/post', methods=['POST'])
 def create_post():
@@ -136,11 +135,12 @@ def get_post_by_location():
 	except:
 		posts = Post.find_limited_posts_within_loc(lon, lat, radius)
 
+	user_id = user.get_user_id()
 	to_ret = {}
 	jsonified_posts = []
 	for post in posts:
 		jsonified_posts.append(json.loads(post.to_json_fields_for_FE(\
-			user.get_user_id())))
+			user_id)))
 	to_ret['posts'] = jsonified_posts
 	return json.dumps(to_ret), 200
 
