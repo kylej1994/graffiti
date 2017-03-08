@@ -30,7 +30,7 @@ def user_login():
 	user = retrieve_user_from_request(request)
 	if (user):
 		# login with idToken passed in through header
-		if (user.get_username() = ''):
+		if (user.get_username() == ''):
 			is_new_user = True
 		is_new_user = False
 	else:
