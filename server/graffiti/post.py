@@ -1,7 +1,7 @@
 import json
 import sys
 sys.path.append('..')
-from graffiti import db, s3_client
+from graffiti import db, s3_client, logger
 from sqlalchemy import Column, Float, Integer, String
 from sqlalchemy.dialects.postgresql import JSON
 from user import User
@@ -72,7 +72,7 @@ class Post(db.Model):
                     Bucket='graffiti-post-images',\
                     Key=key)['Body'].read().decode('ascii')
             except:
-                print('Error retrieving image post: ' + key)
+                logger.error('Error retrieving image post: ' + key)
         return json.dumps(dict(
             postid=self.post_id,
             type=self.post_type.describe(),
@@ -112,7 +112,8 @@ class Post(db.Model):
                     Bucket='graffiti-post-images',\
                     Key=key)
             except:
-                print('Error uploading image post: ' + key)
+                logger.error('Error uploading image post: ' + key)
+
         # if not, do nothing
         # doing this for compatability reasons...wow this code is smelly
 

@@ -6,7 +6,7 @@ import types
 import time as Time
 
 sys.path.append('..')
-from graffiti import db, s3_client
+from graffiti import db, s3_client, logger
 from sqlalchemy import Column, Float, Integer, String
 
 from datetime import datetime
@@ -106,7 +106,7 @@ class User(db.Model):
                 Key=key)
             return True
         except Exception, e:
-            print e
+            logger.error(e)
             return False
 
     def get_img_file_loc(self):
@@ -169,7 +169,7 @@ class User(db.Model):
                 Bucket='graffiti-user-images',\
                 Key=key)['Body'].read().decode('ascii')
         except:
-            print('Error retrieving image tag: ' + key)
+            logger.error('Error retrieving image tag: ' + key)
             return []
 
     def to_json_fields_for_FE(self, img_tag=[]):
@@ -180,6 +180,7 @@ class User(db.Model):
             img_data = self.get_image_tag()
         else:
             img_data = img_tag
+
         return json.dumps(dict(
             userid=self.user_id,
             username=self.username,

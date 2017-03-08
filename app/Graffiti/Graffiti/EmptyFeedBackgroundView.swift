@@ -22,7 +22,7 @@ extension FeedTableViewController {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 40))
         label.text = text
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 20)
+        label.font = UIFont.systemFont(ofSize: 20, weight: UIFontWeightLight)
         label.textColor = UIColor.darkGray
         label.center = view.center
         return label
