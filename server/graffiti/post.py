@@ -202,7 +202,8 @@ class Post(db.Model):
             wkt_element, distance)).order_by(Post.created_at.desc()).all()
         return posts
 
-    # finds max 15 posts within a certain radius of a coordinate
+    # finds max NUM_POSTS_TO_RETURN posts within a certain radius of a
+    # coordinate
     @staticmethod
     def find_limited_posts_within_loc(lon, lat, radius):
         distance = radius * 0.014472 #convert to degrees
@@ -213,7 +214,8 @@ class Post(db.Model):
             .limit(Post.NUM_POSTS_TO_RETURN)
         return posts
 
-    # finds max 15 posts within a certain radius of a coordinate
+    # finds max NUM_POSTS_TO_RETURN posts within a certain radius of a
+    # coordinate posted before the specified time
     @staticmethod
     def find_limited_posts_within_loc_before_time(lon, lat, radius, time_before):
         distance = radius * 0.014472 #convert to degrees
