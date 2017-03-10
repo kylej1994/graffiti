@@ -13,8 +13,15 @@ class FeedTableViewController: UITableViewController {
     let api = API.sharedInstance
     let locationManager = LocationService.sharedInstance
     var posts: [Post] = []
+    var earliestPostTime: Date?
+    var requestInflight: Bool = false
 
-    var timestamp = "time ago"
+    let timestamp = "time ago"
+    let pageSize = 15
+    
+    let autoLoadRatio: CGFloat = 0.8
+    var endOfAutoLoad: Bool = false
+    var autoLoadFooter: AutoLoadFooter!
     
     var currentLatitude: CLLocationDegrees? = CLLocationDegrees()
     var currentLongitude: CLLocationDegrees? = CLLocationDegrees()
@@ -26,7 +33,10 @@ class FeedTableViewController: UITableViewController {
         let logo = UIImage(named: "logo-text-black.pdf")
         let imageView = UIImageView(image:logo)
 
-        self.navigationItem.titleView = imageView
+        // refresh feed if no posts
+        if posts.count == 0 {
+            self.getPostsByLocation()
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -36,8 +46,10 @@ class FeedTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.getPostsByLocation()
+        locationManager.startUpdatingLocation()
+        locationManager.addOnceListener() { _ in
+            self.getPostsByLocation()
+        }
         
         // add refresh control for pull to refresh
         self.refreshControl?.addTarget(self, action: #selector(refreshFeed), for: .valueChanged)
@@ -46,33 +58,94 @@ class FeedTableViewController: UITableViewController {
         //  and the contents of its cells to determine each cell’s height
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 150
+        
+        
+        autoLoadFooter = AutoLoadFooter(frame: CGRect(0, 0, tableView.bounds.width, 100))
+        autoLoadFooter.isHidden = true
+        tableView.tableFooterView = autoLoadFooter
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let height = scrollView.frame.size.height
+        let contentHeight = scrollView.contentSize.height
+        let contentYoffset = scrollView.contentOffset.y
+        let distanceFromBottom = contentHeight - contentYoffset
+        
+        // Always at bottom
+        if contentHeight < height {
+            return
+        }
+        
+        let progress = (contentYoffset + height) / contentHeight
+        if (progress > self.autoLoadRatio) ||  (distanceFromBottom < height) {
+            if !self.requestInflight && !self.endOfAutoLoad {
+                print(" you reached end of the table")
+                getPostsByLocation(nextPage: true)
+            }
+        }
+    }
+    
+    func resetAutoLoad() {
+        self.endOfAutoLoad = false
+        self.autoLoadFooter.setLoadingText()
+    }
+    
+    func setNoMorePosts() {
+        self.endOfAutoLoad = true
+        self.autoLoadFooter.setNoMoreText()
     }
     
     
     // get the current location and request list of posts
-    func getPostsByLocation() {
-        currentLongitude = locationManager.getLongitude()
-        currentLatitude = locationManager.getLatitude()
+    func getPostsByLocation(nextPage: Bool = false) {
+        self.requestInflight = true
         
-        // Bypass Simulator
-        if currentLongitude == nil {
-            print("long was nil so setting to default")
-            currentLongitude = 0.0
+        if self.posts.count == 0 {
+            self.showLoadingPostsTable()
         }
-        if currentLatitude == nil {
-            print("lat was nil so setting to default")
-            currentLatitude = 0.0
+        
+        guard
+            let currentLongitude = locationManager.getLongitude(),
+            let currentLatitude = locationManager.getLatitude()
+            else {
+                return
+        }
+        
+        let before = nextPage ? self.earliestPostTime : nil
+        
+        // Reset
+        if !nextPage {
+            self.resetAutoLoad()
         }
         
         // Get Posts
-        api.getPosts(longitude: currentLongitude!, latitude: currentLatitude!) { response in
+        api.getPosts(longitude: currentLongitude, latitude: currentLatitude, before: before) { response in
             switch response.result {
             case .success:
                 if let json = response.result.value as? [String:Any],
                     let posts = json["posts"] as? [Post] {
-                    self.posts = posts
-                    self.tableView.reloadData()
-                    if posts.count == 0 {
+                    
+                    if nextPage {
+                        if posts.count > 0 {
+                            let start_index = self.posts.count
+                            var indexPaths: [IndexPath] = []
+                            for row in (start_index..<start_index + posts.count) {
+                                indexPaths.append(IndexPath(row: row, section: 0))
+                            }
+                            
+                            self.posts = self.posts + posts
+                            self.tableView.insertRows(at: indexPaths, with: .none)
+                        } else {
+                            self.setNoMorePosts()
+                        }
+                    } else {
+                        self.posts = posts
+                        self.tableView.reloadData()
+                    }
+                    
+                    self.earliestPostTime = posts.last?.getTimeAdded()?.addingTimeInterval(-0.001) ?? self.earliestPostTime
+                    
+                    if self.posts.count == 0 {
                         self.showNoPostsTable()
                     }
                 }
@@ -80,22 +153,26 @@ class FeedTableViewController: UITableViewController {
                 print(error)
                 self.showFeedFailureAlert()
             }
+            
+            self.requestInflight = false
         }
     }
     
     func showNoPostsTable() {
-        if posts.count == 0 {
-            setupEmptyBackgroundView(withMessage: "There are no posts nearby.")
-            tableView.separatorStyle = .none
-            tableView.backgroundView?.isHidden = false
-        }
+        setupEmptyBackgroundView(withMessage: "There are no posts nearby.")
+        tableView.separatorStyle = .none
+        tableView.backgroundView?.isHidden = false
+    }
+    
+    func showLoadingPostsTable() {
+        setupEmptyBackgroundView(withMessage: "Looking for posts...")
+        tableView.separatorStyle = .none
+        tableView.backgroundView?.isHidden = false
     }
     
     func setupTableViewForNumRows(_ numRows: Int) {
         if numRows == 0 {
-            setupEmptyBackgroundView(withMessage: "Looking for posts...")
-            tableView.separatorStyle = .none
-            tableView.backgroundView?.isHidden = false
+            showLoadingPostsTable()
         } else {
             tableView.separatorStyle = .singleLine
             tableView.backgroundView?.isHidden = true
@@ -110,6 +187,12 @@ class FeedTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let numRows = posts.count
+        
+        if numRows >= self.pageSize {
+            self.autoLoadFooter.isHidden = false
+        } else {
+            self.autoLoadFooter.isHidden = true
+        }
         
         setupTableViewForNumRows(numRows)
         

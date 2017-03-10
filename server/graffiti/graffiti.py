@@ -2,6 +2,7 @@ import boto3
 import botocore
 import json
 import auth_Middleware
+import logging
 
 from flask import Flask, request, abort
 from oauth2client import client, crypt
@@ -29,6 +30,13 @@ cfg = botocore.config.Config(signature_version='s3v4')
 s3_client = boto3.client('s3', config=cfg,\
     aws_access_key_id=ACCESS_KEY,\
     aws_secret_access_key=SECRET_KEY)
+
+logger = logging.getLogger('graffiti')
+hdlr = logging.FileHandler('log.log')
+formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+hdlr.setFormatter(formatter)
+logger.addHandler(hdlr) 
+logger.setLevel(logging.INFO)
 
 def generate_error_response(message, code):
 	error_response = {}
@@ -100,9 +108,9 @@ def fill_db():
 
 # If its the default db, i.e. the local db
 if not DB or DB == 'postgresql://localhost/mydb':
-	print init_db()
-	print clear_db_of_everything()
-	print fill_db()
+	logger.info(init_db())
+	logger.info(clear_db_of_everything())
+	logger.info(fill_db())
 
 def generate_error_response(message, code):
 	error_response = {}

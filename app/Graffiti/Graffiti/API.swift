@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 import AlamofireObjectMapper
+import ObjectMapper
 import GoogleSignIn
 import CoreLocation
 
@@ -270,11 +271,16 @@ class API {
         }
     }
     
-    func getPosts(longitude: Double, latitude: Double, handler: @escaping Handler) {
-        let parameters = [
+    func getPosts(longitude: Double, latitude: Double, before: Date? = nil, handler: @escaping Handler) {
+        var parameters = [
             "longitude": longitude,
             "latitude": latitude
         ]
+        
+        if let unwrappedBefore = before {
+            parameters["time_before"] = DateTransform().transformToJSON(unwrappedBefore)
+        }
+        
         makeRequest("/post", method: .get, parameters: parameters){ requestResult in
             switch requestResult {
             case .success:

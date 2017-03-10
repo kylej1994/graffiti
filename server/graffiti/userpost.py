@@ -1,6 +1,6 @@
 import sys
 sys.path.append('..')
-from graffiti import db
+from graffiti import db, logger
 from sqlalchemy import Column, Float, Integer, String
 
 from datetime import datetime
@@ -44,5 +44,6 @@ class UserPost(db.Model):
             return db.session.query(UserPost).filter(UserPost.post_id==post_id,\
                 UserPost.user_id==user_id).first().get_vote()
         except:
+            logger.error('Error in get_vote_by_ids in UserPost')
             return None
     
