@@ -32,9 +32,6 @@ class FeedTableViewController: UITableViewController {
         
         let logo = UIImage(named: "logo-text-black.pdf")
         let imageView = UIImageView(image:logo)
-        // let screenSize: CGRect = UIScreen.main.bounds
-        // imageView.frame = CGRect(x: 0, y: 0, width: screenSize.width * 0.15, height: screenSize.height * 0.15)
-        self.navigationItem.titleView = imageView
 
         // refresh feed if no posts
         if posts.count == 0 {
@@ -161,7 +158,6 @@ class FeedTableViewController: UITableViewController {
         }
     }
     
-    // todo: test this - ask server to return no posts
     func showNoPostsTable() {
         setupEmptyBackgroundView(withMessage: "There are no posts nearby.")
         tableView.separatorStyle = .none
@@ -427,15 +423,14 @@ class FeedTableViewController: UITableViewController {
         }
     }
     
-        func addPostToTop(newpost: Post){
-            self.posts.insert(newpost, at: 0)
-            self.tableView.beginUpdates()
-            self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
-            self.tableView.endUpdates()
-            
-        }
+    func addPostToTop(newpost: Post){
+        self.posts.insert(newpost, at: 0)
+        self.tableView.beginUpdates()
+        self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+        self.tableView.endUpdates()
         
     }
+}
     
     
     

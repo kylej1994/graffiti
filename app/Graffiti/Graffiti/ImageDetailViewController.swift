@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ImageDetailViewController: UIViewController {
+class ImageDetailViewController: UIViewController, UIGestureRecognizerDelegate {
 
     @IBOutlet var imageDetailView: UIImageView!
     var originalImageViewCenter: CGPoint!
@@ -25,6 +25,10 @@ class ImageDetailViewController: UIViewController {
         imageMoveOffset = self.view.frame.height // how much the image moves up or down
         imageUp = CGPoint(x: imageDetailView.center.x ,y: imageDetailView.center.y - imageMoveOffset)
         imageDown = CGPoint(x: imageDetailView.center.x ,y: imageDetailView.center.y + imageMoveOffset)
+        
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(didPinchImage(sender:)))
+        imageDetailView.addGestureRecognizer(pinchGesture)
+        pinchGesture.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -62,6 +66,19 @@ class ImageDetailViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    func didPinchImage(sender: UIPinchGestureRecognizer) {
+        let scale = sender.scale
+        let imageView = sender.view as! UIImageView
+        imageView.transform = imageView.transform.scaledBy(x: scale, y: scale)
+        
+        sender.scale = 1
+    }
+    
+    // recognize more than one gesture recognizer
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
     
 
